@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9장 · 실전 시나리오 5종 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 09 · 조리법</span>
+    <h1>실전 시나리오 5종 — 따라 하면 동작</h1>
+    <p class="lead">
+      앞 장들의 도구를 조합한 <strong>실제 구축 가능한 5가지 자동화</strong>.
+      각 시나리오는 <em>준비물 · 구현 단계 · 코드 · 운영 팁</em>으로 정리돼 있어 바로 본인 프로젝트에 옮길 수 있습니다.
+    </p>
+
+    <h2 id="overview">5종 한눈 비교</h2>
+
+    <table>
+      <thead>
+        <tr><th>#</th><th>시나리오</th><th>주요 도구</th><th>구축 시간</th><th>월 비용 추정</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><a href="#pr-review">PR 자동 코드 리뷰</a></td><td>claude-code-action, 5장</td><td>30분</td><td>$5~50</td></tr>
+        <tr><td>2</td><td><a href="#refactor">대규모 리팩터링</a></td><td>Workflow(6장), worktree</td><td>1~2시간</td><td>$30~150 (1회성)</td></tr>
+        <tr><td>3</td><td><a href="#security">지속적 보안 모니터링</a></td><td><code>/schedule</code>, <code>/security-review</code></td><td>20분</td><td>$10~30</td></tr>
+        <tr><td>4</td><td><a href="#ci-opt">CI 파이프라인 자체 최적화</a></td><td>API 직호출(8장), gh CLI</td><td>1시간</td><td>$5</td></tr>
+        <tr><td>5</td><td><a href="#docs">기술 문서 자동화</a></td><td>hooks, <code>/init</code>, gh action</td><td>40분</td><td>$5~20</td></tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- ============ Scenario 1 ============ -->
+    <h2 id="pr-review">🥇 시나리오 1 · PR 자동 코드 리뷰 파이프라인</h2>
+
+    <table>
+      <tbody>
+        <tr><th>목표</th><td>모든 PR에 5분 안에 1차 리뷰 코멘트 자동 게시. 사람 리뷰어는 설계·맥락에 집중.</td></tr>
+        <tr><th>도구</th><td><code>anthropics/claude-code-action</code> (10장), <code>/code-review</code> 스킬</td></tr>
+        <tr><th>적용 효과</th><td>리뷰 라운드트립 50~70% 단축, 명백한 버그·스타일 즉시 차단</td></tr>
+      </tbody>
+    </table>
+
+    <h3>구현 단계</h3>
+
+    <ol>
+      <li><strong>API 키 등록</strong> — GitHub repo → Settings → Secrets → <code>ANTHROPIC_API_KEY</code> 추가</li>
+      <li><strong>워크플로우 파일 생성</strong> — <code>.github/workflows/claude-review.yml</code></li>
+      <li><strong>PR 권한 부여</strong> — pull-requests write 필요</li>
+      <li><strong>변경 크기 차등 적용</strong> (15장 §6 권장)</li>
+    </ol>
+
+<pre><code><span class="tok-com"># .github/workflows/claude-review.yml</span>
+name: Claude PR Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      <span class="tok-com"># 변경 파일 수에 따라 effort 차등</span>
+      - id: size
+        run: |
+          FILES=$(gh pr view ${{ github.event.number }} --json changedFiles -q .changedFiles)
+          <span class="tok-kw">if</span> [ <span class="tok-str">"$FILES"</span> -le 5 ]; <span class="tok-kw">then</span>
+            echo <span class="tok-str">"effort=low"</span> &gt;&gt; $GITHUB_OUTPUT
+          <span class="tok-kw">elif</span> [ <span class="tok-str">"$FILES"</span> -le 30 ]; <span class="tok-kw">then</span>
+            echo <span class="tok-str">"effort=medium"</span> &gt;&gt; $GITHUB_OUTPUT
+          <span class="tok-kw">else</span>
+            echo <span class="tok-str">"effort=high"</span> &gt;&gt; $GITHUB_OUTPUT
+          <span class="tok-kw">fi</span>
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: <span class="tok-str">"/code-review --comment --effort ${{ steps.size.outputs.effort }}"</span></code></pre>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 보안 폴더는 무조건 high</div>
+      <p>auth/·payment/·crypto/ 같은 민감 경로가 변경된 PR은 effort 강제 high + <code>/security-review</code> 추가.
+        조건 분기 한 줄 더 추가하면 평소엔 저비용, 위험 PR엔 충분한 깊이 확보.</p>
+    </div>
+
+    <h3>운영 팁</h3>
+    <ul>
+      <li>외부 컨트리뷰터 PR은 <code>github.event.pull_request.author_association</code>로 조건 분기 (악용 방지)</li>
+      <li>봇 리뷰는 1차일 뿐 — 머지 정책엔 사람 리뷰 1명 이상 의무</li>
+      <li>월 1회 ccusage로 비용 점검, 비용 폭주 시 effort 다운</li>
+    </ul>
+
+    <hr />
+
+    <!-- ============ Scenario 2 ============ -->
+    <h2 id="refactor">🥈 시나리오 2 · 대규모 리팩터링 자동화</h2>
+
+    <table>
+      <tbody>
+        <tr><th>목표</th><td>"Sequelize → Drizzle ORM 마이그레이션" 같은 30+ 파일 일괄 변환. 사람 검토 가능한 단위로.</td></tr>
+        <tr><th>도구</th><td>Workflow(6장), <code>git worktree</code>, <code>/code-review</code>, <code>/verify</code></td></tr>
+        <tr><th>적용 효과</th><td>수동 대비 5~10배 빠름, 동일 패턴 일관 적용</td></tr>
+      </tbody>
+    </table>
+
+    <h3>구현 단계</h3>
+
+    <ol>
+      <li>대상 파일 목록 자동 추출 (예: <code>find src/models -name "*.ts"</code>)</li>
+      <li>각 파일을 격리된 worktree에서 변환 → 테스트 → 커밋</li>
+      <li>변환 결과를 모듈별로 PR 분할 (한 PR 5~10 파일)</li>
+      <li>각 PR에 자동 리뷰 + 본인 검토 후 머지</li>
+    </ol>
+
+<pre><code><span class="tok-com"># 1) 대상 식별 (Claude에 시킴)</span>
+&gt; <span class="tok-str">"src/models 의 Sequelize 사용 파일 목록을 [경로 | 줄 수 | 복잡도] 표로. 마이그레이션 작업 단위로 5개씩 묶어줘."</span>
+
+<span class="tok-com"># 2) 격리된 worktree에서 한 묶음 진행</span>
+claude --worktree refactor/orm-batch-1
+&gt; <span class="tok-str">"방금 묶은 batch-1 의 5개 파일을 Drizzle로 마이그레이션.
+   원칙:
+   - 한 파일 끝낼 때마다 npm test 통과 확인
+   - 변경 의도가 한 줄로 안 떠오르면 멈추고 보고
+   - 테스트가 부족하면 추가 작성도 OK
+   진행 전: 변경 계획 먼저 표로 보여줘."</span>
+
+<span class="tok-com"># 3) 자동 셀프 리뷰 → PR</span>
+&gt; /code-review --fix
+&gt; /verify
+&gt; <span class="tok-str">"gh pr create --title 'refactor(orm): batch 1/6 — User·Session models' --body '...'"</span></code></pre>
+
+    <p>같은 흐름을 batch-2 ~ batch-6 까지 다른 worktree에서 동시 진행 가능 → 며칠 짜리 작업이 한 나절.</p>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — Workflow가 정말 필요한가</div>
+      <p>30 파일 정도면 위처럼 <strong>worktree + 사람 진행</strong>이면 충분합니다.
+        100+ 파일이고 같은 패턴이 반복되며 사람이 매번 확인 불필요한 케이스에서야 6장 Workflow로 자동화가 정당화됩니다.
+        도구 선택은 늘 "이게 정말 필요한가"부터.</p>
+    </div>
+
+    <hr />
+
+    <!-- ============ Scenario 3 ============ -->
+    <h2 id="security">🥉 시나리오 3 · 지속적 보안 모니터링</h2>
+
+    <table>
+      <tbody>
+        <tr><th>목표</th><td>매일 자동으로 의존성·코드 취약점 스캔, 발견 시 슬랙 알림 + 자동 수정 PR (가능한 케이스)</td></tr>
+        <tr><th>도구</th><td><code>/schedule</code> (5장), <code>/security-review</code>, npm audit, gh CLI</td></tr>
+        <tr><th>적용 효과</th><td>릴리즈 직전 부랴부랴 점검 → 매일 baseline 유지</td></tr>
+      </tbody>
+    </table>
+
+    <h3>구현 단계</h3>
+
+    <ol>
+      <li>일일 스캔 스킬 작성 (<code>.claude/skills/daily-sec/SKILL.md</code>)</li>
+      <li><code>/schedule</code>로 매일 새벽 6시 실행</li>
+      <li>결과를 슬랙으로 게시 (심각도 high 이상)</li>
+      <li>자동 수정 가능한 의존성 업데이트는 PR로 자동 생성</li>
+    </ol>
+
+<pre><code><span class="tok-com"># .claude/skills/daily-sec/SKILL.md</span>
+---
+name: daily-sec
+description: <span class="tok-str">"일일 보안 점검 — 의존성·코드·설정"</span>
+---
+
+# Daily Security Check
+
+순서대로 수행하고 마지막에 슬랙용 마크다운 요약 출력.
+
+1. `npm audit --json` 실행, high·critical 추출
+2. `/security-review --effort high` 로 코드 변경 점검
+3. `find . -name "*.env*" -not -path "./node_modules/*"` 노출된 .env 확인
+4. 결과 종합 — 발견 0건이면 "✅ 이상 없음", 발견 시 [심각도][파일][설명] 표
+5. 자동 수정 가능한 의존성은 별도로 표시 (PR 후보)</code></pre>
+
+<pre><code><span class="tok-com"># 스케줄 등록 (한 번만)</span>
+&gt; /schedule <span class="tok-str">"0 6 * * *"</span> sh -c <span class="tok-str">'
+  cd ~/proj &amp;&amp;
+  claude -p /daily-sec | tee /tmp/sec.md &amp;&amp;
+  slack-cli post --channel "#security-daily" --text "$(cat /tmp/sec.md)"
+'</span></code></pre>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 보너스 — 자동 수정 PR까지</div>
+      <span class="scenario__step"><strong>심화 단계</strong>: 의존성 업데이트가 마이너/패치 버전이고 테스트 통과 시 자동 PR.</span>
+<pre><code>&gt; /schedule <span class="tok-str">"0 7 * * 1"</span> sh -c <span class="tok-str">'
+  claude -p "npm outdated --json 의 결과 중 patch/minor 업데이트만,
+             각각 별도 PR로 생성. 각 PR에서 npm test 통과 확인 후 push."
+'</span></code></pre>
+      <span class="scenario__step"><strong>주의</strong>: 메이저 버전 업데이트는 절대 자동화 X — breaking change 위험.</span>
+    </div>
+
+    <hr />
+
+    <!-- ============ Scenario 4 ============ -->
+    <h2 id="ci-opt">🚀 시나리오 4 · CI 파이프라인 자체 최적화</h2>
+
+    <table>
+      <tbody>
+        <tr><th>목표</th><td>"우리 CI가 왜 이렇게 느리지?" → 빌드 로그를 Claude가 분석해 병목·개선안 자동 제시</td></tr>
+        <tr><th>도구</th><td>API 직호출(8장) + Haiku, gh CLI</td></tr>
+        <tr><th>적용 효과</th><td>빌드 시간 20~40% 단축 사례 흔함</td></tr>
+      </tbody>
+    </table>
+
+    <h3>구현 단계</h3>
+
+    <ol>
+      <li>최근 10개 CI run의 메트릭 수집 (gh CLI)</li>
+      <li>Claude에게 분석 위임 (Haiku로 충분)</li>
+      <li>개선안을 슬랙 또는 GitHub Discussion에 게시</li>
+      <li>채택할 만한 개선은 별도 PR로</li>
+    </ol>
+
+<pre><code><span class="tok-com">#!/bin/bash</span>
+<span class="tok-com"># scripts/analyze-ci.sh</span>
+
+<span class="tok-com"># 1) 최근 빌드 메트릭 수집</span>
+gh run list --limit 10 --json databaseId,name,conclusion,createdAt,updatedAt \
+  | jq <span class="tok-str">'[.[] | {name, conclusion, duration_min: ((.updatedAt | fromdate) - (.createdAt | fromdate)) / 60}]'</span> \
+  &gt; /tmp/ci-runs.json
+
+<span class="tok-com"># 2) Claude API 직호출 — Haiku로 비용 절감</span>
+curl https://api.anthropic.com/v1/messages \
+  -H <span class="tok-str">"x-api-key: $ANTHROPIC_API_KEY"</span> \
+  -H <span class="tok-str">"anthropic-version: 2023-06-01"</span> \
+  -H <span class="tok-str">"content-type: application/json"</span> \
+  -d <span class="tok-str">"$(jq -n --slurpfile data /tmp/ci-runs.json '{
+    model: \"claude-haiku-4-5-20251001\",
+    max_tokens: 1024,
+    messages: [{
+      role: \"user\",
+      content: \"이 CI 메트릭에서 1) 가장 느린 워크플로우 2) 변동성 큰 워크플로우 3) 개선 가설 3가지를 마크다운으로:\\n\\n\\($data[0] | @json)\"
+    }]
+  }')"</span> \
+  | jq -r <span class="tok-str">'.content[0].text'</span> \
+  | slack-cli post --channel <span class="tok-str">"#ci-health"</span> --stdin</code></pre>
+
+<pre><code><span class="tok-com"># 매주 월요일 자동 실행</span>
+&gt; /schedule <span class="tok-str">"0 9 * * 1"</span> bash ~/proj/scripts/analyze-ci.sh</code></pre>
+
+    <h3>발견 후 액션</h3>
+    <ul>
+      <li>"X 워크플로우가 평소 5분 → 가끔 25분" 변동성 → 캐시 미스 가능성 → cache key 점검</li>
+      <li>"빌드와 테스트가 직렬" → 병렬화 가능 검토</li>
+      <li>"같은 컨테이너 이미지 반복 다운로드" → registry 캐시</li>
+    </ul>
+
+    <hr />
+
+    <!-- ============ Scenario 5 ============ -->
+    <h2 id="docs">📚 시나리오 5 · 기술 문서 자동화</h2>
+
+    <table>
+      <tbody>
+        <tr><th>목표</th><td>코드 변경 시 CLAUDE.md·README·API 문서가 자동으로 최신 상태 유지</td></tr>
+        <tr><th>도구</th><td>hooks(2장), <code>/init</code>, claude-code-action, gh CLI</td></tr>
+        <tr><th>적용 효과</th><td>"코드는 새 거, 문서는 6개월 전" 문제 박멸</td></tr>
+      </tbody>
+    </table>
+
+    <h3>구현 단계</h3>
+
+    <ol>
+      <li>로컬 hooks로 큰 변경 시 CLAUDE.md 갱신 제안</li>
+      <li>main 브랜치 머지 시 GitHub Action으로 문서 동기화 PR 자동 생성</li>
+      <li>릴리즈 시 CHANGELOG 자동 생성·검증</li>
+    </ol>
+
+    <h4>① 로컬: 큰 변경 시 CLAUDE.md 점검</h4>
+<pre><code><span class="tok-com">// .claude/settings.json hooks</span>
+{
+  <span class="tok-str">"hooks"</span>: [{
+    <span class="tok-str">"event"</span>: <span class="tok-str">"FilesModified"</span>,
+    <span class="tok-str">"command"</span>: <span class="tok-str">"~/.claude/hooks/check-claude-md.sh"</span>
+  }]
+}</code></pre>
+
+<pre><code><span class="tok-com">#!/bin/bash</span>
+<span class="tok-com"># ~/.claude/hooks/check-claude-md.sh</span>
+<span class="tok-com"># 변경 파일이 10개 넘으면 CLAUDE.md 점검 제안</span>
+COUNT=$(echo <span class="tok-str">"$INPUT_paths"</span> | tr <span class="tok-str">' '</span> <span class="tok-str">'\n'</span> | wc -l)
+<span class="tok-kw">if</span> [ <span class="tok-str">"$COUNT"</span> -gt 10 ]; <span class="tok-kw">then</span>
+  echo <span class="tok-str">"💡 큰 변경 감지 ($COUNT 파일). CLAUDE.md 갱신 필요한지 확인해 보세요."</span>
+<span class="tok-kw">fi</span>
+<span class="tok-kw">exit</span> 0</code></pre>
+
+    <h4>② CI: 머지 후 문서 동기화 PR</h4>
+<pre><code><span class="tok-com"># .github/workflows/docs-sync.yml</span>
+name: Sync Docs
+on:
+  push:
+    branches: [main]
+    paths:
+      - <span class="tok-str">"src/api/**"</span>      <span class="tok-com"># API 변경 시만</span>
+      - <span class="tok-str">"package.json"</span>
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions: { contents: write, pull-requests: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            최근 머지된 변경을 보고 다음을 갱신:
+            1) README.md 의 "Quick Start" 섹션 (명령 변화 반영)
+            2) docs/api.md 의 엔드포인트 표
+            3) CLAUDE.md 의 build/test 명령
+            변경이 있으면 새 브랜치 docs/auto-sync-{날짜} 생성 후 PR.</code></pre>
+
+    <h4>③ 릴리즈: CHANGELOG 자동 생성</h4>
+<pre><code><span class="tok-com"># 태깅 직전</span>
+&gt; <span class="tok-str">"git log v0.5.0..HEAD --oneline 의 커밋들을
+   Keep a Changelog 형식으로 정리. 카테고리:
+   Added · Changed · Fixed · Deprecated · Security.
+   사용자 영향 없는 내부 리팩터링은 제외."</span>
+&gt; <span class="tok-str">"위 결과를 CHANGELOG.md 최상단에 추가하고 git commit"</span></code></pre>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 문서 자동화의 함정</div>
+      <p>전부 자동화하지 마세요. <strong>"누가 읽는가"</strong>가 중요한 문서(아키텍처 결정·신입 온보딩 가이드)는 사람이 직접 써야 합니다.
+        자동화 적합 영역은 <em>코드와 1:1 매핑되는 부분</em>(API 표·명령 목록·CHANGELOG) — 이것만 자동화해도 시간 절감 큽니다.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="combine">5종을 조합한 "이상적 운영" 1주일</h2>
+
+    <table>
+      <thead><tr><th>요일</th><th>자동 실행</th></tr></thead>
+      <tbody>
+        <tr><td>매일 06:00</td><td>시나리오 3 — 보안 스캔 → 슬랙</td></tr>
+        <tr><td>월요일 09:00</td><td>시나리오 4 — CI 분석 → 슬랙</td></tr>
+        <tr><td>매 PR</td><td>시나리오 1 — 자동 리뷰</td></tr>
+        <tr><td>main 머지마다</td><td>시나리오 5 ② — 문서 동기화 PR</td></tr>
+        <tr><td>릴리즈 시</td><td>시나리오 5 ③ — CHANGELOG</td></tr>
+        <tr><td>분기 1회</td><td>시나리오 2 — 누적된 리팩터링 정리</td></tr>
+      </tbody>
+    </table>
+
+    <p>이 조합이 자리잡으면 <strong>"내가 안 해도 잘 돌아간다"</strong>는 느낌이 옵니다. 그게 곧 잘 설계된 자동화.</p>
+
+    <h2 id="checklist">9장 체크리스트</h2>
+    <ul>
+      <li>☐ 시나리오 1 — 본인 가장 활발한 리포에 PR 자동 리뷰 적용</li>
+      <li>☐ 시나리오 3 — 일일 보안 스캔 1개 등록</li>
+      <li>☐ 시나리오 5 ① — CLAUDE.md 점검 hook 1개</li>
+      <li>☐ 시나리오 4 — 한 번 돌려서 CI 개선 가설 받기</li>
+      <li>☐ 시나리오 2 — 다음 큰 리팩터링 때 worktree 패턴 시도</li>
+      <li>☐ 분기 회고: 자동화 중 정말 회수되는 것 / 부담만 늘리는 것 구분</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="08-claude-api.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">8. Claude API</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="10-community.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">10. 커뮤니티 스킬·툴</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>16장 · 부록·치트시트 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 16 · 부록</span>
+    <h1>치트시트 & 템플릿 — 인쇄해서 옆에</h1>
+    <p class="lead">앞 챕터 핵심을 복붙·인쇄 가능 형태로. ⌘P하면 사이드바·복사 버튼 제거된 책 형태.</p>
+
+    <h2 id="commands">🗂 명령어 치트시트</h2>
+
+    <h3>실행</h3>
+    <table>
+      <tbody>
+        <tr><td><code>codex</code></td><td>대화형</td></tr>
+        <tr><td><code>codex exec "..."</code></td><td>한 번 실행</td></tr>
+        <tr><td><code>codex resume</code></td><td>세션 이어가기</td></tr>
+        <tr><td><code>codex --profile dev</code></td><td>profile 지정</td></tr>
+        <tr><td><code>codex --sandbox read-only</code></td><td>sandbox 즉시 변경</td></tr>
+        <tr><td><code>codex --full-auto</code></td><td>승인 자동 (위험)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>세션 안</h3>
+    <table>
+      <tbody>
+        <tr><td><code>/help</code> · <code>/quit</code></td><td>도움 / 종료</td></tr>
+        <tr><td><code>/init</code></td><td>AGENTS.md 생성</td></tr>
+        <tr><td><code>/clear</code> · <code>/compact</code> · <code>/new</code></td><td>대화 정리</td></tr>
+        <tr><td><code>/model gpt-5.4-mini</code></td><td>모델 변경</td></tr>
+        <tr><td><code>/approvals</code> · <code>/sandbox</code></td><td>권한 변경</td></tr>
+        <tr><td><code>/profile review</code></td><td>profile 전환</td></tr>
+        <tr><td><code>/mcp</code></td><td>MCP 관리</td></tr>
+        <tr><td><code>/status</code></td><td>현재 상태 (트러블슈팅 1순위)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>MCP</h3>
+    <table>
+      <tbody>
+        <tr><td><code>codex mcp add &lt;name&gt; -- &lt;cmd&gt;</code></td><td>STDIO 서버</td></tr>
+        <tr><td><code>codex mcp add --transport http &lt;name&gt; &lt;url&gt;</code></td><td>HTTP 서버</td></tr>
+        <tr><td><code>codex mcp list/get/remove</code></td><td>관리</td></tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <h2 id="config-templates">⚙️ config.toml 템플릿 3종</h2>
+
+    <h3>🟢 미니멀 (개인)</h3>
+<pre><code>model = <span class="tok-str">"gpt-5.5"</span>
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span></code></pre>
+
+    <h3>🟡 실무 (팀 — <code>.codex/config.toml</code>)</h3>
+<pre><code>model = <span class="tok-str">"gpt-5.5"</span>
+
+[profiles.dev]
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+[profiles.dev.sandbox_workspace_write]
+network_access = <span class="tok-kw">false</span>
+
+[profiles.review]
+approval_policy = <span class="tok-str">"never"</span>
+sandbox_mode = <span class="tok-str">"read-only"</span>
+
+[profiles.ci]
+model = <span class="tok-str">"gpt-5.4-mini"</span>
+approval_policy = <span class="tok-str">"never"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+[profiles.ci.sandbox_workspace_write]
+network_access = <span class="tok-kw">true</span></code></pre>
+
+    <h3>🔴 엔터프라이즈 (보안 우선)</h3>
+<pre><code>approval_policy = <span class="tok-str">"untrusted"</span>
+sandbox_mode = <span class="tok-str">"read-only"</span>
+
+[profiles.contained]
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+[profiles.contained.sandbox_workspace_write]
+network_access = <span class="tok-kw">false</span>
+allowed_write_paths = [<span class="tok-str">"src/**"</span>, <span class="tok-str">"tests/**"</span>]
+
+[profiles.danger]
+approval_policy = <span class="tok-str">"untrusted"</span>
+sandbox_mode = <span class="tok-str">"danger-full-access"</span>  <span class="tok-com"># VM/컨테이너만</span></code></pre>
+
+    <hr />
+
+    <h2 id="agents-templates">📘 AGENTS.md 템플릿 3종</h2>
+
+    <h3>🟢 개인 (10줄)</h3>
+<pre><code><span class="tok-com"># [프로젝트명]</span>
+
+<span class="tok-com">## Quick</span>
+- Dev: `npm run dev`
+- Test: `npm test`
+
+<span class="tok-com">## Conventions</span>
+- 2-space indent
+- TypeScript strict
+- ESM only</code></pre>
+
+    <h3>🟡 팀 (50줄)</h3>
+<pre><code><span class="tok-com"># [프로젝트명]</span>
+
+<span class="tok-com">## Stack</span>
+- React 19 + Vite + Tailwind in `apps/web/`
+- Hono + Cloudflare Workers in `apps/api/`
+- D1 + Drizzle ORM
+
+<span class="tok-com">## Commands</span>
+- Dev: `pnpm dev`
+- Test: `pnpm test`
+- Deploy: `pnpm deploy`
+
+<span class="tok-com">## Conventions</span>
+- TypeScript strict, no `any`
+- 함수형 컴포넌트 + hooks
+- API 응답: `{ ok, data?, error? }`
+
+<span class="tok-com">## Forbidden</span>
+- raw SQL (Drizzle만)
+- 환경변수는 wrangler secret
+- `apps/api/core/auth.ts` 수정 시 integration test 필수</code></pre>
+
+    <h3>🔵 오픈소스</h3>
+<pre><code><span class="tok-com"># [프로젝트명] — Contributor Guide</span>
+
+<span class="tok-com">## Project</span>
+- 한 줄: [무엇]
+- License: MIT
+- Audience: [누구]
+
+<span class="tok-com">## Setup</span>
+- Install: `pnpm install`
+- Dev: `pnpm dev`
+- Test: `pnpm test` (90% coverage 목표)
+
+<span class="tok-com">## Contribution</span>
+- 모든 PR: 테스트 + CHANGELOG 항목
+- Commit: Conventional Commits
+- breaking은 별도 PR + 마이그레이션 가이드</code></pre>
+
+    <hr />
+
+    <h2 id="mcp-templates">🔌 .codex/config.toml MCP 템플릿</h2>
+
+    <h3>프론트엔드</h3>
+<pre><code>[mcp_servers.playwright]
+type = <span class="tok-str">"stdio"</span>
+command = <span class="tok-str">"npx"</span>
+args = [<span class="tok-str">"-y"</span>, <span class="tok-str">"@playwright/mcp@latest"</span>]
+
+[mcp_servers.figma]
+type = <span class="tok-str">"http"</span>
+url = <span class="tok-str">"https://mcp.figma.com"</span>
+env = { FIGMA_TOKEN = <span class="tok-str">"${FIGMA_TOKEN}"</span> }</code></pre>
+
+    <h3>백엔드</h3>
+<pre><code>[mcp_servers.github]
+type = <span class="tok-str">"http"</span>
+url = <span class="tok-str">"https://mcp.github.com/api"</span>
+env = { GITHUB_TOKEN = <span class="tok-str">"${GITHUB_TOKEN}"</span> }
+
+[mcp_servers.sentry]
+type = <span class="tok-str">"http"</span>
+url = <span class="tok-str">"https://mcp.sentry.dev/mcp"</span>
+
+[mcp_servers.postgres-ro]
+type = <span class="tok-str">"stdio"</span>
+command = <span class="tok-str">"npx"</span>
+args = [<span class="tok-str">"-y"</span>, <span class="tok-str">"@anthropic-ai/pg-mcp"</span>, <span class="tok-str">"--readonly"</span>]
+env = { DATABASE_URL = <span class="tok-str">"${DATABASE_URL_RO}"</span> }</code></pre>
+
+    <hr />
+
+    <h2 id="handoff-templates">🤝 세션 인수인계 템플릿</h2>
+
+    <h3><code>.codex/handoff/YYYY-MM-DD-주제.md</code></h3>
+<pre><code><span class="tok-com"># [주제] Handoff</span>
+
+<span class="tok-com">## 목표</span>
+- 한 줄
+
+<span class="tok-com">## 현재 진행 상태</span>
+- 어디까지 (구체적으로)
+- 동작하는 것 / 안 되는 것
+
+<span class="tok-com">## 시도했지만 안 통한 것</span>
+- 가설 A — 왜 폐기 (1줄)
+- 가설 B — 왜 폐기
+
+<span class="tok-com">## 다음 액션</span>
+1. 1순위
+2. 2순위
+3. 시간 남으면
+
+<span class="tok-com">## 주의점·함정</span>
+- 건드리면 안 됨: ...</code></pre>
+
+    <h3><code>.codex/log/YYYY-MM-DD.md</code> — 일일 일지</h3>
+<pre><code><span class="tok-com"># 2026-06-23 작업 일지</span>
+
+<span class="tok-com">## 오늘 한 것</span>
+- ...
+
+<span class="tok-com">## 발견·결정</span>
+- ...
+
+<span class="tok-com">## 내일 시작점</span>
+- ...
+
+<span class="tok-com">## 미해결 질문</span>
+- ...</code></pre>
+
+    <hr />
+
+    <h2 id="prompt-snippets">💬 자주 쓰는 프롬프트 5종</h2>
+
+    <h3>1. 안전한 큰 작업</h3>
+<pre><code>&gt; <span class="tok-str">"[작업]. 파일 수정 전에 1) 변경 파일 목록 2) 각 파일에 무엇을 바꿀지 먼저 보여줘. OK 받고 진행."</span></code></pre>
+
+    <h3>2. 막힌 곳 가설</h3>
+<pre><code>&gt; <span class="tok-str">"증상: [...]. 시도: [목록]. 가능한 원인 3가지를 가능성 순으로, 각각 검증 방법 한 줄씩."</span></code></pre>
+
+    <h3>3. 다 끝낸 척 방지</h3>
+<pre><code>&gt; <span class="tok-str">"수정 끝나면: 1) 영향 테스트 목록 2) 직접 실행 결과 3) 빠뜨린 케이스 자가 검토"</span></code></pre>
+
+    <h3>4. 모호한 결정 되묻기</h3>
+<pre><code>&gt; <span class="tok-str">"[작업]. 진행 전 확실하지 않은 결정이 있으면 먼저 질문 3개 이내."</span></code></pre>
+
+    <h3>5. 인수인계</h3>
+<pre><code>&gt; <span class="tok-str">"이어가려고 한다. 다음 세션의 나(=너)가 5분 안에 이어 작업할 수 있도록 현재 상태·다음 액션·주의점을 마크다운으로. 파일 수정 X."</span></code></pre>
+
+    <hr />
+
+    <h2 id="claude-vs-codex">📊 Claude Code vs Codex CLI 비교</h2>
+
+    <table>
+      <thead><tr><th>측면</th><th>Claude Code</th><th>Codex CLI</th></tr></thead>
+      <tbody>
+        <tr><td>모델 백엔드</td><td>Anthropic Claude 4.x</td><td>OpenAI GPT-5.x</td></tr>
+        <tr><td>메모리 파일</td><td>CLAUDE.md (+ CLAUDE.local.md)</td><td>AGENTS.md (+ .override.md)</td></tr>
+        <tr><td>권한 모델</td><td>allow / ask / deny (도구별)</td><td>3축: approval · sandbox · network</td></tr>
+        <tr><td>권한 프로파일</td><td>settings.json</td><td>named permission profiles (v0.129+)</td></tr>
+        <tr><td>설정 파일</td><td>settings.json</td><td>config.toml</td></tr>
+        <tr><td>세션 재개</td><td><code>claude -c</code> / <code>/resume</code></td><td><code>codex resume</code></td></tr>
+        <tr><td>MCP 명령</td><td><code>claude mcp</code></td><td><code>codex mcp</code></td></tr>
+        <tr><td>인증</td><td>claude.ai 로그인 / API</td><td>ChatGPT 로그인 / OpenAI API</td></tr>
+        <tr><td>클라우드 위임</td><td>Slack 통합 (간접)</td><td>✅ Codex Cloud (본격)</td></tr>
+        <tr><td>스킬 시스템</td><td>풍부 (superpowers 등 233k+)</td><td>없음 (직접 프롬프트)</td></tr>
+        <tr><td>Workflow 도구</td><td>JS 스크립트 결정적</td><td>없음 (Cloud 병렬 + SDK)</td></tr>
+        <tr><td>커뮤니티 규모</td><td>매우 큼</td><td>작지만 단단</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="checklist">16장 체크리스트</h2>
+    <ul>
+      <li>☐ 명령어 치트시트 ⌘P로 PDF</li>
+      <li>☐ 본인 프로젝트에 맞는 config.toml 템플릿 적용</li>
+      <li>☐ AGENTS.md 템플릿 골라 본인 프로젝트화</li>
+      <li>☐ MCP 템플릿 본인 직군 맞춰 적용</li>
+      <li>☐ 5가지 프롬프트 따로 저장</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="15-cost.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">15. 비용 최적화</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="17-cost-stories.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">17. 비용 효율화 사례집</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

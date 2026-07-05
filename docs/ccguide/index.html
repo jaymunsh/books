@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Code 완벽 가이드 · 입문부터 실무·고급까지</title>
+  <meta name="description" content="20년차 강사가 정리한 Claude Code 사용 가이드 — 설치·핵심 명령·스킬·서브에이전트·MCP·자동화·Agent SDK·Claude API까지 한 권으로." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">C</span>
+      Claude Code 가이드
+      <span class="brand__sub">· 20년차 강사가 정리한 실전판</span>
+    </a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button" aria-label="검색">
+        🔍 <span>검색</span> <span class="kbd">⌘K</span>
+      </button>
+      <button class="header-action" id="theme-toggle" type="button" aria-label="테마 변경">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell shell--landing">
+
+  <section class="hero">
+    <span class="hero__eyebrow">한국 개발자를 위한 실전 가이드</span>
+    <h1 class="hero__title">
+      터미널에서 시작해서<br />
+      <span>AI 에이전트 자동화까지</span>
+    </h1>
+    <p class="hero__desc">
+      Claude Code는 단순한 코딩 도우미가 아닙니다. <strong>슬래시 명령어</strong>, <strong>스킬</strong>,
+      <strong>서브에이전트</strong>, <strong>MCP</strong>, <strong>워크플로우</strong>, <strong>Agent SDK</strong>까지
+      활용하면, 혼자서 팀처럼 일할 수 있습니다. 이 가이드 한 권이면 입문부터 고급 자동화까지 끝납니다.
+    </p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="chapters/01-getting-started.html">처음부터 시작하기 →</a>
+      <a class="btn btn--ghost" href="#table-of-contents">목차 보기</a>
+    </div>
+  </section>
+
+  <section>
+    <h2 style="border-top:none; margin-top:0;">🎓 강사 노트 · 이 가이드를 쓰는 법</h2>
+    <p class="lead">
+      Claude Code는 빠르게 진화하고 있습니다. "어디부터 봐야 할지" 모르겠다면, 아래 세 가지 학습 경로 중 본인 위치에 맞는 하나를 골라 시작하세요.
+      각 경로는 <strong>30분 ~ 2시간</strong> 안에 끝납니다.
+    </p>
+
+    <div class="paths">
+      <div class="path">
+        <div class="path__icon">🌱</div>
+        <h3 class="path__title">처음 써본다면 — 30분 코스</h3>
+        <ul class="path__steps">
+          <li>1장 설치·로그인·`claude` 첫 실행</li>
+          <li>2장 `/init`으로 CLAUDE.md 만들기</li>
+          <li>2장 권한 시스템 이해(allow/deny)</li>
+          <li>실습: 본인 프로젝트에서 코드 하나 수정</li>
+        </ul>
+      </div>
+      <div class="path">
+        <div class="path__icon">💼</div>
+        <h3 class="path__title">실무에 바로 쓰고 싶다면 — 1시간</h3>
+        <ul class="path__steps">
+          <li>1·2장 빠르게 스킵</li>
+          <li>3장 내장 스킬 (`/code-review`, `/verify`, `/security-review`)</li>
+          <li>4장 MCP로 GitHub·Slack 연결</li>
+          <li>5장 헤드리스 모드로 CI에 붙이기</li>
+        </ul>
+      </div>
+      <div class="path">
+        <div class="path__icon">🚀</div>
+        <h3 class="path__title">자동화·확장까지 — 2시간 코스</h3>
+        <ul class="path__steps">
+          <li>3장 커스텀 스킬·서브에이전트</li>
+          <li>5장 `/loop` · `/schedule` 자동화</li>
+          <li>10장 커뮤니티 도구(superpowers · ccusage 등)</li>
+          <li>6·7·8장 Workflow · SDK · API (예정)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout--scenario" style="margin-top: var(--space-5)">
+      <div class="callout__title">📖 처음이 막막하다면 — 11장 "실무 빌딩 스토리"로 시작</div>
+      <p>이론보다 <strong>실제 서비스 구축 흐름</strong>이 먼저 궁금하다면, 11장의 세 가지 스토리(결혼식 사이트 · URL 단축 SaaS · 가족 PWA)를 먼저 읽으세요.
+        본인 프로젝트가 어느 패턴에 가까운지 감이 잡힌 뒤 나머지를 읽으면 흡수 속도가 훨씬 빠릅니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="table-of-contents">📚 전체 목차</h2>
+    <p>각 장은 독립적으로 읽어도 됩니다. 순서대로 가면 입문 → 실무 → 고급으로 자연스럽게 연결됩니다.</p>
+
+    <div class="cards">
+      <a class="card" href="chapters/00-concepts.html">
+        <span class="card__num">CHAPTER 00 · 개념</span>
+        <h3 class="card__title">기초 개념</h3>
+        <p class="card__desc">LLM 작동 원리 · Claude 특징 · Claude Code 작동 흐름도 · 4가지 메탈 모델 — <strong>읽으면 모든 게 더 쉬워짐</strong></p>
+      </a>
+      <a class="card" href="chapters/01-getting-started.html">
+        <span class="card__num">CHAPTER 01</span>
+        <h3 class="card__title">시작하기</h3>
+        <p class="card__desc">설치 · 로그인 · 실행 모드(인터랙티브 · `-p` · `-c` · plan · fast · headless) · 첫 세션 · 핵심 단축키</p>
+      </a>
+      <a class="card" href="chapters/02-commands.html">
+        <span class="card__num">CHAPTER 02</span>
+        <h3 class="card__title">명령어·권한·메모리·훅</h3>
+        <p class="card__desc">슬래시 명령어 · 권한(allow/ask/deny) · settings.json · CLAUDE.md 작성법 · hooks 자동화</p>
+      </a>
+      <a class="card" href="chapters/03-skills-agents.html">
+        <span class="card__num">CHAPTER 03</span>
+        <h3 class="card__title">스킬·서브에이전트</h3>
+        <p class="card__desc">내장 스킬(<code>code-review</code> 등) · 커스텀 SKILL.md · 서브에이전트(Explore · Plan · 커스텀)</p>
+      </a>
+      <a class="card" href="chapters/04-mcp-integration.html">
+        <span class="card__num">CHAPTER 04</span>
+        <h3 class="card__title">MCP · 외부 통합</h3>
+        <p class="card__desc">MCP 서버 추가 · GitHub · Slack · Notion · Playwright · Git worktree · 권한·보안</p>
+      </a>
+      <a class="card" href="chapters/05-automation.html">
+        <span class="card__num">CHAPTER 05</span>
+        <h3 class="card__title">자동화 · CI/CD</h3>
+        <p class="card__desc"><code>/loop</code> · <code>/schedule</code> · 헤드리스 모드 · 훅(PreCommit·PostToolUse) · GitHub Actions 연동</p>
+      </a>
+      <a class="card" href="chapters/06-workflow.html">
+        <span class="card__num">CHAPTER 06</span>
+        <h3 class="card__title">Workflow 도구</h3>
+        <p class="card__desc">멀티 에이전트 오케스트레이션 · pipeline · parallel · judge panel · loop-until-dry <span class="todo-marker">2차</span></p>
+      </a>
+      <a class="card" href="chapters/07-agent-sdk.html">
+        <span class="card__num">CHAPTER 07</span>
+        <h3 class="card__title">Claude Agent SDK</h3>
+        <p class="card__desc">Python · TypeScript로 자체 에이전트 만들기 · 도구 정의 · 권한 · CI/슬랙봇 시나리오 <span class="todo-marker">2차</span></p>
+      </a>
+      <a class="card" href="chapters/08-claude-api.html">
+        <span class="card__num">CHAPTER 08</span>
+        <h3 class="card__title">Claude API</h3>
+        <p class="card__desc">최신 모델 ID · 프롬프트 캐싱 · Extended Thinking · Tool Use · Files / Batch API <span class="todo-marker">2차</span></p>
+      </a>
+      <a class="card" href="chapters/09-scenarios.html">
+        <span class="card__num">CHAPTER 09</span>
+        <h3 class="card__title">실전 시나리오</h3>
+        <p class="card__desc">PR 자동 리뷰 · 대규모 리팩터링 · 보안 모니터링 · CI 최적화 · 문서 자동화 <span class="todo-marker">2차</span></p>
+      </a>
+      <a class="card" href="chapters/10-community.html">
+        <span class="card__num">CHAPTER 10 · NEW</span>
+        <h3 class="card__title">커뮤니티 스킬·툴 베스트</h3>
+        <p class="card__desc"><code>superpowers</code>★233k · <code>ccusage</code>★16k · <code>awesome-skills</code>★25k · 공식 GitHub Action — 핫한 도구별 시나리오</p>
+      </a>
+      <a class="card" href="chapters/11-real-stories.html">
+        <span class="card__num">CHAPTER 11 · NEW</span>
+        <h3 class="card__title">실무 빌딩 스토리</h3>
+        <p class="card__desc">결혼식 정적사이트(스킬 0) · URL 단축 SaaS(풀 자동화) · 가족 PWA(균형) — 0→1 서비스 구축 전 과정 블로그형 일지</p>
+      </a>
+      <a class="card" href="chapters/12-troubleshooting.html">
+        <span class="card__num">CHAPTER 12 · NEW</span>
+        <h3 class="card__title">트러블슈팅</h3>
+        <p class="card__desc">권한 무한 루프 · 컨텍스트 폭발 · 파일 복구 · 토큰 폭발 · 자주 만나는 에러 메시지 해석</p>
+      </a>
+      <a class="card" href="chapters/13-prompting.html">
+        <span class="card__num">CHAPTER 13 · NEW</span>
+        <h3 class="card__title">프롬프팅 기술</h3>
+        <p class="card__desc">좋은/나쁜 비교 · 계획부터 패턴 · 컨텍스트 주는 3가지 · 모델별 전략 · 3대 안티패턴</p>
+      </a>
+      <a class="card" href="chapters/14-team.html">
+        <span class="card__num">CHAPTER 14 · NEW</span>
+        <h3 class="card__title">팀·협업 운영</h3>
+        <p class="card__desc">.claude/ 운영 · 권한·비용 정책 · CLAUDE.md 충돌 · 신입 온보딩 · AI 코드 리뷰 문화 · 비밀 정보 5규칙</p>
+      </a>
+      <a class="card" href="chapters/15-cost.html">
+        <span class="card__num">CHAPTER 15 · NEW</span>
+        <h3 class="card__title">비용 최적화</h3>
+        <p class="card__desc">모델 선택 · 프롬프트 캐싱 · 서브에이전트 비용 격리 · CI 차등화 · 4대 안티패턴 · 5분 빠른 절감</p>
+      </a>
+      <a class="card" href="chapters/16-cheatsheet.html">
+        <span class="card__num">CHAPTER 16 · 부록</span>
+        <h3 class="card__title">치트시트 & 템플릿</h3>
+        <p class="card__desc">한 페이지 명령어 치트시트 · settings.json 3종 · CLAUDE.md 3종 · SKILL.md 3종 · hooks 10선 · 인쇄 가능</p>
+      </a>
+      <a class="card" href="chapters/17-cost-stories.html">
+        <span class="card__num">CHAPTER 17 · NEW</span>
+        <h3 class="card__title">비용 효율화 사례집</h3>
+        <p class="card__desc">실제 70~80% 절감 사례 4개 · 프로젝트 단계별 시나리오 · Claude에 국한되지 않는 <strong>AI 활용 일반 원칙 8가지</strong></p>
+      </a>
+      <a class="card" href="chapters/18-by-role.html">
+        <span class="card__num">CHAPTER 18 · NEW</span>
+        <h3 class="card__title">직군별 가이드</h3>
+        <p class="card__desc">🎨 프론트 · ⚙️ 백엔드 · 📊 데이터/ML · ☁️ DevOps · 📱 모바일 · 🎓 신입 — 6개 직군별 처방전 한 페이지로</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>⚡ 1분 빠른 시작</h2>
+    <p>이미 설치돼 있다면 아래 명령들만 외워도 절반은 끝납니다.</p>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Bash</button>
+        <button class="code-tabs__btn" type="button">Python (SDK)</button>
+        <button class="code-tabs__btn" type="button">TypeScript (SDK)</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code><span class="tok-com"># 설치 (macOS / Linux)</span>
+curl -fsSL https://claude.ai/install.sh | bash
+
+<span class="tok-com"># 프로젝트 진입 → 대화형 세션 시작</span>
+cd ~/my-project
+claude
+
+<span class="tok-com"># 한 번만 실행 (one-shot, 자동화·CI에 유용)</span>
+claude -p <span class="tok-str">"이 프로젝트의 README를 200자로 요약해줘"</span>
+
+<span class="tok-com"># 이전 대화 이어 가기</span>
+claude -c
+
+<span class="tok-com"># 자주 쓰는 슬래시 명령 (세션 안에서)</span>
+<span class="tok-com">#   /init      → CLAUDE.md 자동 생성</span>
+<span class="tok-com">#   /model     → 모델 변경 (Opus / Sonnet / Haiku)</span>
+<span class="tok-com">#   /agents    → 서브에이전트 관리</span>
+<span class="tok-com">#   /mcp       → MCP 서버 추가·확인</span>
+<span class="tok-com">#   /compact   → 컨텍스트 압축</span></code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="python">
+<pre><code><span class="tok-com"># Claude Code를 라이브러리처럼 임베드 — Agent SDK (Python)</span>
+<span class="tok-com"># pip install claude-agent-sdk  (※ 패키지명은 공식 문서에서 최종 확인)</span>
+
+<span class="tok-kw">from</span> claude_agent_sdk <span class="tok-kw">import</span> ClaudeAgent
+
+agent = ClaudeAgent(
+    model=<span class="tok-str">"claude-sonnet-4-6"</span>,
+    system_prompt=<span class="tok-str">"You are a senior Python reviewer."</span>,
+)
+
+result = agent.run(<span class="tok-str">"src/api.py의 보안 취약점을 찾아줘"</span>)
+<span class="tok-kw">print</span>(result.text)</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="typescript">
+<pre><code><span class="tok-com">// Agent SDK (TypeScript)</span>
+<span class="tok-com">// npm i @anthropic-ai/claude-agent-sdk  (※ 패키지명은 공식 문서에서 최종 확인)</span>
+
+<span class="tok-kw">import</span> { ClaudeAgent } <span class="tok-kw">from</span> <span class="tok-str">"@anthropic-ai/claude-agent-sdk"</span>;
+
+<span class="tok-kw">const</span> agent = <span class="tok-kw">new</span> ClaudeAgent({
+  model: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  systemPrompt: <span class="tok-str">"You are a senior TypeScript reviewer."</span>,
+});
+
+<span class="tok-kw">const</span> result = <span class="tok-kw">await</span> agent.run(<span class="tok-str">"src/api.ts의 보안 취약점을 찾아줘"</span>);
+console.log(result.text);</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트</div>
+      <p>처음에는 <strong>Bash 탭만 봐도 충분</strong>합니다. Claude Code를 그냥 <em>사용</em>한다면 SDK는 필요 없어요.
+        Python·TypeScript SDK는 <strong>Claude Code를 본인 서비스에 임베드</strong>할 때(예: 슬랙봇, CI 자동화) 등장합니다.
+        7장에서 다시 만납니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>🛠 이 가이드를 활용하는 팁</h2>
+    <ul>
+      <li><strong>검색 (<span class="kbd">⌘K</span> / <span class="kbd">Ctrl+K</span>)</strong> — 명령어·키워드를 빠르게 찾을 수 있습니다.</li>
+      <li><strong>코드 탭</strong> — 모든 예제는 Bash · Python · TypeScript 탭으로 전환 가능합니다(해당되는 경우).</li>
+      <li><strong>다크 모드</strong> — 우측 상단 토글. OS 설정도 자동 감지합니다.</li>
+      <li><strong>인쇄 / PDF</strong> — 브라우저 인쇄(<span class="kbd">⌘P</span>)하면 사이드바·복사 버튼이 제거된 책 형태로 출력됩니다.</li>
+      <li><strong>오프라인</strong> — 외부 의존성 0. 파일을 폴더째 복사해 어디서든 열 수 있습니다.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>❓ 시작 전 자주 묻는 질문</h2>
+    <p>도입을 망설이게 하는 질문 7가지. 클릭해서 펼치세요.</p>
+
+    <div class="faq">
+      <details>
+        <summary>Cursor / Copilot / Cline 쓰던 사람도 옮겨오기 쉬운가요?</summary>
+        <div class="faq__body">
+          <p><strong>예, 하지만 사고방식 전환은 필요합니다.</strong></p>
+          <p>Cursor·Copilot은 주로 <em>IDE 안에서 코드 자동완성·인라인 편집</em> 중심이라면, Claude Code는 <em>터미널 기반 자율 에이전트</em>에 가깝습니다.
+            "탭으로 코드 완성"보다 <strong>"이걸 해줘"라고 위임</strong>하는 비중이 큽니다.</p>
+          <p>병행 사용도 가능합니다 — IDE 안 즉시 자동완성은 Copilot, 멀티스텝 작업·리팩터링·디버깅은 Claude Code 식으로 역할 분담하는 패턴도 흔합니다. 14장 §AI 코드 리뷰 가이드라인 참조.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Pro/Max 구독 vs API 직결 — 뭐가 나을까요?</summary>
+        <div class="faq__body">
+          <p><strong>혼자 또는 학습 단계라면 Pro·Max</strong>가 마음 편합니다. 매번 토큰 신경 안 써도 되고, 월 정액이라 예산도 예측 가능.</p>
+          <p><strong>팀·자동화·CI에 붙일 거라면 API 직결 + Anthropic Console</strong>이 적합합니다. spending limit·사용량 분석·여러 키 분리가 가능하고, 결제도 회사 계정으로 깔끔.</p>
+          <p>17장 §팀 규모·예산 가이드라인에 규모별 권장 표가 있어요.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>회사 보안 정책상 외부 클라우드 AI를 못 쓰는데요?</summary>
+        <div class="faq__body">
+          <p>방법이 있습니다. Claude Code는 <strong>Amazon Bedrock · Google Vertex AI · Microsoft Foundry</strong>를 백엔드로 지원합니다.
+            기존 클라우드 계약·VPC 안에서 호출되므로 보통 회사 보안팀이 받아들이는 경로입니다.</p>
+          <p>또한 settings.json의 권한·hook으로 <strong>어떤 명령·어떤 파일에 접근 가능한지</strong>를 코드로 강제할 수 있어 감사 추적도 가능합니다. 16장의 🔴 엔터프라이즈 settings 템플릿 참조.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>한국어 응답·한국어 코드 주석 품질은 어떤가요?</summary>
+        <div class="faq__body">
+          <p><strong>Sonnet 4.6·Opus 4.7 모두 한국어 품질이 매우 좋습니다.</strong> 영어와 거의 차이가 없는 수준이고, 한국 개발자 관용어(예: "유스케이스", "워크플로우")도 자연스럽게 사용합니다.</p>
+          <p>다만 <strong>코드 주석·문서를 한국어로 쓰게 하려면 명시적으로 지시</strong>해야 합니다. CLAUDE.md에 <code>"모든 주석·문서는 한국어로"</code> 한 줄 박아두는 게 가장 확실합니다.
+            settings.json의 <code>"language": "korean"</code>도 응답 언어에 도움이 됩니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>월 비용이 얼마나 들까요? 감을 잡고 싶습니다</summary>
+        <div class="faq__body">
+          <p>대략적인 벤치마크 (17장에 자세한 표 있음):</p>
+          <ul>
+            <li>주말 사이드 프로젝트 위주: <strong>월 $10~50</strong></li>
+            <li>풀타임 1인 개발: <strong>월 $50~200</strong></li>
+            <li>2~5인 스타트업: <strong>월 $200~600</strong></li>
+            <li>5~20인 팀(CI 포함): <strong>월 $600~2,000</strong></li>
+          </ul>
+          <p>Pro/Max 구독($20~200/월)으로 시작해서 한도가 부족할 때 API 전환을 고려하는 게 안전합니다.
+            <code>npx ccusage@latest</code>로 매주 한 번씩 확인하세요 — 가시화만 해도 사용량이 줄어듭니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Claude가 짠 코드를 그대로 머지해도 되나요?</summary>
+        <div class="faq__body">
+          <p><strong>안 됩니다.</strong> AI가 짰든 사람이 짰든, <em>PR 작성자가 모든 라인을 이해하고 책임진다</em>는 원칙은 똑같습니다.</p>
+          <p>실무에서 권장하는 워크플로우:</p>
+          <ol>
+            <li><strong>본인 셀프 리뷰</strong> — <code>/code-review</code> 한 번 (3장)</li>
+            <li><strong>실행 검증</strong> — <code>/verify</code>로 실제 동작 확인</li>
+            <li><strong>사람 리뷰어 1명 이상</strong> — 자동 리뷰 봇으로 대체 X</li>
+          </ol>
+          <p>14장 §AI 코드 리뷰 가이드라인에 5가지 합의 사항이 있습니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>학습 곡선은 어느 정도인가요? 며칠이면 익숙해질까요?</summary>
+        <div class="faq__body">
+          <p>대략적인 단계 (개인차 큼):</p>
+          <ul>
+            <li><strong>Day 1 · 30분</strong>: 설치·로그인·첫 <code>claude</code>·<code>/init</code> (1장)</li>
+            <li><strong>1주차</strong>: 슬래시 명령·권한·Plan mode 익숙해짐. 작은 작업 위임 가능 (2장)</li>
+            <li><strong>2~3주차</strong>: 스킬·MCP 적극 활용. 본인 워크플로우 구축 (3·4장)</li>
+            <li><strong>1개월+</strong>: 커스텀 스킬·서브에이전트·자동화. "도구가 손에 익은 느낌" (5·11장)</li>
+          </ul>
+          <p>처음부터 다 외울 필요 없습니다. 11장 §스토리 C("균형") 패턴으로 시작 → 필요해질 때 도구 추가, 가 가장 자연스러운 경로입니다.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>📌 환경 안내</h2>
+    <ul>
+      <li>이 가이드는 <strong>2026년 6월 기준</strong>의 Claude Code · Anthropic 모델 라인업을 토대로 작성되었습니다.</li>
+      <li>최신 모델 ID: <code>claude-opus-4-7</code>, <code>claude-sonnet-4-6</code>, <code>claude-haiku-4-5-20251001</code></li>
+      <li>일부 명령어·SDK 패키지명은 빠르게 변할 수 있어, 실 사용 전 <strong>공식 문서</strong>(<a href="https://docs.claude.com/en/docs/claude-code">docs.claude.com</a>)에서 최종 확인을 권장합니다.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · 20년차 강사 정리 ·
+    <a href="https://docs.claude.com/en/docs/claude-code" target="_blank" rel="noopener">공식 문서</a> ·
+    <a href="https://github.com/anthropics/claude-code/issues" target="_blank" rel="noopener">이슈 트래커</a>
+  </p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

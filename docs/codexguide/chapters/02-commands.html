@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2장 · 명령·approval·AGENTS.md · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 02</span>
+    <h1>슬래시 명령·3축 권한·AGENTS.md·config.toml</h1>
+    <p class="lead">
+      Codex CLI의 "조종 장치" 네 가지를 한 번에 익힙니다.
+      <strong>슬래시 명령</strong>으로 세션을 통제하고, <strong>3축 권한</strong>(approval·sandbox·network)으로 안전을 보장하며,
+      <strong>AGENTS.md</strong>로 프로젝트 컨텍스트를 영구 학습시키고, <strong>config.toml</strong>로 전역 설정을 관리합니다.
+    </p>
+
+    <h2 id="slash-commands">자주 쓰는 슬래시 명령</h2>
+
+    <p>전부 외울 필요는 없습니다. <code>/help</code>로 언제든 목록을 볼 수 있어요.</p>
+
+    <h3>세션 관리</h3>
+    <table>
+      <thead><tr><th>명령</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td><code>/help</code></td><td>사용 가능한 모든 명령 목록</td></tr>
+        <tr><td><code>/clear</code></td><td>현재 대화 히스토리 비우기</td></tr>
+        <tr><td><code>/compact</code></td><td>대화 컨텍스트 압축</td></tr>
+        <tr><td><code>/new</code></td><td>새 세션 시작 (현재 세션 보존)</td></tr>
+        <tr><td><code>/quit</code> 또는 <span class="kbd">Ctrl+D</span></td><td>세션 종료</td></tr>
+      </tbody>
+    </table>
+
+    <h3>설정·메모리·권한</h3>
+    <table>
+      <thead><tr><th>명령</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td><code>/init</code></td><td>AGENTS.md 자동 생성 / 갱신</td></tr>
+        <tr><td><code>/model</code></td><td>모델 변경 (gpt-5.5 / 5.4-mini / spark)</td></tr>
+        <tr><td><code>/approvals</code></td><td>approval_policy 변경</td></tr>
+        <tr><td><code>/sandbox</code></td><td>sandbox_mode 변경</td></tr>
+        <tr><td><code>/mcp</code></td><td>MCP 서버 추가·조회·인증</td></tr>
+        <tr><td><code>/profile</code></td><td>permission profile 전환 (v0.129+)</td></tr>
+        <tr><td><code>/status</code></td><td>현재 모델·권한·sandbox 상태 확인</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 명령 자동완성</div>
+      <p>슬래시(<code>/</code>)만 치면 사용 가능한 명령이 드롭다운으로 떠요. 실제로 외울 명령은 위 표 정도면 충분.</p>
+    </div>
+
+    <h2 id="permissions">3축 권한 시스템 — Codex만의 차별점</h2>
+
+    <p>Codex의 권한은 <strong>3개의 독립된 축</strong>으로 동작합니다. Claude Code의 단일 allow/ask/deny보다 세밀합니다.</p>
+
+    <figure class="diagram" aria-labelledby="diag-perm-caption">
+      <svg viewBox="0 0 640 220" role="img" aria-label="Codex 3축 권한 다이어그램">
+        <text class="diag-text" x="20" y="22" font-size="13" font-weight="700">도구 실행 전 3가지가 모두 통과해야 함</text>
+
+        <rect class="diag-box-fill-info" x="20"  y="50" width="190" height="100" rx="10" stroke-width="2"/>
+        <text class="diag-text" x="115" y="75"  font-size="13" font-weight="700" text-anchor="middle">① approval_policy</text>
+        <text class="diag-text--muted" x="115" y="98" font-size="11" text-anchor="middle">사용자에게 언제</text>
+        <text class="diag-text--muted" x="115" y="114" font-size="11" text-anchor="middle">승인을 요청할까</text>
+        <text class="diag-text--muted" x="115" y="135" font-size="10" text-anchor="middle">untrusted · on-request</text>
+        <text class="diag-text--muted" x="115" y="147" font-size="10" text-anchor="middle">never · granular</text>
+
+        <rect class="diag-box-fill-info" x="225" y="50" width="190" height="100" rx="10" stroke-width="2"/>
+        <text class="diag-text" x="320" y="75"  font-size="13" font-weight="700" text-anchor="middle">② sandbox_mode</text>
+        <text class="diag-text--muted" x="320" y="98" font-size="11" text-anchor="middle">파일·쉘 접근의</text>
+        <text class="diag-text--muted" x="320" y="114" font-size="11" text-anchor="middle">기술적 경계는?</text>
+        <text class="diag-text--muted" x="320" y="135" font-size="10" text-anchor="middle">read-only · workspace-write</text>
+        <text class="diag-text--muted" x="320" y="147" font-size="10" text-anchor="middle">danger-full-access</text>
+
+        <rect class="diag-box-fill-info" x="430" y="50" width="190" height="100" rx="10" stroke-width="2"/>
+        <text class="diag-text" x="525" y="75"  font-size="13" font-weight="700" text-anchor="middle">③ network_access</text>
+        <text class="diag-text--muted" x="525" y="98" font-size="11" text-anchor="middle">외부 네트워크</text>
+        <text class="diag-text--muted" x="525" y="114" font-size="11" text-anchor="middle">허용 여부?</text>
+        <text class="diag-text--muted" x="525" y="135" font-size="10" text-anchor="middle">true · false</text>
+        <text class="diag-text--muted" x="525" y="147" font-size="10" text-anchor="middle">(workspace-write 기본 false)</text>
+
+        <text class="diag-text--accent" x="320" y="190" font-size="12" font-weight="700" text-anchor="middle">3축 AND → 실행</text>
+        <text class="diag-text--muted" x="320" y="208" font-size="11" text-anchor="middle" font-style="italic">예: sandbox 허용해도 approval 막으면 실행 안 됨</text>
+      </svg>
+      <figcaption id="diag-perm-caption" class="diagram__caption">
+        approval(언제 물을지) + sandbox(기술적 경계) + network(외부 통신) = 안전 모델
+      </figcaption>
+    </figure>
+
+    <h3>① approval_policy — 언제 사용자에게 물을까</h3>
+    <table>
+      <thead><tr><th>값</th><th>동작</th><th>사용 시기</th></tr></thead>
+      <tbody>
+        <tr><td><code>untrusted</code></td><td>모든 도구 호출에 승인 요청</td><td>의심스러운 코드베이스·첫 작업</td></tr>
+        <tr><td><code>on-request</code> (기본)</td><td>위험·민감 작업만 승인 요청</td><td>일반 개발</td></tr>
+        <tr><td><code>never</code></td><td>승인 요청 없이 모두 진행</td><td>격리된 컨테이너·CI</td></tr>
+        <tr><td><code>granular</code></td><td>도구 카테고리별 세밀 제어</td><td>특정 도구만 차단·자동화</td></tr>
+      </tbody>
+    </table>
+
+    <h3>② sandbox_mode — 기술적 경계</h3>
+    <table>
+      <thead><tr><th>값</th><th>동작</th><th>사용 시기</th></tr></thead>
+      <tbody>
+        <tr><td><code>read-only</code></td><td>파일 읽기·grep만, 수정 X</td><td>코드 리뷰·탐색</td></tr>
+        <tr><td><code>workspace-write</code> (기본)</td><td>워크스페이스 내 읽기·수정·로컬 명령</td><td>일반 개발 (디폴트)</td></tr>
+        <tr><td><code>danger-full-access</code></td><td>sandbox 해제, 전 시스템 접근</td><td>VM·컨테이너 안에서만</td></tr>
+      </tbody>
+    </table>
+
+    <h3>③ network_access — 외부 통신</h3>
+    <p><code>workspace-write</code>의 하위 옵션으로 기본 <code>false</code>. <code>npm install</code> 같은 네트워크 명령은 그때마다 approval. 자동화에선 <code>true</code>.</p>
+
+    <h3>config.toml로 묶어서 설정</h3>
+
+<pre><code><span class="tok-com"># ~/.codex/config.toml (전역) 또는 프로젝트별</span>
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+
+[sandbox_workspace_write]
+network_access = <span class="tok-kw">false</span>
+
+model = <span class="tok-str">"gpt-5.5"</span></code></pre>
+
+    <h3>실시간 전환</h3>
+<pre><code>&gt; /approvals            <span class="tok-com"># GUI로 변경</span>
+&gt; /sandbox read-only    <span class="tok-com"># 즉시 변경</span>
+&gt; /status               <span class="tok-com"># 현재 상태 확인</span></code></pre>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "안전은 sandbox로, 편함은 approval로"</div>
+      <p>두 축의 역할을 헷갈리기 쉽습니다. <strong>sandbox는 "물리적 경계"</strong>(이 폴더 밖은 못 만짐), <strong>approval은 "확인 시점"</strong>(이 작업은 묻고 가자).
+        가장 흔한 실무 조합: <code>sandbox_mode = "workspace-write" + approval_policy = "on-request"</code> — 워크스페이스 안에서만 + 위험 작업만 확인.</p>
+    </div>
+
+    <h2 id="agents-md">AGENTS.md — 프로젝트 영구 컨텍스트</h2>
+
+    <p><code>AGENTS.md</code>는 <strong>매 세션 자동으로 컨텍스트 윈도우에 주입되는 지시사항 파일</strong>입니다.
+      Claude Code의 <code>CLAUDE.md</code>에 대응하지만, Codex만의 차별점은 <strong><code>AGENTS.override.md</code> 우선순위</strong>입니다.</p>
+
+    <h3>위치와 우선순위</h3>
+    <table>
+      <thead><tr><th>경로</th><th>범위</th><th>우선순위</th></tr></thead>
+      <tbody>
+        <tr><td><code>~/.codex/AGENTS.override.md</code></td><td>개인 전역 override</td><td>1 (가장 강함)</td></tr>
+        <tr><td><code>~/.codex/AGENTS.md</code></td><td>개인 전역 (override 없을 때만)</td><td>2</td></tr>
+        <tr><td><code>./AGENTS.md</code> (프로젝트 루트)</td><td>이 프로젝트 (팀 공유)</td><td>3</td></tr>
+        <tr><td><code>./하위경로/AGENTS.md</code></td><td>해당 경로만</td><td>4 (가장 좁음)</td></tr>
+      </tbody>
+    </table>
+
+    <p>전부 발견되면 컨텍스트에 합쳐 주입됩니다. Override는 글로벌 AGENTS.md를 <strong>완전 대체</strong>합니다.</p>
+
+    <h3>잘 쓴 AGENTS.md 예시</h3>
+
+<pre><code><span class="tok-com"># Backend API Project</span>
+
+<span class="tok-com">## Quick Start</span>
+- Install: `pnpm install`
+- Dev: `pnpm dev` (http://localhost:3000)
+- Test: `pnpm test`
+- Build: `pnpm build`
+
+<span class="tok-com">## Architecture</span>
+- Entry: `src/index.ts`
+- Routes: `src/routes/`
+- Models: `src/models/` (Drizzle schemas)
+
+<span class="tok-com">## Code Standards</span>
+- Indentation: 2 spaces
+- camelCase for functions, PascalCase for classes
+- TypeScript strict mode required
+- Run `pnpm lint` before commit
+
+<span class="tok-com">## Forbidden</span>
+- raw SQL — Drizzle ORM only
+- Direct DB queries in route handlers — service layer 경유
+- console.log — pino logger only</code></pre>
+
+    <h3>작성 원칙 5가지</h3>
+    <ol>
+      <li><strong>200줄 이하</strong> 목표 — 매 세션 토큰 소모. 길수록 무시될 가능성 증가.</li>
+      <li><strong>구체성</strong> — "좋은 포맷" 대신 "2-space 인덴트".</li>
+      <li><strong>해야 할 것 + 하지 말 것</strong>을 같이 명시.</li>
+      <li>큰 규칙은 <strong>하위 경로 AGENTS.md</strong>로 분리 (자동으로 해당 경로 작업 시만 로드).</li>
+      <li><code>/init</code>으로 초안 생성 후 다듬는 게 가장 빠릅니다.</li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "전사 글로벌 규칙 + 개인 override"</div>
+      <span class="scenario__step"><strong>상황</strong>: 회사가 <code>~/.codex/AGENTS.md</code>에 전사 규칙(코딩 컨벤션·금지 라이브러리)을 깔아 둠. 본인은 추가로 본인 취향(이모지 사용·언어)을 더하고 싶음.</span>
+      <span class="scenario__step"><strong>적용</strong>: <code>~/.codex/AGENTS.override.md</code>에 본인 규칙 + 전사 규칙 인용. Override는 글로벌을 완전 대체하므로, 회사 규칙도 여기에 복사 + 본인 규칙 추가.</span>
+      <span class="scenario__step"><strong>결과</strong>: 본인만의 워크플로우 유지, 회사 규칙도 깨지지 않음.</span>
+    </div>
+
+    <h2 id="config-toml"><code>config.toml</code> — 어디에 무엇이 들어가나</h2>
+
+    <p>Codex의 모든 설정은 <strong>TOML 형식</strong>입니다(Claude Code의 JSON과 다름). 4계층으로 적용:</p>
+
+    <table>
+      <thead><tr><th>레이어</th><th>경로</th><th>공유 여부</th></tr></thead>
+      <tbody>
+        <tr><td>전역 (사용자)</td><td><code>~/.codex/config.toml</code></td><td>X (개인)</td></tr>
+        <tr><td>프로젝트 (공유)</td><td><code>./.codex/config.toml</code></td><td>✅ (커밋)</td></tr>
+        <tr><td>프로젝트 (개인)</td><td><code>./.codex/config.local.toml</code></td><td>X (gitignore)</td></tr>
+        <tr><td>CLI 인자</td><td><code>codex --model gpt-5.4-mini</code></td><td>임시</td></tr>
+      </tbody>
+    </table>
+
+    <p>아래로 갈수록 우선순위가 높습니다.</p>
+
+    <h3>자주 쓰는 키</h3>
+
+<pre><code><span class="tok-com"># 모델 · 추론</span>
+model = <span class="tok-str">"gpt-5.5"</span>
+reasoning_effort = <span class="tok-str">"medium"</span>     <span class="tok-com"># low / medium / high</span>
+
+<span class="tok-com"># 권한 3축</span>
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+
+[sandbox_workspace_write]
+network_access = <span class="tok-kw">false</span>
+
+<span class="tok-com"># 환경변수 (도구 실행에 주입)</span>
+[env]
+NODE_ENV = <span class="tok-str">"development"</span>
+
+<span class="tok-com"># UI</span>
+theme = <span class="tok-str">"dark"</span>
+
+<span class="tok-com"># 메모리·컨텍스트</span>
+auto_compact = <span class="tok-kw">true</span></code></pre>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ 비밀은 절대 config.toml에</div>
+      <p>API 키·토큰은 <code>config.toml</code>(커밋되는 경우 위험)에 넣으면 큰 일. 반드시 <code>config.local.toml</code> 또는 OS 환경변수로.</p>
+    </div>
+
+    <h2 id="checklist">2장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>/help</code>로 명령 목록 한 번 훑기</li>
+      <li>☐ 3축(approval·sandbox·network)의 역할 분리 이해</li>
+      <li>☐ <code>~/.codex/config.toml</code>에 본인 기본 설정</li>
+      <li>☐ AGENTS.md를 200줄 이내로 정리</li>
+      <li>☐ (선택) AGENTS.override.md로 본인 취향 분리</li>
+      <li>☐ <code>/status</code>로 현재 권한·sandbox 확인 습관</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="01-getting-started.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">1. 시작하기</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="03-cloud-profiles.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">3. Cloud·Profiles</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8장 · Claude API · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 08</span>
+    <h1>Claude API — 모델을 직접 호출하기</h1>
+    <p class="lead">
+      Claude Code·Agent SDK 너머 — <strong>모델을 가장 낮은 수준에서 직접</strong> 호출하는 방법.
+      프롬프트 캐싱으로 비용 90% 절감, Extended Thinking으로 복잡 문제 추론, Tool Use·Batch·Files API까지.
+    </p>
+
+    <h2 id="models">최신 모델 ID와 선택 트리</h2>
+
+    <table>
+      <thead><tr><th>모델</th><th>모델 ID</th><th>최적 용도</th><th>1M 컨텍스트</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Opus 4.7</strong></td><td><code>claude-opus-4-7</code></td><td>복잡한 추론·설계·창의적 합성</td><td>✅ <code>claude-opus-4-7[1m]</code></td></tr>
+        <tr><td><strong>Sonnet 4.6</strong></td><td><code>claude-sonnet-4-6</code></td><td>일반 코딩·균형·기본값</td><td>✅</td></tr>
+        <tr><td><strong>Haiku 4.5</strong></td><td><code>claude-haiku-4-5-20251001</code></td><td>분류·변환·고속 처리</td><td>✅</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 선택 트리 (15장 표 요약)</div>
+      <ul>
+        <li>설계·복잡 디버깅·모호한 문제 → <strong>Opus 4.7</strong></li>
+        <li>일반 코딩·리뷰·리팩터링 → <strong>Sonnet 4.6 (디폴트)</strong></li>
+        <li>대량 분류·변환·요약 → <strong>Haiku 4.5</strong></li>
+        <li>200k 초과 컨텍스트 필요 → 모델 ID 뒤에 <code>[1m]</code> 변형</li>
+      </ul>
+    </div>
+
+    <h2 id="basic">기본 호출 — Python · TS · cURL</h2>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Python</button>
+        <button class="code-tabs__btn" type="button">TypeScript</button>
+        <button class="code-tabs__btn" type="button">cURL</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="python">
+<pre><code><span class="tok-kw">import</span> anthropic
+
+client = anthropic.Anthropic()  <span class="tok-com"># ANTHROPIC_API_KEY 자동 사용</span>
+
+message = client.messages.create(
+    model=<span class="tok-str">"claude-sonnet-4-6"</span>,
+    max_tokens=1024,
+    messages=[
+        { <span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"Python에서 데코레이터를 설명해줘"</span> }
+    ],
+)
+<span class="tok-kw">print</span>(message.content[0].text)</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="typescript">
+<pre><code><span class="tok-kw">import</span> Anthropic <span class="tok-kw">from</span> <span class="tok-str">"@anthropic-ai/sdk"</span>;
+
+<span class="tok-kw">const</span> client = <span class="tok-kw">new</span> Anthropic();
+
+<span class="tok-kw">const</span> message = <span class="tok-kw">await</span> client.messages.create({
+  model: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  max_tokens: 1024,
+  messages: [
+    { role: <span class="tok-str">"user"</span>, content: <span class="tok-str">"TypeScript에서 제네릭을 설명해줘"</span> },
+  ],
+});
+console.log(message.content[0].type === <span class="tok-str">"text"</span> &amp;&amp; message.content[0].text);</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code>curl https://api.anthropic.com/v1/messages \
+  -H <span class="tok-str">"x-api-key: $ANTHROPIC_API_KEY"</span> \
+  -H <span class="tok-str">"anthropic-version: 2023-06-01"</span> \
+  -H <span class="tok-str">"content-type: application/json"</span> \
+  -d <span class="tok-str">'{
+    "model": "claude-sonnet-4-6",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "Rust에서 ownership을 설명해줘"}
+    ]
+  }'</span></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="streaming">스트리밍 — 토큰 단위 실시간 출력</h2>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Python</button>
+        <button class="code-tabs__btn" type="button">TypeScript</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="python">
+<pre><code><span class="tok-kw">with</span> client.messages.stream(
+    model=<span class="tok-str">"claude-sonnet-4-6"</span>,
+    max_tokens=1024,
+    messages=[{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"한국 역사 삼국시대 5줄 설명"</span>}],
+) <span class="tok-kw">as</span> stream:
+    <span class="tok-kw">for</span> text <span class="tok-kw">in</span> stream.text_stream:
+        <span class="tok-kw">print</span>(text, end=<span class="tok-str">""</span>, flush=<span class="tok-kw">True</span>)</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="typescript">
+<pre><code><span class="tok-kw">const</span> stream = <span class="tok-kw">await</span> client.messages.create({
+  model: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  max_tokens: 1024,
+  stream: <span class="tok-kw">true</span>,
+  messages: [{ role: <span class="tok-str">"user"</span>, content: <span class="tok-str">"한국 역사 삼국시대 5줄"</span> }],
+});
+
+<span class="tok-kw">for await</span> (<span class="tok-kw">const</span> event <span class="tok-kw">of</span> stream) {
+  <span class="tok-kw">if</span> (event.type === <span class="tok-str">"content_block_delta"</span> &amp;&amp; event.delta.type === <span class="tok-str">"text_delta"</span>) {
+    process.stdout.write(event.delta.text);
+  }
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="caching">프롬프트 캐싱 — 비용 90% 절감의 진짜 무기</h2>
+
+    <p>같은 시스템 프롬프트·문서를 여러 번 호출한다면 무조건 활성화. <strong>캐시 토큰은 입력 토큰의 10% 비용</strong>이고 응답도 더 빠릅니다.</p>
+
+    <h3>언제 캐싱이 본전 뽑히는가</h3>
+    <ul>
+      <li>같은 시스템 프롬프트로 N번 호출 (챗봇·고객 지원)</li>
+      <li>큰 문서(API 스펙·매뉴얼)를 컨텍스트로 두고 반복 질의</li>
+      <li>대화형 세션 (이전 대화를 매번 보냄)</li>
+    </ul>
+
+    <h3>활성화 — <code>cache_control</code> 한 줄</h3>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Python</button>
+        <button class="code-tabs__btn" type="button">TypeScript</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="python">
+<pre><code>large_doc = <span class="tok-kw">open</span>(<span class="tok-str">"api-spec.md"</span>).read()  <span class="tok-com"># 50KB 문서</span>
+
+response = client.messages.create(
+    model=<span class="tok-str">"claude-sonnet-4-6"</span>,
+    max_tokens=1024,
+    system=[
+        {<span class="tok-str">"type"</span>: <span class="tok-str">"text"</span>, <span class="tok-str">"text"</span>: <span class="tok-str">"You are a senior API designer."</span>},
+        {
+            <span class="tok-str">"type"</span>: <span class="tok-str">"text"</span>,
+            <span class="tok-str">"text"</span>: large_doc,
+            <span class="tok-str">"cache_control"</span>: {<span class="tok-str">"type"</span>: <span class="tok-str">"ephemeral"</span>},  <span class="tok-com">// ← 캐싱 켜기</span>
+        },
+    ],
+    messages=[{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"이 API에서 누락된 인증 케이스 3가지"</span>}],
+)
+<span class="tok-kw">print</span>(<span class="tok-str">f"cache_creation: {response.usage.cache_creation_input_tokens}"</span>)
+<span class="tok-kw">print</span>(<span class="tok-str">f"cache_read    : {response.usage.cache_read_input_tokens}"</span>)
+<span class="tok-com"># 두 번째 요청부터 cache_read가 대부분 차지하면 성공</span></code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="typescript">
+<pre><code><span class="tok-kw">import</span> fs <span class="tok-kw">from</span> <span class="tok-str">"node:fs"</span>;
+<span class="tok-kw">const</span> largeDoc = fs.readFileSync(<span class="tok-str">"api-spec.md"</span>, <span class="tok-str">"utf8"</span>);
+
+<span class="tok-kw">const</span> response = <span class="tok-kw">await</span> client.messages.create({
+  model: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  max_tokens: 1024,
+  system: [
+    { type: <span class="tok-str">"text"</span>, text: <span class="tok-str">"You are a senior API designer."</span> },
+    { type: <span class="tok-str">"text"</span>, text: largeDoc, cache_control: { type: <span class="tok-str">"ephemeral"</span> } },
+  ],
+  messages: [{ role: <span class="tok-str">"user"</span>, content: <span class="tok-str">"누락된 인증 케이스 3가지"</span> }],
+});
+
+console.log(<span class="tok-str">`cache_creation: ${response.usage.cache_creation_input_tokens}`</span>);
+console.log(<span class="tok-str">`cache_read    : ${response.usage.cache_read_input_tokens}`</span>);</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — TTL과 효율</div>
+      <p>캐시 TTL은 기본 <strong>5분</strong>, 활성 사용 시 최대 <strong>1시간</strong>까지 연장. 5분 이내 후속 요청에서 본전이 빠지므로,
+        대화형 봇이라면 사용자 응답 직후 다음 메시지가 빨리 들어와야 좋습니다.
+        배치 처리는 <strong>같은 시스템을 묶어서 연속 호출</strong>해야 캐시 효과가 큽니다.</p>
+    </div>
+
+    <h2 id="thinking">Extended Thinking — 복잡 추론에 더 깊은 사고</h2>
+
+    <p>모델이 응답 전 "생각하는 단계"를 별도 토큰 예산으로 할당. 수학·논리·다단계 디버깅에 유리.</p>
+
+<pre><code>response = client.messages.create(
+    model=<span class="tok-str">"claude-opus-4-7"</span>,
+    max_tokens=16000,           <span class="tok-com"># thinking + 최종 답 모두 포함</span>
+    thinking={
+        <span class="tok-str">"type"</span>: <span class="tok-str">"enabled"</span>,
+        <span class="tok-str">"budget_tokens"</span>: 10000   <span class="tok-com"># 사고에 쓸 토큰</span>
+    },
+    messages=[{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>:
+        <span class="tok-str">"이 코드의 race condition을 단계별로 분석하고, 가능한 시나리오 3가지 제시"</span>}],
+)
+
+<span class="tok-kw">for</span> block <span class="tok-kw">in</span> response.content:
+    <span class="tok-kw">if</span> block.<span class="tok-kw">type</span> == <span class="tok-str">"thinking"</span>:
+        <span class="tok-kw">print</span>(<span class="tok-str">"=== 사고 과정 ==="</span>, block.thinking)
+    <span class="tok-kw">elif</span> block.<span class="tok-kw">type</span> == <span class="tok-str">"text"</span>:
+        <span class="tok-kw">print</span>(<span class="tok-str">"=== 최종 답 ==="</span>, block.text)</code></pre>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ Thinking 토큰도 비용</div>
+      <p>budget_tokens는 응답 토큰 단가로 청구됩니다. 단순 작업엔 끄세요(또는 budget을 낮게).
+        반대로 정말 복잡한 문제엔 후하게 — 잘못된 답을 디버깅하는 시간이 더 비쌉니다.</p>
+    </div>
+
+    <h2 id="tool-use">Tool Use — 함수 호출 (Function Calling)</h2>
+
+    <p>SDK 안 쓰고 API 레벨에서 직접 도구 호출 흐름을 다루기. 일반적으로 SDK가 편하지만, 흐름 이해는 필수.</p>
+
+<pre><code>tools = [{
+    <span class="tok-str">"name"</span>: <span class="tok-str">"get_weather"</span>,
+    <span class="tok-str">"description"</span>: <span class="tok-str">"도시의 현재 날씨 조회"</span>,
+    <span class="tok-str">"input_schema"</span>: {
+        <span class="tok-str">"type"</span>: <span class="tok-str">"object"</span>,
+        <span class="tok-str">"properties"</span>: {<span class="tok-str">"city"</span>: {<span class="tok-str">"type"</span>: <span class="tok-str">"string"</span>}},
+        <span class="tok-str">"required"</span>: [<span class="tok-str">"city"</span>]
+    }
+}]
+
+messages = [{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"서울이랑 부산 날씨 알려줘"</span>}]
+response = client.messages.create(model=<span class="tok-str">"claude-sonnet-4-6"</span>, max_tokens=1024, tools=tools, messages=messages)
+
+<span class="tok-com"># 에이전트 루프</span>
+<span class="tok-kw">while</span> response.stop_reason == <span class="tok-str">"tool_use"</span>:
+    tool_calls = [b <span class="tok-kw">for</span> b <span class="tok-kw">in</span> response.content <span class="tok-kw">if</span> b.<span class="tok-kw">type</span> == <span class="tok-str">"tool_use"</span>]
+    tool_results = []
+    <span class="tok-kw">for</span> call <span class="tok-kw">in</span> tool_calls:
+        result = my_get_weather(call.input[<span class="tok-str">"city"</span>])  <span class="tok-com"># 실제 함수 실행</span>
+        tool_results.append({<span class="tok-str">"type"</span>: <span class="tok-str">"tool_result"</span>, <span class="tok-str">"tool_use_id"</span>: call.id, <span class="tok-str">"content"</span>: result})
+
+    messages.append({<span class="tok-str">"role"</span>: <span class="tok-str">"assistant"</span>, <span class="tok-str">"content"</span>: response.content})
+    messages.append({<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,      <span class="tok-str">"content"</span>: tool_results})
+    response = client.messages.create(model=<span class="tok-str">"claude-sonnet-4-6"</span>, max_tokens=1024, tools=tools, messages=messages)
+
+<span class="tok-kw">print</span>(<span class="tok-str">""</span>.join(b.text <span class="tok-kw">for</span> b <span class="tok-kw">in</span> response.content <span class="tok-kw">if</span> b.<span class="tok-kw">type</span> == <span class="tok-str">"text"</span>))</code></pre>
+
+    <h2 id="mcp-client">MCP를 API 클라이언트로 사용</h2>
+
+    <p>4장에서 본 MCP를 API에서도 직접 연결 가능. SDK가 자동 처리해 주지만, 헤더로 명시할 수도 있습니다.</p>
+
+<pre><code><span class="tok-com"># mcp_servers 파라미터에 등록</span>
+response = client.messages.create(
+    model=<span class="tok-str">"claude-sonnet-4-6"</span>,
+    max_tokens=1024,
+    mcp_servers=[{
+        <span class="tok-str">"type"</span>: <span class="tok-str">"url"</span>,
+        <span class="tok-str">"url"</span>: <span class="tok-str">"https://mcp.sentry.dev/mcp"</span>,
+        <span class="tok-str">"name"</span>: <span class="tok-str">"sentry"</span>,
+        <span class="tok-str">"authorization_token"</span>: os.environ[<span class="tok-str">"SENTRY_TOKEN"</span>],
+    }],
+    messages=[{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">"지난 1시간 에러 톱 5"</span>}],
+)</code></pre>
+
+    <h2 id="files">Files API — PDF·이미지·문서 전송</h2>
+
+    <p>큰 파일은 미리 업로드해 두고 file_id로 참조 → 매번 base64 인코딩 부담 제거.</p>
+
+<pre><code><span class="tok-com"># 1) 업로드 (한 번만)</span>
+upload = client.files.create(file=<span class="tok-kw">open</span>(<span class="tok-str">"manual.pdf"</span>, <span class="tok-str">"rb"</span>))
+<span class="tok-kw">print</span>(upload.id)  <span class="tok-com"># file_xxxxx</span>
+
+<span class="tok-com"># 2) 메시지에서 참조</span>
+response = client.messages.create(
+    model=<span class="tok-str">"claude-sonnet-4-6"</span>,
+    max_tokens=1024,
+    messages=[{
+        <span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,
+        <span class="tok-str">"content"</span>: [
+            {<span class="tok-str">"type"</span>: <span class="tok-str">"document"</span>, <span class="tok-str">"source"</span>: {<span class="tok-str">"type"</span>: <span class="tok-str">"file"</span>, <span class="tok-str">"file_id"</span>: upload.id}},
+            {<span class="tok-str">"type"</span>: <span class="tok-str">"text"</span>, <span class="tok-str">"text"</span>: <span class="tok-str">"이 매뉴얼의 핵심을 5줄로"</span>},
+        ],
+    }],
+)</code></pre>
+
+    <h2 id="batch">Batch API — 비동기 대량 처리 50% 절감</h2>
+
+    <p>"지금 당장" 필요 없는 작업(분류·요약 대량)은 Batch로 보내면 비용 절반.
+      처리 시간은 보통 1시간 이내(SLA 최대 24h).</p>
+
+<pre><code><span class="tok-com"># 1) 배치 요청 준비</span>
+requests = [
+    {
+        <span class="tok-str">"custom_id"</span>: <span class="tok-str">f"feedback-{i}"</span>,
+        <span class="tok-str">"params"</span>: {
+            <span class="tok-str">"model"</span>: <span class="tok-str">"claude-haiku-4-5-20251001"</span>,
+            <span class="tok-str">"max_tokens"</span>: 256,
+            <span class="tok-str">"messages"</span>: [{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>, <span class="tok-str">"content"</span>: <span class="tok-str">f"분류: {text}"</span>}],
+        }
+    }
+    <span class="tok-kw">for</span> i, text <span class="tok-kw">in</span> <span class="tok-kw">enumerate</span>(feedbacks)
+]
+
+<span class="tok-com"># 2) 배치 제출</span>
+batch = client.messages.batches.create(requests=requests)
+<span class="tok-kw">print</span>(<span class="tok-str">f"batch_id: {batch.id}"</span>)
+
+<span class="tok-com"># 3) 폴링 (또는 webhook으로 받기)</span>
+<span class="tok-kw">while</span> batch.processing_status != <span class="tok-str">"ended"</span>:
+    time.sleep(60)
+    batch = client.messages.batches.retrieve(batch.id)
+
+<span class="tok-com"># 4) 결과 가져오기</span>
+<span class="tok-kw">for</span> result <span class="tok-kw">in</span> client.messages.batches.results(batch.id):
+    <span class="tok-kw">print</span>(result.custom_id, result.result.message.content[0].text)</code></pre>
+
+    <h2 id="best-practices">실무 권장 패턴 요약</h2>
+
+    <table>
+      <thead><tr><th>상황</th><th>패턴</th></tr></thead>
+      <tbody>
+        <tr><td>챗봇·반복 호출</td><td><strong>프롬프트 캐싱</strong> 무조건 활성화 + 5분 이내 후속 요청</td></tr>
+        <tr><td>대량 분류·요약</td><td><strong>Batch API</strong> + Haiku 조합 = 비용 1/4</td></tr>
+        <tr><td>큰 문서 반복 질의</td><td>Files API 업로드 1회 + 캐싱</td></tr>
+        <tr><td>복잡한 다단계 디버깅</td><td>Opus + Extended Thinking + budget 10k~20k</td></tr>
+        <tr><td>도구·외부 시스템 연동</td><td>가능하면 SDK(7장) — 에이전트 루프를 안 짜도 됨</td></tr>
+        <tr><td>스트리밍 UX 필요</td><td><code>stream: True</code>, content_block_delta 이벤트 처리</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="security">API 키·청구 안전</h2>
+    <ul>
+      <li><strong>키 분리</strong>: dev/staging/prod 별도 키 → 사고 시 회전 쉬움</li>
+      <li><strong>키 환경변수만</strong>: 코드·CLAUDE.md·Git에 키 박지 말 것</li>
+      <li><strong>Spending limit</strong>: Anthropic Console → Billing → 월 한도 + 50/80/100% 알림</li>
+      <li><strong>로그</strong>: 모든 API 호출의 request_id·model·tokens 기록 (감사용)</li>
+      <li><strong>레이트 리밋</strong>: 429 받으면 지수 백오프 (SDK는 자동, raw cURL은 직접)</li>
+    </ul>
+
+    <h2 id="checklist">8장 체크리스트</h2>
+    <ul>
+      <li>☐ 본인 작업의 적정 모델 선정 (Opus/Sonnet/Haiku)</li>
+      <li>☐ 반복 호출이라면 프롬프트 캐싱 활성화</li>
+      <li>☐ 대량 처리는 Batch API 검토 (50% 절감)</li>
+      <li>☐ 큰 파일은 Files API로 업로드 후 file_id 참조</li>
+      <li>☐ API 키 환경변수 + dev/prod 분리</li>
+      <li>☐ Console에 spending limit 설정</li>
+      <li>☐ 7장 SDK와 비교 후 알맞은 추상화 수준 선택</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="07-agent-sdk.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">7. Agent SDK</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="09-scenarios.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">9. 실전 시나리오</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codex CLI 완벽 가이드 · 입문부터 실무·고급까지</title>
+  <meta name="description" content="20년차 강사가 정리한 OpenAI Codex CLI 사용 가이드 — 설치·핵심 명령·AGENTS.md·sandbox·MCP·자동화·API까지 한 권으로." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">X</span>
+      Codex CLI 가이드
+      <span class="brand__sub">· 20년차 강사가 정리한 실전판</span>
+    </a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button" aria-label="검색">
+        🔍 <span>검색</span> <span class="kbd">⌘K</span>
+      </button>
+      <button class="header-action" id="theme-toggle" type="button" aria-label="테마 변경">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell shell--landing">
+
+  <section class="hero">
+    <span class="hero__eyebrow">한국 개발자를 위한 실전 가이드</span>
+    <h1 class="hero__title">
+      OpenAI Codex로<br />
+      <span>터미널에서 코드를 짓다</span>
+    </h1>
+    <p class="hero__desc">
+      Codex CLI는 <strong>GPT-5.5 기반의 터미널 자율 코딩 에이전트</strong>입니다.
+      <strong>AGENTS.md</strong>로 영구 컨텍스트를, <strong>sandbox 모드</strong>로 안전을,
+      <strong>Codex Cloud</strong>로 백그라운드 작업을 — 한 도구로 모두 해냅니다. 이 가이드 한 권이면 입문부터 고급 자동화까지 끝납니다.
+    </p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="chapters/01-getting-started.html">처음부터 시작하기 →</a>
+      <a class="btn btn--ghost" href="#table-of-contents">목차 보기</a>
+    </div>
+  </section>
+
+  <section>
+    <h2 style="border-top:none; margin-top:0;">🎓 강사 노트 · 이 가이드를 쓰는 법</h2>
+    <p class="lead">
+      Codex CLI는 빠르게 진화하고 있습니다. 본인 위치에 맞는 학습 경로 하나를 골라 시작하세요.
+      각 경로는 <strong>30분 ~ 2시간</strong> 안에 끝납니다.
+    </p>
+
+    <div class="paths">
+      <div class="path">
+        <div class="path__icon">🌱</div>
+        <h3 class="path__title">처음 써본다면 — 30분 코스</h3>
+        <ul class="path__steps">
+          <li>1장 설치·로그인·`codex` 첫 실행</li>
+          <li>2장 `AGENTS.md` 만들기</li>
+          <li>2장 sandbox·approval 모드 이해</li>
+          <li>실습: 본인 프로젝트에서 코드 하나 수정</li>
+        </ul>
+      </div>
+      <div class="path">
+        <div class="path__icon">💼</div>
+        <h3 class="path__title">실무에 바로 쓰고 싶다면 — 1시간</h3>
+        <ul class="path__steps">
+          <li>1·2장 빠르게 스킵</li>
+          <li>3장 Codex Cloud(웹 위임)</li>
+          <li>4장 MCP로 GitHub·Slack 연결</li>
+          <li>5장 헤드리스 모드로 CI에 붙이기</li>
+        </ul>
+      </div>
+      <div class="path">
+        <div class="path__icon">🚀</div>
+        <h3 class="path__title">자동화·확장까지 — 2시간 코스</h3>
+        <ul class="path__steps">
+          <li>3장 permission profile 공유</li>
+          <li>5장 자동화·CI/CD</li>
+          <li>10장 커뮤니티 도구</li>
+          <li>6·7·8장 Workflow · SDK · API</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout--scenario" style="margin-top: var(--space-5)">
+      <div class="callout__title">📖 처음이 막막하다면 — 11장 "실무 빌딩 스토리"로 시작</div>
+      <p>이론보다 <strong>실제 서비스 구축 흐름</strong>이 먼저 궁금하다면, 11장의 세 가지 스토리(개인 사이트 · SaaS · 가족 앱)를 먼저 읽으세요.
+        본인 프로젝트가 어느 패턴에 가까운지 감이 잡힌 뒤 나머지를 읽으면 흡수 속도가 훨씬 빠릅니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="table-of-contents">📚 전체 목차</h2>
+    <p>각 장은 독립적으로 읽어도 됩니다. 순서대로 가면 입문 → 실무 → 고급으로 자연스럽게 연결됩니다.</p>
+
+    <div class="cards">
+      <a class="card" href="chapters/00-concepts.html">
+        <span class="card__num">CHAPTER 00 · 개념</span>
+        <h3 class="card__title">기초 개념</h3>
+        <p class="card__desc">LLM 작동 원리 · GPT-5 특징 · Codex CLI 작동 흐름도 · 4가지 메탈 모델 — <strong>읽으면 모든 게 더 쉬워짐</strong></p>
+      </a>
+      <a class="card" href="chapters/01-getting-started.html">
+        <span class="card__num">CHAPTER 01</span>
+        <h3 class="card__title">시작하기</h3>
+        <p class="card__desc">설치 · ChatGPT/API 로그인 · 실행 모드 · 첫 세션 · 핵심 단축키 · `codex resume`</p>
+      </a>
+      <a class="card" href="chapters/02-commands.html">
+        <span class="card__num">CHAPTER 02</span>
+        <h3 class="card__title">명령어·approval·AGENTS.md</h3>
+        <p class="card__desc">슬래시 명령 · 3축 권한(approval·sandbox·network) · config.toml · AGENTS.md / .override.md</p>
+      </a>
+      <a class="card" href="chapters/03-cloud-profiles.html">
+        <span class="card__num">CHAPTER 03</span>
+        <h3 class="card__title">Codex Cloud · Permission Profiles</h3>
+        <p class="card__desc">웹 위임 · 백그라운드 병렬 작업 · IDE 통합 · v0.129+ 명명된 권한 프로파일 공유</p>
+      </a>
+      <a class="card" href="chapters/04-mcp-integration.html">
+        <span class="card__num">CHAPTER 04</span>
+        <h3 class="card__title">MCP · 외부 통합</h3>
+        <p class="card__desc">`codex mcp add` · config.toml MCP · GitHub · Slack · DB · Git worktree · 권한·보안</p>
+      </a>
+      <a class="card" href="chapters/05-automation.html">
+        <span class="card__num">CHAPTER 05</span>
+        <h3 class="card__title">자동화 · CI/CD</h3>
+        <p class="card__desc">헤드리스 모드 · GitHub Actions 연동 · Codex Cloud 자동 위임 · 정기 작업</p>
+      </a>
+      <a class="card" href="chapters/06-orchestration.html">
+        <span class="card__num">CHAPTER 06</span>
+        <h3 class="card__title">멀티 에이전트 오케스트레이션</h3>
+        <p class="card__desc">서브에이전트(gpt-5.4-mini로 비용 격리) · pipeline·parallel·judge panel 패턴</p>
+      </a>
+      <a class="card" href="chapters/07-agents-sdk.html">
+        <span class="card__num">CHAPTER 07</span>
+        <h3 class="card__title">OpenAI Agents SDK</h3>
+        <p class="card__desc">Python · TypeScript로 자체 에이전트 만들기 · 도구 정의 · Codex CLI와의 관계</p>
+      </a>
+      <a class="card" href="chapters/08-openai-api.html">
+        <span class="card__num">CHAPTER 08</span>
+        <h3 class="card__title">OpenAI API</h3>
+        <p class="card__desc">최신 모델 ID · Responses API · 캐싱 · Reasoning · Function Calling · Batch · Files</p>
+      </a>
+      <a class="card" href="chapters/09-scenarios.html">
+        <span class="card__num">CHAPTER 09</span>
+        <h3 class="card__title">실전 시나리오</h3>
+        <p class="card__desc">PR 자동 리뷰 · 대규모 리팩터링 · 보안 모니터링 · CI 최적화 · 문서 자동화</p>
+      </a>
+      <a class="card" href="chapters/10-community.html">
+        <span class="card__num">CHAPTER 10</span>
+        <h3 class="card__title">커뮤니티 도구·확장</h3>
+        <p class="card__desc">awesome-codex 컬렉션 · 사용량 모니터링 · GitHub Action · 비공식 플러그인</p>
+      </a>
+      <a class="card" href="chapters/11-real-stories.html">
+        <span class="card__num">CHAPTER 11</span>
+        <h3 class="card__title">실무 빌딩 스토리</h3>
+        <p class="card__desc">개인 사이트(미니멀) · SaaS(풀 자동화) · 가족 앱(균형) — 0→1 서비스 구축 일지</p>
+      </a>
+      <a class="card" href="chapters/12-troubleshooting.html">
+        <span class="card__num">CHAPTER 12</span>
+        <h3 class="card__title">트러블슈팅</h3>
+        <p class="card__desc">approval 무한 반복 · 컨텍스트 폭발 · 파일 복구 · 비용 폭주 · sandbox 디버깅</p>
+      </a>
+      <a class="card" href="chapters/13-prompting.html">
+        <span class="card__num">CHAPTER 13</span>
+        <h3 class="card__title">프롬프팅 + 세션 운영</h3>
+        <p class="card__desc">좋은/나쁜 비교 · `codex resume` · handoff.md · GPT-5 특화 프롬프팅</p>
+      </a>
+      <a class="card" href="chapters/14-team.html">
+        <span class="card__num">CHAPTER 14</span>
+        <h3 class="card__title">팀·협업 운영</h3>
+        <p class="card__desc">.codex/ 운영 · permission profile 공유 · AGENTS.md 충돌 · AI 코드 리뷰 문화</p>
+      </a>
+      <a class="card" href="chapters/15-cost.html">
+        <span class="card__num">CHAPTER 15</span>
+        <h3 class="card__title">비용 최적화</h3>
+        <p class="card__desc">모델 선택(gpt-5.5/mini/spark) · 캐싱 · CI 차등화 · ChatGPT 플랜 vs API</p>
+      </a>
+      <a class="card" href="chapters/16-cheatsheet.html">
+        <span class="card__num">CHAPTER 16</span>
+        <h3 class="card__title">치트시트 & 템플릿</h3>
+        <p class="card__desc">한 페이지 명령어 · config.toml 3종 · AGENTS.md 3종 · MCP 템플릿 · 인쇄 가능</p>
+      </a>
+      <a class="card" href="chapters/17-cost-stories.html">
+        <span class="card__num">CHAPTER 17</span>
+        <h3 class="card__title">비용 효율화 사례집</h3>
+        <p class="card__desc">실제 절감 사례 4개 · 프로젝트 단계별 시나리오 · AI 활용 일반 원칙 8가지</p>
+      </a>
+      <a class="card" href="chapters/18-by-role.html">
+        <span class="card__num">CHAPTER 18</span>
+        <h3 class="card__title">직군별 가이드</h3>
+        <p class="card__desc">🎨 프론트 · ⚙️ 백엔드 · 📊 데이터/ML · ☁️ DevOps · 📱 모바일 · 🎓 신입</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>⚡ 1분 빠른 시작</h2>
+    <p>이미 설치돼 있다면 아래 명령들만 외워도 절반은 끝납니다.</p>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Bash</button>
+        <button class="code-tabs__btn" type="button">Python (SDK)</button>
+        <button class="code-tabs__btn" type="button">TypeScript (SDK)</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code><span class="tok-com"># 설치 (macOS / Linux)</span>
+brew install --cask codex
+<span class="tok-com"># 또는</span>
+npm install -g @openai/codex
+
+<span class="tok-com"># 프로젝트 진입 → 대화형 세션 시작</span>
+cd ~/my-project
+codex
+
+<span class="tok-com"># 한 번만 실행 (자동화·CI에 유용)</span>
+codex exec <span class="tok-str">"이 프로젝트의 README를 200자로 요약해줘"</span>
+
+<span class="tok-com"># 이전 세션 이어 가기</span>
+codex resume
+
+<span class="tok-com"># 자주 쓰는 슬래시 명령 (세션 안에서)</span>
+<span class="tok-com">#   /init        → AGENTS.md 자동 생성</span>
+<span class="tok-com">#   /model       → 모델 변경 (gpt-5.5 / mini / spark)</span>
+<span class="tok-com">#   /approvals   → 권한 모드 변경</span>
+<span class="tok-com">#   /mcp         → MCP 서버 추가·확인</span>
+<span class="tok-com">#   /compact     → 컨텍스트 압축</span></code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="python">
+<pre><code><span class="tok-com"># OpenAI API · GPT-5.5 직접 호출 — Python</span>
+<span class="tok-com"># pip install openai</span>
+
+<span class="tok-kw">from</span> openai <span class="tok-kw">import</span> OpenAI
+
+client = OpenAI()
+
+response = client.responses.create(
+    model=<span class="tok-str">"gpt-5.5"</span>,
+    input=<span class="tok-str">"src/api.py의 보안 취약점을 찾아줘"</span>,
+)
+<span class="tok-kw">print</span>(response.output_text)</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="typescript">
+<pre><code><span class="tok-com">// OpenAI API · GPT-5.5 직접 호출 — TypeScript</span>
+<span class="tok-com">// npm i openai</span>
+
+<span class="tok-kw">import</span> OpenAI <span class="tok-kw">from</span> <span class="tok-str">"openai"</span>;
+
+<span class="tok-kw">const</span> client = <span class="tok-kw">new</span> OpenAI();
+
+<span class="tok-kw">const</span> response = <span class="tok-kw">await</span> client.responses.create({
+  model: <span class="tok-str">"gpt-5.5"</span>,
+  input: <span class="tok-str">"src/api.ts의 보안 취약점을 찾아줘"</span>,
+});
+
+console.log(response.output_text);</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트</div>
+      <p>처음에는 <strong>Bash 탭만 봐도 충분</strong>합니다. Codex CLI를 그냥 <em>사용</em>한다면 SDK는 필요 없어요.
+        Python·TypeScript SDK는 <strong>OpenAI 모델을 본인 서비스에 임베드</strong>할 때(예: 슬랙봇, CI 자동화) 등장합니다.
+        7·8장에서 다시 만납니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>❓ 시작 전 자주 묻는 질문</h2>
+    <p>도입을 망설이게 하는 질문 7가지. 클릭해서 펼치세요.</p>
+
+    <div class="faq">
+      <details>
+        <summary>Claude Code와 Codex CLI, 뭐가 다르고 뭐가 같나요?</summary>
+        <div class="faq__body">
+          <p><strong>컨셉은 비슷, 디테일은 다릅니다.</strong></p>
+          <p>같은 점: 둘 다 터미널 자율 에이전트 · MCP 지원 · 영구 메모리 파일 · 권한 시스템 · 헤드리스 CI 통합 가능.</p>
+          <p>다른 점:</p>
+          <ul>
+            <li>모델 백엔드 — OpenAI (GPT-5.x) vs Anthropic (Claude 4.x)</li>
+            <li>메모리 파일 — <code>AGENTS.md</code> (+ <code>.override.md</code>) vs <code>CLAUDE.md</code></li>
+            <li>권한 모델 — 3축(approval·sandbox·network) vs allow/ask/deny</li>
+            <li>클라우드 — Codex Cloud(본격적 웹 위임) vs (Slack 통합 정도)</li>
+            <li>설정 파일 — <code>config.toml</code> vs <code>settings.json</code></li>
+          </ul>
+          <p>비교 표는 16장 부록에 있습니다. 병행 사용도 흔합니다(역할 분담).</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>ChatGPT 구독 vs API 직결 — 뭐가 나을까요?</summary>
+        <div class="faq__body">
+          <p><strong>혼자 또는 학습 단계라면 ChatGPT Plus/Pro</strong>가 마음 편합니다. Codex CLI를 ChatGPT 로그인으로 바로 쓸 수 있고, 매번 토큰 신경 안 써도 됨.</p>
+          <p><strong>팀·자동화·CI에 붙일 거라면 OpenAI API 직결</strong>이 적합. 사용량 분석·여러 키 분리·spending limit 모두 가능.</p>
+          <p>15장 §비용 최적화에 규모별 권장 표가 있어요.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>회사 보안 정책상 외부 클라우드 AI를 못 쓰는데요?</summary>
+        <div class="faq__body">
+          <p>방법이 있습니다. OpenAI는 <strong>Azure OpenAI Service</strong>를 통해 동일 모델을 제공하며,
+            기존 Azure 계약·VPC 안에서 호출됩니다. 보통 보안팀이 받아들이는 경로.</p>
+          <p>또한 Codex의 <strong>sandbox 모드</strong>는 기본이 <code>workspace-write</code>로
+            <em>워크스페이스 외부 접근을 막아주는 OS-level 격리</em>를 제공합니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>한국어 응답·한국어 코드 주석 품질은 어떤가요?</summary>
+        <div class="faq__body">
+          <p><strong>GPT-5.5는 한국어 품질이 우수합니다.</strong> 한국 개발자 관용어, 자연스러운 코멘트 모두 양호.</p>
+          <p>다만 <strong>코드 주석·문서를 한국어로 쓰게 하려면 명시적으로 지시</strong>해야 합니다.
+            AGENTS.md에 <code>"모든 주석·문서는 한국어로"</code> 한 줄 박아두는 게 가장 확실합니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>월 비용이 얼마나 들까요? 감을 잡고 싶습니다</summary>
+        <div class="faq__body">
+          <p>대략적인 벤치마크 (17장에 자세한 표 있음):</p>
+          <ul>
+            <li>주말 사이드 프로젝트: <strong>월 $10~50</strong></li>
+            <li>풀타임 1인 개발: <strong>월 $50~200</strong></li>
+            <li>2~5인 스타트업: <strong>월 $200~600</strong></li>
+            <li>5~20인 팀(CI 포함): <strong>월 $600~2,000</strong></li>
+          </ul>
+          <p>ChatGPT Plus($20)·Pro($200)로 시작해서 한도 부족 시 API 전환을 고려하는 게 안전합니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Codex가 짠 코드를 그대로 머지해도 되나요?</summary>
+        <div class="faq__body">
+          <p><strong>안 됩니다.</strong> AI가 짰든 사람이 짰든 PR 작성자가 모든 라인을 이해하고 책임진다는 원칙은 똑같습니다.</p>
+          <p>워크플로우 권장:</p>
+          <ol>
+            <li><strong>본인 셀프 리뷰</strong> — diff 직접 훑기</li>
+            <li><strong>실행 검증</strong> — 실제 동작 확인</li>
+            <li><strong>사람 리뷰어 1명 이상</strong> — 자동 봇이 봤어도 사람 1명은 필수</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>학습 곡선은 어느 정도인가요?</summary>
+        <div class="faq__body">
+          <p>대략적인 단계:</p>
+          <ul>
+            <li><strong>Day 1 · 30분</strong>: 설치·로그인·첫 <code>codex</code>·<code>/init</code></li>
+            <li><strong>1주차</strong>: 슬래시 명령·sandbox·approval 익숙해짐</li>
+            <li><strong>2~3주차</strong>: Codex Cloud·MCP·자동화 패턴 구축</li>
+            <li><strong>1개월+</strong>: permission profile 공유·CI 통합·"손에 익은 느낌"</li>
+          </ul>
+          <p>처음부터 다 외울 필요 없습니다. 11장 §스토리 C("균형") 패턴으로 시작 → 필요해질 때 도구 추가가 가장 자연스러운 경로입니다.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>🛠 이 가이드를 활용하는 팁</h2>
+    <ul>
+      <li><strong>검색 (<span class="kbd">⌘K</span> / <span class="kbd">Ctrl+K</span>)</strong> — 명령어·키워드를 빠르게 찾을 수 있습니다.</li>
+      <li><strong>코드 탭</strong> — 모든 예제는 Bash · Python · TypeScript 탭으로 전환 가능합니다(해당되는 경우).</li>
+      <li><strong>다크 모드</strong> — 우측 상단 토글. OS 설정도 자동 감지합니다.</li>
+      <li><strong>인쇄 / PDF</strong> — 브라우저 인쇄(<span class="kbd">⌘P</span>)하면 사이드바·복사 버튼이 제거된 책 형태로 출력됩니다.</li>
+      <li><strong>진척도</strong> — 각 챕터 끝 체크리스트는 localStorage에 자동 저장됩니다.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>📌 환경 안내</h2>
+    <ul>
+      <li>이 가이드는 <strong>2026년 6월 기준</strong>의 Codex CLI · OpenAI 모델 라인업을 토대로 작성되었습니다.</li>
+      <li>최신 모델 ID: <code>gpt-5.5</code>(추천 기본) · <code>gpt-5.4-mini</code>(저비용) · <code>gpt-5.3-codex-spark</code>(실시간, Pro 한정)</li>
+      <li>2026.06~07 사이 구형 codex-lineage 모델(gpt-5.3-codex 이전)이 폐기됩니다 — <code>gpt-5.5</code>로 마이그레이션 권장.</li>
+      <li>Codex CLI는 빠르게 변하니, 실 사용 전 <strong>공식 문서</strong>(<a href="https://developers.openai.com/codex" target="_blank" rel="noopener">developers.openai.com/codex</a>)에서 최종 확인을 권장합니다.</li>
+      <li>자매 가이드: <a href="../ccguide/index.html"><strong>Claude Code 완벽 가이드</strong></a> — 같은 컨셉의 도구를 다른 진영에서 살펴보고 싶다면.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · 20년차 강사 정리 ·
+    <a href="https://developers.openai.com/codex" target="_blank" rel="noopener">공식 문서</a> ·
+    <a href="https://github.com/openai/codex" target="_blank" rel="noopener">GitHub</a>
+  </p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

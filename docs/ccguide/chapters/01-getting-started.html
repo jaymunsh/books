@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1장 · 시작하기 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 01</span>
+    <h1>시작하기 — 설치부터 첫 세션까지</h1>
+    <p class="lead">
+      이 장은 <strong>Claude Code를 처음 켜는 순간부터</strong> 첫 코드를 수정해 보기까지를 다룹니다.
+      30분이면 끝나며, 이 장만 마쳐도 <em>"평소처럼 코딩하다 막힐 때 도움받기"</em>는 바로 시작할 수 있습니다.
+    </p>
+
+    <h2 id="install">설치 및 인증</h2>
+
+    <p>Claude Code는 <strong>터미널에서 실행되는 AI 코딩 에이전트</strong>입니다. macOS·Linux·Windows(WSL2 권장)에서 동작합니다.</p>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">macOS / Linux</button>
+        <button class="code-tabs__btn" type="button">macOS (Homebrew)</button>
+        <button class="code-tabs__btn" type="button">Windows (PowerShell)</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code><span class="tok-com"># 공식 설치 스크립트</span>
+curl -fsSL https://claude.ai/install.sh | bash
+
+<span class="tok-com"># 설치 확인</span>
+claude --version</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code><span class="tok-com"># Homebrew Cask</span>
+brew install --cask claude-code
+
+<span class="tok-com"># 업데이트</span>
+brew upgrade claude-code</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="powershell">
+<pre><code><span class="tok-com"># PowerShell (관리자 권한 권장)</span>
+irm https://claude.ai/install.ps1 | iex
+
+<span class="tok-com"># 설치 확인</span>
+claude --version</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <h3>로그인</h3>
+    <p>최초 실행 시 자동으로 브라우저 로그인 창이 뜹니다. 세션 안에서는 <code>/login</code>으로 다시 로그인할 수 있어요.</p>
+
+<pre><code><span class="tok-com"># 첫 실행 → 브라우저 자동 오픈 → 로그인</span>
+claude
+
+<span class="tok-com"># 세션 안에서 재로그인</span>
+/login</code></pre>
+
+    <p>지원 계정은 다음과 같습니다.</p>
+    <ul>
+      <li><strong>Claude Pro / Max / Team / Enterprise</strong> (가장 일반적)</li>
+      <li><strong>Anthropic Console</strong> (API 크레딧으로 사용)</li>
+      <li><strong>Amazon Bedrock · Google Vertex AI · Microsoft Foundry</strong> (기업/규제 환경)</li>
+    </ul>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 팁 — 처음엔 Pro/Max 권장</div>
+      <p>API 크레딧 결제 방식은 토큰량을 매번 신경 써야 합니다. 학습 단계에서는 <strong>Pro 또는 Max 구독</strong>이 마음 편합니다.
+        팀 단위라면 Team/Enterprise로 청구·정책 관리를 한곳에 묶을 수 있습니다.</p>
+    </div>
+
+    <h2 id="modes">실행 모드 — 한 번에 정리</h2>
+
+    <p>Claude Code는 같은 <code>claude</code> 명령에 옵션을 붙여 여러 모드로 동작합니다. 한 표로 외우세요.</p>
+
+    <table>
+      <thead>
+        <tr><th>모드</th><th>실행 방법</th><th>언제 쓰는가</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Interactive</strong> (대화형)</td><td><code>claude</code></td><td>가장 일반적. 대화하면서 계속 작업</td></tr>
+        <tr><td><strong>One-shot</strong></td><td><code>claude "질문/작업"</code></td><td>한 번만 실행하고 종료. 스크립트에서 호출</td></tr>
+        <tr><td><strong>Print</strong></td><td><code>claude -p "질문"</code></td><td>상호작용 없이 결과만 표준출력. 파이프·CI에 적합</td></tr>
+        <tr><td><strong>Continue</strong></td><td><code>claude -c</code></td><td>가장 최근 세션 그대로 이어가기</td></tr>
+        <tr><td><strong>Resume</strong></td><td><code>claude -r</code> 또는 <code>/resume</code></td><td>여러 과거 세션 중 선택해 이어가기</td></tr>
+        <tr><td><strong>Plan mode</strong></td><td>세션 중 <code>Shift+Tab</code> 토글 또는 <code>/plan</code></td><td>실제 수정 전에 계획만 받고 승인 → 안전</td></tr>
+        <tr><td><strong>Fast mode</strong></td><td><code>/fast</code></td><td>Opus 4.6 / 4.7에서 빠른 응답 모드</td></tr>
+        <tr><td><strong>Headless</strong></td><td><code>claude -p ... &amp;&amp; ...</code></td><td>CI/CD·크론·서버에서 비대화식 실행</td></tr>
+      </tbody>
+    </table>
+
+    <h3>실제 사용 예</h3>
+
+<pre><code><span class="tok-com"># 평소 작업 — 그냥 진입</span>
+cd ~/my-project
+claude
+
+<span class="tok-com"># "이 README를 200자로 요약해줘" → 결과만 stdout</span>
+claude -p <span class="tok-str">"README.md를 200자 한국어로 요약"</span>
+
+<span class="tok-com"># 어제 하던 대화 그대로 이어가기</span>
+claude -c
+
+<span class="tok-com"># 새 기능을 격리된 워크트리에서 시작</span>
+claude --worktree feature/auth</code></pre>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — Plan mode를 디폴트로 두세요</div>
+      <p>처음 한 달은 무조건 <strong>Plan mode</strong>로 쓰세요. 큰 변경 전에 Claude가 계획을 먼저 보여주고, 당신이 승인해야 실행됩니다.
+        익숙해지면 <code>Shift+Tab</code>으로 토글해서 평소엔 일반 모드, 위험 작업만 plan으로 가는 식으로 운영하면 됩니다.</p>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "슬랙에서 빠른 질문 받았을 때 (one-shot)"</div>
+      <span class="scenario__step"><strong>상황</strong>: 동료가 슬랙으로 "이 에러 메시지 뭐야?" 스크린샷을 보냈음. 세션 켜고 대화하긴 과함.</span>
+      <span class="scenario__step"><strong>적용</strong>: 터미널 한 줄.</span>
+<pre><code>claude -p <span class="tok-str">"이 Node.js 에러 메시지가 무슨 뜻인지 한 줄로: TypeError: Cannot read properties of undefined (reading 'map')"</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 답변이 stdout으로만 나옴 → 그대로 복사해 슬랙에 붙여넣기. 30초 컷.</span>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "처음 만지는 큰 변경, 무서워서 Plan mode"</div>
+      <span class="scenario__step"><strong>상황</strong>: 인증 미들웨어 전체를 갈아엎어야 함. Claude가 곧장 코드 갈아엎어 버리면 무서움.</span>
+      <span class="scenario__step"><strong>이전 방식</strong>: 작업 시키고 매번 "잠깐, 그건 아냐" 끊기 반복.</span>
+      <span class="scenario__step"><strong>적용</strong>: 세션 들어가서 <span class="kbd">Shift+Tab</span> → Plan mode로 전환. "auth 미들웨어를 JWT 기반으로 교체해줘"라고 요청.</span>
+      <span class="scenario__step"><strong>결과</strong>: Claude가 코드 안 건드리고 "이런 파일을 이렇게 바꾸겠다"는 계획만 제시 → 당신이 검토 후 승인 → 그때부터 실제 수정. 안전 + 빠름.</span>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "메인 브랜치 만지지 않고 실험 (worktree)"</div>
+      <span class="scenario__step"><strong>상황</strong>: 현재 다른 작업 중인데, 누가 "이거 한번만 빠르게 시도해줄래?"</span>
+      <span class="scenario__step"><strong>적용</strong>: 메인 디렉토리는 그대로 두고 별도 worktree에서 Claude 띄움.</span>
+<pre><code>claude --worktree experiment/quick-poc
+<span class="tok-com"># → .claude/worktrees/experiment-quick-poc 에서 독립 작업</span>
+<span class="tok-com"># → 메인 작업 디렉토리는 영향 없음</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 실험이 망해도 메인은 안전. 마음에 들면 그 브랜치로 PR.</span>
+    </div>
+
+    <h2 id="first-session">첫 세션 — 5분 워크플로우</h2>
+
+    <p>Claude Code의 진가는 <strong>프로젝트 컨텍스트</strong>를 자동으로 이해한다는 데 있습니다. 다음 흐름을 그대로 따라 해 보세요.</p>
+
+    <ol>
+      <li><strong>프로젝트로 이동</strong> — Git 리포지토리 루트가 가장 좋습니다.</li>
+      <li><strong><code>claude</code> 실행</strong> — 자동으로 디렉토리 구조를 인지합니다.</li>
+      <li><strong><code>/init</code> 실행</strong> — Claude가 코드를 훑고 <code>CLAUDE.md</code> 초안을 만들어 줍니다.</li>
+      <li><strong>가벼운 질문</strong> — 예: "이 프로젝트는 뭐 하는 거야?", "build·test 명령은 뭐야?"</li>
+      <li><strong>작은 작업 위임</strong> — 예: "README의 오타 수정만 해줘"</li>
+    </ol>
+
+<pre><code>cd ~/my-project
+claude
+<span class="tok-com"># 세션 안에서</span>
+&gt; /init
+&gt; <span class="tok-str">"이 프로젝트는 뭐 하는 건지 3줄로 설명해줘"</span>
+&gt; <span class="tok-str">"package.json을 보고 dev·build·test 명령을 표로 정리해줘"</span>
+&gt; <span class="tok-str">"README.md의 한국어 오타만 찾아서 고쳐줘"</span></code></pre>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ 주의 — 권한 프롬프트가 나오면 차분히 읽기</div>
+      <p>처음에는 거의 모든 명령(파일 쓰기, Bash 실행 등)에 권한 프롬프트가 뜹니다. 무조건 <em>Yes</em>를 누르지 말고 어떤 도구를 어떤 인자로 실행하는지 보세요.
+        익숙해지면 자주 쓰는 명령을 "Yes, don't ask again"으로 화이트리스트에 추가해 갑니다.</p>
+    </div>
+
+    <h2 id="shortcuts">핵심 단축키 — 외우면 일이 빨라집니다</h2>
+
+    <p>모든 키를 외울 필요는 없습니다. <strong>이 6개만</strong> 손에 익히세요.</p>
+
+    <table>
+      <thead><tr><th>키</th><th>동작</th><th>왜 중요한가</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Shift+Tab</span></td><td>권한 모드 순환 (default → plan → ...)</td><td>위험 작업 직전에 plan으로 전환</td></tr>
+        <tr><td><span class="kbd">Ctrl+J</span></td><td>줄 바꿈 (전송 없음)</td><td>긴 프롬프트 여러 줄 작성</td></tr>
+        <tr><td><span class="kbd">Ctrl+C</span></td><td>현재 작업 중단</td><td>잘못된 방향이다 싶을 때 즉시 멈춤</td></tr>
+        <tr><td><span class="kbd">Ctrl+L</span></td><td>화면 클리어 (대화는 유지)</td><td>출력이 너무 많을 때 화면만 정리</td></tr>
+        <tr><td><span class="kbd">Ctrl+R</span></td><td>이전 프롬프트 히스토리 검색</td><td>같은 작업 반복 시 빠르게 호출</td></tr>
+        <tr><td><span class="kbd">Esc</span></td><td>응답 중 회피·드롭다운 닫기</td><td>"잠깐, 그거 아냐" 할 때</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 팁 — 커스텀 단축키</div>
+      <p><code>~/.claude/keybindings.json</code>으로 단축키를 본인 취향에 맞게 바꿀 수 있습니다. Vim 사용자라면 스크롤 영역에서 <code>j/k/gg/G</code>를 그대로 쓸 수도 있어요. 자세한 건 <code>/keybindings</code>로 편집기를 열어 보세요.</p>
+    </div>
+
+    <h2 id="ide">IDE 통합 — VS Code · JetBrains</h2>
+
+    <p>터미널보다 IDE 안에서 쓰고 싶다면, Claude Code는 두 IDE를 1급으로 지원합니다.</p>
+
+    <ul>
+      <li><strong>VS Code</strong>: Extensions → "Claude Code" 설치 후, 통합 터미널에서 <code>claude</code> 실행. 사이드바 패널·인라인 diff·<code>@</code>-멘션으로 선택 코드 공유 가능.</li>
+      <li><strong>JetBrains</strong> (IntelliJ · PyCharm · WebStorm 등): Settings → Plugins → "Claude Code" 설치. <code>Cmd/Alt+Ctrl+K</code>로 파일 참조.</li>
+    </ul>
+
+<pre><code><span class="tok-com"># 이미 IDE를 켠 상태에서 통합 터미널로</span>
+claude
+<span class="tok-com"># 세션 안에서</span>
+/ide
+<span class="tok-com"># → 현재 IDE와 연결 (선택 텍스트·diff·진단 자동 공유)</span></code></pre>
+
+    <h2 id="checklist">1장 체크리스트</h2>
+
+    <ul>
+      <li>☐ <code>claude --version</code>으로 설치 확인</li>
+      <li>☐ 첫 <code>claude</code> 세션에서 로그인 완료</li>
+      <li>☐ 본인 프로젝트에서 <code>/init</code>으로 CLAUDE.md 생성</li>
+      <li>☐ Plan mode와 일반 모드 <code>Shift+Tab</code>으로 토글해 보기</li>
+      <li>☐ <code>claude -p "..."</code>로 one-shot 한 번 실행</li>
+      <li>☐ IDE에서 <code>/ide</code> 연결 (선택)</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="00-concepts.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">0. 기초 개념</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="02-commands.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">2. 명령·권한·메모리·훅</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

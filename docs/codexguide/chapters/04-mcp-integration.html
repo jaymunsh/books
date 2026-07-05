@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4장 · MCP · 외부 통합 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 04</span>
+    <h1>MCP — Codex를 세상과 연결하기</h1>
+    <p class="lead">
+      MCP(Model Context Protocol)는 Codex가 <strong>외부 서비스를 도구처럼 다루기</strong> 위한 개방 표준입니다.
+      GitHub·Slack·DB·브라우저 자동화까지 같은 방식으로 연결합니다.
+    </p>
+
+    <h2 id="mcp">MCP가 무엇이고 왜 필요한가</h2>
+
+    <p>"Codex한테 GitHub PR 정보를 직접 읽게 하고 싶다", "Sentry 에러를 분석하게 하고 싶다" — 이런 욕구를 매번 따로 통합하지 않아도 되게 만든 게 MCP입니다. <strong>Anthropic이 처음 표준화했지만 OpenAI/Codex도 같은 프로토콜을 지원</strong>합니다.</p>
+
+    <figure class="diagram" aria-labelledby="diag-mcp-caption">
+      <svg viewBox="0 0 640 280" role="img" aria-label="MCP 구조 다이어그램">
+        <rect class="diag-box-fill-info" x="20"  y="60" width="160" height="80" rx="10" stroke-width="2"/>
+        <text class="diag-text" x="100" y="95"  font-weight="700" font-size="14" text-anchor="middle">Codex CLI</text>
+        <text class="diag-text--muted" x="100" y="118" font-size="12" text-anchor="middle">(클라이언트)</text>
+
+        <rect class="diag-box-fill-neut" x="240" y="60" width="160" height="80" rx="10" stroke-width="2"/>
+        <text class="diag-text" x="320" y="95"  font-weight="700" font-size="14" text-anchor="middle">MCP Server</text>
+        <text class="diag-text--muted" x="320" y="118" font-size="12" text-anchor="middle">(어댑터)</text>
+
+        <rect class="diag-box-fill-neut" x="460" y="60" width="160" height="80" rx="10" stroke-width="2"/>
+        <text class="diag-text" x="540" y="95"  font-weight="700" font-size="14" text-anchor="middle">외부 서비스</text>
+        <text class="diag-text--muted" x="540" y="118" font-size="12" text-anchor="middle">(GitHub, Slack, ...)</text>
+
+        <line class="diag-line diag-line--arrow" x1="180" y1="100" x2="240" y2="100"/>
+        <line class="diag-line diag-line--arrow" x1="240" y1="108" x2="180" y2="108"/>
+        <text class="diag-text--accent" x="210" y="50" font-size="11" text-anchor="middle">MCP 표준</text>
+
+        <line class="diag-line diag-line--arrow" x1="400" y1="100" x2="460" y2="100"/>
+        <line class="diag-line diag-line--arrow" x1="460" y1="108" x2="400" y2="108"/>
+        <text class="diag-text--accent" x="430" y="50" font-size="11" text-anchor="middle">각자의 API</text>
+
+        <text class="diag-text--muted" x="20" y="180" font-size="12" font-weight="700">전송 방식 2종</text>
+        <rect class="diag-box-fill-neut" x="20"  y="195" width="290" height="50" rx="6" stroke-width="1.5"/>
+        <text class="diag-text" x="165" y="217" font-size="12" text-anchor="middle" font-weight="700">STDIO (로컬)</text>
+        <text class="diag-text--muted" x="165" y="233" font-size="10" text-anchor="middle">npx·python 등 로컬 프로세스. 데이터가 내 머신을 떠나지 않음</text>
+
+        <rect class="diag-box-fill-neut" x="330" y="195" width="290" height="50" rx="6" stroke-width="1.5"/>
+        <text class="diag-text" x="475" y="217" font-size="12" text-anchor="middle" font-weight="700">HTTP/Streaming (호스팅)</text>
+        <text class="diag-text--muted" x="475" y="233" font-size="10" text-anchor="middle">URL로 떠 있는 원격 서버. 인증 토큰 필요</text>
+      </svg>
+      <figcaption id="diag-mcp-caption" class="diagram__caption">
+        Codex ↔ MCP Server ↔ 외부 서비스 — Anthropic이 만든 표준을 OpenAI도 채택
+      </figcaption>
+    </figure>
+
+    <h2 id="mcp-add"><code>codex mcp add</code> — MCP 서버 추가</h2>
+
+    <h3>STDIO 서버 (로컬)</h3>
+<pre><code><span class="tok-com"># 기본 형태</span>
+codex mcp add <span class="tok-str">&lt;name&gt;</span> -- <span class="tok-str">&lt;실행 명령&gt;</span>
+
+<span class="tok-com"># 예: Playwright 브라우저 자동화</span>
+codex mcp add playwright -- npx -y @playwright/mcp@latest
+
+<span class="tok-com"># 예: 내부 파이썬 MCP 서버</span>
+codex mcp add my-db -- python3 /opt/mcp/my_db_server.py</code></pre>
+
+    <h3>HTTP 서버 (호스팅)</h3>
+<pre><code><span class="tok-com"># 기본 형태</span>
+codex mcp add --transport http <span class="tok-str">&lt;name&gt;</span> <span class="tok-str">&lt;URL&gt;</span>
+
+<span class="tok-com"># 예: Sentry MCP (인증 필요)</span>
+codex mcp add --transport http sentry https://mcp.sentry.dev/mcp
+
+<span class="tok-com"># 인증은 세션 안에서</span>
+&gt; /mcp
+<span class="tok-com"># → 서버 선택 → Authenticate → 브라우저 OAuth</span></code></pre>
+
+    <h3>설정 파일로 한꺼번에 — <code>config.toml</code></h3>
+
+<pre><code><span class="tok-com"># ~/.codex/config.toml 또는 ./.codex/config.toml</span>
+
+[mcp_servers.playwright]
+type = <span class="tok-str">"stdio"</span>
+command = <span class="tok-str">"npx"</span>
+args = [<span class="tok-str">"-y"</span>, <span class="tok-str">"@playwright/mcp@latest"</span>]
+
+[mcp_servers.sentry]
+type = <span class="tok-str">"http"</span>
+url = <span class="tok-str">"https://mcp.sentry.dev/mcp"</span>
+
+[mcp_servers.my-db]
+type = <span class="tok-str">"stdio"</span>
+command = <span class="tok-str">"python3"</span>
+args = [<span class="tok-str">"/opt/mcp/my_db_server.py"</span>]
+env = { DB_HOST = <span class="tok-str">"localhost"</span> }</code></pre>
+
+    <p>프로젝트 루트 <code>./.codex/config.toml</code>에 두면 팀원 모두 같은 MCP 서버를 자동으로 갖게 됩니다.</p>
+
+    <h3>관리 명령</h3>
+<pre><code>codex mcp list               <span class="tok-com"># 연결된 서버 목록</span>
+codex mcp get <span class="tok-str">&lt;name&gt;</span>        <span class="tok-com"># 단일 서버 정보</span>
+codex mcp remove <span class="tok-str">&lt;name&gt;</span>     <span class="tok-com"># 제거</span>
+/mcp                         <span class="tok-com"># 세션 안 GUI (인증 포함)</span></code></pre>
+
+    <h2 id="mcp-servers">자주 쓰는 MCP 서버 12선</h2>
+
+    <table>
+      <thead><tr><th>서버</th><th>용도</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td><strong>GitHub</strong></td><td>PR·이슈·코드 검색</td><td>토큰 필요. <code>gh</code> CLI도 함께 권장</td></tr>
+        <tr><td><strong>Slack</strong></td><td>메시지·채널</td><td>워크스페이스 인증</td></tr>
+        <tr><td><strong>Sentry</strong></td><td>에러 모니터링</td><td>OAuth</td></tr>
+        <tr><td><strong>Linear</strong></td><td>이슈 트래커</td><td>토큰 필요</td></tr>
+        <tr><td><strong>Notion</strong></td><td>DB·문서 읽기/쓰기</td><td>인테그레이션 토큰</td></tr>
+        <tr><td><strong>Figma</strong></td><td>디자인 파일·에셋</td><td>OAuth</td></tr>
+        <tr><td><strong>Playwright</strong></td><td>브라우저 자동화·스크린샷</td><td>로컬 Chromium</td></tr>
+        <tr><td><strong>PostgreSQL/MySQL</strong></td><td>SQL·스키마</td><td>읽기 전용 권장</td></tr>
+        <tr><td><strong>Filesystem</strong></td><td>안전 파일 접근</td><td>경로 화이트리스트</td></tr>
+        <tr><td><strong>AWS / GCP</strong></td><td>리소스 조회·로그</td><td>IAM 최소 권한</td></tr>
+        <tr><td><strong>Stripe</strong></td><td>결제 데이터 조회</td><td>읽기 토큰만</td></tr>
+        <tr><td><strong>Vector DB</strong> (Pinecone 등)</td><td>임베딩 검색</td><td>RAG 워크플로우</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "프론트 검증에 Playwright MCP"</div>
+      <span class="scenario__step"><strong>상황</strong>: 로그인 페이지 디자인 변경. 매번 브라우저 열어 확인 귀찮음.</span>
+<pre><code>codex mcp add playwright -- npx -y @playwright/mcp@latest
+
+&gt; <span class="tok-str">"http://localhost:3000/login 스크린샷 + 이메일 input placeholder 확인"</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 헤드리스 브라우저가 자동 띄워 캡처 → diff 검토 30초로 단축.</span>
+    </div>
+
+    <h2 id="security">MCP 권한·보안</h2>
+
+    <p>MCP 서버는 <strong>실제 외부 시스템에 행위</strong>를 합니다. 권한을 잘 잠그지 않으면 위험.</p>
+
+    <h3>3가지 안전 장치</h3>
+    <ol>
+      <li><strong>scope 분리</strong>: 민감 서버는 <code>~/.codex/config.toml</code>(개인 전역)에, 공통 서버는 프로젝트 루트에.</li>
+      <li><strong>3축 권한</strong>: MCP 도구도 3축 권한(2장) 적용 받음. 위험 MCP는 approval 강제.</li>
+      <li><strong>토큰 환경변수</strong>: 토큰을 <code>config.toml</code>에 직접 박지 말고 <code>${ENV_VAR}</code> 참조.</li>
+    </ol>
+
+<pre><code>[mcp_servers.github]
+type = <span class="tok-str">"http"</span>
+url = <span class="tok-str">"https://mcp.github.com/api"</span>
+env = { GITHUB_TOKEN = <span class="tok-str">"${GITHUB_TOKEN}"</span> }</code></pre>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ prod DB·결제 등 위험 서버</div>
+      <p>프로덕션 DB나 결제 API의 쓰기 권한 MCP는 절대 <code>approval_policy = "never"</code>와 조합하지 마세요.
+        그런 서버는 <code>approval_policy = "untrusted"</code> + 읽기 전용 토큰 + 도구 단위 deny가 안전.</p>
+    </div>
+
+    <h2 id="gh">GitHub CLI(<code>gh</code>) — MCP보다 가볍게 쓰기</h2>
+
+    <p>GitHub은 MCP뿐 아니라 <strong><code>gh</code> CLI</strong>도 잘 동작합니다. 권한이 이미 잡혀 있고, Shell로 호출만 하면 끝나서 부담이 적어요.</p>
+
+<pre><code><span class="tok-com"># 인증 (1회)</span>
+gh auth login
+
+<span class="tok-com"># Codex가 이 명령을 알아서 호출함</span>
+&gt; <span class="tok-str">"현재 변경사항으로 PR 만들어줘. 제목은 변경 요약, 본문은 변경 파일 목록과 테스트 결과"</span>
+
+<span class="tok-com"># 직접 예</span>
+gh pr create --title <span class="tok-str">"feat: add auth"</span> --body <span class="tok-str">"..."</span>
+gh pr list
+gh pr view 1234
+gh pr checks 1234</code></pre>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — gh vs GitHub MCP</div>
+      <p>일반 PR/이슈 작업은 <code>gh</code> CLI가 가볍고 빠릅니다.
+        반복 자동화(예: 한 시간 동안 여러 PR을 다루는 워크플로우)는 MCP가 일관성 있게 동작합니다.
+        보통 <strong><code>gh</code>부터 시작</strong>하고, 필요할 때 MCP 추가.</p>
+    </div>
+
+    <h2 id="worktree">Git Worktree — Codex를 격리해서 안전하게</h2>
+
+    <p>큰 작업이나 위험한 변경을 시킬 때는 별도 worktree에서 작업시키는 게 깔끔합니다.</p>
+
+<pre><code><span class="tok-com"># 새 기능 브랜치를 worktree로</span>
+git worktree add ../my-proj-feature feature/payments
+cd ../my-proj-feature
+codex
+<span class="tok-com"># → 메인 작업 디렉토리는 영향 없음</span>
+
+<span class="tok-com"># 정리</span>
+git worktree list
+git worktree remove ../my-proj-feature</code></pre>
+
+    <p>Codex Cloud(3장)와 조합하면 더 강력: <strong>큰 작업은 Cloud로, 작은 격리 작업은 worktree로</strong>.</p>
+
+    <h2 id="checklist">4장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>codex mcp list</code>로 현재 연결 확인</li>
+      <li>☐ Playwright 1개라도 깔아 보고 "스크린샷 찍어줘" 시험</li>
+      <li>☐ <code>gh auth login</code> → Codex로 PR 자동 생성</li>
+      <li>☐ MCP 토큰은 환경변수로만</li>
+      <li>☐ 위험 MCP는 approval 강제 (3축 활용)</li>
+      <li>☐ 위험 작업은 worktree로 격리</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="03-cloud-profiles.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">3. Cloud·Profiles</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="05-automation.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">5. 자동화·CI/CD</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

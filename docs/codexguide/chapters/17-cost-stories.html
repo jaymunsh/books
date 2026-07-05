@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>17장 · 비용 효율화 사례집 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 17 · 사례집</span>
+    <h1>비용 효율화 사례집 — 절감 스토리와 AI 활용 원칙</h1>
+    <p class="lead">15장이 <em>기법</em>이라면 17장은 <em>이야기와 원칙</em>. 절감 사례 4개 + 단계별 가이드 + Codex 무관 AI 활용 8원칙.</p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 사례 안내</div>
+      <p>커뮤니티에 자주 보고되는 패턴을 합성한 가상 케이스. 본인 환경에 옮기면 비슷한 효과 기대.</p>
+    </div>
+
+    <h2 id="overview">절감 사례 4개</h2>
+    <table>
+      <thead><tr><th>사례</th><th>핵심 액션</th><th>전</th><th>후</th><th>절감</th></tr></thead>
+      <tbody>
+        <tr><td>① 스타트업</td><td>전사 디폴트 GPT-5.5 → 작업별 5.4-mini 분리</td><td>월 $2,200</td><td>월 $680</td><td>-69%</td></tr>
+        <tr><td>② 오픈소스</td><td>CI에 변경 크기 차등 (mini vs full)</td><td>월 $760</td><td>월 $190</td><td>-75%</td></tr>
+        <tr><td>③ 솔로 개발자</td><td>AGENTS.md 240줄→85줄 다이어트</td><td>세션 17k</td><td>세션 5k</td><td>-70%</td></tr>
+        <tr><td>④ 데이터팀</td><td>Codex Cloud → 로컬 Batch API + mini</td><td>일 $40</td><td>일 $7</td><td>-83%</td></tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <h2 id="case-1">📖 사례 ① · 디폴트 모델 분리로 69% 절감</h2>
+    <p><strong>증상</strong>: 시리즈 A 스타트업 12명. 도입 3개월차 월 $2,200.</p>
+    <p><strong>진단</strong>: Platform Usage 보니 모든 사용자가 gpt-5.5만 사용 — 분류·정리 같은 단순 작업도 5.5.</p>
+    <p><strong>적용</strong>: <code>bulk</code> profile (gpt-5.4-mini) + 팀 슬랙 가이드 "단순 작업은 /profile bulk".</p>
+    <p><strong>결과</strong>: 월 $2,200 → $680 (-69%). 품질 차이 거의 없음.</p>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 기본값의 폭력</div>
+      <p>"아무도 의식하지 않는 기본값"이 가장 큰 비용 누수. 도입 첫 주에 config.toml 같이 읽으세요.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="case-2">📖 사례 ② · CI 차등화 75% 절감</h2>
+    <p><strong>증상</strong>: OSS 라이브러리. 주말 외부 PR 23개에 일 $74 청구.</p>
+    <p><strong>진단</strong>: PR 62%가 5파일 이하 소형인데 워크플로우는 모두 gpt-5.5 + reasoning high.</p>
+    <p><strong>적용</strong>: 변경 크기로 분기 (15장 §CI 비용 차등) — 소형은 gpt-5.4-mini + low.</p>
+    <p><strong>결과</strong>: 월 $760 → $190 (-75%). 리뷰 속도는 오히려 빨라짐.</p>
+
+    <hr />
+
+    <h2 id="case-3">📖 사례 ③ · AGENTS.md 다이어트 70% 절약</h2>
+    <p><strong>증상</strong>: 인디 개발자 M. 세션 시작도 안 했는데 컨텍스트 17k 차 있음.</p>
+    <p><strong>진단</strong>: 1년간 "이것도 적어둬야지" 누적된 AGENTS.md 240줄.</p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 짚고 가기 — AGENTS.md는 자동으로 안 커진다</div>
+      <p>AGENTS.md는 Codex가 자동 추가하지 않습니다. 사람이 직접 편집해야 합니다. M의 경우처럼 "한 줄씩 추가" 1년이면 240줄 누적되는 것이지, 가만히 둔다고 커지지 않아요.</p>
+    </div>
+
+    <p><strong>적용</strong>: Codex에게 다이어트 직접 시킴.</p>
+<pre><code>&gt; <span class="tok-str">"이 AGENTS.md를 90줄 이내로 다이어트:
+   1) 지금도 실제 적용되는 규칙만
+   2) 중복 통합
+   3) '과거에 막혔던' 회상형 메모 삭제 (필요시 .codex/notes/ 로 분리)
+   4) '왜 이 규칙인가' 1줄로 안 떠오르면 삭제 후보로 표시"</span></code></pre>
+
+    <p><strong>결과</strong>: 세션 시작 컨텍스트 17k → 5k (-70%). 월 토큰 30% 감소.</p>
+
+    <hr />
+
+    <h2 id="case-4">📖 사례 ④ · Cloud → 로컬 Batch로 83% 절감</h2>
+    <p><strong>증상</strong>: 데이터팀. Codex Cloud로 매일 3000건 피드백 분류 — 일 $40.</p>
+    <p><strong>진단</strong>: Cloud는 인터랙티브 작업에 가치 있지만, 단순 배치 분류는 Batch API가 훨씬 저렴.</p>
+    <p><strong>적용</strong>: 8장의 Batch API + gpt-5.4-mini 조합으로 야간 실행.</p>
+    <p><strong>결과</strong>: 일 $40 → $7 (-83%). 분류 정확도 96% → 94% (실용적 차이 없음).</p>
+
+    <hr />
+
+    <h2 id="lifecycle">🔄 프로젝트 단계별 효율 시나리오</h2>
+
+    <h3>1단계 · 설계 (Discovery)</h3>
+    <ul>
+      <li>gpt-5.5 + reasoning high를 짧고 굵게 (1~2회/일, 1시간)</li>
+      <li>출력: 아키텍처·ADR·기술 스택. 코드 X</li>
+      <li>예상 비용: $20~50로 끝남</li>
+    </ul>
+
+    <h3>2단계 · 구축 (Build)</h3>
+    <ul>
+      <li>gpt-5.5 (기본 effort)가 80%</li>
+      <li>막힐 때만 effort high</li>
+      <li>매 PR review profile로 셀프 점검</li>
+      <li>예상: 1인 풀타임 월 $100~200</li>
+    </ul>
+
+    <h3>3단계 · 출시 (Launch)</h3>
+    <ul>
+      <li>보안 점검 한 번 high — "값진 $5"</li>
+      <li>CI에 Codex Action + effort 차등</li>
+      <li>Usage baseline 측정</li>
+    </ul>
+
+    <h3>4단계 · 운영 (Operate)</h3>
+    <ul>
+      <li>모니터링 자동화는 gpt-5.4-mini</li>
+      <li>인시던트는 5.5 + high — 아끼지 마세요</li>
+      <li>주간 Usage 자동 리포트</li>
+      <li>분기 AGENTS.md·profile 정리</li>
+    </ul>
+
+    <h3>5단계 · 회고 (Retro)</h3>
+    <ul>
+      <li>분기 30분: "지난 분기 비싸게 쓴 패턴 3가지"</li>
+      <li>안티패턴은 config.toml·AGENTS.md에 룰로 박기</li>
+    </ul>
+
+    <hr />
+
+    <h2 id="ai-principles">🧭 AI 활용 일반 원칙 8가지 (Codex 무관)</h2>
+
+    <p>GPT·Claude·Gemini — 어떤 AI 도구를 쓰든 적용되는 원칙.</p>
+
+    <ol>
+      <li><strong>도구의 무게 = 작업의 무게</strong>. 오타에 reasoning high 호출 X.</li>
+      <li><strong>"비싼 모델 = 좋은 결과"는 신화</strong>. 정형 작업은 mini로 충분.</li>
+      <li><strong>사람 시간 vs API 비용 트레이드오프</strong>. 월 $200 더 써서 5시간 절약은 이득.</li>
+      <li><strong>측정 없는 최적화는 추측</strong>. 숫자 먼저, 액션 나중.</li>
+      <li><strong>컨텍스트가 곧 비용</strong>. "매번 보낼 가치가 있나?"</li>
+      <li><strong>캐싱은 무조건 켜라</strong>. OpenAI는 자동, 다만 prefix를 변경하지 마라.</li>
+      <li><strong>배치·비동기로 분리</strong>. 실시간성 자기 강요 X. Batch API 50% 절감.</li>
+      <li><strong>모델·벤더에 락인되지 마라</strong>. AGENTS.md·프롬프트는 평문 마크다운으로.</li>
+    </ol>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 한 줄 요약</div>
+      <p>"<strong>측정하고, 작업에 맞는 도구를 골라, 컨텍스트를 절제하고, 사람 시간으로 환산해서 판단한다.</strong>"</p>
+    </div>
+
+    <h2 id="roi">💰 ROI 빠른 계산</h2>
+    <table>
+      <thead><tr><th>항목</th><th>예</th></tr></thead>
+      <tbody>
+        <tr><td>(A) 월 Codex 비용</td><td>$200</td></tr>
+        <tr><td>(B) 절약 시간 (월)</td><td>20시간</td></tr>
+        <tr><td>(C) 시간당 인건비</td><td>$50</td></tr>
+        <tr><td>(D) 절약 가치 = B × C</td><td>$1,000</td></tr>
+        <tr><td><strong>ROI</strong> = (D − A) / A</td><td><strong>+400%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="budget-guide">📊 팀 규모·예산</h2>
+    <table>
+      <thead><tr><th>규모</th><th>적정 월 예산</th></tr></thead>
+      <tbody>
+        <tr><td>1인 (사이드)</td><td>$10~50 (ChatGPT Plus로 무료 가능)</td></tr>
+        <tr><td>1인 풀타임</td><td>$50~200</td></tr>
+        <tr><td>2~5인 스타트업</td><td>$200~600</td></tr>
+        <tr><td>5~20인 팀</td><td>$600~2,000</td></tr>
+        <tr><td>20인+</td><td>$2,000~10,000+</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="closing">🎯 닫는 글</h2>
+    <p>모든 사례·원칙은 한 사고방식으로 수렴: <strong>"AI 비용을 절약된 사람 시간으로 환산해서 판단"</strong>.
+      월 $200이 비싸 보이지만 5시간 살리면 $1,000짜리 결정. 숫자보다 <strong>그 숫자가 어떤 시간을 사고 있는가</strong>를 보세요.</p>
+
+    <h2 id="checklist">17장 체크리스트</h2>
+    <ul>
+      <li>☐ Platform Usage로 본인 모델 분포 확인</li>
+      <li>☐ 기본 모델·profile 점검 (사례 ①)</li>
+      <li>☐ CI에 effort 차등 (사례 ②)</li>
+      <li>☐ AGENTS.md 200줄 초과면 다이어트 (사례 ③)</li>
+      <li>☐ 배치 작업은 Batch API 검토 (사례 ④)</li>
+      <li>☐ ROI를 사람 시간으로 환산</li>
+      <li>☐ AI 원칙 8개 중 약한 항목 1개 개선</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="16-cheatsheet.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">16. 부록·치트시트</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="18-by-role.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">18. 직군별 가이드</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

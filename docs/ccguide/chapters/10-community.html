@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10장 · 커뮤니티 스킬·툴 베스트 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 10</span>
+    <h1>커뮤니티 스킬·툴 베스트 — 2026년 핫한 것들</h1>
+    <p class="lead">
+      Claude Code 생태계는 폭발적으로 자라고 있습니다. 이 장에서는 <strong>GitHub 별이 빠르게 오른 커뮤니티 도구</strong>들을 골라
+      "<em>언제·어떻게 쓰면 되는지</em>"의 시나리오와 함께 소개합니다. 별 수치는 2026년 6월 기준입니다(빠르게 변하니 참고용).
+    </p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 어떻게 골랐나</div>
+      <p>① GitHub 별 1k+ ② 최근 6개월 안에 활발히 업데이트 ③ 실무에서 실제 쓸 만한 시나리오가 있는 것 — 세 조건을 만족하는 것들만 추렸습니다.
+        커뮤니티 프로젝트는 빠르게 변하므로, 설치 전 반드시 저장소의 최신 README를 확인하세요.</p>
+    </div>
+
+    <h2 id="superpowers">⭐ superpowers — TDD 강제 풀스택 SDLC 프레임워크</h2>
+
+    <div class="tool-card">
+      <h3>obra/superpowers <span class="star-badge">★ 233k</span></h3>
+      <p class="tool-card__meta">
+        🔗 <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">github.com/obra/superpowers</a>
+      </p>
+      <p>커뮤니티에서 <strong>가장 큰 Claude Code 스킬 라이브러리</strong>. 브레인스토밍 → 스펙 → 계획 → 서브에이전트 분담 → TDD → 리뷰 → 머지까지
+        소프트웨어 개발 전체 사이클을 스킬 묶음으로 강제합니다. 핵심 철학은 <code>RED → GREEN → REFACTOR</code> 사이클을 코드 작성 매 단계마다 따르게 하는 것.</p>
+
+      <p><strong>설치</strong> (Claude Code 플러그인):</p>
+<pre><code>/plugin install superpowers@claude-plugins-official</code></pre>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "기능 하나를 처음부터 끝까지 맡기기"</div>
+        <span class="scenario__step"><strong>상황</strong>: 결제 API 엔드포인트 1개를 새로 만들어야 하는데, 매번 빠뜨리는 단계(테스트 작성·엣지 케이스·문서)가 있어 머지 후에 후회한다.</span>
+        <span class="scenario__step"><strong>이전 방식</strong>: "결제 API 만들어줘" → Claude가 코드만 후딱 짜고 끝. 테스트는 따로 시켜야 함.</span>
+        <span class="scenario__step"><strong>superpowers 적용</strong>:</span>
+<pre><code>&gt; /superpowers:plan-feature <span class="tok-str">"POST /payments — 카드 결제 생성"</span>
+<span class="tok-com"># 1) 스펙 초안 자동 생성 (요청·응답·에러 케이스)</span>
+<span class="tok-com"># 2) 실패하는 테스트 먼저 작성 (RED)</span>
+<span class="tok-com"># 3) 통과시키는 최소 구현 (GREEN)</span>
+<span class="tok-com"># 4) 리팩터링 → 보안·성능 리뷰</span>
+<span class="tok-com"># 5) PR 본문·체인지로그 자동 생성</span></code></pre>
+        <span class="scenario__step"><strong>결과</strong>: 시간은 30% 정도 더 들지만, 머지 직전 "테스트·문서 빠졌네" 0건. 큰 작업일수록 효과가 큽니다.</span>
+      </div>
+    </div>
+
+    <h2 id="awesome-skills">⭐ awesome-agent-skills — 1000+ 스킬 큐레이션</h2>
+
+    <div class="tool-card">
+      <h3>VoltAgent/awesome-agent-skills <span class="star-badge">★ 25.8k</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/VoltAgent/awesome-agent-skills" target="_blank" rel="noopener">github.com/VoltAgent/awesome-agent-skills</a></p>
+      <p>공식 팀과 커뮤니티가 만든 <strong>1000개 이상의 에이전트 스킬</strong>을 카테고리별로 정리. Claude Code뿐 아니라 Codex·Gemini CLI·Cursor 와도 호환되는 포맷이라
+        스킬 자체의 이식성이 좋습니다. 인프라·실행·데이터 접근·코드 품질·오케스트레이션 5개 영역으로 분류돼 있어 필요한 것만 골라 쓸 수 있어요.</p>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "스킬을 직접 만들기 전에 한 번 둘러보기"</div>
+        <span class="scenario__step"><strong>상황</strong>: "릴리즈 자동화 스킬을 만들까…" 하다가 시간 낭비.</span>
+        <span class="scenario__step"><strong>적용</strong>: awesome-agent-skills에서 <code>release</code>·<code>changelog</code> 검색 → 유사 스킬 3~4개 README 비교 → 가장 잘 맞는 것 골라 <code>.claude/skills/</code>에 복사 → 우리 팀 컨벤션만 살짝 수정.</span>
+        <span class="scenario__step"><strong>결과</strong>: 1시간 작업이 15분으로. 처음부터 안 만드는 게 잘 만드는 첫 단계입니다.</span>
+      </div>
+    </div>
+
+    <h2 id="toolkit">⭐ awesome-claude-code-toolkit — 올인원 키트</h2>
+
+    <div class="tool-card">
+      <h3>rohitg00/awesome-claude-code-toolkit <span class="star-badge">★ 2.1k</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/rohitg00/awesome-claude-code-toolkit" target="_blank" rel="noopener">github.com/rohitg00/awesome-claude-code-toolkit</a></p>
+      <p>혼자 다 짜기 부담스러운 사람을 위한 <strong>올인원 패키지</strong>: 135개 에이전트, 35개 큐레이션 스킬, 42개 커스텀 명령, 176+ 플러그인, 20개 훅, 15개 룰,
+        14개 MCP 설정까지. 카테고리는 개발·DevOps·QA·데이터 과학·비즈니스 등 11개로 나뉘어 있어요.</p>
+
+      <p><strong>설치</strong> (플러그인 마켓플레이스):</p>
+<pre><code>/plugin marketplace add rohitg00/awesome-claude-code-toolkit</code></pre>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "처음 Claude Code 도입하는 팀"</div>
+        <span class="scenario__step"><strong>상황</strong>: 회사에 Claude Code를 도입했는데, 팀원마다 사용법이 제각각이고 셋업도 비효율.</span>
+        <span class="scenario__step"><strong>적용</strong>: 신규 도입 첫날 <code>/plugin marketplace add ...</code>로 전체 키트를 깔고, 우리 팀이 안 쓸 것은 비활성화. 1주일간 모두가 같은 스킬·훅을 공유하며 일관성 확보.</span>
+        <span class="scenario__step"><strong>결과</strong>: "이런 작업 어떻게 해요?"의 답이 "스킬 <code>/xxx</code> 써보세요"로 통일. 온보딩 시간 절반 이상 단축.</span>
+      </div>
+    </div>
+
+    <h2 id="ccusage">⭐ ccusage — 토큰·비용 모니터링 표준</h2>
+
+    <div class="tool-card">
+      <h3>ryoppippi/ccusage <span class="star-badge">★ 16.4k</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/ryoppippi/ccusage" target="_blank" rel="noopener">github.com/ryoppippi/ccusage</a></p>
+      <p>로컬에 쌓이는 Claude Code의 <code>.jsonl</code> 사용 로그를 분석해 <strong>일/주/월/세션별 토큰·비용 리포트</strong>를 표로 출력합니다.
+        5시간 청구 윈도우·모델별 분리·JSON 출력·타임존 지원까지. 사실상 커뮤니티 표준 트래커입니다.</p>
+
+      <p><strong>설치 없이 한 줄 실행</strong>:</p>
+<pre><code>npx ccusage@latest             <span class="tok-com"># 기본 일별 리포트</span>
+npx ccusage@latest monthly     <span class="tok-com"># 월별 합계</span>
+npx ccusage@latest session     <span class="tok-com"># 세션별</span>
+npx ccusage@latest --json      <span class="tok-com"># JSON 출력 (자동화용)</span></code></pre>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 1 · "이번 달 얼마 썼지?"</div>
+        <span class="scenario__step"><strong>상황</strong>: API 크레딧으로 결제 중인데, 월말에 "왜 이렇게 많이 나왔지?" 매번 놀란다.</span>
+        <span class="scenario__step"><strong>적용</strong>: 매주 금요일 퇴근 전에 한 줄.</span>
+<pre><code>npx ccusage@latest weekly</code></pre>
+        <span class="scenario__step"><strong>결과</strong>: 비싼 작업(주로 Opus + 큰 컨텍스트)이 어디에 몰렸는지 표로 보임. 다음 주엔 그 작업만 Sonnet으로.</span>
+      </div>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 2 · "팀 사용량 대시보드"</div>
+        <span class="scenario__step"><strong>적용</strong>: <code>/schedule</code>로 매일 새벽 ccusage 결과를 슬랙으로.</span>
+<pre><code>&gt; /schedule <span class="tok-str">"0 7 * * *"</span> sh -c <span class="tok-str">'npx ccusage@latest daily --json | jq ... | slack-post #ops-claude'</span></code></pre>
+      </div>
+    </div>
+
+    <h2 id="usage-monitor">⭐ Claude Code Usage Monitor — 실시간 터미널 게이지</h2>
+
+    <div class="tool-card">
+      <h3>Maciek-roboblog/Claude-Code-Usage-Monitor</h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor" target="_blank" rel="noopener">github.com/Maciek-roboblog/Claude-Code-Usage-Monitor</a></p>
+      <p>ccusage가 <em>리포트형</em>이라면 이건 <strong>실시간 게이지형</strong>입니다. 별도 터미널에 띄워 두면 현재 5시간 윈도우 사용량·잔여 토큰·ML 기반 예측이 계속 갱신됩니다.
+        프로 플랜의 윈도우 제한을 자주 만나는 헤비 유저용.</p>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "마감 직전 토큰 폭주 방지"</div>
+        <span class="scenario__step"><strong>상황</strong>: 큰 리팩터링 중간에 갑자기 "토큰 한도 초과 — 2시간 대기"가 떠 작업이 막힘.</span>
+        <span class="scenario__step"><strong>적용</strong>: 모니터를 2번째 모니터에 띄워 두고, 사용률 70% 넘으면 Opus → Sonnet으로 다운그레이드.</span>
+      </div>
+    </div>
+
+    <h2 id="claude-code-action">⭐ claude-code-action — 공식 GitHub Action</h2>
+
+    <div class="tool-card">
+      <h3>anthropics/claude-code-action <span class="star-badge">공식</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/anthropics/claude-code-action" target="_blank" rel="noopener">github.com/anthropics/claude-code-action</a></p>
+      <p>Anthropic이 공식 배포하는 GitHub Action. PR이 열리면 자동 리뷰하거나, 이슈/PR 코멘트에 <code>@claude</code>를 멘션하면 <strong>브랜치 생성 → 수정 → 테스트 → PR</strong>까지 자동으로.
+        50 PR/월 정도면 비용은 보통 $5 안쪽으로 알려져 있습니다.</p>
+
+      <p><strong>최소 설정</strong> (<code>.github/workflows/claude.yml</code>):</p>
+<pre><code>name: Claude
+on:
+  issue_comment: { types: [created] }
+  pull_request_review_comment: { types: [created] }
+
+jobs:
+  claude:
+    <span class="tok-kw">if</span>: contains(github.event.comment.body, <span class="tok-str">'@claude'</span>)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}</code></pre>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "이슈 던지면 PR이 돌아온다"</div>
+        <span class="scenario__step"><strong>상황</strong>: 작은 버그가 잔뜩. 매번 직접 브랜치 만들고 고치기 귀찮음.</span>
+        <span class="scenario__step"><strong>적용</strong>: 이슈 본문에 재현 절차 적고 코멘트로 <code>@claude 이거 고쳐줘</code>.</span>
+        <span class="scenario__step"><strong>결과</strong>: 10분 뒤 봇이 브랜치 만들고 수정 후 PR 올림. 나는 리뷰만 누름. 작은 버그 처리 속도가 5배.</span>
+      </div>
+
+      <div class="callout callout--warn">
+        <div class="callout__title">⚠️ 주의 — 외부 PR에는 신중히</div>
+        <p>외부 컨트리뷰터의 PR에 자동 리뷰가 트리거되면 비용·악용 위험이 있습니다. <code>if</code> 조건에 <code>github.event.pull_request.author_association</code> 체크를 꼭 넣으세요.</p>
+      </div>
+    </div>
+
+    <h2 id="anthropics-skills">⭐ anthropics/skills — 공식 레퍼런스 스킬</h2>
+
+    <div class="tool-card">
+      <h3>anthropics/skills <span class="star-badge">공식</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">github.com/anthropics/skills</a></p>
+      <p>Anthropic이 직접 운영하는 <strong>공식 스킬 저장소</strong>. 창작(아트·음악·디자인) · 기술(웹 앱 테스트·MCP 서버 생성) · 엔터프라이즈 워크플로우까지
+        "스킬을 어떻게 잘 쓰는지"의 모범 답안이 모여 있습니다. 커스텀 스킬 작성 전에 한 번 훑으세요.</p>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "내 첫 커스텀 스킬 만들 때 베끼기"</div>
+        <span class="scenario__step"><strong>적용</strong>: anthropics/skills의 유사 도메인 스킬 1개를 통째로 <code>.claude/skills/</code>에 복사 → 프론트매터의 <code>name</code>·<code>description</code>만 우리 것으로 → 본문은 천천히 수정.</span>
+      </div>
+    </div>
+
+    <h2 id="travisvn">⭐ awesome-claude-skills — 큐레이션 디렉토리</h2>
+
+    <div class="tool-card">
+      <h3>travisvn/awesome-claude-skills <span class="star-badge">★ 13k</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/travisvn/awesome-claude-skills" target="_blank" rel="noopener">github.com/travisvn/awesome-claude-skills</a></p>
+      <p>스킬·리소스·도구를 <strong>카테고리별로 분류한 awesome 리스트</strong>. 검색이 안 되는 디렉토리 형 디렉토리. Ctrl+F로 키워드 찾는 게 가장 빠릅니다.
+        <a href="https://awesomeclaudeskills.com/" target="_blank" rel="noopener">awesomeclaudeskills.com</a>에서 웹으로도 볼 수 있어요.</p>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "주제만 정하고 도구 찾기"</div>
+        <span class="scenario__step"><strong>상황</strong>: "테스트 자동화" 같은 키워드는 정해졌는데 어떤 도구가 있는지 모르겠음.</span>
+        <span class="scenario__step"><strong>적용</strong>: 사이트에서 카테고리 클릭 → 별 수 높은 것부터 README 확인 → 마음에 드는 것 3개 비교.</span>
+      </div>
+    </div>
+
+    <h2 id="alirezarezvani">⭐ claude-skills — 비즈니스/엔지니어링 통합</h2>
+
+    <div class="tool-card">
+      <h3>alirezarezvani/claude-skills</h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/alirezarezvani/claude-skills" target="_blank" rel="noopener">github.com/alirezarezvani/claude-skills</a></p>
+      <p><strong>337개 스킬 + 30개 에이전트 + 70개 커스텀 명령</strong>. 특이점은 엔지니어링뿐 아니라 마케팅·프로덕트·컴플라이언스·C레벨 자문·연구·비즈니스 오퍼레이션까지 커버한다는 것.
+        Claude Code뿐 아니라 Codex·Gemini CLI·Cursor 등 8개 코딩 에이전트와 호환.</p>
+
+      <div class="callout callout--scenario">
+        <div class="callout__title">🎬 시나리오 · "엔지니어 아닌 사람도 같이 쓰는 팀"</div>
+        <span class="scenario__step"><strong>상황</strong>: PM·디자이너·CEO도 Claude Code 깔아 둠. 각자 다른 스킬이 필요.</span>
+        <span class="scenario__step"><strong>적용</strong>: 이 컬렉션에서 직군별로 필요한 스킬을 골라 <code>.claude/skills/</code>에 깔아두면, 한 도구로 전 회사를 굴림.</span>
+      </div>
+    </div>
+
+    <h2 id="how-to-choose">실전 선택 가이드</h2>
+
+    <p>모든 도구를 다 깔면 오히려 어수선해집니다. 본인 상황에 맞춰 골라 보세요.</p>
+
+    <table>
+      <thead><tr><th>상황 / 목표</th><th>먼저 깔 도구</th></tr></thead>
+      <tbody>
+        <tr><td>비용·토큰 관리가 시급</td><td><code>ccusage</code> + (선택) Usage Monitor</td></tr>
+        <tr><td>PR 자동 리뷰·이슈 자동 수정</td><td><code>anthropics/claude-code-action</code></td></tr>
+        <tr><td>혼자 큰 기능을 빠뜨림 없이 만들기</td><td><code>obra/superpowers</code></td></tr>
+        <tr><td>팀 전체 표준화·온보딩</td><td><code>awesome-claude-code-toolkit</code></td></tr>
+        <tr><td>스킬 1~2개만 베껴 쓰고 싶음</td><td><code>anthropics/skills</code> + <code>awesome-agent-skills</code></td></tr>
+        <tr><td>비엔지니어 직군까지 함께</td><td><code>alirezarezvani/claude-skills</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 커뮤니티 도구를 깔 때 5가지 체크</div>
+      <ol>
+        <li><strong>최근 커밋 날짜</strong> — 3개월 이상 멈춰 있으면 패스</li>
+        <li><strong>이슈 응답 속도</strong> — 메인테이너가 살아 있는지 확인</li>
+        <li><strong>README의 보안 섹션</strong> — 어떤 권한이 필요한지 명시돼 있는가</li>
+        <li><strong>스킬 본문 검토</strong> — 깔기 전에 <code>SKILL.md</code>를 직접 읽고, 위험한 명령이 들어 있지 않은지 확인</li>
+        <li><strong>본인 settings.json의 deny와 충돌</strong> — 깐 뒤에도 deny 규칙은 그대로 유지하기</li>
+      </ol>
+    </div>
+
+    <h2 id="checklist">10장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>npx ccusage@latest</code> 한 번 실행해 본인 사용량 확인</li>
+      <li>☐ 위 5가지 안전 체크를 통과한 커뮤니티 스킬 1개 시범 도입</li>
+      <li>☐ (Github 리포 사용자) <code>claude-code-action</code> 워크플로우 1개 등록</li>
+      <li>☐ 우리 팀에 필요 없는 스킬은 비활성화 — 명령 자동완성이 깔끔해짐</li>
+      <li>☐ awesome-* 리스트 1개 북마크해 두기 (도구 떠오를 때 첫 검색지)</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="09-scenarios.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">9. 실전 시나리오</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="11-real-stories.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">11. 실무 빌딩 스토리</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2장 · 명령·권한·메모리·훅 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 02</span>
+    <h1>슬래시 명령·권한·메모리·훅</h1>
+    <p class="lead">
+      Claude Code의 "조종 장치" 네 가지를 한 번에 익힙니다.
+      <strong>슬래시 명령어</strong>로 세션을 통제하고, <strong>권한</strong>으로 안전을 보장하며,
+      <strong>CLAUDE.md</strong>로 프로젝트 컨텍스트를 영구 학습시키고, <strong>훅</strong>으로 자동 동작을 박아 둡니다.
+    </p>
+
+    <h2 id="slash-commands">자주 쓰는 슬래시 명령어</h2>
+    <p>전부 외울 필요는 없습니다. <code>/help</code>로 언제든 목록을 볼 수 있어요. 다만 아래 표는 <strong>매주 만나는 명령</strong>들입니다.</p>
+
+    <h3>세션 관리</h3>
+    <table>
+      <thead><tr><th>명령</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td><code>/help</code></td><td>사용 가능한 모든 명령 목록</td></tr>
+        <tr><td><code>/clear</code></td><td>현재 대화 히스토리 비우기 (CLAUDE.md는 유지)</td></tr>
+        <tr><td><code>/compact</code></td><td>대화 컨텍스트 압축 (긴 대화 지속 가능)</td></tr>
+        <tr><td><code>/context</code></td><td>현재 토큰 사용량 확인</td></tr>
+        <tr><td><code>/resume</code></td><td>과거 세션 목록에서 골라 이어가기</td></tr>
+        <tr><td><code>/exit</code> 또는 <span class="kbd">Ctrl+D</span></td><td>세션 종료</td></tr>
+      </tbody>
+    </table>
+
+    <h3>설정·메모리·도구</h3>
+    <table>
+      <thead><tr><th>명령</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td><code>/config</code></td><td>설정 GUI (모델·테마·언어 등)</td></tr>
+        <tr><td><code>/model</code></td><td>모델 변경 (Opus / Sonnet / Haiku)</td></tr>
+        <tr><td><code>/permissions</code></td><td>권한 규칙 추가/조회</td></tr>
+        <tr><td><code>/init</code></td><td>CLAUDE.md 자동 생성 / 갱신</td></tr>
+        <tr><td><code>/memory</code></td><td>CLAUDE.md · 자동 메모리 열람/편집</td></tr>
+        <tr><td><code>/agents</code></td><td>서브에이전트 관리</td></tr>
+        <tr><td><code>/mcp</code></td><td>MCP 서버 추가/조회/인증</td></tr>
+        <tr><td><code>/hooks</code></td><td>이벤트 훅 설정</td></tr>
+        <tr><td><code>/ide</code></td><td>VS Code / JetBrains 연결</td></tr>
+        <tr><td><code>/doctor</code></td><td>설정 진단 (문제 발생 시 1순위)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 팁 — 명령어 자동완성</div>
+      <p>슬래시(<code>/</code>)만 치면 사용 가능한 명령이 드롭다운으로 떠요. <strong>스킬</strong>(3장)과 <strong>플러그인</strong>도 같은 자리에 노출됩니다.
+        실제로 외울 명령은 위 표 정도면 충분합니다.</p>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "처음 들어간 프로젝트 (/init)"</div>
+      <span class="scenario__step"><strong>상황</strong>: 신입으로 입사 첫날. 50개 디렉토리, 수백 파일의 모놀리식 프로젝트. 어디부터 봐야 할지 모르겠음.</span>
+      <span class="scenario__step"><strong>이전 방식</strong>: README 정독 → 핵심 파일 찾아 헤매기 → 1시간 이상.</span>
+      <span class="scenario__step"><strong>적용</strong>:</span>
+<pre><code>cd ~/projects/big-mono
+claude
+&gt; /init
+<span class="tok-com"># Claude가 코드를 훑고 CLAUDE.md 초안 작성</span>
+<span class="tok-com"># → 빌드/테스트 명령, 모듈 구조, 의존성 흐름 자동 정리</span>
+
+&gt; <span class="tok-str">"CLAUDE.md에 적힌 구조 중 가장 중요한 모듈 3개를 골라 각각 한 문단으로 설명"</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 15분 만에 프로젝트 지도를 손에 쥠. CLAUDE.md는 그대로 커밋해 다음 사람도 같은 길로.</span>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "긴 디버깅 도중 컨텍스트 꽉 참 (/compact)"</div>
+      <span class="scenario__step"><strong>상황</strong>: 3시간째 같은 버그 추적. 대화가 100메시지를 넘어 응답이 점점 느려지고, "이전에 시도한 것"을 Claude가 잊기 시작.</span>
+      <span class="scenario__step"><strong>이전 방식</strong>: <code>/clear</code> → 처음부터 다시 설명. 컨텍스트 다 날아감.</span>
+      <span class="scenario__step"><strong>적용</strong>:</span>
+<pre><code>&gt; /context              <span class="tok-com"># 현재 사용량 확인 (예: 180k/200k)</span>
+&gt; /compact              <span class="tok-com"># 핵심 결론만 요약하고 나머지 압축</span>
+&gt; <span class="tok-str">"지금까지 시도한 가설 3개와 가장 유력한 원인 1개를 다시 요약해줘"</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 핵심 컨텍스트는 보존된 채 60k로 다이어트. 디버깅 흐름 끊기지 않고 계속.</span>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "팀에 새 사람 합류 (CLAUDE.md)"</div>
+      <span class="scenario__step"><strong>상황</strong>: 신입에게 매번 "우리는 2-space 인덴트", "lint 돌리고 커밋", "core 폴더는 함부로 건드리지 마" 반복 설명.</span>
+      <span class="scenario__step"><strong>적용</strong>: 같은 내용을 CLAUDE.md에 박아 두면 본인뿐 아니라 <strong>모든 팀원의 Claude</strong>가 자동 학습.</span>
+<pre><code><span class="tok-com"># CLAUDE.md (커밋 대상)</span>
+## Code Standards
+- 2-space indent, camelCase
+- Always run `npm run lint` before commit
+
+## Common Mistakes
+- Do NOT modify `src/core/engine.ts` without integration tests
+- Never commit `.env`</code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 신입의 첫 PR이 처음부터 팀 컨벤션과 맞아 들어옴. 리뷰 코멘트 80% 감소.</span>
+    </div>
+
+    <h2 id="permissions">권한 시스템 — Deny &gt; Ask &gt; Allow</h2>
+
+    <p>Claude Code의 권한은 <strong>3단계 규칙</strong>으로 동작합니다. 우선순위는 <code>Deny &gt; Ask &gt; Allow</code> 순.
+      한 번 학습해 두면 평생 씁니다.</p>
+
+    <figure class="diagram" aria-labelledby="diag-perm-caption">
+      <svg viewBox="0 0 520 240" role="img" aria-label="권한 우선순위 다이어그램">
+        <defs>
+          <marker id="diag-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+          </marker>
+        </defs>
+        <!-- Deny -->
+        <rect class="diag-box-fill-deny" x="80" y="20" width="320" height="50" rx="8" stroke-width="2"/>
+        <text class="diag-text" x="100" y="50" font-weight="700" font-size="16">🛑 Deny</text>
+        <text class="diag-text--muted" x="180" y="50" font-size="13">아예 실행 금지 — 가장 강한 규칙</text>
+        <!-- Ask -->
+        <rect class="diag-box-fill-ask" x="80" y="95" width="320" height="50" rx="8" stroke-width="2"/>
+        <text class="diag-text" x="100" y="125" font-weight="700" font-size="16">❓ Ask</text>
+        <text class="diag-text--muted" x="180" y="125" font-size="13">매번 사용자에게 확인 요청</text>
+        <!-- Allow -->
+        <rect class="diag-box-fill-allow" x="80" y="170" width="320" height="50" rx="8" stroke-width="2"/>
+        <text class="diag-text" x="100" y="200" font-weight="700" font-size="16">✅ Allow</text>
+        <text class="diag-text--muted" x="180" y="200" font-size="13">프롬프트 없이 자동 실행</text>
+        <!-- Priority arrow -->
+        <line class="diag-line diag-line--arrow" x1="450" y1="210" x2="450" y2="30"/>
+        <text class="diag-text--accent" x="430" y="125" font-size="12" transform="rotate(-90 430 125)">위가 우선</text>
+      </svg>
+      <figcaption id="diag-perm-caption" class="diagram__caption">
+        한 도구 실행에 Deny·Ask·Allow 규칙이 모두 매칭되면 가장 위(Deny)가 이깁니다.
+      </figcaption>
+    </figure>
+
+    <h3>3가지 규칙</h3>
+    <table>
+      <thead><tr><th>규칙</th><th>동작</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Allow</strong></td><td>프롬프트 없이 자동 실행</td><td><code>"Bash(npm run test *)"</code></td></tr>
+        <tr><td><strong>Ask</strong></td><td>매번 실행 전 확인</td><td><code>"Edit(.env)"</code></td></tr>
+        <tr><td><strong>Deny</strong></td><td>아예 실행 금지</td><td><code>"Bash(rm -rf *)"</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>설정 위치 — <code>.claude/settings.json</code></h3>
+
+<pre><code>{
+  <span class="tok-str">"defaultMode"</span>: <span class="tok-str">"plan"</span>,
+  <span class="tok-str">"permissions"</span>: {
+    <span class="tok-str">"allow"</span>: [
+      <span class="tok-str">"Bash(npm run test *)"</span>,
+      <span class="tok-str">"Bash(git commit *)"</span>,
+      <span class="tok-str">"Bash(git log *)"</span>,
+      <span class="tok-str">"Read(.env)"</span>
+    ],
+    <span class="tok-str">"ask"</span>: [
+      <span class="tok-str">"Bash(rm *)"</span>,
+      <span class="tok-str">"Edit(src/core/**)"</span>
+    ],
+    <span class="tok-str">"deny"</span>: [
+      <span class="tok-str">"Bash(curl *)"</span>,
+      <span class="tok-str">"WebFetch(domain:example.com)"</span>,
+      <span class="tok-str">"Read(~/.ssh/**)"</span>
+    ]
+  }
+}</code></pre>
+
+    <h3>패턴 문법 핵심</h3>
+    <ul>
+      <li><code>Bash(npm run *)</code> — <code>npm run</code> 뒤에 무엇이 와도 매칭</li>
+      <li><code>Edit(src/**/*.ts)</code> — glob 패턴으로 경로 제한</li>
+      <li><code>WebFetch(domain:github.com)</code> — 도메인 단위 제어</li>
+      <li><code>mcp__github__*</code> — MCP 서버의 특정 도구만/전부 제어</li>
+    </ul>
+
+    <h3>권한 프롬프트 줄이는 4단계</h3>
+    <ol>
+      <li><strong>실시간으로 "Yes, don't ask again" 선택</strong> — 가장 빠른 방법.</li>
+      <li><strong><code>/permissions</code> GUI</strong>로 직접 추가.</li>
+      <li><strong><code>.claude/settings.json</code> 편집</strong>으로 팀 단위 공유.</li>
+      <li><strong><code>/fewer-permission-prompts</code> 스킬</strong> — 지난 세션을 분석해 자주 쓴 명령을 allow 후보로 자동 추천 (3장).</li>
+    </ol>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — Deny는 작게, Allow는 천천히</div>
+      <p>"안전하니까 Deny를 잔뜩 걸자"는 매력적이지만, 실제로는 <strong>Deny는 진짜 위험한 것만</strong> 등록하고
+        Allow는 작업하면서 천천히 늘려 가는 편이 좋습니다. Deny가 너무 넓으면 Claude가 작은 작업도 못 해서 의외로 답답해집니다.
+        대신 <strong>Plan mode를 함께 켜 두면</strong> Deny 없이도 큰 사고를 막을 수 있어요.</p>
+    </div>
+
+    <h3>Permission Modes (전역 모드)</h3>
+    <p>위 3규칙과 별개로, 세션 전체의 동작 모드도 바꿀 수 있습니다.</p>
+    <table>
+      <thead><tr><th>모드</th><th>동작</th><th>사용 시기</th></tr></thead>
+      <tbody>
+        <tr><td><code>default</code></td><td>처음 한 번만 묻고 기억</td><td>일상 개발</td></tr>
+        <tr><td><code>plan</code></td><td>모든 수정 전에 계획 제시 → 승인 요청</td><td>신중한 검토 필요</td></tr>
+        <tr><td><code>acceptEdits</code></td><td>파일 편집을 자동 승인</td><td>잘 아는 정형 작업</td></tr>
+        <tr><td><code>bypassPermissions</code></td><td>거의 모든 권한 자동 (위험)</td><td>격리된 VM·컨테이너 안에서만</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="settings"><code>settings.json</code> — 어디에 무엇이 들어가나</h2>
+
+    <p>설정 파일은 4계층입니다. 위로 갈수록 우선순위가 높습니다.</p>
+
+    <table>
+      <thead><tr><th>레이어</th><th>경로</th><th>공유 여부</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td>관리자 정책</td><td>OS별 시스템 경로</td><td>강제</td><td>회사 IT 정책</td></tr>
+        <tr><td>로컬(개인 프로젝트)</td><td><code>.claude/settings.local.json</code></td><td>X (gitignore)</td><td>나만의 모델·테마·API 키</td></tr>
+        <tr><td>프로젝트(팀 공유)</td><td><code>.claude/settings.json</code></td><td>O (커밋)</td><td>팀 공통 권한·훅·언어 설정</td></tr>
+        <tr><td>사용자(전역)</td><td><code>~/.claude/settings.json</code></td><td>X</td><td>모든 프로젝트 공통</td></tr>
+      </tbody>
+    </table>
+
+    <h3>자주 쓰는 키</h3>
+
+<pre><code>{
+  <span class="tok-com">// 모델 · 추론</span>
+  <span class="tok-str">"model"</span>: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  <span class="tok-str">"effortLevel"</span>: <span class="tok-str">"high"</span>,
+
+  <span class="tok-com">// 권한</span>
+  <span class="tok-str">"defaultMode"</span>: <span class="tok-str">"plan"</span>,
+  <span class="tok-str">"permissions"</span>: { <span class="tok-str">"allow"</span>: [<span class="tok-str">"Bash(npm run *)"</span>], <span class="tok-str">"deny"</span>: [<span class="tok-str">"Bash(rm -rf *)"</span>] },
+
+  <span class="tok-com">// UX</span>
+  <span class="tok-str">"theme"</span>: <span class="tok-str">"dark"</span>,
+  <span class="tok-str">"language"</span>: <span class="tok-str">"korean"</span>,
+  <span class="tok-str">"editorMode"</span>: <span class="tok-str">"vim"</span>,
+
+  <span class="tok-com">// 메모리·컨텍스트</span>
+  <span class="tok-str">"autoMemoryEnabled"</span>: <span class="tok-kw">true</span>,
+  <span class="tok-str">"autoCompactEnabled"</span>: <span class="tok-kw">true</span>,
+
+  <span class="tok-com">// 환경변수 (모든 도구 실행에 주입)</span>
+  <span class="tok-str">"env"</span>: { <span class="tok-str">"NODE_ENV"</span>: <span class="tok-str">"development"</span> }
+}</code></pre>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ 주의 — 비밀은 절대 settings.json에</div>
+      <p>API 키·토큰은 <code>.claude/settings.json</code> (커밋 대상)에 넣으면 큰 일 납니다. 반드시 <code>.claude/settings.local.json</code> 또는 OS 환경변수로.</p>
+    </div>
+
+    <h2 id="memory">CLAUDE.md — 프로젝트 영구 컨텍스트</h2>
+
+    <p><code>CLAUDE.md</code>는 <strong>매 세션 자동으로 읽히는 지시사항 파일</strong>입니다. 잘 쓰면 같은 설명을 반복할 필요가 없어집니다.</p>
+
+    <h3>종류</h3>
+    <table>
+      <thead><tr><th>위치</th><th>범위</th><th>커밋?</th></tr></thead>
+      <tbody>
+        <tr><td><code>~/.claude/CLAUDE.md</code></td><td>모든 프로젝트 (개인 전역)</td><td>X</td></tr>
+        <tr><td><code>./CLAUDE.md</code></td><td>이 프로젝트 (팀 공유)</td><td>O</td></tr>
+        <tr><td><code>./CLAUDE.local.md</code></td><td>이 프로젝트 (개인용)</td><td>X (gitignore)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>잘 쓴 CLAUDE.md 예시</h3>
+
+<pre><code><span class="tok-com"># Backend API Project</span>
+
+<span class="tok-com">## Quick Start</span>
+- Install: `npm install`
+- Dev: `npm run dev` (http://localhost:3000)
+- Test: `npm run test:watch`
+- Build: `npm run build`
+
+<span class="tok-com">## Architecture</span>
+- Entry: `src/index.ts`
+- Routes: `src/routes/`
+- Models: `src/models/` (Mongoose schemas)
+
+<span class="tok-com">## Code Standards</span>
+- Indentation: 2 spaces
+- camelCase for functions, PascalCase for classes
+- TypeScript types required
+- Run `npm run lint` before committing
+
+<span class="tok-com">## Common Mistakes (do NOT)</span>
+- Do NOT modify `src/core/engine.ts` without running integration tests
+- Do NOT commit `.env`
+</code></pre>
+
+    <h3>작성 원칙 5가지</h3>
+    <ol>
+      <li><strong>200줄 이하</strong>를 목표 — 매 세션마다 토큰 소모. 길수록 Claude가 무시할 가능성도 증가.</li>
+      <li><strong>구체성</strong> — "좋은 포맷"이 아니라 "2-space 인덴트"처럼 검증 가능하게.</li>
+      <li><strong>해야 할 것 + 하지 말 것</strong>을 같이 명시.</li>
+      <li>큰 파일은 <code>.claude/rules/*.md</code>로 분리하고 <code>@</code>로 임포트.</li>
+      <li><code>/init</code>으로 초안 자동 생성 후 다듬는 게 가장 빠릅니다.</li>
+    </ol>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 참고 — Auto Memory</div>
+      <p>Claude는 자기 자신을 위한 <strong>자동 메모리</strong>도 따로 적습니다(<code>~/.claude/projects/&lt;proj&gt;/memory/MEMORY.md</code>).
+        세션마다 "사용자가 ~를 선호함", "이 빌드 명령이 맞음" 등을 누적 학습합니다. <code>/memory</code>로 열람·정리 가능합니다.</p>
+    </div>
+
+    <h2 id="hooks">훅(Hooks) — 자동 동작 박아 넣기</h2>
+
+    <p>훅은 특정 이벤트가 발생할 때 <strong>자동 실행되는 쉘 명령</strong>입니다. 권한과 함께 "안전·자동화"의 양 축입니다.</p>
+
+    <h3>주요 이벤트</h3>
+    <table>
+      <thead><tr><th>이벤트</th><th>시점</th><th>흔한 용도</th></tr></thead>
+      <tbody>
+        <tr><td><code>PreToolUse</code></td><td>도구 사용 직전</td><td>커스텀 검증·차단</td></tr>
+        <tr><td><code>PostToolUse</code></td><td>도구 실행 후</td><td>로깅·후처리</td></tr>
+        <tr><td><code>FilesModified</code></td><td>파일 수정 후</td><td>자동 포맷팅·린트</td></tr>
+        <tr><td><code>SessionStart</code></td><td>세션 시작</td><td>환경 점검·환영 메시지</td></tr>
+        <tr><td><code>SessionEnd</code></td><td>세션 종료</td><td>요약 저장·정리</td></tr>
+      </tbody>
+    </table>
+
+    <h3>설정 예시 — 저장 후 자동 포맷</h3>
+
+<pre><code>{
+  <span class="tok-str">"hooks"</span>: [
+    {
+      <span class="tok-str">"event"</span>: <span class="tok-str">"FilesModified"</span>,
+      <span class="tok-str">"command"</span>: <span class="tok-str">"npx prettier --write $INPUT_paths"</span>
+    },
+    {
+      <span class="tok-str">"event"</span>: <span class="tok-str">"PreToolUse"</span>,
+      <span class="tok-str">"tool"</span>: <span class="tok-str">"Bash"</span>,
+      <span class="tok-str">"command"</span>: <span class="tok-str">"~/.claude/hooks/safe-bash.sh"</span>
+    }
+  ]
+}</code></pre>
+
+    <h3>쉘 스크립트 예 — 위험 명령 차단</h3>
+
+<pre><code><span class="tok-com">#!/bin/bash</span>
+<span class="tok-com"># ~/.claude/hooks/safe-bash.sh</span>
+<span class="tok-kw">if</span> [[ <span class="tok-str">"$INPUT_command"</span> == *<span class="tok-str">"rm -rf /"</span>* ]]; <span class="tok-kw">then</span>
+  <span class="tok-kw">echo</span> <span class="tok-str">"BLOCKED: dangerous rm -rf detected"</span>
+  <span class="tok-kw">exit</span> 1  <span class="tok-com"># non-zero → 도구 실행 차단</span>
+<span class="tok-kw">fi</span>
+<span class="tok-kw">exit</span> 0</code></pre>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 훅 vs 권한, 무엇을 쓸까</div>
+      <p>둘은 보완 관계입니다. <strong>권한</strong>은 정적 규칙(JSON)으로 빠르고 명확합니다.
+        <strong>훅</strong>은 동적 검증(쉘 스크립트)이 가능해 더 유연하지만 디버깅이 까다롭습니다.
+        간단한 allow/deny는 권한으로, <em>"명령어 안 인자까지 보고 결정"</em>이 필요한 케이스만 훅으로 가는 게 깔끔합니다.</p>
+    </div>
+
+    <h2 id="checklist">2장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>/help</code>로 명령 목록 한 번 훑기</li>
+      <li>☐ <code>.claude/settings.json</code>에 권한 allow 3~5개 등록</li>
+      <li>☐ <code>defaultMode</code>를 <code>plan</code>으로 설정</li>
+      <li>☐ <code>CLAUDE.md</code>를 200줄 이내로 정리</li>
+      <li>☐ (선택) 저장 후 자동 포맷 훅 1개 등록</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="01-getting-started.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">1. 시작하기</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="03-skills-agents.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">3. 스킬·서브에이전트</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

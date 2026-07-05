@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>17장 · 비용 효율화 사례집 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 17 · 사례집</span>
+    <h1>비용 효율화 사례집 — 절감 스토리와 AI 활용 원칙</h1>
+    <p class="lead">
+      15장이 <em>기법</em>이라면, 17장은 <em>이야기와 원칙</em>입니다.
+      실제 절감 시나리오 4개, 프로젝트 단계별 효율화 가이드,
+      그리고 <strong>Claude에 국한되지 않는 AI 활용 일반 원칙 8가지</strong>까지 다룹니다.
+    </p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 이 장의 사례에 대해</div>
+      <p>아래 절감 사례들은 <strong>커뮤니티에 자주 보고되는 패턴을 합성한 가상의 케이스</strong>입니다.
+        숫자는 실제 ccusage·청구서 데이터에서 흔히 관찰되는 범위이며, 본인 환경에 그대로 옮기면 비슷한 효과를 기대할 수 있습니다.</p>
+    </div>
+
+    <h2 id="overview">절감 사례 4개 — 한눈 비교</h2>
+
+    <table>
+      <thead>
+        <tr><th>사례</th><th>핵심 액션</th><th>전</th><th>후</th><th>절감</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="#case-1"><strong>① 스타트업</strong></a></td><td>전사 디폴트 Opus → Sonnet 다운그레이드</td><td>월 $2,400</td><td>월 $720</td><td><strong>-70%</strong></td></tr>
+        <tr><td><a href="#case-2"><strong>② 오픈소스</strong></a></td><td>CI에 변경 크기 차등 적용</td><td>월 $820</td><td>월 $210</td><td><strong>-74%</strong></td></tr>
+        <tr><td><a href="#case-3"><strong>③ 솔로 개발자</strong></a></td><td>CLAUDE.md 250줄 → 90줄 다이어트</td><td>세션당 18k</td><td>세션당 6k</td><td><strong>-66%</strong></td></tr>
+        <tr><td><a href="#case-4"><strong>④ 데이터팀</strong></a></td><td>대량 분류 작업을 Haiku 서브에이전트로</td><td>일 $34</td><td>일 $6</td><td><strong>-82%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- =============== CASE 1 =============== -->
+    <h2 id="case-1">📖 사례 ① · 스타트업 — 전사 디폴트 모델 한 줄로 70% 절감</h2>
+
+    <table>
+      <tbody>
+        <tr><th>배경</th><td>시리즈 A 스타트업, 백엔드·프론트 합쳐 12명. Claude Code 도입 3개월차.</td></tr>
+        <tr><th>증상</th><td>월 청구액이 도입 첫 달 $800 → 둘째 달 $1,600 → 셋째 달 $2,400로 가파르게 상승.</td></tr>
+        <tr><th>가설</th><td>"모두가 알아서 잘 쓰고 있을 거다"는 막연한 믿음.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🔍 진단 (1시간 투자)</h3>
+
+    <p>플랫폼 엔지니어 H가 ccusage로 사용자별 모델 분포를 뽑았다.</p>
+
+<pre><code>npx ccusage@latest monthly --json | jq <span class="tok-str">'.entries | group_by(.model)'</span>
+
+<span class="tok-com"># 결과:</span>
+<span class="tok-com"># Opus 4.7  : 73% of tokens, 91% of cost</span>
+<span class="tok-com"># Sonnet 4.6: 24%, 8%</span>
+<span class="tok-com"># Haiku 4.5 : 3%, 1%</span></code></pre>
+
+    <p>충격적이었다. <strong>"기본값이 Opus였다"</strong>는 것을 아무도 몰랐다 — 도입 시 누군가가 settings.json에 <code>"model": "claude-opus-4-7"</code>을 박아 두고 잊었다.</p>
+
+    <h3>🛠 적용 (30분 작업)</h3>
+
+<pre><code><span class="tok-com">// .claude/settings.json (팀 공유)</span>
+{
+  <span class="tok-str">"model"</span>: <span class="tok-str">"claude-sonnet-4-6"</span>,   <span class="tok-com">// ← Opus → Sonnet</span>
+  ...
+}</code></pre>
+
+    <p>동시에 팀 슬랙에 한 줄 가이드: <strong>"설계·복잡 디버깅만 <code>/model</code>로 Opus 전환. 끝나면 다시 Sonnet."</strong></p>
+
+    <h3>📊 결과 (한 달 후)</h3>
+
+    <ul>
+      <li>월 청구액: <strong>$2,400 → $720 (-70%)</strong></li>
+      <li>주관적 품질 변화: <strong>거의 없음</strong> (출시 속도·버그 비율 동일)</li>
+      <li>Opus 사용 빈도: 73% → 12% (실제 필요한 곳에만)</li>
+    </ul>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "기본값의 폭력"</div>
+      <p>가장 큰 비용 누수는 <strong>아무도 의식하지 않는 기본값</strong>입니다. 도입 첫 주에 settings.json을 한 번 같이 읽으세요.
+        "왜 이 값이지?" 질문이 90% 비용 사고를 막습니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- =============== CASE 2 =============== -->
+    <h2 id="case-2">📖 사례 ② · 오픈소스 — CI 차등화로 74% 절감</h2>
+
+    <table>
+      <tbody>
+        <tr><th>배경</th><td>스타 2.4k짜리 오픈소스 라이브러리. 메인테이너 2명. claude-code-action으로 PR 자동 1차 리뷰 운영 중.</td></tr>
+        <tr><th>증상</th><td>주말 동안 외부 PR이 23개 들어오니 일요일 청구액만 $74. 월 청구액이 $820까지 치솟음. 후원금으로 운영되는 프로젝트라 부담.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🔍 진단</h3>
+
+    <p>메인테이너가 <code>gh pr list --json additions,deletions,changedFiles</code>로 PR 크기 분포를 살폈다.</p>
+
+    <ul>
+      <li>전체 PR 중 <strong>62%가 5파일 이하의 소형</strong> (오타·문서·작은 버그픽스)</li>
+      <li>나머지 38%만 실제 코드 변경 큰 PR</li>
+      <li>그런데 워크플로우는 <strong>모든 PR에 동일하게 <code>--effort high + Opus</code></strong> 사용</li>
+    </ul>
+
+    <h3>🛠 적용 (워크플로우 1개 추가)</h3>
+
+<pre><code><span class="tok-com"># .github/workflows/claude.yml</span>
+on: pull_request
+jobs:
+  size-check:
+    runs-on: ubuntu-latest
+    outputs:
+      tier: ${{ steps.classify.outputs.tier }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: classify
+        run: |
+          FILES=$(gh pr view ${{ github.event.number }} --json changedFiles -q .changedFiles)
+          <span class="tok-kw">if</span> [ <span class="tok-str">"$FILES"</span> -le 5 ]; <span class="tok-kw">then</span> echo <span class="tok-str">"tier=light"</span> &gt;&gt; $GITHUB_OUTPUT
+          <span class="tok-kw">elif</span> [ <span class="tok-str">"$FILES"</span> -le 30 ]; <span class="tok-kw">then</span> echo <span class="tok-str">"tier=medium"</span> &gt;&gt; $GITHUB_OUTPUT
+          <span class="tok-kw">else</span> echo <span class="tok-str">"tier=heavy"</span> &gt;&gt; $GITHUB_OUTPUT
+          <span class="tok-kw">fi</span>
+
+  review:
+    needs: size-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          prompt: |
+            ${{ needs.size-check.outputs.tier == 'light'  &amp;&amp; '/code-review --effort low'    || '' }}
+            ${{ needs.size-check.outputs.tier == 'medium' &amp;&amp; '/code-review --effort medium' || '' }}
+            ${{ needs.size-check.outputs.tier == 'heavy'  &amp;&amp; '/code-review --effort high'   || '' }}</code></pre>
+
+    <p>여기에 <strong>보안 민감 경로(<code>auth/</code>·<code>crypto/</code>)는 무조건 high</strong> 강제 룰 추가.</p>
+
+    <h3>📊 결과</h3>
+
+    <ul>
+      <li>월 청구액: <strong>$820 → $210 (-74%)</strong></li>
+      <li>외부 컨트리뷰터 피드백: "리뷰가 더 빨라졌다" (light tier가 30초 안에 응답)</li>
+      <li>발견된 버그 수: 거의 동일 (큰 PR엔 여전히 high)</li>
+    </ul>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "모든 PR이 같은 무게가 아니다"</div>
+      <p>CI 비용 폭주의 99%는 "오타 1줄짜리 PR에도 Opus + effort high"입니다.
+        <strong>변경 크기·민감도를 코드로 분기</strong>하면, 평균 리뷰 품질은 유지하면서 비용만 떨어집니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- =============== CASE 3 =============== -->
+    <h2 id="case-3">📖 사례 ③ · 솔로 개발자 — CLAUDE.md 다이어트로 매 세션 66% 절약</h2>
+
+    <table>
+      <tbody>
+        <tr><th>배경</th><td>인디 SaaS 개발자 M. 1년째 운영, 매일 3~5세션 사용.</td></tr>
+        <tr><th>증상</th><td>최근 세션마다 첫 응답이 느려짐. <code>/context</code> 찍어보니 <strong>대화 시작도 안 했는데 이미 22%(44k)가 차 있음</strong>.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🔍 진단</h3>
+
+    <p>범인은 <strong>M이 1년간 "이것도 적어둬야지" 하다 누적된</strong> <code>CLAUDE.md</code>였다.</p>
+
+<pre><code>wc -l CLAUDE.md
+<span class="tok-com"># 253 CLAUDE.md   ← 250줄 초과</span>
+
+<span class="tok-com"># 내용 검토 결과:</span>
+<span class="tok-com"># - "옛날에 한 번 막혔던 버그 회피법" 12개 (지금은 안 막힘)</span>
+<span class="tok-com"># - 더 이상 안 쓰는 라이브러리 컨벤션 (마이그레이션 끝남)</span>
+<span class="tok-com"># - 같은 의미의 규칙이 다른 표현으로 3번 반복</span></code></pre>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 짚고 가기 — CLAUDE.md vs auto memory, 누가 늘리나</div>
+      <p>흔한 오해 정정. <strong>CLAUDE.md는 Claude가 자동으로 늘리지 않습니다.</strong> 사람이 직접 편집해야 합니다.
+        M의 경우처럼 "이슈 만날 때마다 한 줄씩 추가" 패턴이 1년이면 250줄로 누적되는 거지, 가만히 둔다고 커지지 않아요.</p>
+      <p>반면 <strong>auto memory</strong>(<code>~/.claude/projects/&lt;proj&gt;/memory/MEMORY.md</code>)는 Claude가 세션마다
+        스스로 학습한 내용을 자동으로 추가합니다. 이쪽이 진짜 "쓸수록 자동으로 늘어나는" 파일입니다.
+        둘 다 컨텍스트를 차지하므로, 분기 다이어트할 땐 <code>/memory</code>로 둘 다 점검하세요.</p>
+    </div>
+
+    <h3>🛠 적용 (30분 가지치기)</h3>
+
+    <p>M은 Claude한테 직접 다이어트를 시켰다.</p>
+
+<pre><code>&gt; <span class="tok-str">"이 CLAUDE.md를 100줄 이내로 다이어트해줘. 기준:
+   1) 지금도 실제로 적용되는 규칙만 남기기
+   2) 중복·유사 규칙은 하나로 통합
+   3) "과거에 막혔던" 회상형 메모는 모두 삭제 (필요하면 .claude/rules/incidents.md로 분리)
+   4) '왜 이 규칙인가'가 한 줄로 안 떠오르면 후보로 표시 → 내가 확인"</span></code></pre>
+
+    <p>Claude가 90줄로 줄인 초안 + 17개 "삭제 후보" 표 제시. M은 그 중 4개만 살리고 나머지 삭제.</p>
+
+    <h3>📊 결과</h3>
+
+    <ul>
+      <li>세션 시작 컨텍스트: <strong>18k → 6k (-66%)</strong></li>
+      <li>월 토큰 사용량: 약 30% 감소 (매 세션 절약 × 100+ 세션)</li>
+      <li>체감 응답 속도: 첫 토큰까지 1초 빨라짐</li>
+    </ul>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "분기 다이어트는 의무"</div>
+      <p>CLAUDE.md는 살아 있는 문서라 자연스럽게 비대해집니다. <strong>3개월마다 한 번씩 강제 가지치기</strong>가 답.
+        "삭제하면 큰일 나나?"를 자문해 보고, 답이 "아니"면 그건 삭제 대상입니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- =============== CASE 4 =============== -->
+    <h2 id="case-4">📖 사례 ④ · 데이터팀 — 대량 분류 작업을 Haiku로 격리해서 82% 절감</h2>
+
+    <table>
+      <tbody>
+        <tr><th>배경</th><td>데이터 팀, 매일 새 고객 피드백 ~3,000건을 카테고리 6종으로 분류해야 함.</td></tr>
+        <tr><th>증상</th><td>일일 분류 작업에 Claude Code(Sonnet) 사용 — 청구액 일 $34. 월 $1,000 넘게 누적.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🔍 진단</h3>
+
+    <p>분류 작업은 단순한 "텍스트 → 라벨" 매핑이라 Sonnet은 오버킬. Haiku로 충분.</p>
+
+    <h3>🛠 적용 — 서브에이전트로 분리</h3>
+
+<pre><code><span class="tok-com"># .claude/agents/classifier/agent.md</span>
+---
+name: classifier
+description: <span class="tok-str">"고객 피드백 → 6개 카테고리 분류 전용"</span>
+model: claude-haiku-4-5-20251001  <span class="tok-com"># ← Haiku 명시</span>
+tools: [Read, Bash]
+---
+
+고객 피드백 한 건을 받아 다음 6개 카테고리 중 하나로 분류:
+[Bug, Feature, Pricing, UX, Performance, Other]
+
+출력 형식: JSON `{ "id": ..., "category": "Bug", "confidence": 0.85 }`
+설명·이유 X. 분류만.</code></pre>
+
+<pre><code><span class="tok-com"># 매일 실행 (스케줄)</span>
+&gt; /schedule <span class="tok-str">"0 2 * * *"</span> sh -c <span class="tok-str">'
+  cat new_feedback.jsonl | while read line; do
+    claude -p "/classifier $line" --output json
+  done &gt; classified.jsonl
+'</span></code></pre>
+
+    <h3>📊 결과</h3>
+
+    <ul>
+      <li>일일 비용: <strong>$34 → $6 (-82%)</strong></li>
+      <li>분류 정확도: Sonnet 96% → Haiku 94% (현실적으로 차이 없음)</li>
+      <li>처리 속도: 오히려 30% 빨라짐 (Haiku가 더 빠름)</li>
+    </ul>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "Haiku를 두려워하지 마라"</div>
+      <p>"Haiku는 품질 떨어지지 않을까?"는 가장 비싼 오해입니다.
+        <strong>분류·추출·변환·요약</strong> 같은 정형 작업에선 Haiku와 Sonnet의 차이가 사람 눈에 안 보이는 수준입니다.
+        대신 추론·창작·복잡 디버깅엔 절대 쓰지 마세요. 도구를 도구답게.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="lifecycle">🔄 프로젝트 단계별 효율 시나리오</h2>
+
+    <p>위 사례들이 "한 시점의 절감"이라면, 이번 섹션은 <strong>프로젝트 생애주기 전체</strong>에 적용할 가이드입니다.</p>
+
+    <h3>1단계 · 설계 (Discovery)</h3>
+    <ul>
+      <li><strong>Opus를 짧고 굵게</strong> — 며칠 동안 매일 1~2회, 1시간씩 집중 사용</li>
+      <li>출력: 아키텍처 문서·ADR·기술 스택 결정. 코드 X</li>
+      <li>마치면 곧장 Sonnet으로 내려오기 (Opus를 디폴트로 두지 말 것)</li>
+      <li><strong>예상 비용</strong>: 보통 $20~50로 끝남. 가장 비싸 보이지만 가장 ROI 큼</li>
+    </ul>
+
+    <h3>2단계 · 구축 (Build)</h3>
+    <ul>
+      <li><strong>Sonnet이 70~80% 작업</strong> — 일반 기능·리팩터링·테스트</li>
+      <li>막힐 때만 1~2회 Opus 호출 (디버깅·아키텍처 검증)</li>
+      <li>Plan mode 디폴트 ON. <strong>위험 작업은 절대 끄지 말 것</strong></li>
+      <li>매 PR <code>/code-review</code> → <code>/verify</code> 사이클 강제</li>
+      <li><strong>예상 비용</strong>: 1인 풀타임 기준 월 $100~200</li>
+    </ul>
+
+    <h3>3단계 · 출시 (Launch)</h3>
+    <ul>
+      <li><strong><code>/security-review</code></strong>를 Opus로 1회 — "값진 $5"</li>
+      <li>CI에 claude-code-action 부착 (effort 차등화 필수)</li>
+      <li>ccusage 베이스라인 측정 시작</li>
+    </ul>
+
+    <h3>4단계 · 운영 (Operate)</h3>
+    <ul>
+      <li><strong>모니터링 자동화는 Haiku</strong> — 로그 분류·이상 탐지 한 줄 요약</li>
+      <li>인시던트 대응은 Opus + xhigh — "이때 아껴서 손해 보지 마라"</li>
+      <li>주간 ccusage 리포트 자동화 (Slack)</li>
+      <li>분기마다 CLAUDE.md·스킬·MCP 정리 (사례 ③ 다이어트)</li>
+    </ul>
+
+    <h3>5단계 · 회고 (Retro)</h3>
+    <ul>
+      <li>분기에 한 번, 30분 회고: "지난 분기 비싸게 쓴 패턴 3가지"</li>
+      <li>안티패턴은 settings.json·CLAUDE.md에 룰로 박기 (사람 의지 의존 X)</li>
+      <li>다음 분기 예산 가이드라인 합의</li>
+    </ul>
+
+    <hr />
+
+    <h2 id="ai-principles">🧭 AI 활용 일반 원칙 8가지 (Claude 무관)</h2>
+
+    <p>여기서부터는 GPT·Gemini·Cursor·Copilot — 어떤 AI 도구를 쓰든 적용되는 원칙입니다.</p>
+
+    <h3>원칙 1 · 도구의 무게는 작업의 무게에 맞춰라</h3>
+    <p>오타 수정에 GPT-5 max thinking을 호출하지 마세요. 잘 모르는 분야의 설계는 작은 모델로 하지 마세요.
+      <strong>"이 작업의 ROI가 이 모델 비용을 정당화하는가?"</strong>를 매 호출마다 물으세요.</p>
+
+    <h3>원칙 2 · "비싼 모델 = 좋은 결과"는 신화</h3>
+    <p>같은 프롬프트로 Opus와 Haiku를 비교해 본 적이 있나요? 분류·추출 같은 정형 작업에선 차이가 없습니다.
+      비싼 모델이 진가를 발휘하는 영역은 <strong>모호한 문제·다단계 추론·창의적 합성</strong> 정도입니다.</p>
+
+    <h3>원칙 3 · 사람 시간 vs API 비용 트레이드오프</h3>
+    <p>월 $200 더 쓰고 개발자 시간을 주 5시간 절약하면 명백히 이득입니다.
+      <strong>비용 자체를 줄이는 게 아니라, "사람 시간 환산 비용"을 줄이는 것</strong>이 진짜 최적화입니다.</p>
+
+<pre><code><span class="tok-com"># 한 줄 환산 공식</span>
+실효 비용 = API 비용 - (절약된 사람 시간 × 시간당 인건비)
+<span class="tok-com"># 음수면? 더 써도 됨. 무조건 흑자다.</span></code></pre>
+
+    <h3>원칙 4 · 측정 없는 최적화는 추측</h3>
+    <p>"왠지 비용이 많이 나가는 거 같아"로 시작한 최적화는 보통 헛수고입니다.
+      ccusage든 OpenAI usage dashboard든 <strong>숫자 먼저, 액션 나중</strong>. 비싼 세션 톱 5만 봐도 90% 패턴이 드러납니다.</p>
+
+    <h3>원칙 5 · 컨텍스트가 곧 비용이다</h3>
+    <p>모든 LLM의 비용은 "입력 토큰 × 단가"에서 시작합니다. 시스템 프롬프트·메모리·첨부 파일·이전 대화 — 다 입력 토큰입니다.
+      <strong>"이 정보를 매번 보낼 필요가 있나?"</strong>가 가장 효과적인 비용 질문입니다.</p>
+
+    <h3>원칙 6 · 캐싱은 무조건 켜라</h3>
+    <p>같은 시스템 프롬프트·문서를 반복 사용한다면 캐싱은 무조건 활성화. 대부분 API에서 캐시 토큰은 50~90% 저렴합니다.
+      <strong>"한 번에 끝낼 작업"이 아니라 "여러 번 호출되는 작업"</strong>에서 본전 뽑힙니다.</p>
+
+    <h3>원칙 7 · 배치·비동기로 분리할 수 있는 건 분리</h3>
+    <p>"지금 당장" 필요 없는 작업은 배치 API로 보내면 50% 절감되는 게 흔합니다(Claude·OpenAI 모두).
+      야간 분류·일일 요약·주간 리포트 같은 작업이 후보. <strong>실시간성을 자기에게 강요하지 마세요.</strong></p>
+
+    <h3>원칙 8 · 모델·벤더에 락인되지 마라</h3>
+    <p>오늘 Claude가 좋아도 6개월 뒤엔 다른 모델이 더 적합할 수 있습니다. 비용 구조도 바뀝니다.
+      <strong>프롬프트·스킬·CLAUDE.md를 평문 마크다운으로 유지</strong>하고, 도구 종속 기능(예: superpowers)도 한 곳에 격리.
+      그래야 갈아탈 때 비용이 며칠로 끝납니다.</p>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 8원칙의 한 줄 요약</div>
+      <p>"<strong>측정하고, 작업에 맞는 도구를 골라, 컨텍스트를 절제하고, 사람 시간으로 환산해서 판단한다.</strong>"
+        이 한 문장이 모든 AI 도구의 비용·효율 사고의 시작점입니다.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="roi">💰 ROI 빠른 계산 — 사람 시간 환산</h2>
+
+    <p>매번 "이 정도 비용이 적정한가?"를 물을 때 쓰는 공식.</p>
+
+    <table>
+      <thead><tr><th>항목</th><th>예시 값</th></tr></thead>
+      <tbody>
+        <tr><td>(A) 월 Claude Code 비용</td><td>$200</td></tr>
+        <tr><td>(B) Claude로 절약된 개발자 시간 (월)</td><td>20시간</td></tr>
+        <tr><td>(C) 개발자 시간당 비용 (인건비/8h)</td><td>$50</td></tr>
+        <tr><td>(D) 절약 가치 = B × C</td><td>$1,000</td></tr>
+        <tr><td><strong>실효 ROI</strong> = (D − A) / A</td><td><strong>+400%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>가이드라인</strong>:</p>
+    <ul>
+      <li>ROI &lt; 0% → 무언가 잘못됨. ccusage로 패턴 진단 필수</li>
+      <li>0% ~ 100% → 정상이지만 개선 여지. 안티패턴 점검</li>
+      <li>100% ~ 500% → 건강한 사용. 현 상태 유지</li>
+      <li>500%+ → 아주 잘 쓰고 있음. 다른 팀에 베스트 프랙티스 공유</li>
+    </ul>
+
+    <h2 id="budget-guide">📊 팀 규모·예산 가이드라인</h2>
+
+    <p>"우리 팀은 얼마가 적정한가?"의 대략적 벤치마크. 환경마다 다르니 참고용.</p>
+
+    <table>
+      <thead><tr><th>팀 규모</th><th>적정 월 예산</th><th>대표 사용 패턴</th></tr></thead>
+      <tbody>
+        <tr><td>1인 (사이드)</td><td>$10~50</td><td>주 1~2회 사용, Sonnet 위주, 가끔 Opus</td></tr>
+        <tr><td>1인 (풀타임)</td><td>$50~200</td><td>매일 4~6시간, Sonnet 디폴트, CLAUDE.md·스킬 활용</td></tr>
+        <tr><td>2~5인 스타트업</td><td>$200~600</td><td>설계는 Opus, 구축은 Sonnet, CI 자동 리뷰 적용</td></tr>
+        <tr><td>5~20인 팀</td><td>$600~2,000</td><td>위 + 비용 정책 + ccusage 주간 모니터링</td></tr>
+        <tr><td>20인+ 조직</td><td>$2,000~10,000+</td><td>위 + 엔터프라이즈 settings + 감사 로그 hooks + 분기 회고</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 가이드라인의 70%를 넘는다면</div>
+      <p>위 표의 상한선을 30% 이상 초과한다면 사례 ①~④ 중 하나가 발생 중일 가능성이 높습니다.
+        오늘 30분 시간 내서 ccusage 진단부터 돌려보세요.</p>
+    </div>
+
+    <h2 id="closing">🎯 닫는 글 — 비용을 "사람 시간"으로 환산하는 습관</h2>
+
+    <p>이 장의 모든 사례·원칙은 결국 한 가지 사고방식으로 수렴합니다:
+      <strong>"AI 비용을 절약된 사람 시간으로 환산해서 판단한다."</strong></p>
+
+    <p>월 $200이 비싸 보이지만 개발자 5시간을 살린다면 $1,000짜리 의사결정입니다.
+      반대로 월 $50이 싸 보이지만 잘못된 모델 선택으로 사람이 10시간을 검토해야 한다면 $500짜리 실수입니다.</p>
+
+    <p>숫자 자체보다 그 숫자가 <strong>어떤 시간을 사고 있는가</strong>를 보세요. 그게 비용 효율의 핵심이고, AI 도구가 바뀌어도 변하지 않을 원칙입니다.</p>
+
+    <h2 id="checklist">17장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>ccusage monthly --json | jq</code>로 본인의 모델 분포 확인</li>
+      <li>☐ settings.json의 기본 모델이 Sonnet인지 점검 (사례 ①)</li>
+      <li>☐ CI에 effort 차등화 적용 (사례 ②)</li>
+      <li>☐ CLAUDE.md 줄 수 확인 — 200줄 초과면 분기 다이어트 예약 (사례 ③)</li>
+      <li>☐ 단순 작업용 Haiku 서브에이전트 1개 등록 (사례 ④)</li>
+      <li>☐ ROI를 사람 시간으로 환산해 본 적이 있는가? 없다면 이번 주에 한 번</li>
+      <li>☐ 본인 팀 규모의 적정 예산 대비 위치 확인</li>
+      <li>☐ AI 활용 원칙 8개 중 가장 약한 항목 1개 골라 개선</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="16-cheatsheet.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">16. 부록·치트시트</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="18-by-role.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">18. 직군별 가이드</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

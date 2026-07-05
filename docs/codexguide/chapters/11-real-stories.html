@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11장 · 실무 빌딩 스토리 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 11 · 스토리텔링</span>
+    <h1>실무 빌딩 스토리 — 서비스 0 → 1까지</h1>
+    <p class="lead">
+      Codex CLI로 실제 서비스를 구축할 때 어떻게 도구를 조합하는지, <strong>세 가지 다른 색깔의 프로젝트</strong>를 일지처럼 풀어 봅니다.
+    </p>
+
+    <h2 id="overview">세 스토리 한눈 비교</h2>
+
+    <table>
+      <thead>
+        <tr><th>스토리</th><th>만든 것</th><th>profile 사용</th><th>기간</th><th>비용*</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="#story-a"><strong>A · 미니멀</strong></a></td><td>결혼식 정적 사이트</td><td>❌ 기본만 (config X)</td><td>주말 하루</td><td>~$2</td></tr>
+        <tr><td><a href="#story-b"><strong>B · 풀 자동화</strong></a></td><td>URL 단축 SaaS</td><td>⭐ dev·review·ci 3종 + Codex Cloud + MCP</td><td>2주</td><td>~$50</td></tr>
+        <tr><td><a href="#story-c"><strong>C · 균형</strong></a></td><td>가족 공유 PWA</td><td>🎯 dev profile만 (1개)</td><td>3~4일</td><td>~$10</td></tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <h2 id="story-a">📖 스토리 A · 결혼식 정적 사이트 — 기본만으로</h2>
+
+    <table>
+      <tbody>
+        <tr><th>주인공</th><td>30대 백엔드 개발자 J. 결혼식 D-30, 직접 청첩장 사이트.</td></tr>
+        <tr><th>전략</th><td>설정·MCP·Cloud 없이 그냥 <code>codex</code>만.</td></tr>
+        <tr><th>모델</th><td>gpt-5.5 기본값 (이마저도 자동)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🌅 토요일 09:00 — 빈 폴더에서 시작</h3>
+<pre><code>mkdir wedding-jh && cd wedding-jh
+codex
+&gt; <span class="tok-str">"모바일 위주 1페이지 결혼식 사이트. 정적 HTML/CSS/JS.
+   파일 만들기 전에 1) 폴더 구조 2) 디자인 컨셉 3가지 제안 먼저."</span></code></pre>
+
+    <p>J는 베이지 컨셉 선택 → 골격 생성 → 갤러리(scroll-snap) 등 5섹션 완성.
+      <strong>처음 sandbox approval 1회 승인 후</strong> 같은 폴더 내 Write는 같은 세션 동안 자동 진행 (workspace-write 기본).</p>
+
+    <h3>🌃 토요일 21:00 — Netlify 배포</h3>
+<pre><code>&gt; <span class="tok-str">"Netlify CLI로 가장 빠르게 배포. 계정은 있음, GitHub 연동."</span>
+<span class="tok-com"># Codex가 npx netlify-cli deploy --prod --dir . 한 줄 안내</span>
+<span class="tok-com"># 단, network_access=false 기본이라 approval 1회</span></code></pre>
+
+    <table>
+      <tbody>
+        <tr><th>총 작업</th><td>약 8시간</td></tr>
+        <tr><th>설정 파일</th><td>없음 (모든 게 기본값)</td></tr>
+        <tr><th>비용</th><td>~$2 (gpt-5.5 기본, ChatGPT Plus였다면 무료)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — sandbox 기본값이 J를 안전하게</div>
+      <p>J는 권한 설정을 일부러 안 했지만, Codex의 기본 sandbox(<code>workspace-write</code>)와 approval(<code>on-request</code>)이 자연스럽게 안전망 역할.
+        <strong>일회성·작은 작업엔 기본값만으로 충분</strong>합니다.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="story-b">📖 스토리 B · URL 단축 SaaS — 풀 자동화</h2>
+
+    <table>
+      <tbody>
+        <tr><th>주인공</th><td>스타트업 3년차 풀스택 K. 사이드 프로젝트로 URL 단축 서비스.</td></tr>
+        <tr><th>스택</th><td>Cloudflare Workers + D1 + Hono · React 대시보드</td></tr>
+        <tr><th>전략</th><td><strong>permission profile 3종 + Codex Cloud + MCP + GitHub Action</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>🛠 Day 0 — 셋업 (2시간)</h3>
+
+    <p>K는 코드 한 줄 전에 셋업에 투자.</p>
+
+<pre><code><span class="tok-com"># .codex/config.toml (커밋 대상)</span>
+[profiles.dev]
+model = <span class="tok-str">"gpt-5.5"</span>
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+[profiles.dev.sandbox_workspace_write]
+network_access = <span class="tok-kw">false</span>
+
+[profiles.review]
+model = <span class="tok-str">"gpt-5.5"</span>
+approval_policy = <span class="tok-str">"never"</span>
+sandbox_mode = <span class="tok-str">"read-only"</span>
+
+[profiles.ci]
+model = <span class="tok-str">"gpt-5.4-mini"</span>
+approval_policy = <span class="tok-str">"never"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+[profiles.ci.sandbox_workspace_write]
+network_access = <span class="tok-kw">true</span>
+
+[mcp_servers.playwright]
+type = <span class="tok-str">"stdio"</span>
+command = <span class="tok-str">"npx"</span>
+args = [<span class="tok-str">"-y"</span>, <span class="tok-str">"@playwright/mcp@latest"</span>]</code></pre>
+
+    <p>+ AGENTS.md 작성 + Codex Action 워크플로우 등록 + Codex Cloud 연결.</p>
+
+    <h3>🚀 Day 1~5 — TDD + 셀프 리뷰 체인</h3>
+<pre><code>codex --profile dev
+&gt; <span class="tok-str">"POST /links 단축 URL 생성, GET /:slug 리다이렉트 기능.
+   1) 스펙 + 에러 케이스 6개 먼저
+   2) 실패 테스트 작성 (RED)
+   3) 통과시키는 최소 구현 (GREEN)
+   4) 리팩터링 (REFACTOR)
+   각 단계마다 커밋 끊기."</span>
+
+<span class="tok-com"># 완성 후 review profile로 안전 점검</span>
+codex --profile review
+&gt; <span class="tok-str">"방금 작업한 diff 보안·correctness 관점 리뷰. 코드 수정 X, 발견만."</span></code></pre>
+
+    <h3>📡 Day 6~10 — Cloud 병렬 + Action 봇</h3>
+<pre><code><span class="tok-com"># 대시보드는 Codex Cloud로 위임 (백그라운드)</span>
+<span class="tok-com"># 본인은 API 작업 계속</span>
+
+<span class="tok-com"># 매 PR에 Codex Action이 자동 1차 리뷰</span></code></pre>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 막힌 곳 — "Stripe webhook 서명 검증 실패"</div>
+      <span class="scenario__step"><strong>적용</strong>: <code>/model gpt-5.5</code> + reasoning effort high로 분석.</span>
+      <span class="scenario__step"><strong>결과</strong>: Cloudflare Workers request body stream 소진 문제 발견 → 20분 만에 해결.</span>
+    </div>
+
+    <table>
+      <tbody>
+        <tr><th>총 작업</th><td>10 영업일</td></tr>
+        <tr><th>비용</th><td>$50 (API 직결)</td></tr>
+        <tr><th>장애</th><td>출시 후 1주 0건 — 셋업이 보험</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 혼자일수록 자동화</div>
+      <p>"자동화는 팀 규모 클 때나 필요"는 오해입니다. <strong>혼자일수록 사람 리뷰어가 없으니 자동 리뷰가 절실</strong>.
+        Cloud + Action + profile 3종이 K에겐 "또 한 명의 동료"였습니다.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="story-c">📖 스토리 C · 가족 PWA — 균형</h2>
+
+    <table>
+      <tbody>
+        <tr><th>주인공</th><td>5년차 모바일 개발자 S. 부부 둘이 쓸 소비 트래커.</td></tr>
+        <tr><th>스택</th><td>React + Vite + Dexie. GitHub Pages.</td></tr>
+        <tr><th>전략</th><td><strong>dev profile만 1개. Cloud·MCP·Action 다 안 씀.</strong></td></tr>
+      </tbody>
+    </table>
+
+<pre><code><span class="tok-com"># 셋업 - 5분</span>
+<span class="tok-com"># ~/.codex/config.toml — 기본만</span>
+model = <span class="tok-str">"gpt-5.5"</span>
+approval_policy = <span class="tok-str">"on-request"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+
+<span class="tok-com"># AGENTS.md — 10줄만</span>
+## My rules
+- 함수형 컴포넌트만
+- Zustand 상태관리
+- IndexedDB는 src/db/queries.ts 경유
+- Tailwind 우선</code></pre>
+
+    <h3>Day 1~4 진행</h3>
+<pre><code><span class="tok-com"># Day 1: 핵심 화면 3개 (입력·리스트·차트)</span>
+&gt; <span class="tok-str">"위 화면 3개를 한 파일씩. 디자인 미니멀."</span>
+
+<span class="tok-com"># Day 2: 핸드폰에서 발견한 5가지 어색함 → 한번에 수정 요청</span>
+&gt; <span class="tok-str">"5가지 어색함: 1) 키보드 안 닫힘 2) 숫자 키패드 X 3) 오늘 버튼 X 4) 월 이동 버튼 작음 5) 다크모드 X. 순서대로."</span>
+
+<span class="tok-com"># Day 3: 출시 직전 셀프 리뷰</span>
+&gt; <span class="tok-str">"diff 리뷰: real bug·refactor·nit 분류. 답을 주지 말고 분류만."</span>
+
+<span class="tok-com"># Day 4: GitHub Pages 배포</span></code></pre>
+
+    <table>
+      <tbody>
+        <tr><th>총 작업</th><td>4일 · 약 12시간</td></tr>
+        <tr><th>비용</th><td>~$10</td></tr>
+        <tr><th>설정</th><td>profile 1개 + 10줄 AGENTS.md</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 절제의 미학</div>
+      <p>S는 도구를 더 쓸 줄 알면서도 안 썼습니다. <strong>"두 명만 위한 것, SaaS 안 키움"</strong>이라는 명확한 범위.
+        그러면 Cloud·MCP·Action·CI는 오버킬. 본인 프로젝트가 어느 스토리에 가까운지 자문해 보세요.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="lessons">세 스토리에서 추리는 5가지 교훈</h2>
+    <ol>
+      <li><strong>도구의 무게 = 프로젝트의 무게</strong>에 맞춰라</li>
+      <li><strong>"파일 만들기 전에 계획부터"</strong>는 모든 스토리 공통</li>
+      <li><strong>혼자일수록 자동화 가치가 큼</strong> (B 스토리)</li>
+      <li><strong>AGENTS.md는 짧을수록 좋다</strong> (B도 30줄, C는 10줄)</li>
+      <li><strong>3축 권한 기본값이 의외로 잘 보호</strong> — 작은 프로젝트는 기본만으로 OK</li>
+    </ol>
+
+    <h2 id="checklist">11장 체크리스트</h2>
+    <ul>
+      <li>☐ 본인의 다음 프로젝트를 A/B/C 중 하나로 분류</li>
+      <li>☐ 그 스토리의 profile 셋업 그대로 재현</li>
+      <li>☐ Day 1 끝나면 Platform Usage로 비용 확인</li>
+      <li>☐ 출시 직전엔 review profile로 셀프 리뷰</li>
+      <li>☐ 회고: 셋업 시간 대비 회수가 됐는가?</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="10-community.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">10. 커뮤니티 도구</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="12-troubleshooting.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">12. 트러블슈팅</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

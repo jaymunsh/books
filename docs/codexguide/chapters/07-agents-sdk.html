@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7장 · OpenAI Agents SDK · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 07</span>
+    <h1>OpenAI Agents SDK — 본인 서비스에 임베드</h1>
+    <p class="lead">
+      Codex CLI가 "터미널에서 사용"이라면, Agents SDK는 <strong>"본인 코드에 라이브러리로 임베드"</strong>입니다.
+      슬랙봇·CI 자동화·내부 도구 — 어디든 GPT-5의 추론을 끼워 넣을 수 있습니다.
+    </p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 SDK 변화 안내</div>
+      <p>OpenAI의 Agents SDK(Python: <code>openai-agents</code>, TS: <code>@openai/agents</code>)는 빠르게 변합니다.
+        본 장의 API 시그니처는 작성 시점 기준이며, 실 사용 전 <a href="https://github.com/openai/openai-agents-python" target="_blank" rel="noopener">공식 저장소</a>의 최신 버전을 확인하세요.</p>
+    </div>
+
+    <h2 id="vs-cli">CLI 헤드리스 vs Agents SDK</h2>
+
+    <table>
+      <thead><tr><th>방식</th><th>적합 상황</th><th>예</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CLI 헤드리스</strong> (<code>codex exec</code>)</td><td>쉘에서 호출 가능한 단발성 작업</td><td>CI PR 리뷰, 크론 보안 스캔</td></tr>
+        <tr><td><strong>Agents SDK</strong> (코드 임베드)</td><td>본인 서비스 안에서 도구·상태를 프로그램으로 통제</td><td>Slack봇, 데이터 분석 봇</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 90%는 헤드리스로 충분</div>
+      <p>SDK는 <strong>쉘로 표현 어려운 통제(도구 동적 선택·세션 상태·실시간 스트리밍)</strong>가 필요할 때만 꺼내세요.</p>
+    </div>
+
+    <h2 id="install">설치</h2>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Python</button>
+        <button class="code-tabs__btn" type="button">TypeScript</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code>pip install openai-agents
+<span class="tok-kw">export</span> OPENAI_API_KEY=sk-...</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="bash">
+<pre><code>npm i @openai/agents
+<span class="tok-kw">export</span> OPENAI_API_KEY=sk-...</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="hello">Hello World</h2>
+
+    <div class="code-tabs">
+      <div class="code-tabs__nav">
+        <button class="code-tabs__btn" type="button">Python</button>
+        <button class="code-tabs__btn" type="button">TypeScript</button>
+      </div>
+      <div class="code-tabs__panels">
+        <div class="code-tabs__panel" data-lang="python">
+<pre><code><span class="tok-kw">from</span> agents <span class="tok-kw">import</span> Agent, Runner
+
+agent = Agent(
+    name=<span class="tok-str">"Reviewer"</span>,
+    model=<span class="tok-str">"gpt-5.5"</span>,
+    instructions=<span class="tok-str">"You are a senior Python reviewer."</span>,
+)
+
+result = Runner.run_sync(agent, <span class="tok-str">"src/api.py 의 보안 취약점 3가지"</span>)
+<span class="tok-kw">print</span>(result.final_output)</code></pre>
+        </div>
+        <div class="code-tabs__panel" data-lang="typescript">
+<pre><code><span class="tok-kw">import</span> { Agent, run } <span class="tok-kw">from</span> <span class="tok-str">"@openai/agents"</span>;
+
+<span class="tok-kw">const</span> agent = <span class="tok-kw">new</span> Agent({
+  name: <span class="tok-str">"Reviewer"</span>,
+  model: <span class="tok-str">"gpt-5.5"</span>,
+  instructions: <span class="tok-str">"You are a senior TS reviewer."</span>,
+});
+
+<span class="tok-kw">const</span> result = <span class="tok-kw">await</span> run(agent, <span class="tok-str">"src/api.ts 의 보안 취약점 3가지"</span>);
+console.log(result.finalOutput);</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="tools">도구(Tool) 정의</h2>
+
+<pre><code><span class="tok-kw">from</span> agents <span class="tok-kw">import</span> Agent, Runner, function_tool
+
+<span class="tok-kw">@function_tool</span>
+<span class="tok-kw">def</span> <span class="tok-kw">get_user</span>(user_id: <span class="tok-kw">str</span>) -&gt; <span class="tok-kw">dict</span>:
+    <span class="tok-com">"""DB에서 사용자 조회"""</span>
+    <span class="tok-kw">return</span> db.query(<span class="tok-str">"SELECT * FROM users WHERE id = ?"</span>, [user_id])
+
+<span class="tok-kw">@function_tool</span>
+<span class="tok-kw">def</span> <span class="tok-kw">refund</span>(order_id: <span class="tok-kw">str</span>, reason: <span class="tok-kw">str</span>) -&gt; <span class="tok-kw">dict</span>:
+    <span class="tok-com">"""주문 환불 (위험)"""</span>
+    <span class="tok-kw">return</span> stripe.refunds.create(charge=order_id, reason=reason)
+
+agent = Agent(
+    name=<span class="tok-str">"SupportBot"</span>,
+    model=<span class="tok-str">"gpt-5.5"</span>,
+    instructions=<span class="tok-str">"고객 지원 봇. 환불 시 반드시 확인."</span>,
+    tools=[get_user, refund],
+)</code></pre>
+
+    <h2 id="multi">Agent Handoffs — 멀티 에이전트</h2>
+
+    <p>Agents SDK의 강점은 <strong>여러 에이전트가 서로 작업을 넘기는</strong> 패턴을 1급으로 지원합니다.</p>
+
+<pre><code><span class="tok-kw">from</span> agents <span class="tok-kw">import</span> Agent, Runner
+
+triage = Agent(
+    name=<span class="tok-str">"Triage"</span>,
+    model=<span class="tok-str">"gpt-5.4-mini"</span>,  <span class="tok-com"># 분류만 — 저렴</span>
+    instructions=<span class="tok-str">"문의를 [billing / technical / general] 분류 후 적절한 에이전트로 handoff."</span>,
+)
+
+billing = Agent(name=<span class="tok-str">"Billing"</span>, model=<span class="tok-str">"gpt-5.5"</span>, instructions=<span class="tok-str">"결제 전문가"</span>)
+tech    = Agent(name=<span class="tok-str">"Tech"</span>,    model=<span class="tok-str">"gpt-5.5"</span>, instructions=<span class="tok-str">"기술 지원"</span>)
+general = Agent(name=<span class="tok-str">"General"</span>, model=<span class="tok-str">"gpt-5.4-mini"</span>, instructions=<span class="tok-str">"일반 문의"</span>)
+
+triage.handoffs = [billing, tech, general]
+
+result = Runner.run_sync(triage, <span class="tok-str">"카드 결제가 두 번 됐어요"</span>)
+<span class="tok-com"># → triage가 billing으로 자동 handoff → billing이 처리</span></code></pre>
+
+    <h2 id="scenarios">실전 시나리오</h2>
+
+    <h3>Slack 봇</h3>
+<pre><code><span class="tok-kw">from</span> agents <span class="tok-kw">import</span> Agent, Runner, function_tool
+<span class="tok-kw">from</span> slack_bolt <span class="tok-kw">import</span> App
+
+<span class="tok-kw">@function_tool</span>
+<span class="tok-kw">def</span> <span class="tok-kw">query_metric</span>(metric: <span class="tok-kw">str</span>) -&gt; <span class="tok-kw">dict</span>:
+    <span class="tok-kw">return</span> prom.query(metric)
+
+ops_agent = Agent(
+    name=<span class="tok-str">"OpsBot"</span>,
+    model=<span class="tok-str">"gpt-5.5"</span>,
+    instructions=<span class="tok-str">"SRE 어시스턴트. 메트릭 조회 후 가설 제시."</span>,
+    tools=[query_metric],
+)
+
+app = App(token=os.environ[<span class="tok-str">"SLACK_BOT_TOKEN"</span>])
+
+<span class="tok-kw">@app.event</span>(<span class="tok-str">"app_mention"</span>)
+<span class="tok-kw">def</span> <span class="tok-kw">handle</span>(event, say):
+    result = Runner.run_sync(ops_agent, event[<span class="tok-str">"text"</span>])
+    say(result.final_output)</code></pre>
+
+    <h2 id="pitfalls">자주 만나는 함정</h2>
+
+    <table>
+      <thead><tr><th>함정</th><th>해결</th></tr></thead>
+      <tbody>
+        <tr><td>도구 너무 많아 모델이 헷갈림</td><td>에이전트당 도구 5~10개 이내, 많으면 handoff로 분할</td></tr>
+        <tr><td>도구 실패에 무한 재시도</td><td><code>max_turns</code> 설정 + 실패는 에러 텍스트로 반환</td></tr>
+        <tr><td>비밀이 도구 결과로 새어 나감</td><td>함수 내부에서 마스킹 후 반환</td></tr>
+        <tr><td>한 세션 응답 너무 길어 컨텍스트 폭발</td><td>긴 작업 여러 <code>run()</code>으로 분리 + 중간 요약</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="checklist">7장 체크리스트</h2>
+    <ul>
+      <li>☐ CLI 헤드리스 vs SDK 선택 — 본인 작업에 적합한 길</li>
+      <li>☐ 도구는 5~10개 이내, description은 1~2줄</li>
+      <li>☐ <code>max_turns</code>로 안전 cap</li>
+      <li>☐ 비밀 정보 마스킹</li>
+      <li>☐ 단순 분류는 gpt-5.4-mini handoff로 비용 절감</li>
+      <li>☐ 패키지명·API 공식 문서 최종 확인</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="06-orchestration.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">6. 멀티 에이전트</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="08-openai-api.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">8. OpenAI API</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

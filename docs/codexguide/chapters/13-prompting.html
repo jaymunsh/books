@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13장 · 프롬프팅·세션 운영 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 13</span>
+    <h1>프롬프팅 기술 + 세션 운영</h1>
+    <p class="lead">
+      같은 도구라도 <strong>지시 방식</strong>으로 결과 품질이 2배 이상 차이.
+      그리고 며칠짜리 작업을 끊김 없이 이어가는 <strong>세션 운영 전략</strong>까지.
+    </p>
+
+    <h2 id="good-bad">좋은 vs 나쁜 프롬프트</h2>
+    <table>
+      <thead><tr><th>나쁨</th><th>좋음</th></tr></thead>
+      <tbody>
+        <tr><td>"버그 고쳐줘"</td><td>"POST /users에 빈 email → 500이어야 하는데 200. 어느 케이스 검증 누락?"</td></tr>
+        <tr><td>"리팩터링해줘"</td><td>"src/auth/login.ts 함수 80줄 → 책임 단위로 3개로. 시그니처 유지, 테스트 그린 유지"</td></tr>
+        <tr><td>"테스트 작성"</td><td>"src/utils/date.ts의 formatDate에 Vitest unit test. 케이스: 정상·null·잘못된 형식·timezone 경계"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 5요소 공식</div>
+      <p>① 무엇을 ② 어떻게 ③ 어디까지 ④ 어떤 형태로 ⑤ 하지 말 것.</p>
+    </div>
+
+    <h2 id="plan-first">패턴 1 · "계획부터"</h2>
+<pre><code>&gt; <span class="tok-str">"... [작업] ... 파일 수정 전에 1) 변경 파일 목록 2) 각 파일에 무엇을 바꿀지 먼저 보여줘. OK 받고 진행."</span></code></pre>
+
+    <h2 id="reasoning">패턴 2 · GPT-5 reasoning effort</h2>
+    <p>Codex는 작업 복잡도에 따라 reasoning을 조절.</p>
+<pre><code>&gt; <span class="tok-str">"단순 문서 정리야. 빠르게."</span>           <span class="tok-com"># → 모델이 자동으로 low 선택</span>
+&gt; <span class="tok-str">"이 race condition을 단계별로 깊이 분석"</span>  <span class="tok-com"># → 자동으로 high</span>
+
+<span class="tok-com"># config.toml로 명시</span>
+reasoning_effort = <span class="tok-str">"medium"</span>  <span class="tok-com"># 기본</span></code></pre>
+
+    <h2 id="context">패턴 3 · 컨텍스트 주는 3가지 방법</h2>
+    <table>
+      <thead><tr><th>방법</th><th>예</th><th>특징</th></tr></thead>
+      <tbody>
+        <tr><td>경로</td><td>"src/api.ts를 보고..."</td><td>가장 가벼움</td></tr>
+        <tr><td>@-멘션 (IDE)</td><td>@src/api.ts:42-78</td><td>줄 범위 정확</td></tr>
+        <tr><td>본문 paste</td><td>코드 직접</td><td>가장 비쌈. 외부 데이터만</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="output-format">패턴 4 · 출력 형식 강제</h2>
+<pre><code>&gt; <span class="tok-str">"package.json deps를 [이름|현재|최신|breaking?] 4컬럼 표"</span>
+&gt; <span class="tok-str">"위 결과를 JSON만 출력, 설명 X"</span>
+&gt; <span class="tok-str">"보안 점검 결과를 [심각도][파일:줄][제안] 체크박스 마크다운"</span></code></pre>
+
+    <h2 id="by-model">패턴 5 · 모델별 프롬프팅</h2>
+    <table>
+      <thead><tr><th>모델</th><th>스타일</th></tr></thead>
+      <tbody>
+        <tr><td>gpt-5.5</td><td>구체적 지시 + 적당한 여백. 5요소 공식 적용</td></tr>
+        <tr><td>gpt-5.4-mini</td><td><strong>매우 명확한 지시 + 예시 1~2개</strong>. 모호함 금물</td></tr>
+        <tr><td>gpt-5.3-codex-spark</td><td>짧고 빠른 이터레이션. 길게 묻지 말 것</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="positive">패턴 6 · 부정문 → 긍정문</h2>
+<pre><code><span class="tok-com">// ❌ "라이브러리 추가하지 마"</span>
+<span class="tok-com">// ✅ "표준 라이브러리만. 의존성 추가 시 먼저 물어보고."</span></code></pre>
+
+    <h2 id="self-verify">패턴 7 · 자체 검증 요청</h2>
+<pre><code>&gt; <span class="tok-str">"수정 끝나면: 1) 영향 테스트 목록 2) 직접 실행 결과 3) 빠뜨린 케이스 자가 검토"</span></code></pre>
+
+    <h2 id="session-handoff">세션 운영·이어가기 전략</h2>
+
+    <h3>컨텍스트 사용률별 액션</h3>
+    <table>
+      <thead><tr><th>사용률</th><th>액션</th></tr></thead>
+      <tbody>
+        <tr><td>~50%</td><td>그냥 진행</td></tr>
+        <tr><td>50~70%</td><td>마무리 페이스 빠르게</td></tr>
+        <tr><td>70~85%</td><td><code>/compact</code> 또는 결론 요약</td></tr>
+        <tr><td>85%+</td><td>handoff 후 <code>codex resume</code> 또는 새 세션</td></tr>
+      </tbody>
+    </table>
+
+    <h3>이어가기 4가지 패턴</h3>
+
+    <h4>① <code>codex resume</code> — Codex가 가장 잘하는 부분</h4>
+    <p>Codex는 세션 자동 저장이 잘 되어 있어서 가장 쉬운 방법.</p>
+<pre><code>codex resume          <span class="tok-com"># 목록에서 선택</span>
+codex resume &lt;id&gt;     <span class="tok-com"># ID 직접</span></code></pre>
+
+    <h4>② <code>/compact</code> — 자동 압축</h4>
+<pre><code>&gt; /compact            <span class="tok-com"># 30~50% 절감, 핵심 보존</span></code></pre>
+
+    <h4>③ 명시적 요약 (자동보다 정확)</h4>
+<pre><code>&gt; <span class="tok-str">"결론·다음 액션 3가지만 요약. 시도해본 잘못된 가설은 한 줄로만."</span>
+&gt; /compact</code></pre>
+
+    <h4>④ <code>handoff.md</code> — 며칠~몇 주짜리 작업</h4>
+<pre><code><span class="tok-com"># 세션 끝낼 때</span>
+&gt; <span class="tok-str">".codex/handoff/2026-06-23-payment.md 로 저장:
+   ## 목표
+   ## 현재 진행 상태
+   ## 시도했지만 안 통한 것
+   ## 다음 액션 1~3순위
+   ## 주의점"</span>
+
+<span class="tok-com"># 새 세션 시작</span>
+$ codex
+&gt; <span class="tok-str">"@.codex/handoff/2026-06-23-payment.md 읽고 이어 작업. '다음 액션 1순위'부터."</span></code></pre>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 handoff.md 운영 팁</div>
+      <ul>
+        <li>위치: <code>.codex/handoff/YYYY-MM-DD-주제.md</code></li>
+        <li>혼자면 <code>.gitignore</code>, 팀이면 ✅ 커밋</li>
+        <li>완료된 건 <code>_archive/</code>로 이동</li>
+        <li>100줄 넘으면 너무 자세함</li>
+      </ul>
+    </div>
+
+    <h3>일일 작업 일지 — 장기 프로젝트</h3>
+<pre><code>&gt; <span class="tok-str">".codex/log/2026-06-23.md 작성:
+   ## 오늘 한 것
+   ## 발견·결정
+   ## 내일 시작점
+   ## 미해결 질문"</span></code></pre>
+
+    <h3>5가지 세션 운영 프롬프트</h3>
+    <ol>
+      <li><strong>시작</strong>: "@.codex/handoff/LATEST.md 읽고 현재 상태 요약 후 다음 액션 1순위부터"</li>
+      <li><strong>중간 점검</strong>: "지금까지 진행 5줄 요약. 다음 할 일은? 막힌 곳?"</li>
+      <li><strong>방향 전환</strong>: "앞서 X로 가기로 했지만 Y가 낫다. 이전 결정 무효, Y 관점에서 재정리"</li>
+      <li><strong>마무리</strong>: "오늘 작업 마무리. handoff 파일 작성."</li>
+      <li><strong>잘못된 방향 끊기</strong>: "3번 시도 모두 같은 패턴 실패. 멈추고: 1) 공통 원인 가설 2) 다른 접근 2가지"</li>
+    </ol>
+
+    <h2 id="anti-patterns">3대 안티패턴</h2>
+    <table>
+      <thead><tr><th>안티</th><th>왜</th><th>대신</th></tr></thead>
+      <tbody>
+        <tr><td>"잘 만들어줘"</td><td>기준 없음</td><td>"이 3가지 만족: ①... ②... ③..."</td></tr>
+        <tr><td>긴 대화에 새 주제 끼우기</td><td>이전 컨텍스트 오염</td><td>새 세션</td></tr>
+        <tr><td>오류 메시지 통째 paste만</td><td>맥락 없음</td><td>"시도한 것 + stderr + 가설 3개"</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="checklist">13장 체크리스트</h2>
+    <ul>
+      <li>☐ 큰 작업 전 "계획부터" 한 줄</li>
+      <li>☐ 파일 참조는 본문 paste 대신 경로/멘션</li>
+      <li>☐ 출력 형식(표·JSON) 명시</li>
+      <li>☐ gpt-5.4-mini 사용 시 예시 1~2개 포함</li>
+      <li>☐ <code>codex resume</code>을 일상화</li>
+      <li>☐ 장기 작업은 handoff.md로</li>
+      <li>☐ "잘 만들어줘" 같은 추상어 추방</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="12-troubleshooting.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">12. 트러블슈팅</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="14-team.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">14. 팀·협업 운영</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

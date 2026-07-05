@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6장 · 멀티 에이전트 오케스트레이션 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 06</span>
+    <h1>멀티 에이전트 오케스트레이션</h1>
+    <p class="lead">
+      Codex는 Claude Code의 "Workflow 도구" 같은 결정적 스크립트 시스템은 없지만,
+      <strong>Codex Cloud 병렬 작업</strong> + <strong>모델 분리(gpt-5.4-mini 서브에이전트)</strong> +
+      <strong>Agents SDK</strong>(7장)로 같은 효과를 낼 수 있습니다.
+    </p>
+
+    <h2 id="approaches">3가지 접근 방식</h2>
+
+    <table>
+      <thead><tr><th>방식</th><th>적합 상황</th><th>도구</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cloud 병렬</strong></td><td>독립적 작업 여러 개 동시 진행</td><td>Codex Cloud (3장)</td></tr>
+        <tr><td><strong>모델 분리</strong></td><td>비용 격리 — 단순 작업은 mini로</td><td>config.toml + <code>/model</code></td></tr>
+        <tr><td><strong>Agents SDK</strong></td><td>코드로 결정적 오케스트레이션</td><td>OpenAI Agents SDK (7장)</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="cloud-parallel">방식 1 · Codex Cloud 병렬 작업</h2>
+
+    <p>가장 직관적이고 강력. 3장에서 다룬 Cloud의 병렬 기능을 멀티 에이전트로 활용.</p>
+
+    <h3>전형적 시나리오 — 큰 PR을 모듈별 분할</h3>
+<pre><code>&gt; <span class="tok-str">"이 마이그레이션 작업을 Cloud로 분할 위임:
+   - Task 1: src/auth/ 의 OAuth 마이그레이션
+   - Task 2: src/api/ 의 응답 형식 변환
+   - Task 3: src/models/ 의 schema 업데이트
+   - Task 4: tests/ 의 fixture 갱신
+   각각 별도 PR로."</span>
+
+<span class="tok-com"># Cloud가 4개 태스크 병렬 실행</span>
+<span class="tok-com"># 30분~1시간 후 4개 PR 준비됨</span></code></pre>
+
+    <h2 id="model-split">방식 2 · 모델 분리 — 비용 격리 패턴</h2>
+
+    <p>같은 세션 안에서 작업 유형별로 다른 모델 사용. <strong>단순 분류·변환은 gpt-5.4-mini, 추론은 gpt-5.5</strong>.</p>
+
+<pre><code><span class="tok-com"># 세션 안에서 모델 전환</span>
+&gt; /model gpt-5.4-mini
+&gt; <span class="tok-str">"이 1000개 로그 라인을 [INFO/WARN/ERROR] 분류해줘"</span>
+
+&gt; /model gpt-5.5
+&gt; <span class="tok-str">"위 결과에서 ERROR 패턴 3가지 가설 제시 (복잡 추론 필요)"</span></code></pre>
+
+    <h3>전용 config — 단순 작업 자동화 스크립트</h3>
+<pre><code><span class="tok-com"># config.toml — 정형 작업용 mini 프로파일</span>
+[profiles.bulk]
+model = <span class="tok-str">"gpt-5.4-mini"</span>
+reasoning_effort = <span class="tok-str">"low"</span>
+approval_policy = <span class="tok-str">"never"</span>
+sandbox_mode = <span class="tok-str">"workspace-write"</span>
+
+<span class="tok-com"># 대량 분류 자동화</span>
+codex exec --profile bulk <span class="tok-str">"data/feedback.jsonl 의 5000건을 [Bug/Feature/Other] 분류"</span></code></pre>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — gpt-5.4-mini의 진가</div>
+      <p><strong>정형 작업에선 gpt-5.5와 차이가 거의 없으면서 비용은 1/5 수준</strong>. 분류·요약·변환·라벨링·간단한 코드 생성에 mini를 적극 활용하세요.
+        복잡 추론·설계만 gpt-5.5로 올리면 청구액이 크게 줄어듭니다.</p>
+    </div>
+
+    <h2 id="agents-sdk-mention">방식 3 · OpenAI Agents SDK (7장에서 자세히)</h2>
+
+    <p>코드로 결정적 오케스트레이션을 짜고 싶다면 Agents SDK를 씁니다. Codex CLI를 임베드하는 게 아니라, <strong>OpenAI 모델을 직접 호출해 본인만의 멀티 에이전트 시스템</strong> 구축.</p>
+
+<pre><code><span class="tok-com"># Python — 5개 finder를 병렬로</span>
+<span class="tok-kw">from</span> openai <span class="tok-kw">import</span> AsyncOpenAI
+<span class="tok-kw">import</span> asyncio
+
+client = AsyncOpenAI()
+
+<span class="tok-kw">async def</span> finder(area):
+    r = <span class="tok-kw">await</span> client.responses.create(
+        model=<span class="tok-str">"gpt-5.5"</span>,
+        input=<span class="tok-str">f"src/{area}/ 의 보안 취약점 분석"</span>
+    )
+    <span class="tok-kw">return</span> { <span class="tok-str">"area"</span>: area, <span class="tok-str">"findings"</span>: r.output_text }
+
+<span class="tok-kw">async def</span> main():
+    results = <span class="tok-kw">await</span> asyncio.gather(*[
+        finder(a) <span class="tok-kw">for</span> a <span class="tok-kw">in</span> [<span class="tok-str">"auth"</span>, <span class="tok-str">"api"</span>, <span class="tok-str">"db"</span>, <span class="tok-str">"middleware"</span>, <span class="tok-str">"config"</span>]
+    ])
+    <span class="tok-kw">return</span> results
+
+asyncio.run(main())</code></pre>
+
+    <h2 id="patterns">5가지 패턴 (Codex 컨텍스트로 재해석)</h2>
+
+    <table>
+      <thead><tr><th>패턴</th><th>구현</th><th>예</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pipeline</strong></td><td>한 세션에서 순차 위임</td><td>"X 분석 → Y 검증 → Z 보고서"</td></tr>
+        <tr><td><strong>Parallel</strong></td><td>Codex Cloud 또는 SDK <code>asyncio.gather</code></td><td>5개 영역 보안 감사 병렬</td></tr>
+        <tr><td><strong>Judge panel</strong></td><td>SDK로 N명 독립 호출 + 다수결</td><td>중요 결정에 다중 검증</td></tr>
+        <tr><td><strong>Loop-until-dry</strong></td><td>SDK 코드로 발견 없을 때까지</td><td>버그 탐색</td></tr>
+        <tr><td><strong>모델 분리</strong></td><td>config.toml 프로파일</td><td>mini로 분류 → 5.5로 분석</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="real-example">실전 예시 — 보안 감사 (3축 결합)</h2>
+
+<pre><code><span class="tok-com"># 1) Cloud 병렬 — 5개 영역 동시 스캔</span>
+&gt; <span class="tok-str">"Cloud로 5개 영역 동시 보안 감사:
+   - auth/ 의 인증·세션 취약점
+   - api/ 의 입력 검증 누락·SQLi
+   - 전체 비밀 정보 하드코딩
+   - 의존성 취약점
+   - docker·CI 설정 미스컨피그
+   각각 별도 보고서로."</span>
+
+<span class="tok-com"># 2) 결과 모이면 mini로 dedup·정리</span>
+&gt; /model gpt-5.4-mini
+&gt; <span class="tok-str">"위 5개 보고서를 dedup + 심각도 정렬 표로"</span>
+
+<span class="tok-com"># 3) gpt-5.5 + reasoning high로 최종 추천 액션</span>
+&gt; /model gpt-5.5
+&gt; <span class="tok-str">"위 정리된 발견 중 CRITICAL/HIGH 3개에 대한 패치 방안 제시"</span></code></pre>
+
+    <h2 id="best">모범 사례 & 안티패턴</h2>
+
+    <table>
+      <thead><tr><th>✅ 모범</th><th>❌ 안티패턴</th></tr></thead>
+      <tbody>
+        <tr><td>독립 작업 → Cloud 병렬</td><td>한 세션에 순차 위임 (시간 낭비)</td></tr>
+        <tr><td>단순 작업은 mini로 분리</td><td>모든 작업에 gpt-5.5 (비용 폭주)</td></tr>
+        <tr><td>중요 결정엔 Judge panel</td><td>한 번의 응답으로 결론 (검증 부족)</td></tr>
+        <tr><td>Loop-until-dry로 자동 종료</td><td>임의 "N번까지만" cap (놓침)</td></tr>
+        <tr><td>중간에 진행 상황 보고</td><td>10분 침묵 → 끊고 싶음</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="checklist">6장 체크리스트</h2>
+    <ul>
+      <li>☐ Cloud 병렬 1번 시도 — 작업 3개 동시 위임</li>
+      <li>☐ <code>profile.bulk</code> 정의 (gpt-5.4-mini + low effort)</li>
+      <li>☐ 같은 세션에서 모델 전환 패턴 체득</li>
+      <li>☐ (선택) Agents SDK로 본인만의 오케스트레이션 1개</li>
+      <li>☐ "단순 작업 = mini" 원칙 본인 워크플로우에 도입</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="05-automation.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">5. 자동화·CI/CD</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="07-agents-sdk.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">7. OpenAI Agents SDK</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

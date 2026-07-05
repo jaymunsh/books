@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14장 · 팀·협업 운영 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 14</span>
+    <h1>팀·협업 운영 — 혼자가 아니라 같이 쓸 때</h1>
+    <p class="lead">
+      한 명이 잘 쓰는 것과 팀이 잘 쓰는 것은 다른 문제입니다.
+      <strong>.claude/ 운영, 권한 정책, 비용 정책, AI 코드 리뷰 문화</strong>까지 — 팀 도입 직전에 합의해 둬야 할 7가지를 정리합니다.
+    </p>
+
+    <h2 id="claude-dir">.claude/ — 무엇을 커밋하고 무엇을 ignore할까</h2>
+
+    <p>가장 자주 틀리는 첫 결정. 잘못 커밋하면 보안 사고, 잘못 ignore하면 협업 마찰.</p>
+
+    <table>
+      <thead><tr><th>파일/폴더</th><th>커밋?</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td><code>.claude/settings.json</code></td><td>✅ 커밋</td><td>팀 공통 권한·기본값</td></tr>
+        <tr><td><code>.claude/settings.local.json</code></td><td>❌ ignore</td><td>개인 모델·테마·API 키</td></tr>
+        <tr><td><code>.claude/skills/</code></td><td>✅ 커밋</td><td>팀 표준 작업 절차</td></tr>
+        <tr><td><code>.claude/agents/</code></td><td>✅ 커밋</td><td>팀 공통 서브에이전트</td></tr>
+        <tr><td><code>.claude/rules/</code></td><td>✅ 커밋</td><td>경로별 코딩 규칙</td></tr>
+        <tr><td><code>.claude/worktrees/</code></td><td>❌ ignore</td><td>임시 작업 디렉토리</td></tr>
+        <tr><td><code>.mcp.json</code></td><td>✅ 커밋 (단, 토큰 ${} 참조)</td><td>팀 공통 MCP 서버</td></tr>
+        <tr><td><code>CLAUDE.md</code></td><td>✅ 커밋</td><td>프로젝트 영구 지시</td></tr>
+        <tr><td><code>CLAUDE.local.md</code></td><td>❌ ignore</td><td>개인 작업 노트</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>권장 <code>.gitignore</code></strong>:</p>
+<pre><code><span class="tok-com"># Claude Code</span>
+.claude/settings.local.json
+.claude/worktrees/
+.claude/cache/
+CLAUDE.local.md</code></pre>
+
+    <h2 id="permission-policy">팀 권한 정책 — 합의 5단계</h2>
+
+    <p>"내 PC에선 잘 되는데" 문제의 90%는 권한 차이입니다. 팀 표준 settings.json을 만들 때 합의 순서:</p>
+
+    <ol>
+      <li><strong>defaultMode</strong> 정하기 — 보통 <code>plan</code>이 신입 친화적</li>
+      <li><strong>모두가 자주 쓰는 명령</strong>(테스트·빌드·git 일부)을 <code>allow</code>로</li>
+      <li><strong>위험 명령</strong>(prod DB·force push·rm -rf)을 <code>deny</code>로</li>
+      <li><strong>편차 큰 명령</strong>(deploy·migrate)은 <code>ask</code>로 둬서 의도 확인</li>
+      <li>3개월에 1회 회고 — 자주 묻는 것은 allow로 승격, 사고 난 건 deny로</li>
+    </ol>
+
+    <p><strong>실전 예시 (10명 백엔드 팀)</strong>:</p>
+
+<pre><code>{
+  <span class="tok-str">"defaultMode"</span>: <span class="tok-str">"plan"</span>,
+  <span class="tok-str">"permissions"</span>: {
+    <span class="tok-str">"allow"</span>: [
+      <span class="tok-str">"Bash(npm run *)"</span>, <span class="tok-str">"Bash(pnpm *)"</span>, <span class="tok-str">"Bash(yarn *)"</span>,
+      <span class="tok-str">"Bash(git log *)"</span>, <span class="tok-str">"Bash(git diff *)"</span>, <span class="tok-str">"Bash(git status)"</span>,
+      <span class="tok-str">"Bash(gh pr view *)"</span>, <span class="tok-str">"Bash(gh issue view *)"</span>,
+      <span class="tok-str">"Read(*)"</span>
+    ],
+    <span class="tok-str">"ask"</span>: [
+      <span class="tok-str">"Bash(git push *)"</span>,
+      <span class="tok-str">"Bash(npm publish *)"</span>,
+      <span class="tok-str">"Bash(*migrate*)"</span>,
+      <span class="tok-str">"Edit(.env*)"</span>
+    ],
+    <span class="tok-str">"deny"</span>: [
+      <span class="tok-str">"Bash(rm -rf *)"</span>,
+      <span class="tok-str">"Bash(git push --force *)"</span>,
+      <span class="tok-str">"Bash(*prod*delete*)"</span>,
+      <span class="tok-str">"Read(.env.production)"</span>,
+      <span class="tok-str">"mcp__db__execute_sql"</span>
+    ]
+  }
+}</code></pre>
+
+    <h2 id="model-cost-policy">모델·비용 정책 — 누가 Opus를 쓰는가</h2>
+
+    <p>"모두 Opus" 정책은 첫 달 청구서를 보면 후회합니다. <strong>역할별·작업별 가이드라인</strong>이 현실적.</p>
+
+    <table>
+      <thead><tr><th>역할/상황</th><th>기본 모델</th><th>업그레이드 조건</th></tr></thead>
+      <tbody>
+        <tr><td>일반 기능 개발</td><td>Sonnet 4.6</td><td>설계·복잡 디버깅만 Opus</td></tr>
+        <tr><td>주니어 / 학습 단계</td><td>Sonnet 4.6</td><td>막힐 때만 Opus 1회</td></tr>
+        <tr><td>시니어 / 아키텍처</td><td>Sonnet 4.6 + Opus 혼용</td><td>본인 판단</td></tr>
+        <tr><td>대량 변환·분류 작업</td><td>Haiku 4.5</td><td>품질 부족하면 Sonnet</td></tr>
+        <tr><td>CI 자동 리뷰</td><td>Sonnet 4.6 (effort medium)</td><td>대형 PR만 Opus</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 한 줄 가이드</div>
+      <p><strong>"Sonnet을 디폴트로, Opus는 의식적 선택"</strong>으로 두면 비용·품질 균형이 가장 좋습니다.</p>
+    </div>
+
+    <h2 id="claude-md-conflict">CLAUDE.md 충돌 — 누가 쓰고 누가 지키나</h2>
+
+    <p>여러 명이 CLAUDE.md를 편집하기 시작하면 곧 200줄 → 500줄 → 사실상 폐기로 갑니다. 운영 원칙:</p>
+
+    <ul>
+      <li><strong>오너 1명</strong>을 정한다 (테크리드·플랫폼 담당자)</li>
+      <li><strong>PR 리뷰 의무</strong>: CLAUDE.md 변경은 오너 승인 필수</li>
+      <li><strong>3개월 다이어트</strong>: 분기에 한 번 200줄 이하로 자르기 — 안 쓰는 규칙 삭제</li>
+      <li><strong>경로별 규칙</strong>은 <code>.claude/rules/api.md</code>·<code>.claude/rules/ui.md</code>로 분리 (필요할 때만 로드)</li>
+      <li><strong>개인 노트</strong>는 <code>CLAUDE.local.md</code>에 (커밋 안 됨)</li>
+    </ul>
+
+    <h2 id="onboarding">신입 온보딩 — 첫 주 체크리스트</h2>
+
+    <p>신입에게 코드베이스 + Claude Code 둘 다를 동시에 적응시키는 게 핵심. <strong>둘이 서로 가속</strong>합니다.</p>
+
+    <table>
+      <thead><tr><th>Day</th><th>코드베이스 적응</th><th>Claude Code 적응</th></tr></thead>
+      <tbody>
+        <tr><td>Day 1</td><td>리포 clone·실행</td><td>설치·로그인·<code>/init</code>으로 CLAUDE.md 한 번 훑기</td></tr>
+        <tr><td>Day 2</td><td>주요 모듈 코드리뷰 1개</td><td>Plan mode 켜고 작은 버그픽스 1개</td></tr>
+        <tr><td>Day 3</td><td>로컬 환경 완성</td><td>팀 권한·스킬 익히기 (<code>/agents</code>·<code>/skills</code>)</td></tr>
+        <tr><td>Day 4</td><td>첫 PR 작성</td><td><code>/code-review</code>로 셀프 리뷰 후 PR</td></tr>
+        <tr><td>Day 5</td><td>PR 머지</td><td>회고 — 무엇이 빠르고 무엇이 어색했나</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "온보딩 메모를 스킬로"</div>
+      <span class="scenario__step"><strong>적용</strong>: 멘토는 신입에게 매번 같은 설명을 하지 않고 <code>.claude/skills/onboard-day1.md</code>·<code>day2.md</code>를 만들어 둔다.</span>
+      <span class="scenario__step"><strong>신입 사용</strong>: <code>/onboard-day1</code>을 치면 그날 할 일·관련 코드·체크리스트가 자동 안내.</span>
+      <span class="scenario__step"><strong>결과</strong>: 멘토 시간 80% 절감. 동시에 신입은 "Claude를 어떻게 쓰는지"를 자연스럽게 습득.</span>
+    </div>
+
+    <h2 id="ai-code-review">AI가 짠 코드 — 리뷰에서 어떻게 다룰까</h2>
+
+    <p>가장 많이 도는 논쟁: "Claude가 짠 거니까 어차피 좋겠지" vs "AI 코드는 다 의심부터". 둘 다 틀립니다. <strong>똑같이 다루는 게 정답</strong>.</p>
+
+    <h3>팀 합의 권장 사항</h3>
+
+    <ol>
+      <li><strong>PR 본문에 표시 의무 없음</strong> — "AI로 작성"이라는 라벨이 리뷰어를 편향시킴</li>
+      <li><strong>리뷰 기준은 동일</strong> — correctness·테스트·보안·가독성. 출처와 무관</li>
+      <li><strong>작성자가 책임자</strong> — Claude가 짰어도 PR을 올린 사람이 모든 라인을 이해해야 함</li>
+      <li><strong>"안 읽고 머지"는 절대 금지</strong> — 자동 리뷰 봇이 OK 줘도 사람 1명은 봐야 함</li>
+      <li><strong>큰 PR 쪼개기</strong> — Claude가 만든 PR이 자주 비대. 리뷰 가능 단위로 쪼개기 요청</li>
+    </ol>
+
+    <h2 id="secrets">비밀 정보 — 5가지 절대 규칙</h2>
+
+    <ul>
+      <li>❌ <code>.claude/settings.json</code>에 API 키·토큰 직접 입력 절대 금지</li>
+      <li>❌ <code>.mcp.json</code>에 토큰 하드코딩 금지 (반드시 <code>${ENV_VAR}</code> 참조)</li>
+      <li>❌ Claude한테 <code>cat .env</code> 시켜서 출력 받은 뒤 그대로 두기 금지 — 토큰이 컨텍스트·로그에 박힘</li>
+      <li>✅ 환경변수는 OS·shell·1Password CLI 같은 외부 도구로 주입</li>
+      <li>✅ 정기 <code>git secrets scan</code> (또는 GitHub secret scanning) 활성화</li>
+    </ul>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ 토큰이 transcript에 남는다</div>
+      <p>Claude 세션 transcript는 <code>~/.claude/projects/&lt;proj&gt;/sessions/</code>에 저장됩니다. 토큰을 한 번이라도 화면에 띄웠으면 그 파일에 남아 있어요. 의심 시 해당 파일 삭제 + 토큰 즉시 회전.</p>
+    </div>
+
+    <h2 id="case-study">사례 — 팀이 망친 경우 vs 잘된 경우</h2>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 망한 사례 · "권한을 너무 풀어 둔 팀"</div>
+      <span class="scenario__step"><strong>상황</strong>: 시작 첫 주, 모두가 <code>bypassPermissions</code> 모드로 작업.</span>
+      <span class="scenario__step"><strong>사고</strong>: 한 개발자의 Claude가 <code>git push --force</code>를 실행 → 메인 브랜치의 동료 커밋 5개 날아감.</span>
+      <span class="scenario__step"><strong>교훈</strong>: 편함을 위해 안전을 다 끄면 결국 비용을 치름. <code>defaultMode: "plan"</code> + 위험 명령 <code>deny</code>는 최소 안전망.</span>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 잘된 사례 · "리뷰 봇 + 사람 리뷰 이중화"</div>
+      <span class="scenario__step"><strong>상황</strong>: 30명 풀스택 팀. claude-code-action을 모든 PR에 자동 1차 리뷰.</span>
+      <span class="scenario__step"><strong>운영</strong>: 봇 리뷰는 5분 안에 와서 명백한 버그·스타일을 잡아 줌 → 사람 리뷰어는 설계·맥락에 집중.</span>
+      <span class="scenario__step"><strong>결과</strong>: 평균 PR 머지 시간 2일 → 5시간. 사람 리뷰 부담 감소, 품질은 오히려 상승.</span>
+    </div>
+
+    <h2 id="checklist">14장 체크리스트 (팀 도입 직전)</h2>
+    <ul>
+      <li>☐ <code>.gitignore</code>에 Claude 관련 6가지 항목 추가</li>
+      <li>☐ 팀 <code>settings.json</code> 합의 — defaultMode + allow/ask/deny</li>
+      <li>☐ 모델·비용 정책 1페이지 문서화</li>
+      <li>☐ CLAUDE.md 오너 1명 지정</li>
+      <li>☐ 신입 온보딩 5일 체크리스트 보유</li>
+      <li>☐ AI 코드 리뷰 가이드라인 합의 (5가지)</li>
+      <li>☐ 비밀 정보 5가지 절대 규칙 공유</li>
+      <li>☐ 분기 1회 회고 (권한·스킬·CLAUDE.md 다이어트)</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="13-prompting.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">13. 프롬프팅 기술</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="15-cost.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">15. 비용 최적화</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

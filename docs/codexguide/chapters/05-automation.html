@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5장 · 자동화 · CI/CD · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 05</span>
+    <h1>자동화 · CI/CD — 사람 없이 돌게 만들기</h1>
+    <p class="lead">
+      Codex의 마지막 도약은 <strong>"사람이 옆에 없을 때도 돌게 만드는 것"</strong>입니다.
+      <code>codex exec</code> 헤드리스 모드, GitHub Actions 통합, Codex Cloud 자동 위임,
+      <code>ci</code> permission profile까지 — 네 가지 도구가 핵심입니다.
+    </p>
+
+    <h2 id="headless">헤드리스 모드 — <code>codex exec</code></h2>
+
+    <p><code>codex exec</code>는 상호작용 없이 stdout으로만 결과를 뱉습니다. CI·크론·쉘 스크립트 어디에서나 호출할 수 있어요.</p>
+
+<pre><code><span class="tok-com"># 가장 단순한 형태 — 질문 → 답변만 출력</span>
+codex exec <span class="tok-str">"package.json의 dependencies를 알파벳 순으로 정렬한 JSON만 출력"</span>
+
+<span class="tok-com"># 권한 자동 승인 — CI 환경에서 필수</span>
+codex exec --profile ci --full-auto <span class="tok-str">"src/ 코드 리뷰 후 결과 마크다운"</span>
+
+<span class="tok-com"># 출력을 파일로</span>
+codex exec <span class="tok-str">"보안 점검"</span> &gt; security.md
+
+<span class="tok-com"># JSON 출력 (자동화 파이프라인)</span>
+codex exec --output json <span class="tok-str">"이슈 분류"</span> | jq .</code></pre>
+
+    <h2 id="github-actions">GitHub Actions — PR 자동 리뷰</h2>
+
+    <p>가장 흔한 자동화 시나리오. PR이 열리면 Codex가 자동으로 리뷰 코멘트 게시.</p>
+
+<pre><code><span class="tok-com"># .github/workflows/codex-review.yml</span>
+name: Codex PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Install Codex CLI
+        run: |
+          curl -fsSL https://chatgpt.com/codex/install.sh | sh
+          echo <span class="tok-str">"$HOME/.local/bin"</span> &gt;&gt; $GITHUB_PATH
+        env:
+          CODEX_NON_INTERACTIVE: <span class="tok-str">"1"</span>
+
+      - name: Run review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          codex exec --profile ci --full-auto \
+            <span class="tok-str">"이 PR의 diff를 리뷰하고 발견 사항을 인라인 코멘트로 게시.
+             gh CLI 사용 가능. 카테고리: bug · security · style · suggestion."</span></code></pre>
+
+    <h3>GitLab CI 예제</h3>
+<pre><code><span class="tok-com"># .gitlab-ci.yml</span>
+codex-review:
+  stage: review
+  image: node:20
+  before_script:
+    - curl -fsSL https://chatgpt.com/codex/install.sh | sh
+    - export PATH=<span class="tok-str">"$HOME/.local/bin:$PATH"</span>
+  script:
+    - codex exec --profile ci --full-auto <span class="tok-str">"merge request 리뷰"</span>
+  only:
+    - merge_requests
+  variables:
+    OPENAI_API_KEY: $CI_OPENAI_KEY
+    CODEX_NON_INTERACTIVE: <span class="tok-str">"1"</span></code></pre>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ CI에서 권한·비용 주의</div>
+      <ul>
+        <li>CI는 비대화식 → <code>--profile ci --full-auto</code> 필수, 또는 <code>approval_policy = "never"</code></li>
+        <li>외부 컨트리뷰터 PR엔 조건 분기 (악용 방지) — <code>if: github.event.pull_request.author_association != 'NONE'</code></li>
+        <li>큰 PR에 매번 gpt-5.5는 비쌈. <code>reasoning_effort = "low"</code> 또는 gpt-5.4-mini로 차등</li>
+      </ul>
+    </div>
+
+    <h2 id="codex-cloud-auto">Codex Cloud — 이슈 자동 처리</h2>
+
+    <p>Codex Cloud(3장)와 GitHub 통합을 합치면 <strong>"이슈 던지면 PR이 돌아오는"</strong> 워크플로우가 가능.</p>
+
+<pre><code><span class="tok-com"># GitHub Issue 본문 또는 코멘트에 멘션</span>
+
+@codex 이 이슈를 분석하고 수정 PR을 만들어줘.
+재현 절차:
+1. ...
+2. ...
+기대: ...
+실제: ...
+</code></pre>
+
+    <p>15분~1시간 안에 Cloud가 자동으로:</p>
+    <ol>
+      <li>이슈 분석 → 가설 수립</li>
+      <li>브랜치 생성 → 수정 → 테스트</li>
+      <li>PR 생성 + 본인 멘션</li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 시나리오 · "작은 버그 10개 → 하룻밤 사이 처리"</div>
+      <span class="scenario__step"><strong>상황</strong>: 작은 버그 10개가 백로그에 쌓임. 하나씩 처리하기 부담.</span>
+      <span class="scenario__step"><strong>적용</strong>: 각 이슈에 <code>@codex 고쳐줘</code> 멘션. 본인은 퇴근.</span>
+      <span class="scenario__step"><strong>결과</strong>: 아침에 10개 PR 준비됨. 리뷰만 하면 끝.</span>
+    </div>
+
+    <h2 id="cron">정기 자동 작업 — 크론으로</h2>
+
+    <p>매일·매주 반복 작업은 OS 크론에 Codex 명령을 박아 둡니다.</p>
+
+<pre><code><span class="tok-com"># crontab -e</span>
+
+<span class="tok-com"># 매일 새벽 6시 보안 점검</span>
+0 6 * * * cd ~/proj &amp;&amp; codex exec --profile ci <span class="tok-str">"보안 점검 + 결과 슬랙 전송"</span>
+
+<span class="tok-com"># 매주 월요일 09시 의존성 업데이트 체크</span>
+0 9 * * 1 cd ~/proj &amp;&amp; codex exec --profile ci <span class="tok-str">"npm outdated 결과 정리 + 슬랙"</span>
+
+<span class="tok-com"># 매시간 CI 상태 모니터링</span>
+0 * * * * codex exec <span class="tok-str">"gh run list --limit 5 + 실패 분석"</span> | slack-cli post --channel <span class="tok-str">"#ci-health"</span></code></pre>
+
+    <h2 id="recipes">실전 자동화 레시피 3가지</h2>
+
+    <h3>레시피 1 · 외부 PR 자동 1차 리뷰</h3>
+
+<pre><code><span class="tok-com"># .github/workflows/external-pr.yml</span>
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+jobs:
+  first-pass:
+    <span class="tok-kw">if</span>: github.event.pull_request.author_association != <span class="tok-str">'MEMBER'</span>
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: <span class="tok-str">'${{ github.event.pull_request.head.sha }}'</span> }
+      - run: curl -fsSL https://chatgpt.com/codex/install.sh | sh
+      - env: { OPENAI_API_KEY: <span class="tok-str">'${{ secrets.OPENAI_API_KEY }}'</span>, CODEX_NON_INTERACTIVE: <span class="tok-str">'1'</span> }
+        run: codex exec --profile ci <span class="tok-str">"외부 PR 1차 리뷰 — 명백한 버그·보안만"</span></code></pre>
+
+    <h3>레시피 2 · 매일 빌드 분석</h3>
+
+<pre><code><span class="tok-com">#!/bin/bash</span>
+<span class="tok-com"># scripts/daily-build-analysis.sh</span>
+
+<span class="tok-com"># 최근 빌드 메트릭 수집</span>
+gh run list --limit 20 --json name,conclusion,createdAt,updatedAt &gt; /tmp/ci.json
+
+<span class="tok-com"># Codex로 분석 → 슬랙</span>
+codex exec --profile ci <span class="tok-str">"
+/tmp/ci.json 의 빌드 데이터에서:
+1) 가장 느린 워크플로우
+2) 변동성 큰 워크플로우
+3) 개선 가설 3가지
+마크다운으로 출력."</span> | slack-cli post --channel <span class="tok-str">"#ci-health"</span></code></pre>
+
+    <h3>레시피 3 · 머지 후 문서 동기화</h3>
+
+<pre><code><span class="tok-com"># .github/workflows/docs-sync.yml</span>
+on:
+  push:
+    branches: [main]
+    paths: [<span class="tok-str">"src/api/**"</span>, <span class="tok-str">"package.json"</span>]
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions: { contents: write, pull-requests: write }
+    steps:
+      - uses: actions/checkout@v4
+      - run: curl -fsSL https://chatgpt.com/codex/install.sh | sh
+      - env: { OPENAI_API_KEY: <span class="tok-str">'${{ secrets.OPENAI_API_KEY }}'</span>, CODEX_NON_INTERACTIVE: <span class="tok-str">'1'</span> }
+        run: |
+          codex exec --profile ci <span class="tok-str">"
+          최근 머지 변경을 보고 README·docs/api.md·AGENTS.md 의 명령 부분 갱신.
+          변경 있으면 docs/auto-sync-$(date +%Y%m%d) 브랜치로 PR."</span></code></pre>
+
+    <h2 id="patterns">자동화 패턴 한눈에</h2>
+
+    <table>
+      <thead><tr><th>상황</th><th>도구</th><th>예</th></tr></thead>
+      <tbody>
+        <tr><td>CI/CD에서 호출</td><td><code>codex exec --profile ci</code></td><td>PR마다 자동 리뷰</td></tr>
+        <tr><td>이슈에서 PR로 변환</td><td>Codex Cloud + GitHub</td><td><code>@codex 고쳐줘</code> 멘션</td></tr>
+        <tr><td>정해진 시간에 자동</td><td>OS 크론 + <code>codex exec</code></td><td>매일 오전 9시 일일 리포트</td></tr>
+        <tr><td>이벤트 트리거</td><td>git hook (<code>.git/hooks/pre-commit</code>)</td><td>커밋 전 자동 lint</td></tr>
+        <tr><td>외부에서 멘션</td><td>Slack 통합 (커뮤니티 도구 10장)</td><td>슬랙에서 운영 작업</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="checklist">5장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>codex exec "..."</code> 한 번 실행해 보기</li>
+      <li>☐ <code>--profile ci</code> 정의 후 CI 워크플로우 등록</li>
+      <li>☐ 외부 PR 자동 리뷰 (조건 분기 포함)</li>
+      <li>☐ GitHub 이슈에 <code>@codex</code> 멘션 → Cloud 자동 처리 시도</li>
+      <li>☐ 크론으로 일일 보안 점검 자동화</li>
+      <li>☐ <code>CODEX_NON_INTERACTIVE=1</code> 환경변수 CI에 설정</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="04-mcp-integration.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">4. MCP·외부 통합</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="06-orchestration.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">6. 멀티 에이전트</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

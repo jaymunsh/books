@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14장 · 팀·협업 운영 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 14</span>
+    <h1>팀·협업 운영</h1>
+    <p class="lead">팀 단위 운영에서 합의해야 할 7가지.</p>
+
+    <h2 id="codex-dir">.codex/ — 무엇을 커밋하고 무엇을 ignore</h2>
+    <table>
+      <thead><tr><th>파일/폴더</th><th>커밋?</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td><code>.codex/config.toml</code></td><td>✅</td><td>팀 공통 profile·MCP</td></tr>
+        <tr><td><code>.codex/config.local.toml</code></td><td>❌</td><td>개인 모델·키</td></tr>
+        <tr><td><code>.codex/handoff/</code></td><td>팀이면 ✅</td><td>인수인계 가시화</td></tr>
+        <tr><td><code>.codex/log/</code></td><td>❌</td><td>개인 작업 일지</td></tr>
+        <tr><td><code>AGENTS.md</code></td><td>✅</td><td>프로젝트 영구 지시</td></tr>
+        <tr><td><code>AGENTS.override.md</code></td><td>❌</td><td>개인 override</td></tr>
+        <tr><td><code>~/.codex/sessions/</code></td><td>❌ (~/ 밖)</td><td>세션 로그</td></tr>
+      </tbody>
+    </table>
+
+<pre><code><span class="tok-com"># .gitignore</span>
+.codex/config.local.toml
+.codex/log/
+AGENTS.override.md</code></pre>
+
+    <h2 id="profile-policy">팀 profile 정책 — 합의 5단계</h2>
+    <ol>
+      <li>기본 profile 정하기 — 보통 dev (workspace-write + on-request + network false)</li>
+      <li>review · ci · danger profile 정의</li>
+      <li>위험 명령은 deny 또는 ask</li>
+      <li>편차 큰 명령은 ask로 의도 확인</li>
+      <li>3개월에 1회 회고</li>
+    </ol>
+
+    <p>실전 예시: 11장 스토리 B의 config.toml 참조.</p>
+
+    <h2 id="model-policy">모델·비용 정책</h2>
+    <table>
+      <thead><tr><th>역할</th><th>기본 모델</th><th>업그레이드 조건</th></tr></thead>
+      <tbody>
+        <tr><td>일반 개발</td><td>gpt-5.5</td><td>설계·복잡 디버깅만 reasoning high</td></tr>
+        <tr><td>주니어 / 학습</td><td>gpt-5.5</td><td>막힐 때만</td></tr>
+        <tr><td>대량 변환·분류</td><td>gpt-5.4-mini</td><td>품질 부족하면 5.5</td></tr>
+        <tr><td>CI 자동 리뷰</td><td>gpt-5.4-mini + low</td><td>대형 PR만 5.5</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="agents-md-conflict">AGENTS.md 충돌 관리</h2>
+    <ul>
+      <li><strong>오너 1명</strong> 정함 (테크리드)</li>
+      <li>PR 리뷰 의무 (CLAUDE.md 변경은 오너 승인)</li>
+      <li>분기 다이어트 (200줄 이하)</li>
+      <li>경로별 규칙은 하위 <code>AGENTS.md</code>로 분리</li>
+      <li>개인 노트는 <code>AGENTS.override.md</code> (커밋 X)</li>
+    </ul>
+
+    <h2 id="onboarding">신입 온보딩 — 첫 주 체크리스트</h2>
+    <table>
+      <thead><tr><th>Day</th><th>코드베이스</th><th>Codex</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>리포 clone·실행</td><td>설치·로그인·<code>/init</code></td></tr>
+        <tr><td>2</td><td>주요 모듈 리뷰 1개</td><td>dev profile로 작은 버그픽스</td></tr>
+        <tr><td>3</td><td>로컬 환경 완성</td><td>profile·MCP 익히기</td></tr>
+        <tr><td>4</td><td>첫 PR</td><td>review profile로 셀프 리뷰</td></tr>
+        <tr><td>5</td><td>PR 머지</td><td>회고</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="ai-code-review">AI가 짠 코드 — 5가지 합의</h2>
+    <ol>
+      <li>PR 본문에 "AI 작성" 표시 의무 없음 — 편향 방지</li>
+      <li>리뷰 기준은 동일 — correctness·테스트·보안·가독성</li>
+      <li>작성자가 책임자 — 모든 라인 이해 필수</li>
+      <li>"안 읽고 머지" 절대 금지</li>
+      <li>큰 PR은 쪼개기</li>
+    </ol>
+
+    <h2 id="secrets">비밀 정보 — 5가지 절대 규칙</h2>
+    <ul>
+      <li>❌ <code>.codex/config.toml</code>(커밋)에 토큰 직접 입력</li>
+      <li>❌ MCP <code>env</code>에 토큰 하드코딩 (반드시 <code>${ENV_VAR}</code>)</li>
+      <li>❌ Codex한테 <code>cat .env</code> 시킨 결과 두기 — 세션 로그에 박힘</li>
+      <li>✅ 환경변수는 OS·shell·1Password CLI</li>
+      <li>✅ git secrets scan·GitHub secret scanning 활성화</li>
+    </ul>
+
+    <div class="callout callout--warn">
+      <div class="callout__title">⚠️ 세션 로그에 토큰</div>
+      <p>Codex 세션 로그는 <code>~/.codex/sessions/</code>에 저장. 토큰을 한 번 화면에 띄웠으면 그 파일에 남음. 토큰 즉시 회전.</p>
+    </div>
+
+    <h2 id="case-study">사례 — 망한 / 잘된</h2>
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 망한 사례 · "danger profile 디폴트"</div>
+      <span class="scenario__step">시작 첫 주, 편하다고 모두 <code>danger</code> profile 사용. 한 개발자가 prod DB에 실수 실행 → 데이터 손상.</span>
+      <span class="scenario__step"><strong>교훈</strong>: dev profile + ask로 위험 명령 가드.</span>
+    </div>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 잘된 사례 · "Cloud + Codex Action 이중화"</div>
+      <span class="scenario__step">30명 팀. Codex Action으로 모든 PR 자동 리뷰. 사람은 설계 리뷰만 집중.</span>
+      <span class="scenario__step"><strong>결과</strong>: 평균 머지 2일 → 5시간.</span>
+    </div>
+
+    <h2 id="checklist">14장 체크리스트</h2>
+    <ul>
+      <li>☐ <code>.gitignore</code>에 Codex 관련 4가지 추가</li>
+      <li>☐ 팀 profile 3종(dev·review·ci) 합의 + 커밋</li>
+      <li>☐ 모델·비용 정책 1페이지 문서화</li>
+      <li>☐ AGENTS.md 오너 1명 지정</li>
+      <li>☐ 신입 온보딩 5일 체크리스트</li>
+      <li>☐ AI 코드 리뷰 5규칙 합의</li>
+      <li>☐ 비밀 정보 5규칙 공유</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="13-prompting.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">13. 프롬프팅·세션 운영</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="15-cost.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">15. 비용 최적화</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

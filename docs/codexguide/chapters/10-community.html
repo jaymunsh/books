@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10장 · 커뮤니티 도구·확장 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 10</span>
+    <h1>커뮤니티 도구·확장 — Codex 생태계</h1>
+    <p class="lead">
+      Codex CLI는 2025년 출시로 비교적 신생이라 커뮤니티 생태계가 Claude Code보다 작습니다.
+      대신 <strong>OpenAI 공식 도구</strong>와 <strong>핵심 모니터링·자동화 도구</strong>가 단단합니다. 가장 유용한 것들만 추렸습니다.
+    </p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 신뢰도 안내</div>
+      <p>이 장의 도구는 작성 시점 기준입니다. 설치 전 README와 최근 커밋 날짜를 반드시 확인하세요. star 수치는 빠르게 변하므로 참고용.</p>
+    </div>
+
+    <h2 id="official">⭐ 공식 도구 — OpenAI 1차 자료</h2>
+
+    <div class="tool-card">
+      <h3>openai/codex — 공식 CLI <span class="star-badge">공식 OSS</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/openai/codex" target="_blank" rel="noopener">github.com/openai/codex</a></p>
+      <p>Codex CLI 본체. Rust로 재작성됨. <strong>이슈·디스커션이 활발해 문제 해결 1차 자료</strong>. config.toml 옵션·sandbox 동작·신규 기능 RFC가 여기에.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>OpenAI Developers Codex Docs <span class="star-badge">공식</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://developers.openai.com/codex" target="_blank" rel="noopener">developers.openai.com/codex</a></p>
+      <p>가장 정확한 최신 정보. <strong>config-reference · sandbox · agent-approvals · MCP</strong> 섹션이 특히 자주 갱신.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>openai-agents-python / @openai/agents <span class="star-badge">공식 SDK</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://github.com/openai/openai-agents-python" target="_blank" rel="noopener">github.com/openai/openai-agents-python</a></p>
+      <p>7장에서 다룬 Agents SDK 공식 저장소. examples 폴더에 실전 패턴 다수.</p>
+    </div>
+
+    <h2 id="action">🤖 GitHub Action — PR 자동화</h2>
+
+    <div class="tool-card">
+      <h3>OpenAI Codex Action (공식)</h3>
+      <p class="tool-card__meta">🔗 OpenAI가 공식 maintain하는 GitHub Action</p>
+      <p>5장에서 본 워크플로우를 더 깔끔하게. <code>OPENAI_API_KEY</code> + 프롬프트만 주면 PR에 자동 코멘트.
+        외부 컨트리뷰터 PR엔 <code>author_association</code> 조건 분기 필수.</p>
+    </div>
+
+    <h2 id="usage">📊 사용량·비용 모니터링</h2>
+
+    <div class="tool-card">
+      <h3>OpenAI Usage Dashboard <span class="star-badge">공식</span></h3>
+      <p class="tool-card__meta">🔗 <a href="https://platform.openai.com/usage" target="_blank" rel="noopener">platform.openai.com/usage</a></p>
+      <p>Platform 콘솔의 Usage 탭이 가장 정확. <strong>API 키별·모델별·일별</strong> 사용량과 cached_tokens 비율까지 확인 가능.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>커뮤니티 사용량 트래커들</h3>
+      <p>Claude Code의 <code>ccusage</code>와 유사한 OpenAI/Codex용 도구들이 npm·PyPI에 다수 있습니다.
+        대부분 <code>~/.codex/sessions/</code>의 로그를 분석. 검색 키워드:
+        "openai usage cli" · "codex token tracker". 사용 전 README와 최근 커밋 확인 필수.</p>
+    </div>
+
+    <h2 id="awesome">📚 awesome 리스트·튜토리얼</h2>
+
+    <div class="tool-card">
+      <h3>awesome-codex 류 리스트</h3>
+      <p>GitHub에 <code>awesome-codex</code>·<code>awesome-openai-agents</code> 같은 큐레이션 리스트가 여러 개. 별 수 많고 최근 갱신된 것을 우선.
+        Anthropic 진영(superpowers 등)에 비해 규모는 작지만 양질의 것들이 모이고 있습니다.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>Codex CLI Cheatsheet 블로그 (Shipyard 등)</h3>
+      <p class="tool-card__meta">🔗 외부 블로그 다수</p>
+      <p>최신 버전 명령어·config 옵션 변경을 빠르게 정리해주는 블로그들. <strong>"codex cli cheatsheet"</strong> 검색으로 발견.
+        다만 모델·API 변화가 빨라 6개월 된 글은 일부 오류 가능.</p>
+    </div>
+
+    <h2 id="ecosystem">🔌 MCP 서버 컬렉션</h2>
+
+    <p>MCP는 Anthropic이 처음 만들었지만 OpenAI/Codex도 같은 프로토콜을 지원. <strong>Anthropic 생태계의 MCP 서버들도 그대로 사용 가능</strong>합니다.</p>
+
+    <ul>
+      <li><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">modelcontextprotocol/servers</a> — 공식 MCP 서버 모음 (filesystem · git · github · slack 등)</li>
+      <li>Anthropic Directory의 MCP 서버 목록 — Codex와도 호환</li>
+      <li>업체 자체 MCP — Sentry · Linear · Notion · Figma 모두 codex와 그대로 작동</li>
+    </ul>
+
+    <h2 id="how-to-choose">실전 선택 가이드</h2>
+
+    <table>
+      <thead><tr><th>상황 / 목표</th><th>먼저 깔 도구</th></tr></thead>
+      <tbody>
+        <tr><td>가장 정확한 정보</td><td>공식 문서 · openai/codex 저장소 issues</td></tr>
+        <tr><td>비용 가시화</td><td>OpenAI Platform Usage 대시보드</td></tr>
+        <tr><td>PR 자동 리뷰</td><td>OpenAI Codex Action</td></tr>
+        <tr><td>본인 서비스 임베드</td><td>openai-agents-python / @openai/agents</td></tr>
+        <tr><td>MCP 외부 통합</td><td>modelcontextprotocol/servers (Anthropic 진영도 사용 가능)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — Codex 생태계는 작지만 단단함</div>
+      <p>Claude Code의 커뮤니티(superpowers 233k 등)에 비하면 Codex 생태계는 작습니다. 다만 <strong>OpenAI 공식 도구가 매우 안정적</strong>이라
+        커뮤니티가 작아도 실무 부담은 별로 없습니다. <strong>"공식부터, 커뮤니티는 보충"</strong>이 안전한 순서입니다.</p>
+      <p>또 한 가지: <strong>MCP 표준은 진영을 뛰어넘습니다</strong>. Anthropic이 만든 MCP 서버 대부분이 Codex에서도 그대로 작동.
+        4장에서 본 서버 12선이 모두 사용 가능합니다.</p>
+    </div>
+
+    <h2 id="checklist">10장 체크리스트</h2>
+    <ul>
+      <li>☐ Platform Usage 대시보드 한 번 확인</li>
+      <li>☐ openai/codex GitHub Issues에서 본인 의문 검색</li>
+      <li>☐ Codex Action을 활발한 리포에 1개 설치</li>
+      <li>☐ MCP 서버 — Anthropic 진영 컬렉션도 후보로 검토</li>
+      <li>☐ "공식부터" 원칙 — 커뮤니티 도구는 보충</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="09-scenarios.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">9. 실전 시나리오</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="11-real-stories.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">11. 실무 빌딩 스토리</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

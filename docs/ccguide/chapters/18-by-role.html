@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>18장 · 직군별 가이드 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 18 · 직군별</span>
+    <h1>직군별 가이드 — 본인 환경에 맞게</h1>
+    <p class="lead">
+      앞 장들의 도구를 <strong>본인 직군에서 어떻게 조합할지</strong>의 6가지 처방전.
+      각 직군마다 "첫 주에 깔 도구 · 자주 쓰는 워크플로우 · 미니 시나리오 · 함정"을 한 페이지로 정리했습니다.
+    </p>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 사용법</div>
+      <p>본인 직군 섹션 1개만 읽으세요. 다른 직군은 호기심 생길 때. 각 직군이 독립적입니다.</p>
+    </div>
+
+    <h2 id="overview">6가지 직군 한눈에</h2>
+
+    <table>
+      <thead>
+        <tr><th>직군</th><th>핵심 도구 조합</th><th>가장 큰 이득</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="#frontend">🎨 프론트엔드</a></td><td>Playwright MCP · <code>/verify</code> · Figma MCP</td><td>UI 작업 → 즉시 시각 검증</td></tr>
+        <tr><td><a href="#backend">⚙️ 백엔드</a></td><td>DB MCP · gh CLI · <code>/security-review</code></td><td>마이그레이션·API 보안 자동화</td></tr>
+        <tr><td><a href="#data-ml">📊 데이터·ML</a></td><td>Jupyter · pandas · Haiku 서브에이전트</td><td>대량 분류·요약·EDA 자동화</td></tr>
+        <tr><td><a href="#devops">☁️ DevOps·SRE</a></td><td>K8s/Terraform MCP · Sentry MCP · <code>/loop</code></td><td>인시던트 대응·IaC 검토</td></tr>
+        <tr><td><a href="#mobile">📱 모바일</a></td><td>Xcode/Android Studio + 헤드리스 · Fastlane</td><td>빌드·플랫폼별 분기 작업</td></tr>
+        <tr><td><a href="#junior">🎓 신입·주니어</a></td><td>Plan mode · <code>/init</code> · 학습 위주 프롬프트</td><td>안전한 학습 + 코드 이해</td></tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- ================ FRONTEND ================ -->
+    <h2 id="frontend">🎨 프론트엔드 개발자 (React · Vue · Svelte · Next)</h2>
+
+    <p>JS/TS 생태계 특성상 라이브러리 변화가 빨라 Claude의 도움 효과가 가장 큰 직군 중 하나.
+      특히 <strong>"보고 확인"이 필요한 UI 작업</strong>에 Playwright MCP가 결정적입니다.</p>
+
+    <h3>첫 주에 깔 도구</h3>
+
+<pre><code><span class="tok-com"># MCP: Playwright (스크린샷·E2E)</span>
+claude mcp add playwright -- npx -y @playwright/mcp@latest
+
+<span class="tok-com"># (선택) Figma MCP — 디자인 → 코드</span>
+claude mcp add figma --transport http \
+  --env FIGMA_TOKEN=$FIGMA_TOKEN https://mcp.figma.com
+
+<span class="tok-com"># 스킬: 셀프 리뷰 + 동작 확인 체인 (3장 패턴)</span>
+<span class="tok-com"># /code-review → /verify 가 PR 직전 표준</span></code></pre>
+
+    <h3>CLAUDE.md 패턴 (50줄 이내)</h3>
+
+<pre><code><span class="tok-com"># [Project] Frontend Guide</span>
+
+<span class="tok-com">## Stack</span>
+- React 19 + TypeScript + Vite
+- TailwindCSS + shadcn/ui
+- TanStack Query (서버 상태)
+- Zustand (클라이언트 상태)
+
+<span class="tok-com">## Patterns</span>
+- 컴포넌트는 함수형 + hooks만 (class 금지)
+- 한 파일 200줄 넘기면 분리 검토
+- 모든 API 호출은 src/api/ 의 React Query hook 경유
+- 스타일은 Tailwind class 우선, 인라인 스타일 금지
+
+<span class="tok-com">## Accessibility</span>
+- 모든 button·a·input에 적절한 aria
+- 키보드 only 사용 가능해야 (focus ring 보존)
+
+<span class="tok-com">## Forbidden</span>
+- innerHTML, dangerouslySetInnerHTML (XSS 위험)
+- 직접 fetch — 항상 react-query 경유</code></pre>
+
+    <h3>자주 쓰는 워크플로우 3가지</h3>
+
+    <ol>
+      <li><strong>"이 컴포넌트 만들어줘 → Playwright로 스크린샷 → 다듬기"</strong>
+<pre><code>&gt; <span class="tok-str">"src/components/UserCard.tsx 를 만들어줘. props: name, avatar, bio. 모바일 우선."</span>
+&gt; <span class="tok-str">"localhost:5173/storybook?path=UserCard 에서 스크린샷 찍어줘"</span>
+<span class="tok-com"># → Playwright MCP가 헤드리스 브라우저로 캡처 → 첨부</span>
+&gt; <span class="tok-str">"위 스크린샷 보고 모바일 폭(360px)에서 깨진 부분 수정"</span></code></pre>
+      </li>
+      <li><strong>"디자인 → 코드" (Figma MCP)</strong>
+<pre><code>&gt; <span class="tok-str">"Figma 파일 URL: https://... 의 'Login Screen' 프레임을 React + Tailwind 컴포넌트로"</span></code></pre>
+      </li>
+      <li><strong>접근성 자동 점검</strong>
+<pre><code>&gt; <span class="tok-str">"src/components/Header.tsx 를 키보드 only로 탐색 가능한지 점검. axe-core 룰 기준."</span></code></pre>
+      </li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 미니 시나리오 · "디자인 시안 → 작동 PR 1시간"</div>
+      <span class="scenario__step"><strong>상황</strong>: 디자이너에게 새 회원가입 폼 Figma 시안 받음. 6개 필드·검증·에러 메시지.</span>
+      <span class="scenario__step"><strong>적용</strong>:</span>
+<pre><code>&gt; <span class="tok-str">"Figma 시안 [URL]을 React + Tailwind + react-hook-form 으로.
+   검증은 zod, 에러 메시지는 한국어, 모바일 우선.
+   완료 후 Playwright로 정상·에러 케이스 스크린샷."</span>
+&gt; /code-review --effort medium
+&gt; gh pr create</code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 1시간 안에 PR. 디자이너와 캡처 보면서 1라운드 수정 → 머지.</span>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 프론트의 함정</div>
+      <p>Claude가 만든 UI 코드는 <strong>스타일이 그럴듯해 보이지만 접근성·반응형이 빠질 때가 잦습니다</strong>.
+        매 PR마다 "키보드 only 가능? 360px 폭에서 깨지지 않음? 다크모드 처리?" 3가지 자체 점검을 CLAUDE.md에 박아두세요.</p>
+    </div>
+
+    <hr />
+
+    <!-- ================ BACKEND ================ -->
+    <h2 id="backend">⚙️ 백엔드 개발자 (Node · Python · Go · Java)</h2>
+
+    <p>API·DB·인증·통합이 일과인 직군. <strong>마이그레이션 자동 생성, N+1 발견, 보안 점검</strong>이 가장 큰 이득.</p>
+
+    <h3>첫 주에 깔 도구</h3>
+
+<pre><code><span class="tok-com"># MCP: PostgreSQL/MySQL (읽기 전용 권장)</span>
+claude mcp add postgres -- npx -y @anthropic-ai/pg-mcp --readonly \
+  --env DATABASE_URL=$DATABASE_URL_READONLY
+
+<span class="tok-com"># MCP: GitHub (PR·이슈)</span>
+claude mcp add github --transport http \
+  --env GITHUB_TOKEN=$GITHUB_TOKEN https://mcp.github.com/api
+
+<span class="tok-com"># 스킬: 보안 점검 의무화</span>
+<span class="tok-com"># /security-review 를 매 PR 직전</span></code></pre>
+
+    <h3>CLAUDE.md 패턴</h3>
+
+<pre><code><span class="tok-com"># [Project] Backend Guide</span>
+
+<span class="tok-com">## Stack</span>
+- Node 22 + TypeScript + Hono
+- PostgreSQL 16 + Drizzle ORM
+- Redis 7 (세션·캐시)
+- Zod (입력 검증)
+
+<span class="tok-com">## Conventions</span>
+- 모든 엔드포인트: Zod 검증 → 핸들러 → 응답 헬퍼
+- 응답 형식: { ok: boolean, data?, error?: { code, message } }
+- 트랜잭션은 db.transaction(), 절대 raw query 금지
+- 환경변수는 src/env.ts 에서 검증 후 export
+
+<span class="tok-com">## Security</span>
+- raw SQL 금지 (Drizzle ORM only)
+- 비밀번호: argon2id
+- JWT secret: env 만, 코드에 금지
+- 사용자 입력은 항상 schema 검증 후 사용
+
+<span class="tok-com">## Forbidden</span>
+- prod DB에 직접 SQL 실행
+- console.log 로그 (winston/pino 사용)
+- 동기 파일 IO (fs.readFileSync 금지)</code></pre>
+
+    <h3>자주 쓰는 워크플로우 3가지</h3>
+
+    <ol>
+      <li><strong>마이그레이션 자동 생성</strong>
+<pre><code>&gt; <span class="tok-str">"users 테이블에 phone_number(string, nullable, indexed) 컬럼 추가. Drizzle 마이그레이션 파일 생성 + 검증 스키마(zod) 갱신."</span></code></pre>
+      </li>
+      <li><strong>N+1 발견 (DB MCP 활용)</strong>
+<pre><code>&gt; <span class="tok-str">"GET /orders 엔드포인트의 SQL 실행 로그를 보고 N+1 의심 가는 부분 찾아줘.
+   필요하면 postgres MCP로 EXPLAIN 실행."</span></code></pre>
+      </li>
+      <li><strong>API 변경 시 자동 점검 체인</strong>
+<pre><code>&gt; <span class="tok-str">"src/api/users.ts 에 새 PATCH 엔드포인트 추가. 작업 후:
+   1) /code-review
+   2) /security-review (인증·권한·검증 누락)
+   3) /verify (실제 호출해 200/400 케이스)
+   4) gh pr create"</span></code></pre>
+      </li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 미니 시나리오 · "N+1을 30분에 박멸"</div>
+      <span class="scenario__step"><strong>상황</strong>: /orders 가 평소 200ms → 사용자 많아지면 8초. 의심은 N+1.</span>
+      <span class="scenario__step"><strong>적용</strong>:</span>
+<pre><code>&gt; <span class="tok-str">"src/api/orders.ts 의 list 핸들러에서 발생하는 모든 SQL을 분석.
+   pg MCP로 EXPLAIN 실행. N+1 패턴 발견 시 with(relations) 또는 JOIN으로 수정."</span>
+&gt; /verify <span class="tok-com"># 동일 응답 보장 확인</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 8초 → 180ms. 같은 패턴이 다른 endpoint에도 있나 추가 점검까지 30분.</span>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 백엔드의 함정</div>
+      <p>Claude가 만든 코드는 <strong>해피 패스는 잘 동작하지만 에러·동시성·트랜잭션 경계가 빠지기 쉽습니다</strong>.
+        "동시 요청 100개 들어오면?", "트랜잭션 안에 외부 API 호출?" 같은 질문을 매번 던지세요.
+        <code>/security-review</code>가 이걸 잡아주는 비율이 의외로 높습니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- ================ DATA / ML ================ -->
+    <h2 id="data-ml">📊 데이터 엔지니어 · ML 엔지니어 · 데이터 분석가</h2>
+
+    <p>대량 데이터 처리·분류·요약·EDA에 Claude가 큰 도움. <strong>Haiku 서브에이전트로 비용 격리</strong>가 핵심 패턴입니다.</p>
+
+    <h3>첫 주에 깔 도구</h3>
+
+<pre><code><span class="tok-com"># Haiku 분류 서브에이전트 (17장 §사례 4 참조)</span>
+<span class="tok-com"># .claude/agents/classifier/agent.md 에 Haiku 명시</span>
+
+<span class="tok-com"># MCP: 데이터 웨어하우스 (BigQuery/Snowflake 등 사내 MCP)</span>
+<span class="tok-com"># Jupyter 통합은 claude CLI를 노트북에서 호출 가능</span></code></pre>
+
+    <h3>CLAUDE.md 패턴</h3>
+
+<pre><code><span class="tok-com"># [Project] Data/ML Guide</span>
+
+<span class="tok-com">## Stack</span>
+- Python 3.12 + uv (패키지 관리)
+- pandas / polars (Pol 우선, 대량은 polars)
+- PyTorch (모델), Hugging Face transformers
+- DuckDB (로컬 분석), BigQuery (운영)
+
+<span class="tok-com">## Notebook Rules</span>
+- 셀 하나 = 한 가지 작업
+- 출력 결과는 변수에 저장 후 다음 셀에서 사용 (의존성 명시)
+- 무거운 셀은 캐시 (joblib.Memory 또는 pickle)
+
+<span class="tok-com">## Reproducibility</span>
+- 시드 고정 (np.random.seed, torch.manual_seed)
+- 환경: uv.lock 항상 커밋
+- 데이터 버전: DVC 또는 명시적 스냅샷
+
+<span class="tok-com">## Cost</span>
+- 대량 분류·라벨링은 .claude/agents/classifier (Haiku)
+- 모델 학습 코드 생성은 Opus, 실행은 직접</code></pre>
+
+    <h3>자주 쓰는 워크플로우 3가지</h3>
+
+    <ol>
+      <li><strong>EDA 자동화</strong>
+<pre><code>&gt; <span class="tok-str">"data/sales_2026.csv 의 EDA를 마크다운으로:
+   1) shape · dtypes
+   2) 각 컬럼 분포 한 줄 요약
+   3) 이상치 의심 톱 5
+   4) 추가 분석할 가치 있는 질문 3가지"</span></code></pre>
+      </li>
+      <li><strong>대량 분류 (Haiku 서브에이전트)</strong>
+<pre><code>&gt; <span class="tok-str">"data/feedback.jsonl 의 3,000건을
+   .claude/agents/classifier 로 [Bug/Feature/UX/Pricing/Other] 분류.
+   결과는 classified.jsonl 로 저장. 비용은 ccusage로 확인 가능."</span></code></pre>
+      </li>
+      <li><strong>모델 평가 자동 비교</strong>
+<pre><code>&gt; <span class="tok-str">"experiments/ 의 최근 5개 run의 metrics.json을 읽어 비교 표 생성:
+   [run_id | val_loss | f1 | latency_ms | model_size_mb]
+   최고 성능 + 추천 이유 1줄."</span></code></pre>
+      </li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 미니 시나리오 · "Jupyter 안에서 Claude로 EDA"</div>
+      <span class="scenario__step"><strong>상황</strong>: 새 데이터셋을 받았는데 EDA에 1시간씩 흘려 보내고 있음.</span>
+      <span class="scenario__step"><strong>적용</strong>: 노트북 옆 터미널에서 <code>claude</code> 켜고, 다음을 시킴.</span>
+<pre><code>&gt; <span class="tok-str">"data/new_dataset.parquet 의 EDA 노트북 eda.ipynb 를 만들어줘.
+   셀 단위로 분리하고, 각 셀의 출력은 다음 셀에서 참조 가능하게.
+   matplotlib + seaborn, 모바일 화면에서도 보기 좋은 figsize."</span>
+&gt; <span class="tok-str">"실행해서 결과 보고, 흥미로운 패턴 3가지를 노트북 마지막에 markdown 셀로"</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 1시간 → 15분. 사람은 "흥미로운 패턴 3가지"에서 시작해 깊은 분석으로 진입.</span>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 데이터의 함정</div>
+      <p>Claude는 데이터 일부만 보고 일반화하는 경향이 있어 <strong>실제 데이터 통계와 다른 주장</strong>을 종종 합니다.
+        EDA 결과는 항상 본인이 수치로 재검증하세요. 또한 "이 컬럼은 categorical 같다"는 추측을 사실처럼 말할 때가 있으니
+        실제 unique count·dtype을 확인하는 습관 필수.</p>
+    </div>
+
+    <hr />
+
+    <!-- ================ DEVOPS / SRE ================ -->
+    <h2 id="devops">☁️ DevOps · SRE · 플랫폼 엔지니어</h2>
+
+    <p>인프라 코드(IaC)·모니터링·인시던트 대응에 Claude가 빛납니다. <strong>특히 인시던트 시 로그 패턴 분석</strong>이 결정적.</p>
+
+    <h3>첫 주에 깔 도구</h3>
+
+<pre><code><span class="tok-com"># MCP: Sentry (에러 모니터링)</span>
+claude mcp add sentry --transport http https://mcp.sentry.dev/mcp
+
+<span class="tok-com"># MCP: AWS / GCP (사내 MCP 또는 공식)</span>
+<span class="tok-com"># Kubernetes는 kubectl을 Bash에서 직접 호출 (권한 신중히)</span>
+
+<span class="tok-com"># 인시던트 대응 스킬</span>
+<span class="tok-com"># .claude/skills/incident-triage/SKILL.md</span></code></pre>
+
+    <h3>CLAUDE.md 패턴</h3>
+
+<pre><code><span class="tok-com"># [Org] Platform Guide</span>
+
+<span class="tok-com">## Infra</span>
+- AWS (ap-northeast-2 주, us-west-2 DR)
+- EKS 1.30, Argo CD, Helm
+- Terraform (terraform/modules/ 공통, environments/{dev,stg,prod})
+- Prometheus + Grafana + Loki
+
+<span class="tok-com">## Conventions</span>
+- 모든 변경은 terraform plan 결과 PR 본문에 첨부
+- helm values는 environments/ 별로만 다름, charts는 공통
+- 시크릿은 SOPS + age (KMS는 prod만)
+
+<span class="tok-com">## Forbidden</span>
+- prod에 kubectl apply 직접 (Argo CD 경유)
+- terraform apply 자동화 X (사람 승인 필수)
+- 콘솔에서 manual 변경 (drift 발생)
+
+<span class="tok-com">## Incident Response</span>
+- 처음 5분: 영향 범위 파악 + Slack #incident 채널 알림
+- /incident-triage 스킬 사용 권장</code></pre>
+
+    <h3>자주 쓰는 워크플로우 3가지</h3>
+
+    <ol>
+      <li><strong>인시던트 트리아지</strong>
+<pre><code>&gt; /incident-triage
+<span class="tok-com"># 스킬이 다음을 수행:</span>
+<span class="tok-com"># 1) Sentry MCP 로 최근 1시간 에러 톱 5</span>
+<span class="tok-com"># 2) Grafana 메트릭 확인 (API p99, error rate)</span>
+<span class="tok-com"># 3) 최근 배포 (gh release list)</span>
+<span class="tok-com"># 4) 가설 3개 제시 + 다음 확인 단계</span></code></pre>
+      </li>
+      <li><strong>Terraform 리뷰</strong>
+<pre><code>&gt; <span class="tok-str">"이 PR의 terraform plan 결과를 보고:
+   1) 의도된 변경 vs 의외 변경 구분
+   2) 비용 영향 추정
+   3) downtime 가능성
+   4) 안전한 적용 순서 제안"</span></code></pre>
+      </li>
+      <li><strong>K8s 매니페스트 디버깅</strong>
+<pre><code>&gt; <span class="tok-str">"my-service Pod가 CrashLoopBackOff. kubectl describe 와 logs 마지막 50줄 첨부:
+   [붙여넣기]
+   가능한 원인 3가지 + 각각 검증 명령"</span></code></pre>
+      </li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 미니 시나리오 · "5분 만에 장애 원인 좁히기"</div>
+      <span class="scenario__step"><strong>상황</strong>: 새벽 3시 페이지. /api/* 에러율 급증.</span>
+      <span class="scenario__step"><strong>적용</strong>: 졸린 머리로 한 줄.</span>
+<pre><code>&gt; <span class="tok-str">"sentry MCP 로 최근 30분 에러 그룹화. 가장 자주 발생한 톱 3.
+   각각: 첫 발생 시각, 영향 endpoint, stack trace 핵심 한 줄.
+   그리고 gh로 같은 시간대 머지된 PR 확인."</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 5분 안에 "새벽 2:55에 머지된 PR #234가 DB connection pool 설정 변경" 식별. 롤백 1분.</span>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — DevOps의 함정</div>
+      <p>인프라 작업은 <strong>한 번의 실수 비용이 가장 큰 영역</strong>입니다. Plan mode는 옵션이 아니라 의무.
+        그리고 prod 관련 명령은 반드시 ask·deny로 등급화. Claude한테 절대 권한 주지 마세요. <em>"편함과 안전 사이에 안전이 항상 이긴다"</em>가 SRE 격언입니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- ================ MOBILE ================ -->
+    <h2 id="mobile">📱 모바일 개발자 (iOS · Android · Flutter · React Native)</h2>
+
+    <p>모바일은 CLI 도구와의 결합이 살짝 까다롭지만, Claude가 <strong>플랫폼별 분기·빌드 스크립트·심사 대응</strong>에서 큰 힘.</p>
+
+    <h3>첫 주에 깔 도구</h3>
+
+<pre><code><span class="tok-com"># IDE 안 통합 터미널에서 claude 실행이 자연스러움</span>
+<span class="tok-com"># Xcode (Mac): 통합 터미널 또는 외부 터미널</span>
+<span class="tok-com"># Android Studio: Terminal 탭에서</span>
+
+<span class="tok-com"># Fastlane을 자주 쓴다면 Bash 권한에 추가</span>
+<span class="tok-com"># 빌드 명령은 시간이 오래 걸리므로 백그라운드 옵션 활용</span></code></pre>
+
+    <h3>CLAUDE.md 패턴 (React Native 예시)</h3>
+
+<pre><code><span class="tok-com"># [Project] Mobile Guide (RN)</span>
+
+<span class="tok-com">## Stack</span>
+- React Native 0.75 + TypeScript
+- Expo SDK 51 (managed)
+- Zustand + MMKV (상태)
+- Reanimated 3 (애니메이션)
+
+<span class="tok-com">## Build</span>
+- iOS dev: `pnpm ios` (M-series Mac 필수)
+- Android dev: `pnpm android` (Pixel 에뮬레이터)
+- 배포: EAS Build (`eas build --profile production`)
+
+<span class="tok-com">## Platform Rules</span>
+- 플랫폼 분기는 Platform.select() 또는 .ios.tsx / .android.tsx
+- iOS 의 safe-area는 react-native-safe-area-context
+- Android 의 back button은 BackHandler 필수 핸들링
+
+<span class="tok-com">## Submission</span>
+- iOS: 매번 What's New 작성, 거부 사유 자주 보는 카테고리 체크
+- Android: 정책 변경 분기마다 점검 (특히 광고·IAP)</code></pre>
+
+    <h3>자주 쓰는 워크플로우 3가지</h3>
+
+    <ol>
+      <li><strong>플랫폼별 분기 코드 자동 생성</strong>
+<pre><code>&gt; <span class="tok-str">"이 hook 의 햅틱 피드백을 iOS·Android 각각 적절한 방식으로 분기.
+   iOS: react-native-haptic-feedback, Android: Vibration API.
+   타입 안전성 유지."</span></code></pre>
+      </li>
+      <li><strong>심사 거부 분석</strong>
+<pre><code>&gt; <span class="tok-str">"App Store 거부 메일 첨부: [붙여넣기]
+   1) 핵심 사유 한 줄
+   2) 우리 코드에서 영향받는 부분 추정
+   3) 수정 + 재제출 시 강조할 What's New 초안"</span></code></pre>
+      </li>
+      <li><strong>오프라인 우선 패턴 적용</strong>
+<pre><code>&gt; <span class="tok-str">"src/screens/FeedScreen.tsx 를 오프라인 우선으로 리팩토링:
+   - MMKV 캐시
+   - 네트워크 복귀 시 자동 sync
+   - 옵티미스틱 업데이트 + 롤백"</span></code></pre>
+      </li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 미니 시나리오 · "심사 거부 → 재제출 2시간"</div>
+      <span class="scenario__step"><strong>상황</strong>: App Store 심사 Guideline 4.0 위반으로 거부. 코드 수정이 필요한지 What's New만 고치면 되는지 모호.</span>
+      <span class="scenario__step"><strong>적용</strong>: 거부 메일·관련 화면 스크린샷 첨부 후 분석 → 수정 → Fastlane으로 재제출.</span>
+      <span class="scenario__step"><strong>결과</strong>: 사람만 했으면 하루 걸릴 일이 2시간. Claude의 "Guideline 4.0 흔한 패턴" 지식이 큰 도움.</span>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 모바일의 함정</div>
+      <p>빌드 명령은 5~30분 걸립니다. Claude한테 <strong>"빌드해서 확인"을 시키면 컨텍스트가 빠르게 소진</strong>됩니다.
+        빌드는 별도 터미널에서 본인이 돌리고, Claude는 코드만 짜게 분리하세요. 또한 시뮬레이터·실기기 차이는 Claude가 잘 모릅니다 — 실기기 테스트는 사람이.</p>
+    </div>
+
+    <hr />
+
+    <!-- ================ JUNIOR ================ -->
+    <h2 id="junior">🎓 신입·주니어 학습자</h2>
+
+    <p>경험 적은 단계에서 가장 큰 위험은 <strong>"Claude가 짠 코드를 이해 못 하고 머지"</strong>입니다.
+      반대로 잘 활용하면 <strong>최고의 학습 도우미</strong>가 됩니다. 균형이 핵심.</p>
+
+    <h3>첫 주에 깔 도구 (최소)</h3>
+
+<pre><code><span class="tok-com"># Plan mode를 기본값으로</span>
+<span class="tok-com"># .claude/settings.json</span>
+{
+  <span class="tok-str">"defaultMode"</span>: <span class="tok-str">"plan"</span>,
+  <span class="tok-str">"model"</span>: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  <span class="tok-str">"fileCheckpointingEnabled"</span>: <span class="tok-kw">true</span>
+}
+
+<span class="tok-com"># 스킬은 /init 정도만. 나머지는 손에 익은 후</span></code></pre>
+
+    <h3>CLAUDE.md 패턴 (학습용)</h3>
+
+<pre><code><span class="tok-com"># My Learning Project</span>
+
+<span class="tok-com">## My Level</span>
+- 백엔드 1년차, Python 익숙, TypeScript 학습 중
+
+<span class="tok-com">## How to help me</span>
+- 코드를 줄 때는 항상 짧은 설명도 함께
+- 새 개념이 등장하면 한 문단 설명 + 공식 문서 링크
+- 내가 작성한 코드의 문제점은 "왜" 부터 설명
+- 모르는 게 있으면 "모른다"고 답해줘 (추측 X)
+
+<span class="tok-com">## Project</span>
+- 이 프로젝트는 학습 목적, 출시 X
+- 안전·완성도보다 "이해" 우선</code></pre>
+
+    <h3>학습에 좋은 프롬프트 패턴 5가지</h3>
+
+    <ol>
+      <li><strong>이해 우선</strong>
+<pre><code>&gt; <span class="tok-str">"이 코드 작성하기 전에:
+   - 이 기능에 쓸 만한 접근 2가지를 비교 (각각 장단점 2개씩)
+   - 추천 + 이유
+   - 그 다음 코드"</span></code></pre>
+      </li>
+      <li><strong>"왜 이렇게 했나" 묻기</strong>
+<pre><code>&gt; <span class="tok-str">"위 코드에서 X 대신 Y를 쓴 이유를 초보자도 알 수 있게 설명. 다른 선택지가 왜 별로인지도."</span></code></pre>
+      </li>
+      <li><strong>실수 추적</strong>
+<pre><code>&gt; <span class="tok-str">"내가 짠 이 함수가 작동 안 함. 답을 주지 말고:
+   1) 어디부터 디버깅 시작할지 힌트
+   2) 어떤 출력을 봐야 하는지
+   순서대로 알려줘. 내가 직접 풀어볼게."</span></code></pre>
+      </li>
+      <li><strong>코드 리뷰 받기 (학습용)</strong>
+<pre><code>&gt; <span class="tok-str">"내가 짠 src/utils/date.ts 를 시니어 관점에서 리뷰.
+   각 지적마다 '왜 더 좋은가'까지. 스타일이 아니라 사고방식 위주."</span></code></pre>
+      </li>
+      <li><strong>새 기술 학습</strong>
+<pre><code>&gt; <span class="tok-str">"React Query 를 처음 쓴다. 5분 안에 핵심 이해할 수 있게:
+   1) 해결하는 문제
+   2) useState vs useQuery 차이
+   3) 핵심 hook 3가지 + 한 줄 설명
+   4) 첫 실수하기 쉬운 함정 2가지"</span></code></pre>
+      </li>
+    </ol>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 미니 시나리오 · "TypeScript 처음, 안전하게 첫 PR"</div>
+      <span class="scenario__step"><strong>상황</strong>: Python만 하다 처음 TS로 작업. 시니어가 "한번 만들어봐"라고 작은 작업 줌.</span>
+      <span class="scenario__step"><strong>잘못된 적용</strong>: "Claude한테 다 시켜서 PR" → 리뷰에서 "이게 왜 이렇게 됐어?" → 답 못 함.</span>
+      <span class="scenario__step"><strong>좋은 적용</strong>:</span>
+<pre><code>&gt; <span class="tok-str">"이 기능을 TypeScript로 만들고 싶다. Python 1년차 관점에서:
+   1) 이 작업의 TS 접근 방법 설명 (Python과 다른 점)
+   2) 의사 코드(영어 주석) 먼저
+   3) 내가 의사 코드 보고 직접 TS로 변환
+   4) 변환 후 너에게 리뷰 요청"</span></code></pre>
+      <span class="scenario__step"><strong>결과</strong>: 시간은 1.5배 들지만 PR 리뷰에서 모든 라인을 설명 가능. <strong>실력이 늘음.</strong></span>
+    </div>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — 주니어가 가장 빠지기 쉬운 함정</div>
+      <p><strong>"이해 없이 머지"</strong>는 단기엔 빠르지만 장기엔 본인 실력을 갉아먹습니다.
+        규칙 하나만 지키세요: <strong>"PR에 들어가는 모든 라인을 한 줄씩 설명할 수 있는가?"</strong>
+        답이 "아니"라면 머지 전에 Claude한테 다시 물어 이해부터 채우세요.</p>
+      <p>또 다른 함정: <strong>"Claude가 짠 코드를 본인이 짠 것처럼 말하기"</strong>.
+        팀 안에서는 솔직히 "이건 Claude로 만들고 X 부분만 수정했어요"가 결국 신뢰를 더 얻습니다.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="closing">닫는 글 — 직군이 바뀌어도 변하지 않는 것</h2>
+
+    <p>6개 직군의 처방전이 다 달랐지만, <strong>공통점도 명확합니다</strong>:</p>
+    <ul>
+      <li>Plan mode는 위험 작업에서 모두에게 의무</li>
+      <li>CLAUDE.md는 짧고 구체적으로 (200줄 이내)</li>
+      <li>본인 직군에 핵심 MCP 1~2개만 신중히 선택</li>
+      <li>완성 후엔 <code>/code-review</code> → <code>/verify</code> 체인</li>
+      <li>비용·진척도는 주 1회 확인</li>
+    </ul>
+
+    <p>도구는 직군마다 다르지만 <strong>"신중함 · 검증 · 절제"</strong>의 태도는 같습니다. 본인 직군의 처방전을 따르되, 이 태도를 잃지 마세요.</p>
+
+    <h2 id="checklist">18장 체크리스트</h2>
+    <ul>
+      <li>☐ 본인 직군 섹션 1번 읽기</li>
+      <li>☐ "첫 주에 깔 도구" 중 본인 환경에 맞는 것 1개 도입</li>
+      <li>☐ CLAUDE.md 템플릿을 본인 프로젝트로 수정해 적용</li>
+      <li>☐ "자주 쓰는 워크플로우" 3개 중 1개 따라 해 보기</li>
+      <li>☐ "강사 노트"의 함정을 본인 작업에서 피하는지 점검</li>
+      <li>☐ (보너스) 다른 직군 섹션 1개 읽고 본인에 응용할 점 찾기</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="17-cost-stories.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">17. 비용 효율화 사례집</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="../index.html">
+        <span class="page-nav__label">완주!</span>
+        <span class="page-nav__title">🏠 처음으로</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

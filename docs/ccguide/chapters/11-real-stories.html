@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11장 · 실무 빌딩 스토리 · Claude Code 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">C</span> Claude Code 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·권한·메모리·훅</a></li>
+        <li><a class="sidebar__link" href="03-skills-agents.html">3. 스킬·서브에이전트</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-workflow.html">6. Workflow 도구</a></li>
+        <li><a class="sidebar__link" href="07-agent-sdk.html">7. Agent SDK</a></li>
+        <li><a class="sidebar__link" href="08-claude-api.html">8. Claude API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 스킬·툴</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅 기술</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 11 · 스토리텔링</span>
+    <h1>실무 빌딩 스토리 — 서비스 0 → 1까지</h1>
+    <p class="lead">
+      앞서 9장까지의 기능들이 <strong>실제 서비스 구축</strong>에서 어떻게 조합되는지,
+      세 가지 다른 색깔의 프로젝트를 <em>날짜별 일지</em>처럼 풀어 봅니다.
+      같은 도구라도 <strong>어디까지 쓰느냐</strong>에 따라 결과물의 결이 완전히 달라집니다.
+    </p>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 이 장의 사용법</div>
+      <p>각 스토리는 <strong>독립적</strong>입니다. 본인 상황에 가까운 것부터 읽으세요.
+        스토리 안의 프롬프트와 출력은 실제 작업 흐름을 정리한 것이며, 그대로 따라 해도 비슷한 결과가 나옵니다.</p>
+    </div>
+
+    <h2 id="overview">세 스토리 한눈에 비교</h2>
+
+    <table>
+      <thead>
+        <tr><th>스토리</th><th>만든 것</th><th>스킬 사용</th><th>기간</th><th>비용*</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="#story-a"><strong>A · 미니멀</strong></a></td>
+          <td>결혼식 안내 정적 사이트</td>
+          <td>❌ 스킬 없음 (그냥 <code>claude</code>)</td>
+          <td>주말 하루</td>
+          <td>~$1</td>
+        </tr>
+        <tr>
+          <td><a href="#story-b"><strong>B · 풀 자동화</strong></a></td>
+          <td>URL 단축 SaaS (인증·관리자·과금)</td>
+          <td>⭐ 적극 활용 (superpowers · MCP · CI Action · ccusage)</td>
+          <td>2주</td>
+          <td>~$45</td>
+        </tr>
+        <tr>
+          <td><a href="#story-c"><strong>C · 균형</strong></a></td>
+          <td>가족 공유 소비 트래커 PWA</td>
+          <td>🎯 핵심 2~3개만 (<code>/init</code>·<code>/code-review</code>·<code>gh</code>)</td>
+          <td>3~4일</td>
+          <td>~$8</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size: var(--fs-13); color: var(--text-faint);">*비용은 API 크레딧 환산. Pro/Max 구독 사용자는 무료 한도 내에서 동일 작업 가능한 범위입니다.</p>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "스킬을 더 많이 쓰는 게 항상 좋은가?"</div>
+      <p>아니요. 작은 작업에 무거운 셋업은 오히려 방해입니다. 스토리 B처럼 <strong>장기 유지보수 + 팀 협업</strong>이 들어가야 비로소 도구를 다 끄집어내는 게 이득입니다.
+        스토리 A·C처럼 <strong>가벼운 작업</strong>은 "그냥 Claude에게 시키기"가 가장 빠릅니다. 도구는 무게가 정당화될 때만 추가하세요.</p>
+    </div>
+
+    <hr />
+
+    <!-- ============== STORY A ============== -->
+    <h2 id="story-a">📖 스토리 A · 결혼식 안내 정적 사이트 — 스킬 없이 순수하게</h2>
+
+    <table>
+      <tbody>
+        <tr><th>주인공</th><td>30대 백엔드 개발자 J. 결혼식 D-30, 모바일 청첩장이 마음에 안 들어 직접 만들기로.</td></tr>
+        <tr><th>목표</th><td>모바일에서 예쁘게 보이는 1페이지 사이트. 사진 슬라이드 · 식장 지도 · RSVP 폼.</td></tr>
+        <tr><th>제약</th><td>주말 하루. 디자인 감각 없음. 프론트는 잘 안 함.</td></tr>
+        <tr><th>전략</th><td>"잘 모르니까 그냥 Claude한테 다 시키자". 스킬·MCP·플러그인 0개.</td></tr>
+        <tr><th>사용 모델</th><td>Sonnet 4.6 (Opus는 오버킬)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🌅 토요일 09:00 — 빈 폴더에서 시작</h3>
+
+    <p>J는 새 폴더만 하나 만들고 <code>claude</code>를 켰다. <code>/init</code>도, 설정도, 스킬도 없다. 그냥 대화로 시작.</p>
+
+<pre><code>mkdir wedding-jh && cd wedding-jh
+claude
+
+&gt; 모바일 위주의 1페이지 결혼식 사이트를 만들고 싶다. 정적 HTML/CSS/JS 만으로.
+  순서:
+  1) 폴더 구조 제안
+  2) 섹션 5개의 디자인 컨셉 3가지 짧게
+  3) 내가 1번 컨셉 고르면 그걸로 골격 작성
+  파일 만들기 전에 1) 2) 부터 먼저 답해줘.</code></pre>
+
+    <p>Claude는 폴더 구조와 디자인 컨셉 3개("화이트 미니멀 · 따뜻한 베이지 · 다크 골드")를 제시했다. J는 "베이지"를 골랐고, 이어 골격 생성을 지시.</p>
+
+<pre><code>&gt; 베이지로 가자. 다음 5섹션을 가진 index.html, style.css, main.js 만들어줘.
+  - 히어로 (이름 · 날짜)
+  - 인사말
+  - 갤러리 (사진 8장 자리, src는 placeholder)
+  - 오시는 길 (카카오맵 임베드 자리)
+  - RSVP 폼 (이름 · 참석 여부 · 메시지)
+  CSS는 모바일 우선, 한 파일에 다 넣어줘. 폰트는 시스템 한글 폰트로.</code></pre>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 권한 프롬프트</div>
+      <p>처음에는 파일 만들 때마다 "허용?"이 떴지만, J는 첫 <code>Write(index.html)</code>에서 <strong>"Yes, don't ask again for Write in this directory"</strong>를 골랐다. 이후로는 조용히 생성. <em>위험한 작업이 없으니 가능한 선택.</em></p>
+    </div>
+
+    <h3>🌤 토요일 11:30 — 첫 결과물 확인</h3>
+
+    <p><code>open index.html</code>로 열어 보니, 모바일 폭에서 그럭저럭 봐줄 만함. 하지만 갤러리가 평범하고, 히어로 영역의 폰트 크기가 너무 작다.</p>
+
+<pre><code>&gt; 지금 모바일에서 열었더니
+  1) 히어로의 신랑신부 이름이 너무 작음 — 더 크고 자간 넓게
+  2) 갤러리는 단순 그리드 말고 가로 스와이프형으로 (CSS scroll-snap)
+  3) 전체적으로 위아래 여백이 빡빡함, 1.5배쯤 늘려줘
+  바로 수정해.</code></pre>
+
+    <p>5초 뒤 수정 완료. J는 브라우저를 새로고침. "어, 이제 진짜 모바일 청첩장 같다."</p>
+
+    <h3>🌇 토요일 14:00 — 사진과 콘텐츠 채우기</h3>
+
+    <p>실제 사진 8장을 <code>img/</code>에 넣고, 인사말·식장 정보를 직접 입력했다. 이번엔 Claude한테 텍스트 다듬기를 시켰다.</p>
+
+<pre><code>&gt; 인사말 초안이야. 너무 딱딱한데, 따뜻하고 짧게(공백 포함 120자 이내) 다듬어줘. 3가지 톤으로 제안:
+  ---
+  "안녕하세요. 저희가 결혼합니다. 와 주셨으면 좋겠습니다."
+  ---</code></pre>
+
+    <p>Claude는 "따뜻", "유머러스", "정중" 3가지 톤으로 후보를 제시. J는 "따뜻"의 한 줄을 골라 그대로 붙여넣었다. <strong>2분 만에 카피라이팅 끝.</strong></p>
+
+    <h3>🌃 토요일 17:00 — 카카오맵 · RSVP 연결</h3>
+
+    <p>카카오맵 임베드는 J가 직접 발급한 키가 필요했다. Claude한테 "어디에 어떤 코드를 넣어야 하는지"만 물어 정확한 위치에 키를 추가했다.</p>
+
+<pre><code>&gt; RSVP 폼은 백엔드 없이 처리하고 싶다. Google Forms로 받는 게 가장 빠를까,
+  아니면 Formspree 같은 거? 각 장단점 3줄씩, 추천 하나.</code></pre>
+
+    <p>Claude의 추천대로 Formspree(무료 50건/월)를 선택. 5분 안에 키를 발급받고 <code>&lt;form&gt;</code> 액션 URL만 교체.</p>
+
+    <h3>🌙 토요일 21:00 — 배포</h3>
+
+<pre><code>&gt; 이걸 Netlify에 배포하려고 한다. CLI로 가장 빠른 길로 알려줘.
+  계정은 이미 있고 GitHub 로그인 됨.</code></pre>
+
+    <p>Claude가 <code>npx netlify-cli deploy --prod --dir .</code> 한 줄을 알려줬다. URL을 카카오톡 가족 단톡방에 공유. <strong>저녁 9시 5분, 작업 종료.</strong></p>
+
+    <h3>📊 결과 정리</h3>
+
+    <table>
+      <tbody>
+        <tr><th>총 작업 시간</th><td>약 8시간 (점심·휴식 포함)</td></tr>
+        <tr><th>사용 토큰</th><td>약 35k 토큰 (ccusage 확인)</td></tr>
+        <tr><th>실제 비용</th><td>$0.8 (Sonnet 4.6 기준)</td></tr>
+        <tr><th>설치한 도구</th><td><strong>0개</strong>. Claude Code 기본 설치만.</td></tr>
+        <tr><th>쓴 명령</th><td><code>claude</code>(인터랙티브) 단 1종</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "스킬 없이도 충분한 경우"</div>
+      <p>이런 프로젝트는 <strong>스킬·MCP·CI를 깔면 오히려 손해</strong>입니다. 셋업 시간이 작업 시간보다 길어지거든요.
+        조건은 분명합니다: ① 일회성 ② 혼자 ③ 짧음 ④ 위험 작업 없음. 이 네 가지가 다 맞으면 <strong>그냥 <code>claude</code>만 켜고 대화</strong>하세요.</p>
+      <p>한 가지 J가 잘한 것: <strong>"파일 만들기 전에 계획부터 보여줘"</strong>라고 지시해 첫 골격이 잘못된 방향으로 가지 않게 잡은 것. Plan mode를 안 켰지만 효과는 비슷합니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- ============== STORY B ============== -->
+    <h2 id="story-b">📖 스토리 B · URL 단축 SaaS — 스킬을 적극 활용</h2>
+
+    <table>
+      <tbody>
+        <tr><th>주인공</th><td>스타트업 3년차 풀스택 K. 사이드 프로젝트로 URL 단축 서비스를 만들어 유료화 시도.</td></tr>
+        <tr><th>목표</th><td>실제 사용자 받을 production 서비스. 인증·관리자·과금·통계 완비.</td></tr>
+        <tr><th>스택</th><td>Cloudflare Workers + D1(SQLite) + Hono · React 대시보드. 단일 리포 모노레포.</td></tr>
+        <tr><th>전략</th><td>혼자라서 더더욱 <strong>자동화·자체 QA·안전망</strong>이 필요. 스킬·MCP·CI Action·모니터링까지 풀로.</td></tr>
+        <tr><th>사용 모델</th><td>일반 작업 Sonnet 4.6, 설계·복잡 디버깅 Opus 4.7. 자동화는 Haiku 4.5도 일부.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🛠 Day 0 (월요일 저녁) — 환경 셋업이 곧 자산</h3>
+
+    <p>K는 코드 한 줄도 짜기 전에 <strong>2시간을 셋업에 투자</strong>했다. "이게 다 길게 보면 회수된다"는 신념.</p>
+
+    <h4>1) 권한·모드 기본값</h4>
+<pre><code><span class="tok-com">// .claude/settings.json (커밋 대상)</span>
+{
+  <span class="tok-str">"defaultMode"</span>: <span class="tok-str">"plan"</span>,
+  <span class="tok-str">"model"</span>: <span class="tok-str">"claude-sonnet-4-6"</span>,
+  <span class="tok-str">"permissions"</span>: {
+    <span class="tok-str">"allow"</span>: [
+      <span class="tok-str">"Bash(npm run *)"</span>,
+      <span class="tok-str">"Bash(pnpm *)"</span>,
+      <span class="tok-str">"Bash(wrangler *)"</span>,
+      <span class="tok-str">"Bash(gh pr *)"</span>,
+      <span class="tok-str">"Bash(gh issue *)"</span>,
+      <span class="tok-str">"Bash(git log *)"</span>,
+      <span class="tok-str">"Bash(git status)"</span>,
+      <span class="tok-str">"Bash(git diff *)"</span>
+    ],
+    <span class="tok-str">"deny"</span>: [
+      <span class="tok-str">"Bash(rm -rf *)"</span>,
+      <span class="tok-str">"Bash(wrangler d1 execute *delete*)"</span>,
+      <span class="tok-str">"Bash(wrangler d1 execute *drop*)"</span>
+    ]
+  }
+}</code></pre>
+
+    <h4>2) 커뮤니티 도구 4종 도입</h4>
+
+    <ul>
+      <li><strong>superpowers</strong> — TDD 사이클 강제. <code>/plugin install superpowers@claude-plugins-official</code></li>
+      <li><strong>Playwright MCP</strong> — 대시보드 E2E 검증. <code>claude mcp add playwright -- npx -y @playwright/mcp@latest</code></li>
+      <li><strong>anthropics/claude-code-action</strong> — PR 자동 1차 리뷰</li>
+      <li><strong>ccusage</strong> — 비용 모니터링 (별도 설치 불필요, <code>npx</code>)</li>
+    </ul>
+
+    <h4>3) CLAUDE.md 초안</h4>
+
+<pre><code><span class="tok-com"># Linkly — URL 단축 SaaS</span>
+
+<span class="tok-com">## Stack</span>
+- Cloudflare Workers + D1 + Hono (apps/api)
+- React + Vite + TailwindCSS (apps/web)
+- pnpm workspaces, Turbo
+
+<span class="tok-com">## Commands</span>
+- Dev: `pnpm dev` (api + web 동시)
+- Test: `pnpm test` (Vitest)
+- E2E: `pnpm e2e` (Playwright)
+- Deploy: `pnpm deploy` (wrangler)
+
+<span class="tok-com">## Conventions</span>
+- TypeScript strict mode
+- API 응답은 항상 `{ ok: boolean, data?, error? }` 형태
+- 모든 DB 마이그레이션은 `apps/api/migrations/` 에 번호 prefix
+
+<span class="tok-com">## Forbidden</span>
+- D1 prod 쿼리에 raw user input 직결 금지 (Drizzle ORM만)
+- 환경변수는 wrangler.toml의 secret으로만</code></pre>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 셋업 시간 = 신뢰 시간</div>
+      <p>이 2시간 덕분에 이후 K는 모든 세션에서 <strong>"잠깐, 그건 하지 마"라고 끊을 일</strong>이 거의 없었다. CLAUDE.md의 Forbidden 섹션이 특히 효자.</p>
+    </div>
+
+    <h3>🚀 Day 1~2 (화·수) — 핵심 기능을 TDD로</h3>
+
+    <p>K는 첫 기능 "단축 URL 생성/리다이렉트"부터 superpowers의 사이클을 그대로 탔다.</p>
+
+<pre><code>&gt; /superpowers:plan-feature <span class="tok-str">"POST /links 단축 URL 생성, GET /:slug 리다이렉트"</span>
+
+<span class="tok-com"># Claude의 응답 (요약):</span>
+<span class="tok-com"># 1. Spec: 입력/출력 스키마, 에러 케이스 6개</span>
+<span class="tok-com"># 2. Test plan: unit 4개, integration 3개</span>
+<span class="tok-com"># 3. Implementation outline: 5개 파일 신규</span>
+<span class="tok-com"># 4. Risk: slug 충돌, race condition, custom slug 검증</span></code></pre>
+
+    <p>K는 spec을 보고 "expire_at 필드도 넣자"고 추가 요청. Claude가 spec을 업데이트했다.</p>
+
+    <p>이어서 RED → GREEN → REFACTOR.</p>
+
+<pre><code>&gt; <span class="tok-str">"이제 RED phase. 실패하는 테스트를 먼저 작성. 구현은 절대 건드리지 마."</span>
+&gt; <span class="tok-str">"GREEN: 가장 단순한 형태로 테스트만 통과시켜. 최적화 X."</span>
+&gt; <span class="tok-str">"REFACTOR: 중복 제거, 함수 분리. 단, 테스트는 계속 그린이어야 함."</span></code></pre>
+
+    <p>각 phase 사이에 K는 git commit을 끊었다. "<strong>RED 커밋이 남아 있으면 나중에 회귀 테스트가 더 잘 잡힌다.</strong>"</p>
+
+    <h3>🔍 Day 3 (목) — 셀프 코드 리뷰 + 동적 검증</h3>
+
+    <p>핵심 기능이 완성된 시점에서 K는 PR을 올리기 전 두 단계를 거쳤다.</p>
+
+<pre><code>&gt; /code-review --effort high
+<span class="tok-com"># → 11개 findings (real bug 2, refactor 5, nit 4)</span>
+
+&gt; /simplify
+<span class="tok-com"># → real bug 2개 + refactor 5개 자동 패치</span>
+<span class="tok-com"># → nit는 K가 직접 수동 검토 (취향 영역)</span>
+
+&gt; /verify
+<span class="tok-com"># → pnpm dev 띄움</span>
+<span class="tok-com"># → Playwright MCP로 단축 URL 생성·리다이렉트 시나리오 자동 실행</span>
+<span class="tok-com"># → 스크린샷 첨부, "redirect 302 OK" 확인</span></code></pre>
+
+    <p>"리뷰어 한 사람을 옆에 둔 느낌"이라고 K는 회상했다. 발견된 진짜 버그 2개 중 하나는 <em>슬러그 충돌 시 race condition으로 같은 슬러그가 두 번 생성될 수 있음</em>이었다. 사람이라면 놓쳤을 수 있는 케이스.</p>
+
+    <h3>🔐 Day 4 (금) — 보안 점검</h3>
+
+<pre><code>&gt; /security-review --effort high
+
+<span class="tok-com"># Claude가 발견:</span>
+<span class="tok-com"># 1. /admin 라우트에 RBAC 미적용 — CRITICAL</span>
+<span class="tok-com"># 2. custom slug에 javascript: 스킴 허용 가능성 — HIGH</span>
+<span class="tok-com"># 3. rate limit이 IP 단위만 — Cloudflare 환경에선 부족</span>
+<span class="tok-com"># 4. 비밀번호 hashing이 PBKDF2 100k iter — 살짝 약함</span></code></pre>
+
+    <p>K는 1·2번을 즉시 수정, 3번은 Cloudflare Turnstile로 보강, 4번은 Argon2id 마이그레이션으로 다음 스프린트 백로그에 등록.</p>
+
+    <h3>🤖 Day 5 (월) — PR 자동 리뷰 봇 활성화</h3>
+
+    <p>혼자 작업이지만 K는 매 PR마다 "또 하나의 리뷰어"를 두기로 결정. <code>.github/workflows/claude.yml</code>에 공식 액션 설정.</p>
+
+<pre><code>name: Claude Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions: { contents: read, pull-requests: write, issues: write }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: <span class="tok-str">"/code-review --comment --effort medium"</span></code></pre>
+
+    <p>이후 PR을 올릴 때마다 봇이 5~10분 안에 인라인 코멘트로 리뷰. K는 자기 자신의 코드를 더 객관적으로 보게 됐다.</p>
+
+    <h3>📡 Day 6~10 — 대시보드 · 과금 · 통계</h3>
+
+    <p>두 번째 주는 React 대시보드와 Stripe 과금. 패턴은 같다: <code>/superpowers:plan-feature</code> → TDD → <code>/code-review</code> → <code>/verify</code>.
+      특히 결제 같은 민감 영역은 K가 <strong>Plan mode를 절대 안 끄고</strong> 작업했다.</p>
+
+    <div class="callout callout--scenario">
+      <div class="callout__title">🎬 막힌 곳 — "Stripe webhook 서명 검증 실패"</div>
+      <span class="scenario__step"><strong>증상</strong>: 로컬 테스트는 통과, 배포 후 Stripe webhook이 401.</span>
+      <span class="scenario__step"><strong>K의 행동</strong>: 새 세션에서 모델을 Opus 4.7로 올리고 <code>/effort xhigh</code>.</span>
+<pre><code>&gt; <span class="tok-str">"이 webhook 서명 검증이 로컬에선 OK, 프로덕션에서만 401. wrangler 로그 첨부:"</span>
+&gt; [wrangler tail 로그 50줄 붙여넣기]</code></pre>
+      <span class="scenario__step"><strong>Claude의 추론</strong>: Cloudflare Workers는 request body를 한 번 읽으면 stream이 소진됨 → 서명 검증 전에 라우터가 JSON parse를 먼저 함 → raw bytes가 깨짐.</span>
+      <span class="scenario__step"><strong>해결</strong>: webhook 라우트에 한해 body를 raw로 보존하는 미들웨어 추가. 20분 만에 해결.</span>
+    </div>
+
+    <h3>💰 Day 10 — 비용 점검</h3>
+
+<pre><code>&gt; npx ccusage@latest weekly
+
+<span class="tok-com"># 출력 (요약):</span>
+<span class="tok-com">#  Date Range       Tokens(in/out)    Cost(USD)</span>
+<span class="tok-com">#  Wk 1 (Mon-Fri)   4.2M / 380k       $28.40</span>
+<span class="tok-com">#  Wk 2 (Mon-Fri)   2.1M / 190k       $16.90</span>
+<span class="tok-com">#  Total            6.3M / 570k       $45.30</span></code></pre>
+
+    <p>K는 "Opus 사용 비중이 너무 높다"는 결론을 내고, 다음 스프린트부터는 <strong>설계·디버깅만 Opus, 일반 작업은 Sonnet</strong>으로 명확히 분리.</p>
+
+    <h3>📊 결과 정리</h3>
+
+    <table>
+      <tbody>
+        <tr><th>총 작업 시간</th><td>10 영업일 (하루 평균 4~5시간)</td></tr>
+        <tr><th>사용 토큰</th><td>6.3M 입력 / 570k 출력</td></tr>
+        <tr><th>실제 비용</th><td>$45 (API 직접) — Pro/Max였다면 한도 내</td></tr>
+        <tr><th>발견·차단된 버그</th><td>코드리뷰 13건, 보안 4건 (그 중 CRITICAL 1건)</td></tr>
+        <tr><th>설치한 도구</th><td>superpowers · Playwright MCP · claude-code-action · ccusage</td></tr>
+        <tr><th>출시 후 1주 운영</th><td>장애 0건. 가장 비싸 보였던 셋업이 가장 큰 보험이었음.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "혼자일수록 자동화가 사람 몫"</div>
+      <p>흔히 자동화는 "팀 규모가 클 때나 필요한 것"이라 생각합니다. 사실 정반대입니다.
+        <strong>혼자 작업할수록</strong> 사람 리뷰어가 없으니 <strong>자동 리뷰</strong>가 절실하고, 사람 QA가 없으니 <strong>/verify</strong>가 절실합니다.
+        K의 선택은 "혼자라서 적게 쓴다"가 아니라 "혼자라서 더 많이 쓴다"였고, 결과는 옳았습니다.</p>
+      <p>또 한 가지: <strong>Plan mode는 결제·인증·DB 마이그레이션</strong>에서만큼은 절대 끄지 마세요. Claude가 한 줄 잘못 쓰면 돈이 사라집니다.</p>
+    </div>
+
+    <hr />
+
+    <!-- ============== STORY C ============== -->
+    <h2 id="story-c">📖 스토리 C · 가족 공유 소비 트래커 PWA — 핵심만 골라서</h2>
+
+    <table>
+      <tbody>
+        <tr><th>주인공</th><td>5년차 모바일 개발자 S. 부부 둘이 쓸 소비 트래커가 필요. 시판 앱들이 다 무겁고 광고 많음.</td></tr>
+        <tr><th>목표</th><td>"우리 부부 둘만 쓸" 단순 PWA. 카테고리 5개, 월별 합계, 그래프 하나. 끝.</td></tr>
+        <tr><th>스택</th><td>React + Vite + Dexie(IndexedDB). 백엔드 없음. GitHub Pages 호스팅.</td></tr>
+        <tr><th>전략</th><td>스토리 A처럼 "맨손"은 아니고, B처럼 "풀 셋업"도 아닌 <strong>중간</strong>. <code>/init</code>과 <code>/code-review</code> 둘만 의도적으로 선택.</td></tr>
+        <tr><th>사용 모델</th><td>Sonnet 4.6 일관</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🌱 Day 1 (수요일) — 형식 잡기</h3>
+
+    <p>S는 새 Vite 프로젝트를 만들자마자 <code>/init</code>으로 CLAUDE.md 초안을 받았다. 잘 쓰진 않지만 "신호용"으로 가치 있다고 본다.</p>
+
+<pre><code>pnpm create vite cashbook -- --template react-ts
+cd cashbook && claude
+&gt; /init</code></pre>
+
+    <p>그 다음, S는 자기가 신경 쓰는 부분만 CLAUDE.md에 덧붙였다. 길어지면 의미 없으니 5줄만.</p>
+
+<pre><code>## My rules (custom)
+- 모든 컴포넌트는 함수형, hooks만 사용
+- 상태관리는 Zustand만 (Redux 금지)
+- IndexedDB 직접 호출 X, src/db/queries.ts 만 경유
+- Tailwind class 우선, styled-components 금지</code></pre>
+
+    <p>이게 전부. 그리고 바로 본격 작업.</p>
+
+<pre><code>&gt; 이 프로젝트의 핵심 화면 3개를 짜자.
+  1) 거래 입력 (+/- · 금액 · 카테고리 5종 · 메모)
+  2) 월별 리스트 (날짜 그룹)
+  3) 월별 합계 + 카테고리별 도넛 차트 1개
+  각 화면을 한 파일씩, 디자인은 미니멀하게. CRUD 로직은 src/db/queries.ts 에 다 모아.</code></pre>
+
+    <p>30분 만에 3개 화면이 동작. S는 핸드폰에서 PWA로 설치하고 실제 영수증 몇 개를 입력해 봤다. "어색한 부분만 메모해 두자."</p>
+
+    <h3>🔧 Day 2 (목요일) — 사용성 다듬기</h3>
+
+    <p>S는 핸드폰에서 발견한 짜증 5개를 한 번에 정리해서 던졌다. <strong>한 메시지에 묶어 보내는 게 답변이 일관적이다.</strong></p>
+
+<pre><code>&gt; 핸드폰에서 써보니 5가지가 어색하다.
+  1) 입력 후 키보드가 안 닫힘
+  2) 금액 input이 그냥 text라 숫자 키패드 안 뜸 (iOS Safari)
+  3) "오늘" 버튼이 없어서 매번 날짜 픽커 만짐
+  4) 월 이동 화살표가 너무 작아서 잘 안 눌림 (44px 미만)
+  5) 다크모드 안 됨
+  순서대로 다 고쳐줘. 각 수정마다 한 줄 commit message도 같이 제안.</code></pre>
+
+    <p>Claude는 5개를 차례로 수정하고, 각 수정마다 한 줄 commit 메시지를 함께 제공. S는 그대로 5개의 작은 커밋을 만들었다. <em>git log가 깔끔하게 떨어진다.</em></p>
+
+    <h3>🧪 Day 3 (금요일) — 셀프 리뷰 한 번</h3>
+
+    <p>출시 전에 S는 <code>/code-review</code>를 한 번만 돌렸다. 다른 스킬은 굳이 안 쓴다.</p>
+
+<pre><code>&gt; /code-review --effort medium
+
+<span class="tok-com"># 7개 findings:</span>
+<span class="tok-com">#   real bug: 1 (월 이동 시 음수 month 시 NaN)</span>
+<span class="tok-com">#   refactor: 3</span>
+<span class="tok-com">#   nit: 3</span></code></pre>
+
+    <p>real bug는 즉시 수정. refactor는 "당장 안 해도 됨" 1개와 "확실히 더 깔끔" 2개로 분류해 2개만 반영. nit는 무시. <strong>완벽함보다 "납득 가능한 품질"에 멈추는 게 사이드 프로젝트의 미덕.</strong></p>
+
+    <h3>🚢 Day 4 (토요일) — 배포 + 아내에게 공유</h3>
+
+<pre><code>&gt; GitHub Pages로 배포하고 싶다. Vite 설정과 gh-pages 액션까지 한 번에.
+
+<span class="tok-com"># Claude가 차례로:</span>
+<span class="tok-com"># 1) vite.config.ts 에 base 경로 설정</span>
+<span class="tok-com"># 2) .github/workflows/deploy.yml 생성</span>
+<span class="tok-com"># 3) gh repo create + push</span>
+<span class="tok-com"># 4) Pages 활성화 명령 안내</span>
+
+&gt; gh pr create --title <span class="tok-str">"초기 배포 셋업"</span> --body <span class="tok-str">"GitHub Pages 자동 배포 워크플로우 추가"</span></code></pre>
+
+    <p>30분 뒤 <code>https://USERNAME.github.io/cashbook</code>에서 동작. 아내가 핸드폰에서 PWA로 설치하고 첫 거래를 입력했다. <strong>"광고 없는 게 진짜 좋다"</strong>는 평.</p>
+
+    <h3>📊 결과 정리</h3>
+
+    <table>
+      <tbody>
+        <tr><th>총 작업 시간</th><td>4일 · 누적 약 12시간</td></tr>
+        <tr><th>사용 토큰</th><td>약 800k</td></tr>
+        <tr><th>실제 비용</th><td>$8 안쪽 (Sonnet 4.6)</td></tr>
+        <tr><th>설치한 도구</th><td>0개 추가 (Claude Code 기본)</td></tr>
+        <tr><th>쓴 스킬</th><td><code>/init</code>, <code>/code-review</code> — 단 2종</td></tr>
+        <tr><th>기타</th><td><code>gh</code> CLI 1회 사용 (PR 생성)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--coach">
+      <div class="callout__title">🎓 강사 노트 — "절제의 미학"</div>
+      <p>S는 도구를 더 쓸 줄 알면서도 일부러 안 썼습니다. 이유는 분명합니다:
+        <strong>"이 프로젝트는 단 두 명을 위한 것이고, 절대 SaaS로 키울 생각 없다."</strong>
+        그러면 superpowers·CI·MCP는 오버킬이고, 셋업 시간이 작업 만족도를 갉아먹습니다.</p>
+      <p>대신 <strong>"꼭 필요한 두 가지"</strong>는 살려뒀습니다: <code>/init</code>으로 시작점을 명확히, <code>/code-review</code>로 출시 직전 안전망 한 번. 이게 "균형" 패턴의 핵심입니다.</p>
+      <p>본인이 진행하는 프로젝트에 대해 <strong>"이건 어느 스토리에 가까운가"</strong>를 물어보세요. 답이 나오면 도구 선택이 자동으로 결정됩니다.</p>
+    </div>
+
+    <hr />
+
+    <h2 id="lessons">세 스토리에서 추리는 5가지 교훈</h2>
+
+    <ol>
+      <li><strong>도구의 무게는 프로젝트의 무게에 맞춰라.</strong> 무거운 셋업은 무거운 작업에서만 회수됩니다.</li>
+      <li><strong>"파일 만들기 전에 계획부터"</strong>는 Plan mode를 안 켜도 효과를 냅니다. 명시적으로 지시하세요.</li>
+      <li><strong>혼자일수록 자동 리뷰·자동 검증의 가치가 큽니다.</strong> 사람 리뷰어가 없으니 도구가 그 역할.</li>
+      <li><strong>CLAUDE.md는 짧을수록 좋다.</strong> 스토리 B의 K도 30줄, 스토리 C의 S는 10줄. 길수록 무시당합니다.</li>
+      <li><strong>비용은 매주 한 번 확인.</strong> <code>ccusage</code> 한 줄이면 됩니다. 비싼 패턴은 발견하자마자 교정.</li>
+    </ol>
+
+    <div class="callout callout--tip">
+      <div class="callout__title">💡 이 장 다 읽었으면 다음 할 일</div>
+      <p>본인 프로젝트 1개를 떠올리고, <strong>스토리 A·B·C 중 가장 가까운 것</strong>을 골라 그 셋업을 그대로 따라 해 보세요.
+        한 번 손에 익으면 다음 프로젝트에서 망설임이 사라집니다.</p>
+    </div>
+
+    <h2 id="checklist">11장 체크리스트</h2>
+    <ul>
+      <li>☐ 본인의 다음 프로젝트를 A/B/C 중 하나로 분류해 보기</li>
+      <li>☐ 그 스토리에서 쓴 도구 셋업을 그대로 재현</li>
+      <li>☐ Day 1이 끝나면 ccusage로 토큰 사용량 확인</li>
+      <li>☐ 출시 직전엔 무조건 <code>/code-review</code> 한 번 (스토리 C의 교훈)</li>
+      <li>☐ 회고: 셋업 시간 대비 회수가 됐는가? 다음 번엔 어떻게 조정?</li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="10-community.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">10. 커뮤니티 스킬·툴</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="12-troubleshooting.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">12. 트러블슈팅</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Claude Code 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

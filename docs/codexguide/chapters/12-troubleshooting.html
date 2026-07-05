@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12장 · 트러블슈팅 · Codex CLI 가이드</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <a class="brand" href="../index.html"><span class="brand__mark">X</span> Codex CLI 가이드</a>
+    <div class="header-actions">
+      <button class="header-action" id="search-trigger" type="button">🔍 <span>검색</span> <span class="kbd">⌘K</span></button>
+      <button class="header-action" id="theme-toggle" type="button">🌙 다크</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h4 class="sidebar__title">목차</h4>
+      <ul class="sidebar__list">
+        <li><a class="sidebar__link" href="../index.html">🏠 홈</a></li>
+        <li><a class="sidebar__link" href="00-concepts.html">0. 기초 개념</a></li>
+        <li><a class="sidebar__link" href="01-getting-started.html">1. 시작하기</a></li>
+        <li><a class="sidebar__link" href="02-commands.html">2. 명령·approval·AGENTS.md</a></li>
+        <li><a class="sidebar__link" href="03-cloud-profiles.html">3. Cloud·Profiles</a></li>
+        <li><a class="sidebar__link" href="04-mcp-integration.html">4. MCP·외부 통합</a></li>
+        <li><a class="sidebar__link" href="05-automation.html">5. 자동화·CI/CD</a></li>
+        <li><a class="sidebar__link" href="06-orchestration.html">6. 멀티 에이전트</a></li>
+        <li><a class="sidebar__link" href="07-agents-sdk.html">7. OpenAI Agents SDK</a></li>
+        <li><a class="sidebar__link" href="08-openai-api.html">8. OpenAI API</a></li>
+        <li><a class="sidebar__link" href="09-scenarios.html">9. 실전 시나리오</a></li>
+        <li><a class="sidebar__link" href="10-community.html">10. 커뮤니티 도구</a></li>
+        <li><a class="sidebar__link" href="11-real-stories.html">11. 실무 빌딩 스토리</a></li>
+        <li><a class="sidebar__link" href="12-troubleshooting.html">12. 트러블슈팅</a></li>
+        <li><a class="sidebar__link" href="13-prompting.html">13. 프롬프팅·세션 운영</a></li>
+        <li><a class="sidebar__link" href="14-team.html">14. 팀·협업 운영</a></li>
+        <li><a class="sidebar__link" href="15-cost.html">15. 비용 최적화</a></li>
+        <li><a class="sidebar__link" href="16-cheatsheet.html">16. 부록·치트시트</a></li>
+        <li><a class="sidebar__link" href="17-cost-stories.html">17. 비용 효율화 사례집</a></li>
+        <li><a class="sidebar__link" href="18-by-role.html">18. 직군별 가이드</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <article class="content">
+    <span class="eyebrow">Chapter 12</span>
+    <h1>트러블슈팅 — Codex가 이상하게 행동할 때</h1>
+    <p class="lead">강의 현장에서 가장 자주 받는 SOS 8가지와 해결법.</p>
+
+    <h2 id="approval-loop">1) approval이 무한 반복</h2>
+    <p><strong>증상</strong>: 같은 명령(<code>pnpm test</code>)인데 매번 승인 요청.</p>
+    <p><strong>원인</strong>: <code>approval_policy = "untrusted"</code>이거나 <code>granular</code> 정책으로 모든 도구 호출에 묻는 상태.</p>
+    <p><strong>해결</strong>:</p>
+<pre><code><span class="tok-com"># 일시 변경</span>
+&gt; /approvals on-request
+
+<span class="tok-com"># 영구 변경 ~/.codex/config.toml</span>
+approval_policy = <span class="tok-str">"on-request"</span></code></pre>
+
+    <h2 id="sandbox-block">2) sandbox가 네트워크·파일을 차단</h2>
+    <p><strong>증상</strong>: <code>npm install</code> 시도 → "network access denied".</p>
+    <p><strong>원인</strong>: <code>sandbox_workspace_write.network_access = false</code>가 기본.</p>
+<pre><code><span class="tok-com"># 임시 (이 세션만)</span>
+&gt; /sandbox workspace-write
+<span class="tok-com"># 후 approval 1회 받고 진행 가능</span>
+
+<span class="tok-com"># 또는 ci profile 같은 별도 프로파일로 전환</span>
+&gt; /profile ci</code></pre>
+
+    <h2 id="context-explode">3) 컨텍스트 폭발 — <code>/compact</code>도 효과 없음</h2>
+<pre><code><span class="tok-com"># 1단계: 명시적 요약</span>
+&gt; <span class="tok-str">"결론·다음 액션 3가지만 요약. 분석 과정은 버려도 됨."</span>
+&gt; /compact
+
+<span class="tok-com"># 2단계: 새 세션으로</span>
+&gt; <span class="tok-str">"위 요약을 새 세션 시작 프롬프트로 마크다운 정리"</span>
+&gt; /quit
+$ codex
+&gt; [요약 붙여넣기]
+
+<span class="tok-com"># 또는 codex resume으로 깔끔히 분리</span></code></pre>
+
+    <h2 id="file-recovery">4) 잘못 수정한 파일 복구</h2>
+    <table>
+      <thead><tr><th>상황</th><th>방법</th></tr></thead>
+      <tbody>
+        <tr><td>방금 작업만 되돌리기</td><td>세션 안에서 <code>/undo</code> 또는 "마지막 변경 되돌려"</td></tr>
+        <tr><td>여러 단계 전</td><td>git log + revert</td></tr>
+        <tr><td>git에 한 번도 커밋 안 됨</td><td>이미 늦음. Codex 응답의 diff 역적용</td></tr>
+      </tbody>
+    </table>
+    <p><strong>예방</strong>: 큰 작업 직전 <code>git commit -m "WIP"</code> 30초 투자.</p>
+
+    <h2 id="token-explosion">5) 토큰 폭주</h2>
+<pre><code><span class="tok-com"># 진단</span>
+<span class="tok-com"># Platform → Usage 대시보드</span>
+<span class="tok-com"># 또는 ~/.codex/sessions/ 의 jsonl 직접 분석</span></code></pre>
+
+    <p><strong>흔한 범인 5가지</strong>: 큰 로그 grep · 스크린샷 다수 · node_modules 검색 · 큰 JSON cat · 반복 재시도.</p>
+
+    <h2 id="resume-fail">6) <code>codex resume</code>가 세션을 못 찾음</h2>
+    <p><strong>원인</strong>: <code>~/.codex/sessions/</code> 경로 변경, 또는 세션 expire.</p>
+<pre><code>ls ~/.codex/sessions/  <span class="tok-com"># 세션 파일 직접 확인</span>
+codex resume &lt;session-id&gt;  <span class="tok-com"># ID 직접 지정</span></code></pre>
+
+    <h2 id="errors">7) 자주 만나는 에러</h2>
+    <table>
+      <thead><tr><th>메시지</th><th>의미</th><th>대처</th></tr></thead>
+      <tbody>
+        <tr><td><code>sandbox_mode denied</code></td><td>sandbox가 차단</td><td><code>/sandbox</code>로 변경 또는 다른 profile</td></tr>
+        <tr><td><code>approval rejected</code></td><td>사용자가 거절</td><td>의도면 OK, 아니면 profile·정책 재검토</td></tr>
+        <tr><td><code>Rate limit (429)</code></td><td>OpenAI 한도</td><td>대기 또는 모델 다운그레이드</td></tr>
+        <tr><td><code>Context window exceeded</code></td><td>컨텍스트 초과</td><td>위 3번 + 모델 변경</td></tr>
+        <tr><td><code>MCP server not responding</code></td><td>MCP 서버 다운</td><td><code>codex mcp list</code>로 점검</td></tr>
+        <tr><td><code>insufficient_quota</code></td><td>API 잔액 부족</td><td>Platform → Billing</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="status"><code>/status</code> — 막힐 땐 첫 명령</h2>
+    <p>현재 모델·profile·sandbox·approval·MCP 상태를 한 번에 점검. "뭐가 문제인지 모르겠음"이면 가장 먼저.</p>
+
+    <h2 id="nuclear">최후의 수단 — 새 세션</h2>
+    <ul>
+      <li>같은 질문을 3번 했는데 답이 모순</li>
+      <li>응답 첫 토큰까지 30초+</li>
+      <li>본인부터 "뭘 시키고 있었지?" 헷갈림</li>
+    </ul>
+
+    <div class="callout callout--note">
+      <div class="callout__title">📌 13장 §세션 운영 가이드 참조</div>
+      <p>여기서 다룬 건 응급처치. <strong>며칠~몇 주짜리 작업을 끊김 없이 이어가는 전략</strong>은 <a href="13-prompting.html#session-handoff">13장 §세션 운영·이어가기 전략</a>에서 자세히.</p>
+    </div>
+
+    <h2 id="checklist">12장 체크리스트</h2>
+    <ul>
+      <li>☐ profile 4종(dev·review·ci·danger) 정의로 approval 노이즈 줄임</li>
+      <li>☐ 큰 작업 전 <code>git commit -m "WIP"</code> 습관</li>
+      <li>☐ Usage 대시보드 주 1회 확인</li>
+      <li>☐ 문제 생기면 <code>/status</code>가 첫 명령</li>
+      <li>☐ 막히면 새 세션 또는 <code>codex resume &lt;id&gt;</code></li>
+    </ul>
+
+    <nav class="page-nav">
+      <a class="page-nav__link" href="11-real-stories.html">
+        <span class="page-nav__label">← 이전</span>
+        <span class="page-nav__title">11. 실무 빌딩 스토리</span>
+      </a>
+      <a class="page-nav__link page-nav__link--next" href="13-prompting.html">
+        <span class="page-nav__label">다음 →</span>
+        <span class="page-nav__title">13. 프롬프팅·세션 운영</span>
+      </a>
+    </nav>
+  </article>
+
+  <aside class="toc"><h4 class="toc__title">On this page</h4><ul class="toc__list"></ul></aside>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 Codex CLI 완벽 가이드 · <a href="../index.html">처음으로</a></p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
