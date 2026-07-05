@@ -1,0 +1,3792 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Java 코딩 테스트 가이드북 — 입문자를 위한 완벽 합격 로드맵</title>
+<style>
+  :root {
+    --bg: #fdfcf7;
+    --paper: #ffffff;
+    --ink: #1f2430;
+    --ink-soft: #4a5160;
+    --muted: #8b93a4;
+    --line: #e8e4d6;
+    --accent: #c0392b;
+    --accent-soft: #f6e3df;
+    --java: #5382a1;
+    --java-soft: #e7eef5;
+    --code-bg: #1e2330;
+    --code-ink: #e6e9f0;
+    --code-key: #ff7b72;
+    --code-str: #a5d6a3;
+    --code-num: #79c0ff;
+    --code-com: #8b949e;
+    --highlight: #fff6c2;
+    --tip-bg: #f0f7ee;
+    --tip-bd: #6aab57;
+    --warn-bg: #fff4e5;
+    --warn-bd: #e09b3c;
+    --info-bg: #ecf3fb;
+    --info-bd: #4a86c7;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', Roboto, 'Apple SD Gothic Neo', sans-serif;
+    line-height: 1.75;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 48px 120px;
+    background: var(--paper);
+    box-shadow: 0 0 60px rgba(0,0,0,0.04);
+  }
+
+  /* ===== 표지 ===== */
+  .cover {
+    text-align: center;
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 64px;
+    position: relative;
+  }
+  .cover::before {
+    content: 'GUIDEBOOK';
+    position: absolute;
+    top: 40px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+  }
+  .cover .badge {
+    display: inline-block;
+    padding: 4px 14px;
+    background: var(--java-soft);
+    color: var(--java);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-size: 44px;
+    line-height: 1.25;
+    margin: 0 0 18px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.025em;
+  }
+  .cover h1 .accent { color: var(--accent); }
+  .cover .subtitle {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 48px;
+    font-weight: 500;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+  .cover .meta span { margin: 0 12px; }
+
+  /* ===== 섹션 공통 ===== */
+  .chapter {
+    margin-bottom: 72px;
+  }
+  .chapter-label {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 30px;
+    margin: 0 0 8px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  h2 .num {
+    display: inline-block;
+    color: var(--muted);
+    font-size: 22px;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+  .chapter-lead {
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin: 0 0 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--line);
+  }
+
+  h3 {
+    font-size: 21px;
+    margin: 40px 0 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 18px;
+    background: var(--accent);
+    margin-right: 10px;
+    vertical-align: -3px;
+    border-radius: 2px;
+  }
+  h4 {
+    font-size: 17px;
+    margin: 24px 0 10px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  p { margin: 12px 0; color: var(--ink); }
+  p.lead { font-size: 17.5px; color: var(--ink-soft); }
+  strong { color: var(--accent); font-weight: 700; }
+  em { font-style: normal; background: var(--highlight); padding: 0 3px; border-radius: 2px; }
+
+  ul, ol { padding-left: 24px; }
+  li { margin: 6px 0; }
+  li::marker { color: var(--accent); }
+
+  /* ===== 박스 종류 ===== */
+  .callout {
+    border-left: 4px solid;
+    padding: 16px 22px;
+    margin: 22px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 15.5px;
+  }
+  .callout .title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout .icon {
+    display: inline-flex;
+    width: 22px; height: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+  }
+  .tip { background: var(--tip-bg); border-color: var(--tip-bd); }
+  .tip .icon { background: var(--tip-bd); }
+  .warn { background: var(--warn-bg); border-color: var(--warn-bd); }
+  .warn .icon { background: var(--warn-bd); }
+  .info { background: var(--info-bg); border-color: var(--info-bd); }
+  .info .icon { background: var(--info-bd); }
+
+  /* ===== 코드 ===== */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 18px 22px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 18px 0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'D2Coding', Menlo, Consolas, monospace;
+  }
+  pre .k { color: var(--code-key); }
+  pre .s { color: var(--code-str); }
+  pre .n { color: var(--code-num); }
+  pre .c { color: var(--code-com); font-style: italic; }
+  code.inline {
+    background: #f1ede0;
+    color: #8a3b2a;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'JetBrains Mono', 'D2Coding', Menlo, Consolas, monospace;
+  }
+
+  /* ===== 표 ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 15px;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  th {
+    background: #f7f3e6;
+    color: var(--ink);
+    font-weight: 700;
+    border-bottom: 2px solid var(--ink);
+    font-size: 14px;
+  }
+  tbody tr:hover { background: #fafaf2; }
+
+  /* ===== 카드/그리드 ===== */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 22px 0;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+    background: #fdfcf3;
+  }
+  .card .card-label {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .card h4 { margin-top: 0; }
+
+  /* ===== 로드맵 ===== */
+  .roadmap {
+    position: relative;
+    padding: 8px 0;
+    margin: 28px 0;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .step:last-child { border-bottom: 0; }
+  .step .step-num {
+    width: 46px; height: 46px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .step .step-body h4 { margin: 4px 0 6px; }
+  .step .step-body .week {
+    display: inline-block;
+    background: var(--java-soft);
+    color: var(--java);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  /* ===== 목차 ===== */
+  .toc {
+    background: #fbf7e8;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 64px;
+  }
+  .toc h3 { margin-top: 0; }
+  .toc h3::before { background: var(--java); }
+  .toc ol { columns: 2; column-gap: 36px; padding-left: 22px; }
+  .toc li { break-inside: avoid; margin: 4px 0; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--accent); text-decoration: underline; }
+
+  /* ===== 안내문 ===== */
+  .draft-note {
+    background: #fff7f5;
+    border: 1px dashed var(--accent);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 40px 0 0;
+    color: var(--accent);
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* ===== 학습용 예제 박스 ===== */
+  .example-box {
+    border: 1px solid #e0d5a8;
+    background: #fbf9ee;
+    border-radius: 10px;
+    padding: 22px 24px 18px;
+    margin: 24px 0 16px;
+    position: relative;
+  }
+  .example-box::before {
+    content: 'EXAMPLE';
+    position: absolute;
+    top: -11px; left: 18px;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 3px 12px;
+    border-radius: 4px;
+  }
+  .example-box h4 { margin-top: 0; }
+  .example-box .io {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0 8px;
+  }
+  .example-box .io-block {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', 'D2Coding', Menlo, Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .example-box .io-label {
+    display: block;
+    color: #b6b8be;
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  /* ===== 사고 과정 단계 ===== */
+  .thought-steps {
+    background: linear-gradient(to right, #fff5f1 0%, #fdfcf3 100%);
+    border-left: 4px solid var(--accent);
+    padding: 16px 22px;
+    margin: 18px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .thought-steps ol {
+    margin: 0;
+    padding-left: 20px;
+    counter-reset: thought;
+    list-style: none;
+  }
+  .thought-steps ol li {
+    position: relative;
+    padding: 8px 0 8px 8px;
+    border-bottom: 1px dashed #f0d8d2;
+    counter-increment: thought;
+    font-size: 15.5px;
+  }
+  .thought-steps ol li:last-child { border-bottom: none; }
+  .thought-steps ol li::before {
+    content: counter(thought);
+    position: absolute;
+    left: -22px;
+    top: 8px;
+    width: 22px; height: 22px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .thought-steps strong { color: var(--accent); }
+
+  /* ===== 알고리즘 패턴 섹션 ===== */
+  .pattern {
+    margin: 44px 0 56px;
+    padding: 28px 0 8px;
+    border-top: 2px solid var(--line);
+  }
+  .pattern:first-of-type { border-top: none; padding-top: 12px; }
+  .pattern-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 0 0 8px;
+  }
+  .pattern-head .num-big {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    min-width: 70px;
+  }
+  .pattern-head h3 {
+    margin: 0;
+    font-size: 25px;
+    flex: 1;
+    letter-spacing: -0.02em;
+  }
+  .pattern-head h3::before { display: none; }
+  .pattern-meta {
+    display: flex;
+    gap: 8px;
+    margin: 4px 0 18px 86px;
+    flex-wrap: wrap;
+  }
+  .pattern-meta .meta-chip {
+    background: var(--java-soft);
+    color: var(--java);
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .pattern h4 { font-size: 16.5px; }
+  .pattern .punchline {
+    background: #fbf0ec;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 18px 0 0;
+    font-size: 15px;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+  }
+  .pattern .punchline strong { color: var(--accent); }
+
+  /* ===== 부록 문제 카드 ===== */
+  .problem {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0;
+    margin: 32px 0;
+    overflow: hidden;
+    background: #fdfcf3;
+  }
+  .problem .problem-head {
+    padding: 14px 22px;
+    background: linear-gradient(90deg, var(--accent) 0%, #d65447 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .problem .problem-head .pno {
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+  .problem .problem-head .company {
+    background: rgba(255,255,255,0.2);
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .problem .problem-body { padding: 22px 26px; }
+  .problem .problem-body h4 { margin-top: 18px; }
+  .problem .problem-body h4:first-child { margin-top: 0; }
+  .problem .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 14px;
+  }
+  .problem .tag {
+    background: var(--java-soft);
+    color: var(--java);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .problem .difficulty {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 999px;
+    color: white;
+  }
+  .difficulty.easy { background: #6aab57; }
+  .difficulty.mid  { background: #e09b3c; }
+  .difficulty.hard { background: #c0392b; }
+
+  /* ===== 마무리 ===== */
+  .ending {
+    text-align: center;
+    padding: 80px 0 0;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+    color: var(--ink-soft);
+  }
+  .ending .big {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .ending .sig {
+    margin-top: 36px;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+  }
+
+  @media (max-width: 720px) {
+    .page { padding: 40px 22px 80px; }
+    .cover h1 { font-size: 32px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .toc ol { columns: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ 표지 ============ -->
+  <section class="cover">
+    <div class="badge">FOR BEGINNERS · 2026 EDITION</div>
+    <h1>코딩만 살짝 아는 당신을 위한<br><span class="accent">Java 코딩 테스트</span> 합격 가이드북</h1>
+    <p class="subtitle">"문법은 안다, 그런데 문제는 안 풀린다"는 사람을 위한 가장 친절한 안내서</p>
+    <div class="meta">
+      <span>BEGINNER → INTERMEDIATE</span>·<span>JAVA 17+</span>·<span>2026 Edition</span>
+    </div>
+  </section>
+
+  <!-- ============ 목차 ============ -->
+  <section class="toc">
+    <h3>이 책의 구성</h3>
+    <ol>
+      <li><a href="#ch1">들어가며 — 이 책의 사용법</a></li>
+      <li><a href="#ch2">코딩 테스트란 무엇인가</a></li>
+      <li><a href="#ch3">왜 Java로 보는가</a></li>
+      <li><a href="#ch4">합격까지의 학습 로드맵</a></li>
+      <li><a href="#ch5">입출력 — 모든 문제의 출발점</a></li>
+      <li><a href="#ch6">시간복잡도 직관 잡기</a></li>
+      <li><a href="#ch7">자료구조 핵심 8가지</a></li>
+      <li><a href="#ch8">알고리즘 패턴 12선</a></li>
+      <li><a href="#ch9">실전 풀이 전략과 디버깅</a></li>
+      <li><a href="#ch10">실전 합격 팁 &amp; 멘탈 관리</a></li>
+      <li><a href="#appendix">부록 — 실제 기출 유형 모음</a></li>
+    </ol>
+  </section>
+
+  <!-- ============ 1장 ============ -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label">CHAPTER 01</div>
+    <h2><span class="num">01.</span>들어가며 — 이 책의 사용법</h2>
+    <p class="chapter-lead">"강의는 봤는데 막상 문제를 풀려니 첫 줄부터 막혀요." 이 책은 바로 그 지점에 서 있는 당신을 위해 쓰였습니다.</p>
+
+    <h3>이 책을 누가 읽어야 할까</h3>
+    <p>당신이 다음 중 하나라도 해당된다면, 이 책은 당신을 위해 쓰였습니다.</p>
+    <ul>
+      <li>Java 문법은 어렴풋이 알지만, <em>문제 지문을 보면 손이 멎는</em> 사람</li>
+      <li>유튜브 강의 5개째 정주행 중인데 <em>실력이 늘었다는 실감이 없는</em> 사람</li>
+      <li>백준 브론즈는 풀리는데 <em>실버에서 벽을 느끼는</em> 사람</li>
+      <li>코딩 테스트 일정을 받아두고 <em>지금 당장 무엇부터 해야 할지 막막한</em> 사람</li>
+      <li>비전공자로 개발자 취업을 준비 중인 사람</li>
+    </ul>
+
+    <div class="callout info">
+      <div class="title"><span class="icon">i</span>이 책이 다루지 <strong>않는</strong> 것</div>
+      Java 문법의 처음부터 끝까지(완전 입문서가 아닙니다), 웹/스프링 같은 실무 프레임워크, 시스템 디자인 면접. 이 책은 오직 <strong>"채용 코딩 테스트 합격"</strong> 한 가지에만 집중합니다.
+    </div>
+
+    <h3>이 책을 200% 활용하는 법</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">방법 01</div>
+        <h4>순서대로 읽으세요</h4>
+        <p>1~4장은 마음가짐, 5장부터는 실전입니다. 건너뛰면 나중에 반드시 돌아오게 됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">방법 02</div>
+        <h4>코드는 반드시 손으로 치세요</h4>
+        <p>눈으로 읽은 코드는 30분 뒤 휘발됩니다. IDE를 켜고 따라 치세요.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">방법 03</div>
+        <h4>"왜?"라는 질문을 멈추지 마세요</h4>
+        <p>외운 풀이는 변형 문제에서 무너집니다. 패턴의 <em>이유</em>를 이해해야 응용이 됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">방법 04</div>
+        <h4>매일 1문제, 100일</h4>
+        <p>주 5문제씩 100일이면 약 70문제. 이 정도면 카카오/네이버 1차 통과 평균선입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2장 ============ -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label">CHAPTER 02</div>
+    <h2><span class="num">02.</span>코딩 테스트란 무엇인가</h2>
+    <p class="chapter-lead">상대를 알아야 전략을 세웁니다. 코딩 테스트의 정체부터 정확히 짚고 갑니다.</p>
+
+    <h3>코딩 테스트의 정의</h3>
+    <p>코딩 테스트는 <strong>정해진 시간 안에, 주어진 문제를 코드로 해결</strong>하는 시험입니다. 단순히 "코드를 짤 줄 안다"를 보는 것이 아니라, 다음 4가지를 동시에 평가합니다.</p>
+
+    <table>
+      <thead>
+        <tr><th>평가 항목</th><th>의미</th><th>비중(체감)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>문제 해석력</td><td>지문을 정확히 이해하고 핵심 요구를 뽑아내는 능력</td><td>★★★★★</td></tr>
+        <tr><td>알고리즘 설계력</td><td>적절한 자료구조와 알고리즘을 선택하는 능력</td><td>★★★★★</td></tr>
+        <tr><td>구현력</td><td>설계를 정확한 코드로 옮기는 능력</td><td>★★★★☆</td></tr>
+        <tr><td>시간/공간 효율</td><td>제약 조건 안에서 동작하게 만드는 능력</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="title"><span class="icon">!</span>오해 하나 — "어려운 문제를 푸는 시험"이 아니다</div>
+      많은 사람이 "코딩 테스트는 천재들의 시험"이라 오해합니다. <strong>실제로 출제되는 문제의 80%는 패턴화된 유형</strong>입니다. 핵심은 "본 적 있는 유형을 본 적 있는 방법으로 빠르게 푸는 것"입니다.
+    </div>
+
+    <h3>주요 시험 종류</h3>
+    <ul>
+      <li><strong>대기업 공채형</strong> — 카카오, 네이버, 라인, 쿠팡 등. 3~5문제 / 3~5시간. 난이도 다양.</li>
+      <li><strong>온라인 저지형</strong> — 프로그래머스, 백준, LeetCode 기반 출제.</li>
+      <li><strong>라이브 코딩</strong> — 면접관 앞에서 화면 공유로 푸는 형식. 사고 과정을 말로 설명해야 함.</li>
+      <li><strong>과제형</strong> — 1~3일간 미니 프로젝트. 알고리즘보다 설계/가독성 비중↑</li>
+    </ul>
+  </section>
+
+  <!-- ============ 3장 ============ -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label">CHAPTER 03</div>
+    <h2><span class="num">03.</span>왜 Java로 보는가</h2>
+    <p class="chapter-lead">Python이 빠르고 간결하다는데, 굳이 Java로 보는 게 맞을까? 답은 "당신의 목표에 따라 다르다"입니다.</p>
+
+    <h3>Java를 선택해야 하는 사람</h3>
+    <ul>
+      <li>백엔드 개발자 취업이 목표인 사람 — <em>국내 SI/금융권/대기업 백엔드의 표준어</em></li>
+      <li>이미 회사가 Java 기반인 사람 (KB, 신한, 삼성SDS, LG CNS 등)</li>
+      <li>스프링 학습을 병행하고 있는 사람 — <em>한 언어로 코테와 실무 모두 커버</em></li>
+      <li>타입과 객체지향에 익숙해지고 싶은 사람</li>
+    </ul>
+
+    <h3>Java의 장단점, 솔직하게</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">장점</div>
+        <h4>실무 연결성이 최고</h4>
+        <p>국내 채용에서 Java 사용처가 압도적. 코테 통과 → 실무 진입까지 언어 전환 비용이 없습니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">장점</div>
+        <h4>정적 타입의 안정성</h4>
+        <p>컴파일 시점에 많은 실수를 잡아줍니다. "왜 안 되지?"로 보내는 시간이 줄어듭니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">단점</div>
+        <h4>코드가 길다</h4>
+        <p>Python으로 5줄인 것이 Java로는 20줄. 입출력 보일러플레이트만 외워두면 체감이 크게 줄어듭니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">단점</div>
+        <h4>입출력이 느리다 (기본값)</h4>
+        <p><code class="inline">Scanner</code>를 그대로 쓰면 시간 초과 위험. <code class="inline">BufferedReader</code>·<code class="inline">StringBuilder</code> 패턴은 4장에서 필수로 배웁니다.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>전문가의 한 마디</div>
+      "Python이 더 빠르다"는 말은 <strong>'코드 작성 속도'가 빠르다</strong>는 뜻입니다. <strong>실행 속도는 오히려 Java가 훨씬 빠릅니다.</strong> 두 언어 모두 코테용으로 충분히 빠르지만, "한 언어로 코테 + 백엔드 실무"를 노린다면 Java가 합리적인 선택입니다.
+    </div>
+
+    <h3>이 책에서 사용하는 Java 버전</h3>
+    <p>이 책은 <strong>Java 17 (LTS)</strong> 기준으로 설명합니다. 대부분의 채용 사이트에서 Java 11 또는 17을 제공하며, 두 버전 사이에 코테 관점의 차이는 거의 없습니다. 다만 <code class="inline">var</code> 키워드, <code class="inline">List.of()</code>, <code class="inline">switch expression</code> 등 최신 문법은 적극 활용합니다.</p>
+
+<pre><span class="c">// Java 17 스타일의 간결한 예시</span>
+<span class="k">var</span> nums = <span class="k">new</span> <span class="k">int</span>[]{<span class="n">3</span>, <span class="n">1</span>, <span class="n">4</span>, <span class="n">1</span>, <span class="n">5</span>};
+<span class="k">var</span> sum = Arrays.stream(nums).sum();
+System.out.println(<span class="s">"합: "</span> + sum);  <span class="c">// 합: 14</span>
+</pre>
+  </section>
+
+  <!-- ============ 4장 ============ -->
+  <section class="chapter">
+    <div class="chapter-label">CHAPTER 04</div>
+    <h2><span class="num">04.</span>합격까지의 학습 로드맵</h2>
+    <p class="chapter-lead">"무엇을 얼마나, 어떤 순서로?" — 6단계 12주 플랜으로 정리했습니다. 본인의 출발점에 맞춰 가감하세요.</p>
+
+    <div class="roadmap">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>문법 정착<span class="week">Week 1–2</span></h4>
+          <p>변수, 조건문, 반복문, 배열, <code class="inline">String</code>, 함수(메서드), 클래스 기초까지. <strong>이미 안다고 넘기지 말고 "막힘 없이 손이 가는지"</strong>를 기준으로 점검하세요.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>입출력 + 시간복잡도<span class="week">Week 3</span></h4>
+          <p>코테용 빠른 입출력 패턴을 <strong>외울 정도로</strong> 반복. Big-O 직관 잡기 (10⁸이 1초의 기준).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>자료구조 8종<span class="week">Week 4–5</span></h4>
+          <p>배열, <code class="inline">ArrayList</code>, <code class="inline">HashMap</code>, <code class="inline">HashSet</code>, <code class="inline">Stack</code>, <code class="inline">Queue</code>, <code class="inline">PriorityQueue</code>, <code class="inline">Deque</code>. 각 자료구조마다 백준 실버 문제 3개씩.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>핵심 알고리즘<span class="week">Week 6–9</span></h4>
+          <p>완전탐색 → 정렬 → 이분탐색 → BFS/DFS → 그리디 → DP → 백트래킹 → 그래프 → 누적합/투포인터. 유형당 5문제.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>실전 모의고사<span class="week">Week 10–11</span></h4>
+          <p>프로그래머스 LV2-3, 카카오 기출. <strong>제한 시간을 걸고 푸는 연습</strong>. 못 풀면 30분 고민 후 해설을 보고, 다음 날 다시 푸세요.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>약점 보강 + 면접 대비<span class="week">Week 12</span></h4>
+          <p>틀린 문제 / 시간 초과 문제만 모아 재풀이. 라이브 코딩에 대비해 <strong>"풀이를 말로 설명하는 연습"</strong>을 병행하세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>핵심 원칙 3가지</div>
+      ① <strong>매일 풀기</strong>가 주 1회 몰아풀기보다 항상 강합니다. ② <strong>해설을 본 문제는 반드시 다음 날 백지에서 다시 푸세요.</strong> 그래야 내 것이 됩니다. ③ <strong>"왜 이 자료구조인가?"</strong>를 설명할 수 있어야 합니다. 못 하면 그 풀이는 아직 안 익은 겁니다.
+    </div>
+  </section>
+
+  <!-- ============ 5장 ============ -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label">CHAPTER 05</div>
+    <h2><span class="num">05.</span>입출력 — 모든 문제의 출발점</h2>
+    <p class="chapter-lead">"문제 풀이는 잘했는데 시간 초과가 나요." 십중팔구 입출력이 범인입니다. 이 장만 외워도 합격률이 올라갑니다.</p>
+
+    <h3>왜 Java의 입출력은 느린가</h3>
+    <p>Java의 기본 입출력 클래스인 <code class="inline">Scanner</code>와 <code class="inline">System.out.println</code>은 입문자에게 친절하지만, 코딩 테스트에서는 <em>치명적으로 느립니다</em>. 입력이 10만 줄만 넘어가도 시간 초과가 납니다. 이유는 단순합니다.</p>
+    <ul>
+      <li><strong>Scanner</strong>는 내부적으로 정규식과 동기화 처리를 거쳐 한 번 읽을 때마다 오버헤드가 큽니다.</li>
+      <li><strong>System.out.println</strong>은 호출할 때마다 <em>버퍼를 즉시 비웁니다(flush)</em>. 100만 번 호출하면 100만 번 flush합니다.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="title"><span class="icon">!</span>한 줄 규칙</div>
+      <strong>Scanner는 잊으세요.</strong> 입력은 <code class="inline">BufferedReader</code>, 출력은 <code class="inline">StringBuilder</code> + <code class="inline">BufferedWriter</code>. 이 패턴 하나로 시간 초과의 90%가 사라집니다.
+    </div>
+
+    <h3>입출력 보일러플레이트 — 외워서 시작하세요</h3>
+    <p>모든 문제의 시작점입니다. 처음 30번은 손으로 직접 쓰고, 그 다음부터는 머릿속에서 자동으로 나와야 합니다.</p>
+
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+        <span class="c">// 1. 한 줄 읽기</span>
+        <span class="k">int</span> n = Integer.parseInt(br.readLine().trim());
+
+        <span class="c">// 2. 공백으로 구분된 숫자 여러 개 읽기</span>
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> a = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> b = Integer.parseInt(st.nextToken());
+
+        <span class="c">// 3. 출력은 sb에 모았다가 마지막에 한 번에</span>
+        sb.append(a + b).append(<span class="s">'\n'</span>);
+
+        System.out.print(sb);
+        br.close();
+    }
+}
+</pre>
+
+    <h3>상황별 입력 패턴 7가지</h3>
+
+    <h4>패턴 1 — 정수 한 개</h4>
+<pre><span class="k">int</span> n = Integer.parseInt(br.readLine().trim());
+</pre>
+
+    <h4>패턴 2 — 한 줄에 정수 여러 개 (공백 구분)</h4>
+<pre>StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+<span class="k">int</span> a = Integer.parseInt(st.nextToken());
+<span class="k">int</span> b = Integer.parseInt(st.nextToken());
+<span class="k">int</span> c = Integer.parseInt(st.nextToken());
+</pre>
+
+    <h4>패턴 3 — 한 줄에 N개의 정수를 배열로</h4>
+<pre><span class="k">int</span> n = Integer.parseInt(br.readLine().trim());
+<span class="k">int</span>[] arr = <span class="k">new int</span>[n];
+StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) {
+    arr[i] = Integer.parseInt(st.nextToken());
+}
+</pre>
+
+    <h4>패턴 4 — N줄에 걸쳐 정수 한 개씩</h4>
+<pre><span class="k">int</span> n = Integer.parseInt(br.readLine().trim());
+<span class="k">int</span>[] arr = <span class="k">new int</span>[n];
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) {
+    arr[i] = Integer.parseInt(br.readLine().trim());
+}
+</pre>
+
+    <h4>패턴 5 — 2차원 배열 (격자/맵)</h4>
+<pre>StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+<span class="k">int</span> n = Integer.parseInt(st.nextToken());
+<span class="k">int</span> m = Integer.parseInt(st.nextToken());
+<span class="k">int</span>[][] map = <span class="k">new int</span>[n][m];
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) {
+    st = <span class="k">new</span> StringTokenizer(br.readLine());
+    <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; m; j++) {
+        map[i][j] = Integer.parseInt(st.nextToken());
+    }
+}
+</pre>
+
+    <h4>패턴 6 — 공백 없는 숫자 문자열 ("11100")</h4>
+<pre>String line = br.readLine();
+<span class="k">int</span>[][] map = <span class="k">new int</span>[n][m];
+<span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; m; j++) {
+    map[i][j] = line.charAt(j) - <span class="s">'0'</span>;  <span class="c">// char를 int로</span>
+}
+</pre>
+
+    <h4>패턴 7 — 입력 끝까지 (EOF)</h4>
+<pre>String line;
+<span class="k">while</span> ((line = br.readLine()) != <span class="k">null</span> &amp;&amp; !line.isEmpty()) {
+    <span class="c">// 처리</span>
+}
+</pre>
+
+    <h3>출력 최적화 — StringBuilder의 위력</h3>
+    <p>출력이 많을 때 <code class="inline">System.out.println</code>을 반복 호출하면 사망 플래그입니다. 결과를 <code class="inline">StringBuilder</code>에 모았다가 마지막에 한 번만 출력하세요.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">BAD — 10만 줄 출력 시 약 4~6초</div>
+<pre style="margin:0;font-size:13px;"><span class="k">for</span> (<span class="k">int</span> x : results) {
+    System.out.println(x);
+}
+</pre>
+      </div>
+      <div class="card">
+        <div class="card-label">GOOD — 같은 작업 0.1초 이내</div>
+<pre style="margin:0;font-size:13px;">StringBuilder sb = <span class="k">new</span> StringBuilder();
+<span class="k">for</span> (<span class="k">int</span> x : results) {
+    sb.append(x).append(<span class="s">'\n'</span>);
+}
+System.out.print(sb);
+</pre>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>실전 팁</div>
+      <code class="inline">sb.append("\n")</code>보다 <code class="inline">sb.append('\n')</code>이 미세하게 빠릅니다. char가 String보다 가볍기 때문입니다. 또한 줄바꿈은 <code class="inline">System.lineSeparator()</code>보다 그냥 <code class="inline">'\n'</code>을 쓰세요. 채점 서버는 LF 기반입니다.
+    </div>
+
+    <h3>자주 만나는 입출력 함정 5가지</h3>
+    <ol>
+      <li><strong>readLine 뒤에 trim()을 빼먹는 경우</strong> — 줄 끝에 보이지 않는 공백/캐리지리턴이 붙어 <code class="inline">NumberFormatException</code>이 납니다.</li>
+      <li><strong>StringTokenizer를 재선언하지 않는 경우</strong> — 다른 줄을 읽을 때마다 <code class="inline">st = new StringTokenizer(...)</code>로 새로 만들어야 합니다.</li>
+      <li><strong>sb를 마지막에 print하지 않는 경우</strong> — 답은 맞는데 "출력 형식이 잘못되었습니다"가 뜬다면 거의 이 경우입니다.</li>
+      <li><strong>줄바꿈 vs 공백 혼동</strong> — 문제가 "한 줄에 출력"이라고 했는데 <code class="inline">'\n'</code>으로 구분하면 오답.</li>
+      <li><strong>마지막 줄의 줄바꿈</strong> — 어지간하면 마지막에 <code class="inline">'\n'</code>을 붙여도 정답으로 처리되지만, 일부 채점기는 깐깐합니다. 기본은 <em>붙이는 것</em>이 안전합니다.</li>
+    </ol>
+
+    <h3>완성된 예시 — A+B로 보는 표준 골격 2가지</h3>
+    <p>코딩 테스트에서 가장 자주 등장하는 두 입력 형태입니다. <strong>이 골격이 머리에 자동으로 떠올라야</strong> 시험 첫 5분이 깔끔해집니다. 머릿속에서 <em>"A+B는 이렇게 시작"</em>이라는 반사 신경을 만들어두세요.</p>
+
+    <div class="example-box">
+      <h4>패턴 A — 한 줄 입력 [백준 1000 A+B]</h4>
+      <p>첫 줄에 두 정수 A, B가 공백으로 구분되어 들어온다. A+B를 출력.</p>
+      <div class="io">
+        <div class="io-block"><span class="io-label">INPUT</span>1 2</div>
+        <div class="io-block"><span class="io-label">OUTPUT</span>3</div>
+      </div>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        <span class="c">// 1) 입력 준비</span>
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+
+        <span class="c">// 2) 한 줄 받아서 공백으로 토큰화 → 정수 변환</span>
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> a = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> b = Integer.parseInt(st.nextToken());
+
+        <span class="c">// 3) 출력</span>
+        System.out.println(a + b);
+    }
+}
+</pre>
+      <p><strong>이 패턴이 적용되는 문제</strong>: A+B, 최대공약수, 삼각형 면적 등 "한 줄에 몇 개의 값"이 들어오는 모든 문제.</p>
+    </div>
+
+    <div class="example-box">
+      <h4>패턴 B — 테스트 케이스 여러 개 [백준 10953 A+B - 6]</h4>
+      <p>첫 줄에 테스트 케이스 수 T. 그 다음 T줄에 각각 A,B(쉼표 구분). 각 줄에 대해 A+B 출력.</p>
+      <div class="io">
+        <div class="io-block"><span class="io-label">INPUT</span>5
+1,1
+2,3
+3,4
+9,8
+5,2</div>
+        <div class="io-block"><span class="io-label">OUTPUT</span>2
+5
+7
+17
+7</div>
+      </div>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringBuilder sb = <span class="k">new</span> StringBuilder();   <span class="c">// 출력 누적용</span>
+
+        <span class="c">// 1) 테스트 케이스 개수</span>
+        <span class="k">int</span> T = Integer.parseInt(br.readLine().trim());
+
+        <span class="c">// 2) T번 반복</span>
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; T; i++) {
+            <span class="c">// 구분자가 쉼표(,)이므로 StringTokenizer에 구분자 지정</span>
+            StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine(), <span class="s">","</span>);
+            <span class="k">int</span> a = Integer.parseInt(st.nextToken());
+            <span class="k">int</span> b = Integer.parseInt(st.nextToken());
+
+            <span class="c">// 결과를 출력 버퍼에 누적</span>
+            sb.append(a + b).append(<span class="s">'\n'</span>);
+        }
+
+        <span class="c">// 3) 한 번에 출력 (println 반복 절대 금지)</span>
+        System.out.print(sb);
+    }
+}
+</pre>
+      <p><strong>이 패턴이 적용되는 문제</strong>: 테스트 케이스가 여러 개인 모든 문제 — 입력 형태만 바꿔서 풀이 로직을 동일하게 적용.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>딱 하나만 외운다면</div>
+      <strong>BufferedReader + StringTokenizer + StringBuilder</strong> 세 가지를 한 세트로 외우세요. 코딩 테스트의 거의 모든 입출력은 이 세 클래스의 조합으로 해결됩니다. 시험장에서 막힘 없이 손이 가는 게 목표.
+    </div>
+  </section>
+
+  <!-- ============ 6장 ============ -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label">CHAPTER 06</div>
+    <h2><span class="num">06.</span>시간복잡도 직관 잡기</h2>
+    <p class="chapter-lead">"왜 시간 초과지?"는 결국 시간복잡도를 못 읽었다는 뜻입니다. 외울 건 딱 하나. <strong>"10⁸ ≒ 1초"</strong>.</p>
+
+    <h3>Big-O가 뭔지, 한 문장으로</h3>
+    <p>Big-O는 <strong>"입력 크기 N이 커질 때, 연산 횟수가 N에 비례해 어떻게 늘어나는가"</strong>의 표기법입니다. 상수와 작은 항은 무시하고 가장 빠르게 커지는 항만 남깁니다.</p>
+    <ul>
+      <li><code class="inline">O(1)</code> — N과 무관하게 항상 같은 시간. 배열 인덱스 접근.</li>
+      <li><code class="inline">O(log N)</code> — N이 두 배 되어도 1회만 추가. 이분 탐색.</li>
+      <li><code class="inline">O(N)</code> — N에 정비례. 한 번 훑기.</li>
+      <li><code class="inline">O(N log N)</code> — 정렬의 표준 속도.</li>
+      <li><code class="inline">O(N²)</code> — 이중 for문. N=1만 넘으면 위험.</li>
+      <li><code class="inline">O(2ᴺ), O(N!)</code> — 백트래킹/완전탐색. N=20 근처가 한계.</li>
+    </ul>
+
+    <h3>"10⁸ ≒ 1초" 룰</h3>
+    <p>Java는 1초에 대략 <strong>1억(10⁸) 회</strong>의 단순 연산을 수행합니다. 문제에 시간 제한이 1초라면 "내 알고리즘의 총 연산 횟수가 10⁸을 넘는가?"를 먼저 따지세요.</p>
+
+    <div class="callout info">
+      <div class="title"><span class="icon">i</span>왜 Java는 이렇게 '안전마진'을 잡아야 하나</div>
+      C++ 기준은 보통 10⁸~10⁹입니다. Java는 JIT 컴파일 + GC가 있어 보통 <strong>C++의 2~3배 느리다</strong>고 가정합니다. 그래서 "Java는 10⁷ 안전, 10⁸은 빡빡, 10⁹은 거의 불가능"이 실전 감각입니다.
+    </div>
+
+    <h3>N에 따른 알고리즘 선택표</h3>
+    <p>지문에서 N을 보자마자 머리에 떠올라야 합니다.</p>
+
+    <table>
+      <thead>
+        <tr><th>N의 크기</th><th>허용 복잡도</th><th>가능한 접근</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>N ≤ 10</td><td>O(N!)</td><td>순열/조합 완전탐색, 백트래킹</td></tr>
+        <tr><td>N ≤ 20</td><td>O(2ᴺ)</td><td>부분집합 탐색, 비트마스킹</td></tr>
+        <tr><td>N ≤ 500</td><td>O(N³)</td><td>플로이드-워셜, 3중 for문 DP</td></tr>
+        <tr><td>N ≤ 5,000</td><td>O(N²)</td><td>이중 for문, 기본 DP</td></tr>
+        <tr><td>N ≤ 100,000</td><td>O(N log N)</td><td>정렬, 이분탐색, 우선순위 큐</td></tr>
+        <tr><td>N ≤ 1,000,000</td><td>O(N) ~ O(N log N)</td><td>한 번 훑기, 투포인터, 슬라이딩 윈도우</td></tr>
+        <tr><td>N ≤ 100,000,000</td><td>O(log N) or O(1)</td><td>수학적 풀이, 이분탐색</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>실전 사고법</div>
+      "N=100,000인데 이중 for문 쓸까?" → 10¹⁰. <strong>100초 걸립니다. 100% 시간 초과.</strong> 이런 식으로 코딩 전에 1초만 계산하면 잘못된 길로 가는 30분을 아낄 수 있습니다.
+    </div>
+
+    <h3>Java 특유의 성능 함정</h3>
+    <h4>1. String 결합은 + 가 아니라 StringBuilder</h4>
+<pre><span class="c">// 절대 금지 — O(N²)</span>
+String s = <span class="s">""</span>;
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) s += i;
+
+<span class="c">// 정답 — O(N)</span>
+StringBuilder sb = <span class="k">new</span> StringBuilder();
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) sb.append(i);
+</pre>
+
+    <h4>2. ArrayList보다 배열이 빠르다</h4>
+    <p>크기가 고정이라면 <code class="inline">int[]</code>을 쓰세요. <code class="inline">ArrayList&lt;Integer&gt;</code>는 박싱/언박싱 비용이 추가됩니다.</p>
+
+    <h4>3. HashMap은 빠르지만 "상수가 큽니다"</h4>
+    <p>이론상 O(1)이지만 실제로는 배열 접근의 5~10배. 키가 0~N 범위 정수라면 그냥 배열을 쓰세요.</p>
+
+    <h4>4. 재귀는 스택을 폭파시킬 수 있다</h4>
+    <p>Java 기본 스택 깊이는 약 1~2만. 깊이 10만짜리 DFS는 <code class="inline">StackOverflowError</code>가 납니다. 깊은 그래프는 <em>반복문 + Stack 자료구조</em>로 풀거나, 별도 스레드에 큰 스택을 할당하세요.</p>
+
+    <h3>실전 시간복잡도 계산 — 시나리오 4개</h3>
+    <p>"이 문제는 어떻게 풀면 안전한가?"를 빠르게 답하는 훈련. 시험장에서 코드를 짜기 전 1초 만에 판단할 수 있어야 합니다.</p>
+
+    <div class="example-box">
+      <h4>시나리오 ① — N = 100,000, 제한 시간 1초</h4>
+      <p><strong>가능한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(N log N)</code> — 정렬, 이분탐색, 우선순위 큐 → <strong>약 170만 연산. 안전.</strong></li>
+        <li><code class="inline">O(N)</code> — 한 번 훑기, 투포인터 → 매우 안전.</li>
+      </ul>
+      <p><strong>불가능한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(N²)</code> — 이중 for문. <strong>100억 연산. 시간 초과 확정.</strong></li>
+      </ul>
+      <p><strong>결론</strong> — "이중 for문이 떠올랐다면, 그건 답이 아닙니다." 정렬 후 투포인터 또는 이분탐색을 고민하세요.</p>
+    </div>
+
+    <div class="example-box">
+      <h4>시나리오 ② — N = 1,000, 제한 시간 1초</h4>
+      <p><strong>가능한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(N²)</code> — 이중 for문. 100만 연산. 안전.</li>
+        <li><code class="inline">O(N² log N)</code> — 약 1천만 연산. 빡빡하지만 OK.</li>
+      </ul>
+      <p><strong>위험한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(N³)</code> — 10억 연산. 1초 안 들어옴.</li>
+      </ul>
+      <p><strong>결론</strong> — DP 표를 채우는 N² 풀이가 표준. 플로이드-워셜은 안 됨.</p>
+    </div>
+
+    <div class="example-box">
+      <h4>시나리오 ③ — N = 20, 제한 시간 1초</h4>
+      <p><strong>가능한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(2ᴺ)</code> — 부분집합 완전탐색. 약 100만. 안전.</li>
+        <li><code class="inline">O(N × 2ᴺ)</code> — 비트마스킹 DP. 약 2천만. OK.</li>
+        <li><code class="inline">O(N!)</code> — N=10까지만. N=12부터는 위험.</li>
+      </ul>
+      <p><strong>결론</strong> — N ≤ 20을 보자마자 <strong>비트마스킹 / 완전탐색 / 백트래킹</strong>을 떠올리세요.</p>
+    </div>
+
+    <div class="example-box">
+      <h4>시나리오 ④ — N = 10⁹, 제한 시간 1초</h4>
+      <p><strong>가능한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(log N)</code> — 이분탐색, 빠른 거듭제곱.</li>
+        <li><code class="inline">O(1)</code> — 수학적 공식 (등차/등비, 조합 공식).</li>
+      </ul>
+      <p><strong>불가능한 풀이</strong></p>
+      <ul>
+        <li><code class="inline">O(N)</code>조차 안 됩니다. 10억 번 루프 → 10초 이상.</li>
+      </ul>
+      <p><strong>결론</strong> — N이 10⁹이면 <strong>수학 또는 이분탐색</strong>으로 풀라는 강한 힌트. 답을 직접 추측하는 매개변수 탐색이 단골.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>1초 룰의 활용법</div>
+      문제를 받자마자 <strong>"N 보기 → 가능한 시간복잡도 추정 → 그 안에서 풀이 후보 좁히기"</strong>를 30초 안에 끝내세요. 이것만 잘 해도 잘못된 길로 가는 30분을 매번 절약합니다.
+    </div>
+  </section>
+
+  <!-- ============ 7장 ============ -->
+  <section class="chapter" id="ch7">
+    <div class="chapter-label">CHAPTER 07</div>
+    <h2><span class="num">07.</span>자료구조 핵심 8가지</h2>
+    <p class="chapter-lead">"적절한 자료구조"를 고르는 것이 곧 풀이의 절반입니다. 코딩 테스트의 95%는 이 8개로 끝납니다.</p>
+
+    <h3>한눈에 보는 선택 가이드</h3>
+    <table>
+      <thead>
+        <tr><th>상황</th><th>자료구조</th><th>핵심 연산 복잡도</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>인덱스로 빠른 접근</td><td>배열 / ArrayList</td><td>접근 O(1), 삽입 O(N)</td></tr>
+        <tr><td>"이 값이 있나?" 빠른 확인</td><td>HashSet</td><td>add/contains O(1)</td></tr>
+        <tr><td>키-값 매핑</td><td>HashMap</td><td>put/get O(1)</td></tr>
+        <tr><td>"마지막에 넣은 걸 꺼내기" (LIFO)</td><td>Stack / Deque</td><td>push/pop O(1)</td></tr>
+        <tr><td>"먼저 넣은 걸 꺼내기" (FIFO)</td><td>Queue (ArrayDeque)</td><td>offer/poll O(1)</td></tr>
+        <tr><td>"가장 작은(큰) 걸 꺼내기"</td><td>PriorityQueue</td><td>offer/poll O(log N)</td></tr>
+        <tr><td>양쪽 끝에서 빼고 넣기</td><td>Deque (ArrayDeque)</td><td>O(1)</td></tr>
+        <tr><td>정렬된 키 순회</td><td>TreeMap / TreeSet</td><td>O(log N)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>1. 배열 &amp; ArrayList</h3>
+    <p>가장 기본. <strong>크기를 알면 배열</strong>, <strong>모르면 ArrayList</strong>가 원칙입니다. 둘은 비슷해 보이지만 성능 차이가 큽니다 — 정수 1억 개를 다룬다면 <code class="inline">int[]</code>가 <code class="inline">ArrayList&lt;Integer&gt;</code>의 2~3배 빠릅니다 (오토박싱 비용).</p>
+
+    <h4>핵심 사용법</h4>
+<pre><span class="c">// ─── 배열 (크기 고정, 빠름) ───</span>
+<span class="k">int</span>[] arr = <span class="k">new int</span>[<span class="n">100</span>];
+arr[<span class="n">0</span>] = <span class="n">42</span>;
+Arrays.fill(arr, -<span class="n">1</span>);                 <span class="c">// 전체 -1로 초기화</span>
+<span class="k">int</span> len = arr.length;                <span class="c">// 길이는 .length (메서드 아님)</span>
+
+<span class="c">// ─── ArrayList (크기 가변) ───</span>
+List&lt;Integer&gt; list = <span class="k">new</span> ArrayList&lt;&gt;();
+list.add(<span class="n">42</span>);                         <span class="c">// 추가 O(1) 분할상환</span>
+<span class="k">int</span> v = list.get(<span class="n">0</span>);                 <span class="c">// 접근 O(1)</span>
+list.remove(<span class="n">0</span>);                       <span class="c">// 중간 삭제 O(N) → 비추</span>
+<span class="k">int</span> size = list.size();              <span class="c">// 길이는 .size() (메서드)</span>
+
+<span class="c">// ─── 정렬 ───</span>
+Arrays.sort(arr);                       <span class="c">// 배열 오름차순</span>
+Collections.sort(list);                 <span class="c">// 리스트 오름차순</span>
+list.sort(Comparator.reverseOrder());   <span class="c">// 리스트 내림차순</span>
+
+<span class="c">// 2차원 배열 정렬 (커스텀 비교자)</span>
+<span class="k">int</span>[][] arr2D = <span class="k">new int</span>[N][<span class="n">2</span>];
+Arrays.sort(arr2D, (a, b) -&gt; a[<span class="n">0</span>] - b[<span class="n">0</span>]);  <span class="c">// 첫 번째 원소 기준</span>
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 수 정렬하기 3 [백준 10989]</h4>
+      <p>N개의 수를 오름차순 정렬 후 한 줄에 하나씩 출력. (N ≤ 10,000,000)</p>
+      <p><strong>주의</strong> — N이 천만이라 ArrayList나 박싱은 메모리 폭발. <code class="inline">int[]</code> 사용 + <code class="inline">Arrays.sort</code>. 단, 수의 범위가 작다면(0~10000) <strong>카운팅 정렬</strong>이 더 빠릅니다.</p>
+<pre><span class="k">int</span>[] count = <span class="k">new int</span>[<span class="n">10001</span>];          <span class="c">// 값별 등장 횟수</span>
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+    <span class="k">int</span> v = Integer.parseInt(br.readLine().trim());
+    count[v]++;                       <span class="c">// 그 값의 카운트 +1</span>
+}
+StringBuilder sb = <span class="k">new</span> StringBuilder();
+<span class="k">for</span> (<span class="k">int</span> v = <span class="n">0</span>; v &lt;= <span class="n">10000</span>; v++) {
+    <span class="k">for</span> (<span class="k">int</span> c = <span class="n">0</span>; c &lt; count[v]; c++) {
+        sb.append(v).append(<span class="s">'\n'</span>);
+    }
+}
+System.out.print(sb);
+</pre>
+      <p><strong>핵심</strong>: 자료구조 선택이 곧 풀이. 수의 <em>범위</em>를 알면 정렬도 O(N)에 끝낼 수 있습니다.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="title"><span class="icon">!</span>주의 — int[]의 sort 함정</div>
+      <code class="inline">int[]</code>를 <code class="inline">Arrays.sort()</code>로 정렬하면 듀얼 피벗 퀵소트로 평균 O(N log N)이지만, <strong>최악 O(N²)</strong>가 됩니다. 백준의 일부 문제는 이 약점을 노려 적대적 데이터를 깔아두므로 의심되면 <code class="inline">Integer[]</code>로 박싱 후 정렬하세요 — 머지소트라 O(N log N) 보장.
+    </div>
+
+    <h3>2. HashMap</h3>
+    <p>"X가 몇 번 등장했나", "이름→점수", "단어→번역" 같은 매핑의 90%는 HashMap. <strong>해시 충돌이 없으면 O(1)</strong>로 매우 빠릅니다.</p>
+
+    <h4>핵심 사용법</h4>
+<pre>Map&lt;String, Integer&gt; count = <span class="k">new</span> HashMap&lt;&gt;();
+
+<span class="c">// 1) getOrDefault — 카운팅의 정석 (외워두세요)</span>
+count.put(word, count.getOrDefault(word, <span class="n">0</span>) + <span class="n">1</span>);
+
+<span class="c">// 2) merge — getOrDefault의 더 깔끔한 대안 (Java 8+)</span>
+count.merge(word, <span class="n">1</span>, Integer::sum);
+
+<span class="c">// 3) 존재 확인</span>
+<span class="k">if</span> (count.containsKey(word)) { ... }
+
+<span class="c">// 4) 순회 — entrySet이 keySet보다 빠름</span>
+<span class="k">for</span> (Map.Entry&lt;String, Integer&gt; e : count.entrySet()) {
+    System.out.println(e.getKey() + <span class="s">" → "</span> + e.getValue());
+}
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 단어 빈도수 [최빈 단어 찾기]</h4>
+      <p>N개의 단어가 입력될 때 <strong>가장 많이 등장한 단어 1개</strong>를 출력하라 (동률이면 사전순).</p>
+<pre>Map&lt;String, Integer&gt; freq = <span class="k">new</span> HashMap&lt;&gt;();
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+    String w = br.readLine().trim();
+    freq.merge(w, <span class="n">1</span>, Integer::sum);    <span class="c">// 빈도 +1</span>
+}
+
+<span class="c">// 정렬: 빈도 내림차순, 같으면 사전 오름차순</span>
+String answer = freq.entrySet().stream()
+    .sorted((a, b) -&gt; {
+        <span class="k">if</span> (!a.getValue().equals(b.getValue()))
+            <span class="k">return</span> b.getValue() - a.getValue();   <span class="c">// 빈도 내림</span>
+        <span class="k">return</span> a.getKey().compareTo(b.getKey());   <span class="c">// 사전 오름</span>
+    })
+    .findFirst().get().getKey();
+
+System.out.println(answer);
+</pre>
+      <p><strong>핵심</strong>: <code class="inline">merge(key, 1, Integer::sum)</code>는 <code class="inline">getOrDefault</code>의 가장 깔끔한 대안. 정렬 기준 2단계는 그리디·해시 문제의 단골입니다.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="title"><span class="icon">!</span>키가 정수라면 배열을 쓰세요</div>
+      키가 0~N 범위 정수라면 <code class="inline">HashMap&lt;Integer, Integer&gt;</code>보다 <code class="inline">int[]</code>가 압도적으로 빠릅니다(5~10배). HashMap은 박싱 + 해시 계산 + 충돌 처리의 상수가 큽니다.
+    </div>
+
+    <h3>3. HashSet</h3>
+    <p>"이미 본 적이 있나?"를 <strong>O(1)</strong>에 답합니다. 중복 제거의 대표 도구. HashMap의 키 부분만 빌려쓴다고 보면 됩니다.</p>
+
+    <h4>핵심 사용법</h4>
+<pre>Set&lt;Integer&gt; seen = <span class="k">new</span> HashSet&lt;&gt;();
+seen.add(<span class="n">42</span>);
+<span class="k">boolean</span> exists = seen.contains(<span class="n">42</span>);   <span class="c">// true</span>
+seen.remove(<span class="n">42</span>);
+<span class="k">int</span> size = seen.size();
+
+<span class="c">// 컬렉션에서 중복 제거</span>
+List&lt;Integer&gt; unique = <span class="k">new</span> ArrayList&lt;&gt;(<span class="k">new</span> HashSet&lt;&gt;(list));
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 서로 다른 부분 문자열의 개수</h4>
+      <p>문자열 S가 주어진다. <strong>S의 모든 서로 다른 부분 문자열의 개수</strong>를 구하라.</p>
+<pre>String S = br.readLine().trim();
+Set&lt;String&gt; substrings = <span class="k">new</span> HashSet&lt;&gt;();
+
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; S.length(); i++) {
+    <span class="k">for</span> (<span class="k">int</span> j = i + <span class="n">1</span>; j &lt;= S.length(); j++) {
+        substrings.add(S.substring(i, j));   <span class="c">// 중복은 자동으로 안 들어감</span>
+    }
+}
+
+System.out.println(substrings.size());
+</pre>
+      <p><strong>핵심</strong>: "서로 다른 ~의 개수"는 HashSet의 단골 패턴. <code class="inline">add</code>가 중복을 자동 거르므로 별도 처리 불필요. (참고: 큰 입력은 Suffix Array가 필요)</p>
+    </div>
+
+    <h3>4. Stack — LIFO (ArrayDeque로 대체)</h3>
+    <p>"마지막에 넣은 것을 가장 먼저 꺼낸다(Last-In First-Out)". Java의 <code class="inline">Stack</code> 클래스는 레거시이고 동기화 오버헤드가 있어 <strong>실전에서는 <code class="inline">ArrayDeque</code>를 Stack처럼</strong> 씁니다.</p>
+
+    <h4>핵심 사용법</h4>
+<pre>Deque&lt;Integer&gt; stack = <span class="k">new</span> ArrayDeque&lt;&gt;();
+stack.push(<span class="n">1</span>);           <span class="c">// 위에 쌓기</span>
+stack.push(<span class="n">2</span>);
+<span class="k">int</span> top  = stack.pop();    <span class="c">// 꺼내기: 2</span>
+<span class="k">int</span> peek = stack.peek();   <span class="c">// 안 꺼내고 확인: 1</span>
+<span class="k">boolean</span> empty = stack.isEmpty();
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 괄호 짝 검사 [백준 9012 유형]</h4>
+      <p>괄호 문자열이 주어진다. <strong>모든 여는 괄호가 같은 종류의 닫는 괄호와 짝지어지면 VPS</strong>, 아니면 NO를 출력하라.</p>
+      <p><strong>입력</strong>: <code class="inline">(())()</code> → YES / <code class="inline">(()</code> → NO</p>
+<pre>Deque&lt;Character&gt; stack = <span class="k">new</span> ArrayDeque&lt;&gt;();
+String s = br.readLine().trim();
+
+<span class="k">boolean</span> valid = <span class="k">true</span>;
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; s.length(); i++) {
+    <span class="k">char</span> c = s.charAt(i);
+    <span class="k">if</span> (c == <span class="s">'('</span>) {
+        stack.push(c);                       <span class="c">// 여는 괄호는 쌓고</span>
+    } <span class="k">else</span> {
+        <span class="c">// 닫는 괄호인데 스택이 비었다면 짝이 없음</span>
+        <span class="k">if</span> (stack.isEmpty()) {
+            valid = <span class="k">false</span>;
+            <span class="k">break</span>;
+        }
+        stack.pop();                         <span class="c">// 짝 맞음 → 여는 괄호 제거</span>
+    }
+}
+<span class="c">// 끝났는데 스택에 남아있다면 닫는 짝이 부족했던 것</span>
+<span class="k">if</span> (!stack.isEmpty()) valid = <span class="k">false</span>;
+
+System.out.println(valid ? <span class="s">"YES"</span> : <span class="s">"NO"</span>);
+</pre>
+      <p><strong>핵심</strong>: 스택의 가장 대표적 사용. <strong>"여는 건 쌓고, 닫는 건 짝 맞춰서 꺼낸다"</strong>는 패턴은 괄호, HTML 태그, 후위표기식, 히스토그램에 모두 동일하게 적용됩니다.</p>
+    </div>
+
+    <h3>5. Queue — FIFO (ArrayDeque)</h3>
+    <p>"먼저 넣은 것을 먼저 꺼낸다(First-In First-Out)". BFS의 심장. <code class="inline">LinkedList</code>로 구현해도 되지만 <code class="inline">ArrayDeque</code>가 2~3배 빠르고 메모리도 적게 씁니다.</p>
+
+    <h4>핵심 사용법</h4>
+<pre>Queue&lt;Integer&gt; q = <span class="k">new</span> ArrayDeque&lt;&gt;();
+q.offer(<span class="n">1</span>);              <span class="c">// 뒤에 추가 (add도 됨)</span>
+q.offer(<span class="n">2</span>);
+<span class="k">int</span> head = q.poll();    <span class="c">// 앞에서 꺼냄: 1</span>
+<span class="k">int</span> peek = q.peek();    <span class="c">// 안 꺼내고 앞 확인: 2</span>
+
+<span class="c">// 좌표를 큐에 넣을 때는 int[] 형태가 객체 생성 비용이 적음</span>
+Queue&lt;<span class="k">int</span>[]&gt; coords = <span class="k">new</span> ArrayDeque&lt;&gt;();
+coords.offer(<span class="k">new int</span>[]{x, y, dist});
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 카드 게임 [백준 2164]</h4>
+      <p>1~N까지 적힌 카드가 위에서 1, 2, ..., N 순으로 쌓여있다. ① 맨 위 카드를 버린다 ② 맨 위 카드를 맨 아래로 옮긴다. ①, ②를 반복해 마지막에 남는 카드는?</p>
+      <p><strong>입력</strong>: <code class="inline">6</code> → <strong>출력</strong>: <code class="inline">4</code></p>
+<pre>Queue&lt;Integer&gt; q = <span class="k">new</span> ArrayDeque&lt;&gt;();
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= N; i++) q.offer(i);
+
+<span class="k">while</span> (q.size() &gt; <span class="n">1</span>) {
+    q.poll();                <span class="c">// ① 맨 위 버림</span>
+    q.offer(q.poll());       <span class="c">// ② 맨 위를 빼서 맨 뒤로</span>
+}
+System.out.println(q.poll());
+</pre>
+      <p><strong>핵심</strong>: 큐는 <em>"줄 서기"의 자연스러운 모델</em>. BFS, 시뮬레이션, 카드/번호표 문제에 자주 등장합니다.</p>
+    </div>
+
+    <h3>6. PriorityQueue (힙)</h3>
+    <p>"항상 가장 작은(또는 큰) 원소부터 꺼내고 싶다"의 답. 내부는 이진 힙. <strong>offer/poll이 O(log N)</strong>이고 peek은 O(1).</p>
+
+    <h4>핵심 사용법</h4>
+<pre><span class="c">// 최소 힙 — 기본</span>
+PriorityQueue&lt;Integer&gt; minHeap = <span class="k">new</span> PriorityQueue&lt;&gt;();
+minHeap.offer(<span class="n">3</span>);
+minHeap.offer(<span class="n">1</span>);
+minHeap.offer(<span class="n">2</span>);
+minHeap.poll();   <span class="c">// 1 (가장 작은 값)</span>
+
+<span class="c">// 최대 힙</span>
+PriorityQueue&lt;Integer&gt; maxHeap = <span class="k">new</span> PriorityQueue&lt;&gt;(Comparator.reverseOrder());
+
+<span class="c">// 커스텀 비교자 — int[] 형태에서 두 번째 원소(거리) 기준 오름차순</span>
+PriorityQueue&lt;<span class="k">int</span>[]&gt; pq = <span class="k">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; a[<span class="n">1</span>] - b[<span class="n">1</span>]);
+pq.offer(<span class="k">new int</span>[]{<span class="n">0</span>, <span class="n">5</span>});   <span class="c">// {노드, 거리}</span>
+
+<span class="c">// 다중 키 정렬 — 첫 번째 같으면 두 번째</span>
+PriorityQueue&lt;<span class="k">int</span>[]&gt; pq2 = <span class="k">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; {
+    <span class="k">if</span> (a[<span class="n">0</span>] != b[<span class="n">0</span>]) <span class="k">return</span> a[<span class="n">0</span>] - b[<span class="n">0</span>];
+    <span class="k">return</span> a[<span class="n">1</span>] - b[<span class="n">1</span>];
+});
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — K번째 큰 수 [실시간 스트림]</h4>
+      <p>스트림으로 숫자가 하나씩 들어온다. 매 입력 후 <strong>지금까지 본 숫자 중 K번째로 큰 값</strong>을 출력하라.</p>
+      <p><strong>아이디어</strong> — 크기 K인 <strong>최소 힙</strong>을 유지. 새 숫자가 힙의 최솟값(top)보다 크면 top을 빼고 새 숫자를 넣음. 항상 K번째 큰 수가 top에 위치.</p>
+<pre><span class="k">int</span> K = <span class="n">3</span>;
+PriorityQueue&lt;Integer&gt; pq = <span class="k">new</span> PriorityQueue&lt;&gt;();   <span class="c">// 최소 힙</span>
+
+<span class="k">for</span> (<span class="k">int</span> x : stream) {
+    pq.offer(x);
+    <span class="k">if</span> (pq.size() &gt; K) {
+        pq.poll();          <span class="c">// 크기를 K로 유지 → 가장 작은 거 버림</span>
+    }
+    <span class="c">// pq의 크기가 K이면 그 top이 K번째 큰 수</span>
+    <span class="k">int</span> kthLargest = pq.peek();
+    System.out.println(kthLargest);
+}
+</pre>
+      <p><strong>핵심</strong>: "K번째 큰 수"는 <em>크기 K짜리 최소 힙</em>으로 풀립니다. 직관적으로는 최대 힙이지만, 반대를 쓰는 게 트릭. 다익스트라, 부록 PROBLEM 07의 작업 스케줄링도 같은 패턴.</p>
+    </div>
+
+    <h3>7. Deque (양방향 큐)</h3>
+    <p>앞뒤 양쪽에서 넣고 빼기가 자유로움. Stack도 되고 Queue도 됨. <em>슬라이딩 윈도우 최댓값</em> 문제의 단골 도구입니다.</p>
+
+    <h4>핵심 사용법</h4>
+<pre>Deque&lt;Integer&gt; dq = <span class="k">new</span> ArrayDeque&lt;&gt;();
+dq.offerFirst(<span class="n">1</span>);       <span class="c">// 앞에 추가</span>
+dq.offerLast(<span class="n">2</span>);        <span class="c">// 뒤에 추가</span>
+dq.pollFirst();          <span class="c">// 앞에서 꺼냄</span>
+dq.pollLast();           <span class="c">// 뒤에서 꺼냄</span>
+dq.peekFirst();          <span class="c">// 앞 확인</span>
+dq.peekLast();           <span class="c">// 뒤 확인</span>
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 슬라이딩 윈도우 최댓값 [어려움]</h4>
+      <p>크기 N의 배열과 윈도우 크기 K가 주어진다. 윈도우가 한 칸씩 이동할 때 <strong>각 윈도우의 최댓값</strong>을 모두 출력. (N ≤ 1,000,000)</p>
+      <p><strong>아이디어</strong> — Deque에 "윈도우 안의 후보 인덱스를 큰 값 순서대로" 유지. 새 원소가 들어올 때 그보다 작은 뒤쪽 후보를 다 제거.</p>
+<pre>Deque&lt;Integer&gt; dq = <span class="k">new</span> ArrayDeque&lt;&gt;();  <span class="c">// 인덱스를 저장</span>
+StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+    <span class="c">// 1) 윈도우 밖으로 나간 인덱스 제거 (앞쪽)</span>
+    <span class="k">while</span> (!dq.isEmpty() &amp;&amp; dq.peekFirst() &lt;= i - K) {
+        dq.pollFirst();
+    }
+    <span class="c">// 2) 새 값보다 작은 뒤쪽 후보는 영원히 최댓값이 될 수 없음 → 제거</span>
+    <span class="k">while</span> (!dq.isEmpty() &amp;&amp; arr[dq.peekLast()] &lt; arr[i]) {
+        dq.pollLast();
+    }
+    <span class="c">// 3) 현재 인덱스 추가</span>
+    dq.offerLast(i);
+
+    <span class="c">// 4) 윈도우가 완성됐다면 최댓값(앞쪽)을 기록</span>
+    <span class="k">if</span> (i &gt;= K - <span class="n">1</span>) {
+        sb.append(arr[dq.peekFirst()]).append(<span class="s">' '</span>);
+    }
+}
+System.out.println(sb);
+</pre>
+      <p><strong>핵심</strong>: Deque로 <em>"단조 감소하는 후보"</em>를 유지하는 패턴. 각 원소가 최대 한 번씩만 추가/제거되어 <strong>전체 O(N)</strong>. 슬라이딩 윈도우 최댓값/최솟값의 정석 풀이입니다.</p>
+    </div>
+
+    <h3>8. TreeMap / TreeSet</h3>
+    <p>키를 <strong>정렬된 상태</strong>로 유지하면서 모든 연산이 O(log N). HashMap이 "있나 없나"라면 TreeMap은 "<strong>x보다 큰 것 중 가장 작은 것</strong>" 같은 범위 검색에 강합니다.</p>
+
+    <h4>핵심 사용법</h4>
+<pre>TreeMap&lt;Integer, String&gt; tm = <span class="k">new</span> TreeMap&lt;&gt;();
+tm.put(<span class="n">3</span>, <span class="s">"c"</span>);
+tm.put(<span class="n">1</span>, <span class="s">"a"</span>);
+tm.put(<span class="n">5</span>, <span class="s">"e"</span>);
+
+<span class="c">// 정렬된 키 접근</span>
+tm.firstKey();         <span class="c">// 1 (최솟값)</span>
+tm.lastKey();          <span class="c">// 5 (최댓값)</span>
+
+<span class="c">// 범위 검색 — 코딩 테스트의 핵심 기능</span>
+tm.ceilingKey(<span class="n">4</span>);     <span class="c">// 5  — 4 이상 중 가장 작은 키</span>
+tm.floorKey(<span class="n">4</span>);       <span class="c">// 3  — 4 이하 중 가장 큰 키</span>
+tm.higherKey(<span class="n">3</span>);      <span class="c">// 5  — 3 초과 중 가장 작은 키 (자기 제외)</span>
+tm.lowerKey(<span class="n">3</span>);       <span class="c">// 1  — 3 미만 중 가장 큰 키</span>
+
+<span class="c">// 정렬 순서대로 순회</span>
+<span class="k">for</span> (Map.Entry&lt;Integer, String&gt; e : tm.entrySet()) { ... }
+</pre>
+
+    <div class="example-box">
+      <h4>미니 예제 — 가까운 수 찾기</h4>
+      <p>정수의 집합 S가 동적으로 변한다(추가/삭제). 매번 어떤 값 x가 주어지면 <strong>S 안의 값 중 x에 가장 가까운 값</strong>을 찾아라.</p>
+<pre>TreeSet&lt;Integer&gt; set = <span class="k">new</span> TreeSet&lt;&gt;();
+
+<span class="c">// 추가/삭제</span>
+set.add(<span class="n">10</span>); set.add(<span class="n">25</span>); set.add(<span class="n">40</span>);
+
+<span class="c">// x에 가장 가까운 값 찾기</span>
+<span class="k">int</span> x = <span class="n">22</span>;
+Integer up   = set.ceiling(x);   <span class="c">// 25 (x 이상 중 가장 작은)</span>
+Integer down = set.floor(x);     <span class="c">// 10 (x 이하 중 가장 큰)</span>
+
+Integer nearest;
+<span class="k">if</span> (up == <span class="k">null</span>) nearest = down;
+<span class="k">else if</span> (down == <span class="k">null</span>) nearest = up;
+<span class="k">else</span> nearest = (up - x &lt;= x - down) ? up : down;
+
+System.out.println(nearest);     <span class="c">// 25 (3 차이, 12 차이보다 가까움)</span>
+</pre>
+      <p><strong>핵심</strong>: HashSet은 못 하는 일. <code class="inline">ceiling</code>과 <code class="inline">floor</code>로 양쪽 후보를 본 뒤 더 가까운 쪽 선택. <em>"동적 + 정렬 + 범위"</em>가 들어오면 TreeMap/TreeSet 떠올리세요.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>외울 한 줄 매핑</div>
+      "있나 없나" → HashSet · "세고 싶다" → HashMap · "선입선출" → ArrayDeque · "최소/최대 꺼내기" → PriorityQueue · "범위 검색" → TreeMap
+    </div>
+  </section>
+
+  <!-- ============ 8장 ============ -->
+  <section class="chapter" id="ch8">
+    <div class="chapter-label">CHAPTER 08</div>
+    <h2><span class="num">08.</span>알고리즘 패턴 12선</h2>
+    <p class="chapter-lead">유형 판단의 직관 + 손에 익은 템플릿 + <strong>"왜 이렇게 푸는지"를 설명할 수 있는 이해</strong>. 이 세 가지가 다 있어야 합격합니다. 패턴마다 <em>개념 → 예제 문제 → 풀이 사고 → 완성 코드 → 핵심 정리</em> 순서로 따라가세요. 코드는 입력부터 출력까지 <strong>그대로 제출해도 동작하는</strong> 완전한 형태로 작성했습니다.</p>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">01</span>
+        <h3>완전탐색 (Brute Force)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">N ≤ 10</span>
+        <span class="meta-chip">O(N!) / O(2ᴺ)</span>
+        <span class="meta-chip">재귀 + 다중 for문</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>"가능한 모든 경우의 수를 만들어보고, 그 중 조건을 만족하는 것을 골라낸다." 가장 무식한 방법이지만 <strong>가장 확실한 출발점</strong>입니다. 더 빠른 풀이가 안 보일 때는 일단 완전탐색으로 정답을 만들고, 거기서 최적화를 고민하는 게 정석입니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li><strong>N이 매우 작다</strong> — 보통 N ≤ 10. N! = 약 360만 이하라 1초 안에 끝납니다.</li>
+        <li>"모든 경우", "전부", "어떤 순서로든" 같은 표현이 보이는 문제</li>
+        <li>순열, 조합, 부분집합 개념이 등장하는 문제</li>
+      </ul>
+
+      <h4>동작 원리</h4>
+      <p>재귀로 <strong>"한 자리씩 결정 → 다음 자리로 들어감 → 끝까지 갔으면 결과 처리 → 돌아와서 다음 선택지 시도"</strong>의 패턴을 반복합니다. 트리 모양으로 모든 가능성이 펼쳐진다고 상상하세요. 가지 끝(리프)에 도달하면 한 케이스가 완성됩니다.</p>
+
+      <div class="example-box">
+        <h4>연습 예제 — "N과 M (1)" 유형 [백준 15649]</h4>
+        <p>자연수 N, M이 주어질 때, <strong>1부터 N까지의 자연수 중 중복 없이 M개를 고른 수열을 사전 순으로 모두 출력</strong>하라. (1 ≤ M ≤ N ≤ 8)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>3 1</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>1
+2
+3</div>
+        </div>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>4 2</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>1 2
+1 3
+1 4
+2 1
+2 3
+2 4
+3 1
+...</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "1~N에서 M개를 골라 모든 수열을 만들어라" → 완전탐색 + 백트래킹의 전형</li>
+          <li><strong>N의 크기 확인</strong> — N ≤ 8 → 최대 8! = 40,320개의 케이스. 완전탐색으로 충분히 가능</li>
+          <li><strong>상태 설계</strong> — <code class="inline">picked[depth]</code>: 현재 depth번째 자리에 놓인 숫자 / <code class="inline">used[i]</code>: 숫자 i를 이미 썼는지</li>
+          <li><strong>사전 순 보장</strong> — 1부터 N까지 차례대로 시도하면 별도 정렬 없이도 자동으로 사전 순</li>
+          <li><strong>출력 처리</strong> — M개 수열을 한 줄로 출력 후 줄바꿈. 출력이 많을 수 있어 StringBuilder 필수</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="c">// ─── 전역 상태 ────────────────────────────────────────</span>
+    <span class="k">static int</span> N, M;
+    <span class="k">static int</span>[] picked;          <span class="c">// 현재까지 고른 수열 (자리별 숫자)</span>
+    <span class="k">static boolean</span>[] used;       <span class="c">// used[i]=true → 숫자 i를 이미 사용</span>
+    <span class="k">static</span> StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        <span class="c">// 1) 입력: 한 줄에 N과 M이 공백으로 구분되어 들어옴</span>
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        <span class="c">// 2) 자료구조 준비</span>
+        <span class="c">//    - picked: M자리짜리 수열</span>
+        <span class="c">//    - used:   숫자 i(1~N)의 사용 여부 → 1-indexed라 N+1 크기</span>
+        picked = <span class="k">new int</span>[M];
+        used   = <span class="k">new boolean</span>[N + <span class="n">1</span>];
+
+        <span class="c">// 3) 0번째 자리부터 결정 시작</span>
+        dfs(<span class="n">0</span>);
+
+        <span class="c">// 4) 모아둔 출력을 한 번에 (System.out.println 반복은 매우 느림)</span>
+        System.out.print(sb);
+    }
+
+    <span class="c">/**
+     * depth: 지금 결정할 자리 (0부터 M-1까지)
+     */</span>
+    <span class="k">static void</span> dfs(<span class="k">int</span> depth) {
+        <span class="c">// ─── 종료 조건 ───</span>
+        <span class="c">// M개를 모두 골랐다 → 한 줄로 출력하고 돌아감</span>
+        <span class="k">if</span> (depth == M) {
+            <span class="k">for</span> (<span class="k">int</span> x : picked) sb.append(x).append(<span class="s">' '</span>);
+            sb.append(<span class="s">'\n'</span>);
+            <span class="k">return</span>;
+        }
+
+        <span class="c">// ─── 선택지 펼치기 ───</span>
+        <span class="c">// 1~N을 차례대로 시도 → 사전 순 자동 보장</span>
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= N; i++) {
+            <span class="k">if</span> (used[i]) <span class="k">continue</span>;          <span class="c">// 이미 사용한 숫자는 건너뜀</span>
+
+            <span class="c">// (a) i를 depth 자리에 놓고</span>
+            picked[depth] = i;
+            used[i] = <span class="k">true</span>;
+
+            <span class="c">// (b) 다음 자리(depth+1)로 들어감</span>
+            dfs(depth + <span class="n">1</span>);
+
+            <span class="c">// (c) 돌아오면 i를 도로 빼고 다음 후보로</span>
+            <span class="c">//     ★ 이 한 줄이 백트래킹의 정수. 빼먹으면 답이 망가짐</span>
+            used[i] = <span class="k">false</span>;
+            <span class="c">// picked[depth]는 다음 반복에서 덮어쓰여지므로 초기화 불필요</span>
+        }
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>"선택 → 재귀 → 원복"</strong>이 백트래킹의 본질. <code class="inline">used[i] = false</code>를 빼먹으면 한 번 쓴 숫자가 영영 못 쓰이게 됩니다.</li>
+        <li>1부터 차례대로 시도 → <strong>사전 순 정렬을 따로 안 해도 자동</strong>으로 됩니다.</li>
+        <li><code class="inline">picked[depth]</code>는 다음 반복에서 덮어쓰여지므로 굳이 초기화할 필요 없음. (불필요한 코드를 안 쓰는 습관)</li>
+        <li>출력이 수만 줄 → <code class="inline">println</code> 반복하면 시간 초과. StringBuilder는 선택이 아닌 필수.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 완전탐색은 "자리를 정해놓고 한 자리씩 채워나가는" 재귀. <em>채운 후 원복하는 것까지가 한 세트</em>입니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">02</span>
+        <h3>정렬 + 그리디 (Greedy)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">"최소 / 최대 개수"</span>
+        <span class="meta-chip">O(N log N)</span>
+        <span class="meta-chip">정렬 후 1-pass</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>그리디는 <strong>"매 순간 가장 좋아 보이는 선택"</strong>을 누적해서 답을 만드는 방법입니다. 다만 그 "현재 최선의 선택"이 정말 전체 최적으로 이어진다는 직관(또는 증명)이 있어야 통합니다. 그리디의 90%는 <em>정렬 기준을 어떻게 잡느냐</em>에 달려 있습니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"최대 개수", "최소 횟수", "최소 비용" — 그러나 DP까지 갈 필요는 없어 보일 때</li>
+        <li>정렬해놓고 보면 답이 보이는 문제</li>
+        <li>"앞에서부터 욕심껏 골라도 손해 안 본다"는 직관이 서는 경우</li>
+      </ul>
+
+      <h4>주의 — 그리디가 안 통할 때</h4>
+      <p>그리디 풀이가 잘 안 되면 <strong>DP를 의심하세요</strong>. 동전 거스름돈 문제에서 동전 종류가 일반적이면 그리디로 안 풀리고 DP로 풀어야 합니다. "그리디로 안 되는 반례가 떠오르는가?"가 판별 기준입니다.</p>
+
+      <div class="example-box">
+        <h4>연습 예제 — 회의실 배정 [백준 1931]</h4>
+        <p>회의실 1개에 N개의 회의 신청이 들어왔다. 각 회의는 시작 시간과 끝 시간이 있다. 회의들이 겹치지 않도록 했을 때 <strong>최대 몇 개의 회의를 배정할 수 있는가</strong>? (N ≤ 100,000)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>11
+1 4
+3 5
+0 6
+5 7
+3 8
+5 9
+6 10
+8 11
+8 12
+2 13
+12 14</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>4
+
+(1-4, 5-7, 8-11, 12-14)</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "겹치지 않는 회의의 최대 개수" → 활동 선택 문제 (Activity Selection). 정렬+그리디의 정석.</li>
+          <li><strong>왜 시작 시간으로 정렬하면 안 될까?</strong> — 0시 시작 24시 끝나는 회의가 1번으로 채택되면 다른 회의를 다 못 함</li>
+          <li><strong>왜 끝나는 시간 정렬이 최적일까?</strong> — 빨리 끝낼수록 "이후 남는 시간"이 최대화 → 뒤에 더 많은 회의를 끼울 자리가 생김</li>
+          <li><strong>끝 시간이 같으면?</strong> — 시작 시간 빠른 것 우선. ("시작=끝"인 0초짜리 회의 처리)</li>
+          <li><strong>구현</strong> — 정렬 후 한 번 훑으며 "직전 회의 끝 시간 이후에 시작 가능하면" 채택</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        <span class="k">int</span> N = Integer.parseInt(br.readLine().trim());
+
+        <span class="c">// 회의: [시작, 끝] 형태로 2차원 배열에 저장</span>
+        <span class="k">int</span>[][] meetings = <span class="k">new int</span>[N][<span class="n">2</span>];
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+            meetings[i][<span class="n">0</span>] = Integer.parseInt(st.nextToken());  <span class="c">// 시작</span>
+            meetings[i][<span class="n">1</span>] = Integer.parseInt(st.nextToken());  <span class="c">// 끝</span>
+        }
+
+        <span class="c">// ★ 정렬 기준 2단계 ★</span>
+        <span class="c">//   1순위: 끝나는 시간 오름차순 → 빨리 끝나는 회의 우선</span>
+        <span class="c">//   2순위: 시작 시간 오름차순 → 끝=시작인 0초 회의 처리용</span>
+        Arrays.sort(meetings, (a, b) -&gt; {
+            <span class="k">if</span> (a[<span class="n">1</span>] != b[<span class="n">1</span>]) <span class="k">return</span> a[<span class="n">1</span>] - b[<span class="n">1</span>];
+            <span class="k">return</span> a[<span class="n">0</span>] - b[<span class="n">0</span>];
+        });
+
+        <span class="c">// 한 번 훑으며 욕심껏 선택</span>
+        <span class="k">int</span> count = <span class="n">0</span>;
+        <span class="k">int</span> currentEnd = <span class="n">0</span>;             <span class="c">// 마지막으로 채택한 회의의 끝 시간</span>
+
+        <span class="k">for</span> (<span class="k">int</span>[] m : meetings) {
+            <span class="c">// 직전 회의 끝 시간 이후(또는 같은 시각)부터 시작 가능 → 채택</span>
+            <span class="k">if</span> (m[<span class="n">0</span>] &gt;= currentEnd) {
+                count++;
+                currentEnd = m[<span class="n">1</span>];       <span class="c">// 끝 시간 갱신</span>
+            }
+        }
+
+        System.out.println(count);
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>"끝 시간 정렬" 한 줄이 풀이의 90%</strong>. 왜 이게 최적인지 한마디로 설명할 수 있어야 합니다 — <em>"빨리 끝낼수록 뒤에 회의 끼울 자리가 더 많이 남는다"</em>.</li>
+        <li>"끝나자마자 다음 회의 시작" 케이스도 허용(<code class="inline">m[0] &gt;= currentEnd</code>). 부등호 방향이 <code class="inline">&gt;</code>가 아니라 <code class="inline">&gt;=</code>임에 주의.</li>
+        <li>2단계 정렬을 람다로 짜는 패턴은 그리디 전반에서 매우 자주 등장합니다 — 외워두세요.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 그리디 = <em>"올바른 정렬 기준 + 1번 훑기"</em>. 정렬 기준이 정해지면 코드는 5줄로 끝납니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">03</span>
+        <h3>이분탐색 (Binary Search)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">정렬된 데이터</span>
+        <span class="meta-chip">O(log N)</span>
+        <span class="meta-chip">매개변수 탐색 응용</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>정렬된 데이터에서 <strong>"가운데를 보고 답이 왼쪽에 있는지 오른쪽에 있는지 판단" → 매번 범위를 절반으로 줄임</strong>. 100만 개에서 단 20번 비교로 답을 찾습니다(2²⁰ ≈ 100만).</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li><strong>"정렬된" 데이터에서 특정 값을 빠르게 찾는다</strong></li>
+        <li><strong>매개변수 탐색</strong> — "답이 X일 때 조건을 만족하는가?"를 이분탐색으로 찾는 응용</li>
+        <li>"최댓값의 최소값", "최솟값의 최대값" 같은 패턴이 보일 때</li>
+      </ul>
+
+      <h4>동작 원리</h4>
+      <p><code class="inline">lo</code>(왼쪽 경계)와 <code class="inline">hi</code>(오른쪽 경계) 사이의 가운데 <code class="inline">mid</code>를 본 뒤, 답이 어느 쪽에 있는지 판단해 한쪽을 버립니다. <strong>"이 가운데를 보고 어느 쪽이 답인가?"의 판단 기준이 명확해야</strong> 통합니다.</p>
+
+      <div class="callout warn">
+        <div class="title"><span class="icon">!</span>흔한 오버플로 함정</div>
+        <code class="inline">int mid = (lo + hi) / 2</code>는 <code class="inline">lo + hi</code>가 int 최대값을 넘으면 음수가 됩니다. 안전하게 <code class="inline">int mid = lo + (hi - lo) / 2</code> 또는 <code class="inline">int mid = (lo + hi) &gt;&gt;&gt; 1</code> (부호 없는 시프트)를 쓰세요.
+      </div>
+
+      <div class="example-box">
+        <h4>연습 예제 — 수 찾기 [백준 1920]</h4>
+        <p>N개의 정수 A[1..N]이 주어진다. 그 다음 M개의 정수가 주어질 때, 각 정수가 A 안에 존재하는지 <strong>0 또는 1로 출력</strong>하라. (N, M ≤ 100,000)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>5
+4 1 5 2 3
+5
+1 3 7 9 5</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>1
+1
+0
+0
+1</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "특정 값이 있는가?" × M번 → 빠른 검색이 필요</li>
+          <li><strong>시간복잡도 계산</strong> — 단순 선형탐색은 O(N×M) = 10¹⁰ → 시간 초과. O(log N)으로 줄여야 함</li>
+          <li><strong>전략 선택</strong> — A를 정렬 O(N log N) 후, 각 질의를 O(log N)에 처리 → 총 O((N+M) log N) ≈ 200만</li>
+          <li><strong>구현</strong> — Arrays.sort로 정렬, 표준 이분탐색 루프로 검색</li>
+          <li><strong>출력 처리</strong> — M=10만 줄 출력 → StringBuilder 필수</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+        <span class="c">// 1) A 배열 입력 및 정렬 (이분탐색의 전제 조건)</span>
+        <span class="k">int</span> N = Integer.parseInt(br.readLine().trim());
+        <span class="k">int</span>[] A = <span class="k">new int</span>[N];
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            A[i] = Integer.parseInt(st.nextToken());
+        }
+        Arrays.sort(A);                              <span class="c">// ★ 정렬해야 이분탐색 가능</span>
+
+        <span class="c">// 2) 질의 처리</span>
+        <span class="k">int</span> M = Integer.parseInt(br.readLine().trim());
+        st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">for</span> (<span class="k">int</span> q = <span class="n">0</span>; q &lt; M; q++) {
+            <span class="k">int</span> target = Integer.parseInt(st.nextToken());
+            sb.append(contains(A, target) ? <span class="n">1</span> : <span class="n">0</span>).append(<span class="s">'\n'</span>);
+        }
+
+        System.out.print(sb);
+    }
+
+    <span class="c">/**
+     * 정렬된 배열 A에서 target이 존재하면 true.
+     * 가운데를 보고 절반씩 잘라가며 O(log N)에 검색.
+     */</span>
+    <span class="k">static boolean</span> contains(<span class="k">int</span>[] A, <span class="k">int</span> target) {
+        <span class="k">int</span> lo = <span class="n">0</span>, hi = A.length - <span class="n">1</span>;
+
+        <span class="k">while</span> (lo &lt;= hi) {
+            <span class="c">// ★ 오버플로 방지: (lo+hi)>>>1 또는 lo + (hi-lo)/2</span>
+            <span class="k">int</span> mid = (lo + hi) &gt;&gt;&gt; <span class="n">1</span>;
+
+            <span class="k">if</span> (A[mid] == target) {
+                <span class="k">return true</span>;                  <span class="c">// 찾음</span>
+            } <span class="k">else if</span> (A[mid] &lt; target) {
+                lo = mid + <span class="n">1</span>;                   <span class="c">// 답은 오른쪽 절반</span>
+            } <span class="k">else</span> {
+                hi = mid - <span class="n">1</span>;                   <span class="c">// 답은 왼쪽 절반</span>
+            }
+        }
+        <span class="k">return false</span>;
+    }
+}
+</pre>
+
+      <h4>매개변수 탐색 — 한 단계 위의 응용</h4>
+      <p>"답"이 무엇인지 모를 때, <strong>답을 직접 추측하고 그 추측이 가능한지 검사</strong>하는 패턴입니다. 부록 PROBLEM 04(나무 자르기)가 정확히 이 응용. 핵심 사고는:</p>
+      <ul>
+        <li>"답 X가 가능한지"를 O(N)에 검사할 수 있다 → 답을 이분탐색</li>
+        <li>"가능하면 더 큰 값을 시도", "불가능하면 더 작은 값을 시도"</li>
+        <li>답의 범위(예: 0 ~ 최대 나무 길이)를 lo, hi로 설정</li>
+      </ul>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><code class="inline">Arrays.sort()</code> 한 줄을 깜빡하면 이분탐색의 전제가 깨져 답이 완전히 망가집니다.</li>
+        <li>Java 내장 <code class="inline">Arrays.binarySearch()</code>는 정확히 일치만 찾고 위치는 보장하지 않습니다 — 매개변수 탐색에는 직접 구현이 필요합니다.</li>
+        <li>10만 줄 출력에는 반드시 StringBuilder.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 이분탐색은 "찾기" 그 자체보다 <em>"매개변수 탐색의 도구"</em>로 더 자주 쓰입니다. "답을 추측 → 검사"의 사고 전환이 핵심.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">04</span>
+        <h3>BFS (너비 우선 탐색)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">최단 거리</span>
+        <span class="meta-chip">O(V + E)</span>
+        <span class="meta-chip">Queue + 거리 배열</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>시작점에서 <strong>가까운 곳부터 한 겹씩 퍼져나가는 탐색</strong>. 큐를 사용하기 때문에 먼저 들어간 칸이 먼저 처리되고, 그 결과 <strong>"가중치가 모두 같은 그래프에서의 최단 거리"</strong>를 자연스럽게 보장합니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li><strong>"최단 거리", "최소 횟수", "최소 이동"</strong> + 격자 또는 그래프</li>
+        <li>가중치가 없거나 모두 같은 그래프 (가중치가 다르면 다익스트라)</li>
+        <li>"몇 번 만에 도달?", "퍼지는 데 며칠?" 같은 표현</li>
+      </ul>
+
+      <h4>동작 원리 — 한 마디로</h4>
+      <p>"시작점부터 1칸 거리의 모든 칸을 먼저 / 그 다음 2칸 거리의 모든 칸을 / …" 식으로 동심원처럼 퍼져 나갑니다. 큐에 넣는 순간 거리가 확정되므로, <strong>최초로 도착한 거리가 최단 거리</strong>입니다.</p>
+
+      <div class="callout warn">
+        <div class="title"><span class="icon">!</span>가장 흔한 실수</div>
+        방문 체크를 <strong>"큐에서 꺼낼 때"</strong> 하면 같은 칸이 여러 번 큐에 들어가 시간 초과나 오답이 발생합니다. 반드시 <strong>"큐에 넣는 그 순간"</strong> 방문 표시하세요.
+      </div>
+
+      <div class="example-box">
+        <h4>연습 예제 — 미로 탐색 [백준 2178]</h4>
+        <p>N×M 미로. 1은 이동 가능, 0은 벽. (1,1)에서 출발해 (N,M)까지 갈 때 <strong>지나야 하는 최소 칸 수</strong>(출발+도착 포함)를 구하라. 4방향 이동. (N, M ≤ 100)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>4 6
+101111
+101010
+101011
+111011</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>15</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "최소 이동" + 격자 + 1칸씩 → BFS의 정석</li>
+          <li><strong>좌표계 결정</strong> — 0-indexed로 변환. (0,0)에서 (N-1, M-1)까지</li>
+          <li><strong>거리 저장</strong> — <code class="inline">dist[N][M]</code>에 시작점부터의 거리. 미방문은 0 또는 -1로</li>
+          <li><strong>입력 파싱</strong> — 공백 없는 숫자 문자열 → <code class="inline">charAt(j) - '0'</code></li>
+          <li><strong>4방향 처리</strong> — <code class="inline">dx, dy</code> 배열로 깔끔하게</li>
+          <li><strong>"칸 수"의 정의</strong> — 출발 칸도 1로 카운트. 시작 dist를 1로 두는 게 깔끔</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">static int</span> N, M;
+    <span class="k">static int</span>[][] map;
+    <span class="k">static int</span>[][] dist;
+
+    <span class="c">// 4방향 이동: 상, 하, 좌, 우</span>
+    <span class="k">static int</span>[] dx = {-<span class="n">1</span>, <span class="n">1</span>,  <span class="n">0</span>, <span class="n">0</span>};
+    <span class="k">static int</span>[] dy = { <span class="n">0</span>, <span class="n">0</span>, -<span class="n">1</span>, <span class="n">1</span>};
+
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+
+        <span class="c">// 1) 첫 줄: N M</span>
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        <span class="c">// 2) 미로 입력 — 공백 없이 붙어 있는 숫자 문자열</span>
+        map  = <span class="k">new int</span>[N][M];
+        dist = <span class="k">new int</span>[N][M];                <span class="c">// 0이면 미방문</span>
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            String line = br.readLine();
+            <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; M; j++) {
+                <span class="c">// '1'(아스키 49) - '0'(아스키 48) = 정수 1</span>
+                map[i][j] = line.charAt(j) - <span class="s">'0'</span>;
+            }
+        }
+
+        <span class="c">// 3) BFS</span>
+        bfs(<span class="n">0</span>, <span class="n">0</span>);
+
+        <span class="c">// 4) 출력 — 도착점까지의 거리</span>
+        System.out.println(dist[N - <span class="n">1</span>][M - <span class="n">1</span>]);
+    }
+
+    <span class="k">static void</span> bfs(<span class="k">int</span> sx, <span class="k">int</span> sy) {
+        Queue&lt;<span class="k">int</span>[]&gt; q = <span class="k">new</span> ArrayDeque&lt;&gt;();
+        q.offer(<span class="k">new int</span>[]{sx, sy});
+        dist[sx][sy] = <span class="n">1</span>;                    <span class="c">// 출발 칸도 1로 카운트</span>
+
+        <span class="k">while</span> (!q.isEmpty()) {
+            <span class="k">int</span>[] cur = q.poll();
+            <span class="k">int</span> x = cur[<span class="n">0</span>], y = cur[<span class="n">1</span>];
+
+            <span class="c">// 4방향 시도</span>
+            <span class="k">for</span> (<span class="k">int</span> d = <span class="n">0</span>; d &lt; <span class="n">4</span>; d++) {
+                <span class="k">int</span> nx = x + dx[d];
+                <span class="k">int</span> ny = y + dy[d];
+
+                <span class="c">// (a) 격자 밖이면 패스</span>
+                <span class="k">if</span> (nx &lt; <span class="n">0</span> || ny &lt; <span class="n">0</span> || nx &gt;= N || ny &gt;= M) <span class="k">continue</span>;
+                <span class="c">// (b) 벽(0)이면 패스</span>
+                <span class="k">if</span> (map[nx][ny] == <span class="n">0</span>) <span class="k">continue</span>;
+                <span class="c">// (c) 이미 방문(dist&gt;0)했으면 패스</span>
+                <span class="k">if</span> (dist[nx][ny] != <span class="n">0</span>) <span class="k">continue</span>;
+
+                <span class="c">// (d) 거리 = 이전 칸 + 1 / 큐에 넣을 때 방문 표시</span>
+                dist[nx][ny] = dist[x][y] + <span class="n">1</span>;
+                q.offer(<span class="k">new int</span>[]{nx, ny});
+            }
+        }
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><code class="inline">dx, dy</code> 배열로 <strong>4방향을 깔끔하게 처리</strong>. 8방향은 8개로 늘리면 끝.</li>
+        <li><strong>방문 체크는 큐에 넣는 순간</strong>. 꺼낼 때 하면 중복 방문으로 시간 초과.</li>
+        <li>거리 배열을 <code class="inline">dist[][]</code> 하나로 통합 — visited와 distance를 따로 안 만들고 "0이면 미방문" 약속.</li>
+        <li>큐 구현은 <code class="inline">ArrayDeque</code>가 표준. <code class="inline">LinkedList</code>는 2~3배 느립니다.</li>
+        <li>이 템플릿은 약 70% 이상의 BFS 문제에 그대로 적용됩니다 — 손에 익히세요.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — BFS는 <em>"큐 + 거리 배열 + 4방향"</em>의 삼총사. <strong>"넣을 때 방문 표시"</strong> 하나만 안 잊으면 됩니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">05</span>
+        <h3>DFS (깊이 우선 탐색)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">연결성 / 구조</span>
+        <span class="meta-chip">O(V + E)</span>
+        <span class="meta-chip">재귀 또는 Stack</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>한 방향으로 <strong>최대한 깊이 들어갔다가, 더 못 가면 되돌아와서 다른 방향을 시도</strong>하는 탐색. 큐 대신 재귀(또는 스택)를 씁니다. "모든 경로", "연결된 영역의 크기" 같이 <strong>"구조"</strong>를 살펴야 할 때 강합니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li><strong>연결된 영역의 개수 / 크기</strong> (섬 개수, 단지 인구 등)</li>
+        <li>"모든 경로 출력", "특정 조건을 만족하는 경로 존재 여부"</li>
+        <li>트리의 부모-자식 탐색, 사이클 검출</li>
+      </ul>
+
+      <h4>BFS vs DFS — 언제 뭘 쓸까</h4>
+      <table>
+        <thead><tr><th>상황</th><th>선택</th></tr></thead>
+        <tbody>
+          <tr><td>최단 거리, 최소 횟수</td><td>BFS</td></tr>
+          <tr><td>연결 영역의 개수 / 크기 / 모양</td><td>DFS or BFS (편한 것)</td></tr>
+          <tr><td>모든 경로, 백트래킹</td><td>DFS</td></tr>
+          <tr><td>그래프 깊이가 매우 깊을 수 있음 (10⁵ 이상)</td><td>BFS (재귀 스택 오버플로 위험)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="example-box">
+        <h4>연습 예제 — 단지번호붙이기 [백준 2667]</h4>
+        <p>N×N 격자에 1(집)과 0(빈 땅). 상하좌우로 연결된 1의 덩어리가 "단지". <strong>단지의 총 개수</strong>와 <strong>각 단지에 속한 집의 수를 오름차순으로</strong> 출력하라. (N ≤ 25)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>7
+0110100
+0110101
+1110101
+0000111
+0100000
+0111110
+0111000</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>3
+7
+8
+9</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "연결된 1 덩어리 + 각 덩어리 크기" → DFS/BFS로 영역 탐색</li>
+          <li><strong>전체 격자를 순회</strong>하면서 "방문 안 한 1을 만나면 DFS 시작"</li>
+          <li><strong>DFS 중 카운트</strong> — 방문하는 칸마다 +1해 단지 크기 계산</li>
+          <li><strong>각 단지 크기를 리스트에 저장</strong> 후 정렬 → 출력</li>
+          <li><strong>입력 처리</strong> — 공백 없는 숫자 문자열, charAt - '0'</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">static int</span> N;
+    <span class="k">static int</span>[][] map;
+    <span class="k">static boolean</span>[][] visited;
+    <span class="k">static int</span> houseCount;          <span class="c">// 현재 DFS 중인 단지의 집 수</span>
+
+    <span class="k">static int</span>[] dx = {-<span class="n">1</span>, <span class="n">1</span>,  <span class="n">0</span>, <span class="n">0</span>};
+    <span class="k">static int</span>[] dy = { <span class="n">0</span>, <span class="n">0</span>, -<span class="n">1</span>, <span class="n">1</span>};
+
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine().trim());
+
+        map     = <span class="k">new int</span>[N][N];
+        visited = <span class="k">new boolean</span>[N][N];
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            String line = br.readLine();
+            <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; N; j++) {
+                map[i][j] = line.charAt(j) - <span class="s">'0'</span>;
+            }
+        }
+
+        <span class="c">// 단지마다의 집 개수를 모으는 리스트</span>
+        List&lt;Integer&gt; sizes = <span class="k">new</span> ArrayList&lt;&gt;();
+
+        <span class="c">// 격자 전체를 훑으며 시작점 발굴</span>
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; N; j++) {
+                <span class="c">// 1이고 방문 안 했다면 새 단지의 시작점</span>
+                <span class="k">if</span> (map[i][j] == <span class="n">1</span> &amp;&amp; !visited[i][j]) {
+                    houseCount = <span class="n">0</span>;       <span class="c">// 새 단지마다 카운트 초기화</span>
+                    dfs(i, j);
+                    sizes.add(houseCount);
+                }
+            }
+        }
+
+        <span class="c">// 출력</span>
+        Collections.sort(sizes);
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+        sb.append(sizes.size()).append(<span class="s">'\n'</span>);
+        <span class="k">for</span> (<span class="k">int</span> s : sizes) sb.append(s).append(<span class="s">'\n'</span>);
+        System.out.print(sb);
+    }
+
+    <span class="k">static void</span> dfs(<span class="k">int</span> x, <span class="k">int</span> y) {
+        visited[x][y] = <span class="k">true</span>;
+        houseCount++;                            <span class="c">// 현재 단지 집 +1</span>
+
+        <span class="c">// 4방향으로 깊이 들어감</span>
+        <span class="k">for</span> (<span class="k">int</span> d = <span class="n">0</span>; d &lt; <span class="n">4</span>; d++) {
+            <span class="k">int</span> nx = x + dx[d];
+            <span class="k">int</span> ny = y + dy[d];
+
+            <span class="k">if</span> (nx &lt; <span class="n">0</span> || ny &lt; <span class="n">0</span> || nx &gt;= N || ny &gt;= N) <span class="k">continue</span>;
+            <span class="k">if</span> (visited[nx][ny] || map[nx][ny] == <span class="n">0</span>) <span class="k">continue</span>;
+
+            dfs(nx, ny);                          <span class="c">// 같은 단지이므로 더 깊이</span>
+        }
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><code class="inline">houseCount</code>를 <strong>새 단지마다 0으로 초기화</strong>하는 것을 잊지 마세요. 전역 변수의 함정.</li>
+        <li>"이중 for로 시작점 발굴 → 만나면 DFS" 패턴은 연결 영역 문제의 정석.</li>
+        <li>단지 크기를 리스트에 모았다가 정렬 → 출력은 "정렬해서 출력" 같은 요구사항을 깔끔하게 처리하는 패턴.</li>
+        <li>N=25라 재귀 깊이 걱정 없음. <strong>N이 1000 이상이면 재귀 대신 BFS</strong>로 풀어야 안전합니다(스택 오버플로).</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — DFS는 "끝까지 가보고 돌아오는" 탐색. <em>BFS와 차이는 큐냐 재귀냐</em>일 뿐 골격은 거의 같습니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">06</span>
+        <h3>동적 계획법 (Dynamic Programming)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">중복 부분 문제</span>
+        <span class="meta-chip">최적 부분 구조</span>
+        <span class="meta-chip">점화식</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>큰 문제를 <strong>작은 부분 문제들로 쪼개고</strong>, 작은 답을 표(<code class="inline">dp</code>)에 저장해두었다가 큰 답을 만들 때 <strong>재활용</strong>하는 기법. 부분 문제가 여러 번 등장하는 경우(중복 부분 문제) 폭발적인 속도 향상을 가져옵니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"경우의 수", "최소/최대값"인데 <strong>완전탐색이 너무 느린</strong> 경우</li>
+        <li>"같은 부분 문제가 여러 번 반복"되는 구조</li>
+        <li>"앞 단계의 답을 알면 다음 단계의 답을 만들 수 있다"는 직관</li>
+      </ul>
+
+      <h4>DP 3단계 사고법</h4>
+      <ol>
+        <li><strong>상태 정의</strong>: <code class="inline">dp[i]</code>(또는 <code class="inline">dp[i][j]</code>)가 <em>정확히 무엇</em>을 의미하는지 한 문장으로 쓸 수 있어야 합니다.</li>
+        <li><strong>점화식</strong>: <code class="inline">dp[i]</code>를 더 작은 <code class="inline">dp[?]</code>들로 표현. "내가 i에 도달하려면 어디서 왔는가?"</li>
+        <li><strong>초기값 / 기저 사례</strong>: 가장 작은 경우의 답을 직접 채워넣음.</li>
+      </ol>
+
+      <div class="callout warn">
+        <div class="title"><span class="icon">!</span>DP가 막힐 때 체크리스트</div>
+        ① <strong>상태 정의가 모호</strong> — "dp[i]가 무엇인가"를 한 줄로 못 적으면 식이 안 나옵니다. ② <strong>차원이 부족</strong> — 1차원 안 되면 2차원으로 확장. ③ <strong>방향이 안 보임</strong> — N=3, 4 같은 작은 경우를 손으로 표 그려보세요.
+      </div>
+
+      <div class="example-box">
+        <h4>연습 예제 — 정수 삼각형 [백준 1932]</h4>
+        <p>n층 정수 삼각형이 주어진다. 맨 위에서 출발해 아래로 내려가면서 <strong>거치는 수의 합이 최대가 되는 경로의 합</strong>을 구하라. 각 단계에서 바로 아래 또는 오른쪽 아래로만 이동 가능. (n ≤ 500)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>5
+7
+3 8
+8 1 0
+2 7 4 4
+4 5 2 6 5</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>30
+
+(경로: 7→3→8→7→5)</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>완전탐색의 한계 확인</strong> — n=500이면 경로 수 2⁴⁹⁹, 절대 불가능. DP 필수</li>
+          <li><strong>상태 정의</strong> — <code class="inline">dp[i][j]</code> = "(i, j) 칸에 도달했을 때까지의 최대 합"</li>
+          <li><strong>점화식</strong> — (i, j)에 도달하는 경로는 (i-1, j-1)에서 오거나 (i-1, j)에서 오거나 둘 중 하나<br>
+              → <code class="inline">dp[i][j] = max(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j]</code></li>
+          <li><strong>경계 처리</strong> — j=0은 왼쪽 위가 없고, j=i는 오른쪽 위가 없음. 인덱스 음수 조심</li>
+          <li><strong>초기값</strong> — <code class="inline">dp[0][0] = triangle[0][0]</code></li>
+          <li><strong>정답</strong> — 마지막 줄 <code class="inline">dp[n-1][0..n-1]</code> 중 최댓값</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        <span class="k">int</span> n = Integer.parseInt(br.readLine().trim());
+
+        <span class="c">// 1) 삼각형 입력 (가변 길이 배열)</span>
+        <span class="k">int</span>[][] tri = <span class="k">new int</span>[n][];
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) {
+            tri[i] = <span class="k">new int</span>[i + <span class="n">1</span>];          <span class="c">// i층은 i+1개의 수</span>
+            StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+            <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt;= i; j++) {
+                tri[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        <span class="c">// 2) DP 테이블 초기화</span>
+        <span class="c">// dp[i][j] = (i, j)에 도달했을 때까지의 최대 누적 합</span>
+        <span class="k">int</span>[][] dp = <span class="k">new int</span>[n][];
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) dp[i] = <span class="k">new int</span>[i + <span class="n">1</span>];
+        dp[<span class="n">0</span>][<span class="n">0</span>] = tri[<span class="n">0</span>][<span class="n">0</span>];                  <span class="c">// 기저</span>
+
+        <span class="c">// 3) 위에서 아래로 점화식 적용</span>
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt; n; i++) {
+            <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt;= i; j++) {
+                <span class="c">// 후보 1: 왼쪽 위 (i-1, j-1) — j=0이면 없음</span>
+                <span class="c">// 후보 2: 바로 위 (i-1, j)   — j=i이면 없음</span>
+                <span class="k">int</span> fromLeft  = (j == <span class="n">0</span>) ? <span class="n">0</span> : dp[i - <span class="n">1</span>][j - <span class="n">1</span>];
+                <span class="k">int</span> fromAbove = (j == i) ? <span class="n">0</span> : dp[i - <span class="n">1</span>][j];
+
+                <span class="c">// (i, j)에 오는 두 경로 중 더 큰 누적 + 현재 칸 값</span>
+                dp[i][j] = Math.max(fromLeft, fromAbove) + tri[i][j];
+            }
+        }
+
+        <span class="c">// 4) 마지막 줄 중 최댓값이 정답</span>
+        <span class="k">int</span> answer = <span class="n">0</span>;
+        <span class="k">for</span> (<span class="k">int</span> v : dp[n - <span class="n">1</span>]) answer = Math.max(answer, v);
+
+        System.out.println(answer);
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>"i, j에 도달했을 때의 최대 누적"</strong>이라는 명확한 상태 정의가 풀이의 절반. 모호하면 식이 안 나옵니다.</li>
+        <li>경계 처리(<code class="inline">j == 0</code>, <code class="inline">j == i</code>)를 깔끔하게 — 인덱스 음수가 가장 흔한 버그.</li>
+        <li>가변 길이 2차원 배열 <code class="inline">int[i + 1]</code>로 메모리 절약. 정사각형 배열로 짜도 답은 같지만 N=10⁴ 정도 되면 차이가 큽니다.</li>
+        <li><strong>"위에서 아래로"는 bottom-up</strong>. 재귀+메모이제이션의 top-down 풀이도 가능하지만 bottom-up이 상수가 작아 코딩 테스트에서 더 선호됩니다.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — DP는 <em>"상태 정의 → 점화식 → 초기값"</em> 3종 세트. <strong>"dp[i]가 정확히 뭔지 한 줄로 못 적으면 식이 안 나온다"</strong>는 것이 가장 큰 진실입니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">07</span>
+        <h3>백트래킹 (Backtracking)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">N ≤ 15 정도</span>
+        <span class="meta-chip">가지치기</span>
+        <span class="meta-chip">DFS + 조건 검사</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>완전탐색과 거의 같지만, <strong>"이 가지를 더 탐색해도 답이 안 나옴"이 명백할 때 즉시 포기(가지치기)</strong>하는 게 차이점. 모든 경우를 다 보긴 하되, 무의미한 곳에 시간을 안 쓰는 영리한 완전탐색입니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"조건을 만족하는 경우의 수"가 정답인 문제</li>
+        <li>N이 작다 (보통 N ≤ 15) — 완전탐색 시간 초과인데 가지치기로 줄일 수 있을 때</li>
+        <li>"~배치 가능한가", "~를 만족하는 가능한 모든 ~" 같은 표현</li>
+      </ul>
+
+      <h4>가지치기의 효과</h4>
+      <p>N=15짜리 N-Queen은 완전탐색이면 15! = 1.3조 시도지만, 가지치기를 잘 하면 <strong>몇 만 번 시도로 끝</strong>납니다. 가지치기는 옵션이 아니라 필수.</p>
+
+      <div class="example-box">
+        <h4>연습 예제 — N-Queen [백준 9663]</h4>
+        <p>N×N 체스판에 N개의 퀸을 <strong>서로 공격할 수 없게</strong> 놓는 경우의 수를 구하라. 퀸은 같은 행/열/대각선에 있는 다른 말을 공격한다. (N ≤ 15)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>8</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>92</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "조건을 만족하는 배치 수" → 백트래킹</li>
+          <li><strong>핵심 관찰</strong> — 행마다 퀸 하나씩만 놓을 수 있음. <em>"row번째 행의 퀸을 어느 열에 놓을까"</em>의 문제로 환원</li>
+          <li><strong>상태</strong> — <code class="inline">cols[row]</code> = row번째 행의 퀸이 놓인 열</li>
+          <li><strong>충돌 검사</strong> — 이전 행들에 놓인 퀸과 (a) 같은 열인가, (b) 대각선상에 있는가</li>
+          <li><strong>가지치기</strong> — 충돌하면 이 열에 안 놓고 다음 열 시도. 모든 열이 안 되면 이전 행으로 돌아감</li>
+          <li><strong>종료 조건</strong> — row == N이면 N개 다 놓는 데 성공 → 카운트 +1</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">static int</span> N;
+    <span class="k">static int</span>[] cols;            <span class="c">// cols[row] = 그 행에서 퀸이 놓인 열</span>
+    <span class="k">static int</span> count = <span class="n">0</span>;
+
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine().trim());
+        cols = <span class="k">new int</span>[N];
+
+        backtrack(<span class="n">0</span>);                <span class="c">// 0번째 행부터 시작</span>
+
+        System.out.println(count);
+    }
+
+    <span class="c">/**
+     * row번째 행의 퀸을 어느 열에 놓을지 결정.
+     */</span>
+    <span class="k">static void</span> backtrack(<span class="k">int</span> row) {
+        <span class="c">// [종료 조건] N개 행을 모두 놓는 데 성공</span>
+        <span class="k">if</span> (row == N) {
+            count++;
+            <span class="k">return</span>;
+        }
+
+        <span class="c">// row번째 행의 0~N-1열을 차례로 시도</span>
+        <span class="k">for</span> (<span class="k">int</span> col = <span class="n">0</span>; col &lt; N; col++) {
+            <span class="c">// ★ 가지치기: 이 열이 가능한가?</span>
+            <span class="k">if</span> (!isSafe(row, col)) <span class="k">continue</span>;
+
+            cols[row] = col;             <span class="c">// (row, col)에 퀸 놓음</span>
+            backtrack(row + <span class="n">1</span>);          <span class="c">// 다음 행으로</span>
+            <span class="c">// cols[row]는 다음 col에서 덮어쓰여지므로 원복 불필요</span>
+        }
+    }
+
+    <span class="c">/**
+     * (row, col)에 퀸을 놓는 게 안전한가?
+     * 이전 행들에 놓인 퀸과 비교:
+     *  1) 같은 열인가
+     *  2) 대각선 상에 있는가 (행 차이 == 열 차이)
+     */</span>
+    <span class="k">static boolean</span> isSafe(<span class="k">int</span> row, <span class="k">int</span> col) {
+        <span class="k">for</span> (<span class="k">int</span> r = <span class="n">0</span>; r &lt; row; r++) {
+            <span class="c">// 같은 열</span>
+            <span class="k">if</span> (cols[r] == col) <span class="k">return false</span>;
+            <span class="c">// 대각선: 행 차이의 절댓값 == 열 차이의 절댓값</span>
+            <span class="k">if</span> (Math.abs(cols[r] - col) == row - r) <span class="k">return false</span>;
+        }
+        <span class="k">return true</span>;
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>"행마다 하나씩 놓는다"</strong>는 모델링이 핵심. 그러면 "같은 행" 충돌은 자동으로 사라집니다.</li>
+        <li>대각선 검사는 <strong>"행 차이 == 열 차이"</strong>로 단순화. <code class="inline">Math.abs</code>로 양쪽 대각선 한 번에 처리.</li>
+        <li><code class="inline">isSafe</code>는 O(row). 전체 가지치기로 실제 호출 수는 극적으로 줄어듭니다.</li>
+        <li>같은 패턴 응용: 부분집합 합, 순열 생성, 스도쿠, 단어 퍼즐.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 백트래킹 = "완전탐색 + 가지치기". <em>"이 가지 더 가도 답 없다"를 빨리 알아채는 것</em>이 통과의 비결입니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">08</span>
+        <h3>다익스트라 (Dijkstra)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">가중치 그래프</span>
+        <span class="meta-chip">O((V + E) log V)</span>
+        <span class="meta-chip">PriorityQueue</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>한 시작점에서 <strong>모든 정점까지의 최단 거리</strong>를 구하는 알고리즘. BFS와 비슷하지만 큐 대신 <em>우선순위 큐</em>를 사용해 "현재까지 발견된 가장 가까운 노드부터 처리"합니다. <strong>음수 간선이 없는 그래프</strong>에서만 동작합니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"A에서 B로 가는 최단 거리"인데 <strong>간선마다 가중치가 다른</strong> 경우</li>
+        <li>"한 노드에서 모든 노드까지의 최단 거리"</li>
+        <li>(가중치가 모두 같으면 BFS면 충분 — 다익스트라는 오버킬)</li>
+      </ul>
+
+      <h4>핵심 아이디어 — "가장 가까운 것부터 확정"</h4>
+      <p>아직 확정 안 된 노드 중 가장 거리가 짧은 노드를 꺼내 그 거리를 확정합니다. 이 노드를 거쳐 갈 수 있는 다른 노드들의 거리를 업데이트(relax). 이 과정을 반복.</p>
+
+      <div class="example-box">
+        <h4>연습 예제 — 최단경로 [백준 1753]</h4>
+        <p>방향 그래프와 시작 정점 K가 주어진다. <strong>K에서 다른 모든 정점까지의 최단 거리</strong>를 구하라. 도달 불가능하면 "INF" 출력. (V ≤ 20,000, E ≤ 300,000, 가중치 ≤ 10)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>5 6
+1
+5 1 1
+1 2 2
+1 3 3
+2 3 4
+2 4 5
+3 4 6</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>0
+2
+3
+7
+INF</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "한 점에서 모든 점" + 양수 가중치 → 다익스트라</li>
+          <li><strong>그래프 표현</strong> — 정점 V=20,000개, 간선 E=300,000개. 인접 행렬은 4억 메모리로 불가능. <strong>인접 리스트</strong> 사용</li>
+          <li><strong>거리 배열</strong> — <code class="inline">dist[i]</code>를 <code class="inline">Integer.MAX_VALUE</code>로 초기화, 시작점은 0</li>
+          <li><strong>PQ에 (정점, 누적거리) 형태로 저장</strong>, 누적거리 짧은 순으로 꺼냄</li>
+          <li><strong>핵심 최적화</strong> — 같은 정점이 PQ에 여러 번 들어가지만, "꺼낼 때의 거리가 이미 알고 있는 dist보다 크면 무시"</li>
+          <li><strong>출력</strong> — 도달 못한 정점은 "INF" 문자열로</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+
+        <span class="c">// 1) V (정점 수), E (간선 수)</span>
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> V = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> E = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> K = Integer.parseInt(br.readLine().trim());  <span class="c">// 시작 정점</span>
+
+        <span class="c">// 2) 인접 리스트 (1-indexed)</span>
+        <span class="c">//    graph[u] = u에서 출발하는 간선들의 리스트. 각 간선은 {도착, 가중치}</span>
+        List&lt;<span class="k">int</span>[]&gt;[] graph = <span class="k">new</span> List[V + <span class="n">1</span>];
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= V; i++) graph[i] = <span class="k">new</span> ArrayList&lt;&gt;();
+
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; E; i++) {
+            st = <span class="k">new</span> StringTokenizer(br.readLine());
+            <span class="k">int</span> u = Integer.parseInt(st.nextToken());
+            <span class="k">int</span> v = Integer.parseInt(st.nextToken());
+            <span class="k">int</span> w = Integer.parseInt(st.nextToken());
+            graph[u].add(<span class="k">new int</span>[]{v, w});
+        }
+
+        <span class="c">// 3) 다익스트라</span>
+        <span class="k">int</span>[] dist = <span class="k">new int</span>[V + <span class="n">1</span>];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[K] = <span class="n">0</span>;
+
+        <span class="c">// PQ: {정점, 시작점부터의 거리}, 거리 짧은 순</span>
+        PriorityQueue&lt;<span class="k">int</span>[]&gt; pq = <span class="k">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; a[<span class="n">1</span>] - b[<span class="n">1</span>]);
+        pq.offer(<span class="k">new int</span>[]{K, <span class="n">0</span>});
+
+        <span class="k">while</span> (!pq.isEmpty()) {
+            <span class="k">int</span>[] cur = pq.poll();
+            <span class="k">int</span> u = cur[<span class="n">0</span>], d = cur[<span class="n">1</span>];
+
+            <span class="c">// ★ 핵심 최적화 ★</span>
+            <span class="c">// 같은 노드가 PQ에 여러 번 들어가는데,</span>
+            <span class="c">// 이미 더 짧은 경로로 처리된 적이 있다면 이 항목은 stale → 무시</span>
+            <span class="k">if</span> (d &gt; dist[u]) <span class="k">continue</span>;
+
+            <span class="c">// u에서 이웃 v로 가는 간선들 완화(relax)</span>
+            <span class="k">for</span> (<span class="k">int</span>[] e : graph[u]) {
+                <span class="k">int</span> v = e[<span class="n">0</span>], w = e[<span class="n">1</span>];
+                <span class="k">int</span> next = dist[u] + w;     <span class="c">// u 거쳐 v 가는 거리</span>
+                <span class="k">if</span> (next &lt; dist[v]) {
+                    dist[v] = next;
+                    pq.offer(<span class="k">new int</span>[]{v, next});
+                }
+            }
+        }
+
+        <span class="c">// 4) 출력</span>
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= V; i++) {
+            sb.append(dist[i] == Integer.MAX_VALUE ? <span class="s">"INF"</span> : dist[i]).append(<span class="s">'\n'</span>);
+        }
+        System.out.print(sb);
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><code class="inline">if (d &gt; dist[u]) continue;</code> 한 줄이 안 쓰면 시간 초과 — PQ에 같은 노드가 중복으로 들어가는데, 옛 항목은 무시해야 합니다.</li>
+        <li><strong>인접 리스트</strong>가 V·E가 큰 그래프의 표준. 인접 행렬은 메모리 폭발.</li>
+        <li>음수 간선이 있으면 <strong>벨만-포드</strong>, 모든 쌍 최단경로면 <strong>플로이드-워셜</strong>로 갈아탑니다.</li>
+        <li>오버플로 주의: <code class="inline">dist[u] + w</code>가 int를 넘을 수 있으면 long 사용.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 다익스트라 = <em>"BFS + 우선순위 큐"</em>. 옛 항목을 무시하는 <code class="inline">if (d &gt; dist[u]) continue;</code>가 통과의 비밀입니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">09</span>
+        <h3>유니온 파인드 (Disjoint Set / DSU)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">집합 관리</span>
+        <span class="meta-chip">거의 O(1)</span>
+        <span class="meta-chip">parent 배열</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>여러 원소들을 <strong>"같은 집합인지 다른 집합인지"</strong> 빠르게 관리하는 자료구조. 각 원소는 자신이 속한 집합의 대표(루트)를 가리키는 트리 구조. 두 연산만 있습니다.</p>
+      <ul>
+        <li><code class="inline">find(x)</code>: x가 속한 집합의 대표(루트)를 찾기</li>
+        <li><code class="inline">union(a, b)</code>: a와 b가 속한 두 집합을 하나로 합치기</li>
+      </ul>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li><strong>"두 노드가 연결되어 있는가?"</strong>를 빠르게 판정해야 할 때</li>
+        <li>그래프 사이클 검출 (간선을 union하다 같은 집합이면 사이클)</li>
+        <li>최소 신장 트리 (MST) — 크루스칼 알고리즘의 핵심 부품</li>
+        <li>"친구의 친구는 친구" 같은 동치 관계 묶기</li>
+      </ul>
+
+      <h4>두 가지 최적화 — 안 쓰면 O(N²)</h4>
+      <ul>
+        <li><strong>경로 압축 (Path Compression)</strong>: find하는 동안 거쳐온 노드를 모두 루트에 직접 연결</li>
+        <li><strong>랭크/사이즈 기반 합치기</strong>: 작은 트리를 큰 트리 아래에 붙임</li>
+      </ul>
+      <p>두 최적화를 모두 쓰면 <strong>한 연산의 평균 시간이 거의 O(1)</strong>이 됩니다 (정확히는 아커만 역함수).</p>
+
+      <div class="example-box">
+        <h4>연습 예제 — 집합의 표현 [백준 1717]</h4>
+        <p>초기에 {0}, {1}, ..., {n} 의 단원소 집합들이 있다. 두 가지 연산 처리:<br>
+           ① 0 a b : a가 포함된 집합과 b가 포함된 집합 합치기<br>
+           ② 1 a b : a와 b가 같은 집합에 있나? YES/NO 출력<br>
+           (n ≤ 10⁶, 연산 ≤ 10⁵)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>7 8
+0 1 3
+1 1 7
+0 7 6
+1 7 1
+0 3 7
+0 4 2
+0 1 1
+1 1 1</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>NO
+NO
+YES</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "같은 집합인가" 판정 → 유니온 파인드의 정석</li>
+          <li><strong>초기화</strong> — 모든 i에 대해 <code class="inline">parent[i] = i</code> (자기 자신이 루트)</li>
+          <li><strong>find 구현</strong> — 재귀로 루트까지 올라가며 경로 압축</li>
+          <li><strong>union 구현</strong> — 두 루트를 비교, 한쪽을 다른 쪽 밑에 붙임</li>
+          <li><strong>같은 집합 판정</strong> — <code class="inline">find(a) == find(b)</code></li>
+          <li><strong>출력</strong> — StringBuilder에 모으기</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">static int</span>[] parent;
+
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> n = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> m = Integer.parseInt(st.nextToken());
+
+        <span class="c">// 0~n까지 사용 (총 n+1개 원소)</span>
+        parent = <span class="k">new int</span>[n + <span class="n">1</span>];
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt;= n; i++) {
+            parent[i] = i;       <span class="c">// 자기 자신이 루트인 단원소 집합</span>
+        }
+
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; m; i++) {
+            st = <span class="k">new</span> StringTokenizer(br.readLine());
+            <span class="k">int</span> op = Integer.parseInt(st.nextToken());
+            <span class="k">int</span> a  = Integer.parseInt(st.nextToken());
+            <span class="k">int</span> b  = Integer.parseInt(st.nextToken());
+
+            <span class="k">if</span> (op == <span class="n">0</span>) {
+                union(a, b);
+            } <span class="k">else</span> {
+                <span class="c">// 같은 집합이면 두 루트가 같음</span>
+                sb.append(find(a) == find(b) ? <span class="s">"YES"</span> : <span class="s">"NO"</span>).append(<span class="s">'\n'</span>);
+            }
+        }
+        System.out.print(sb);
+    }
+
+    <span class="c">/**
+     * x의 루트를 찾는다.
+     * ★ 경로 압축: 거쳐온 모든 노드를 루트에 직접 연결 → 다음 호출은 O(1)
+     */</span>
+    <span class="k">static int</span> find(<span class="k">int</span> x) {
+        <span class="k">if</span> (parent[x] == x) <span class="k">return</span> x;
+        <span class="k">return</span> parent[x] = find(parent[x]);
+    }
+
+    <span class="c">/**
+     * a와 b가 속한 집합을 합친다.
+     * 이미 같은 집합이면 아무 일도 안 함.
+     */</span>
+    <span class="k">static void</span> union(<span class="k">int</span> a, <span class="k">int</span> b) {
+        <span class="k">int</span> ra = find(a);
+        <span class="k">int</span> rb = find(b);
+        <span class="k">if</span> (ra == rb) <span class="k">return</span>;
+
+        <span class="c">// 더 작은 번호가 루트가 되도록 (선택사항 — 일관성 유지용)</span>
+        <span class="k">if</span> (ra &lt; rb) parent[rb] = ra;
+        <span class="k">else</span>          parent[ra] = rb;
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>경로 압축</strong>은 <code class="inline">return parent[x] = find(parent[x])</code> 한 줄에 다 들어있습니다. 안 쓰면 트리가 길어져 시간 초과.</li>
+        <li><code class="inline">parent[i] = i</code> 초기화를 빼먹는 게 흔한 버그.</li>
+        <li>"노드 a와 b를 union" → "어디서 노드 번호를 받았는지 추적" → 그래프 사이클 검출, 크루스칼 MST 등 응용이 다양합니다.</li>
+        <li>여러 집합의 크기를 알고 싶다면 <code class="inline">size[]</code> 배열을 추가해 union 시 합산.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — DSU = "<em>parent 배열 + find + union</em>". 경로 압축 한 줄이 핵심. 외워두면 친구 관계, 사이클, MST를 다 풀 수 있습니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">10</span>
+        <h3>누적합 (Prefix Sum)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">구간 합 질의</span>
+        <span class="meta-chip">전처리 O(N) + 질의 O(1)</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>배열의 부분 합을 미리 한 번 계산해두면, 그 다음부터 임의의 <strong>구간 [l, r]의 합을 단 O(1)에 답할 수 있습니다.</strong> 매 질의를 O(N)으로 풀던 것을 O(1)로 줄이는 마법.</p>
+
+      <h4>왜 동작하나 — 핵심 식 한 줄</h4>
+      <p><code class="inline">prefix[i]</code> = "원본 배열의 0부터 i-1까지의 합" 으로 정의하면,</p>
+      <p style="text-align:center;font-size:18px;background:#fbf9ee;padding:14px;border-radius:8px;"><code class="inline">arr[l..r] 합 = prefix[r+1] - prefix[l]</code></p>
+      <p>이게 전부입니다. "끝까지의 합 − 시작 직전까지의 합 = 구간 합" — 적분의 직관과 똑같습니다.</p>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"구간 [l, r]의 합을 여러 번 질의" — 단순 반복은 O(N×M), 누적합은 O(N+M)</li>
+        <li>슬라이딩 윈도우 합, 부분합 비교</li>
+        <li>2차원 응용 — 직사각형 영역 합 (2D 누적합)</li>
+      </ul>
+
+      <div class="example-box">
+        <h4>연습 예제 — 구간 합 구하기 4 [백준 11659]</h4>
+        <p>N개의 수와 M개의 질의(i, j)가 주어진다. 각 질의마다 <strong>i번째부터 j번째까지의 수의 합</strong>을 출력하라. (N, M ≤ 100,000)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>5 3
+5 4 3 2 1
+1 3
+2 4
+5 5</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>12
+9
+1</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "구간 합 × M번" → 누적합</li>
+          <li><strong>왜 단순 반복은 안 되나</strong> — 매 질의가 O(N) → 총 O(N×M) = 10¹⁰ → 시간 초과</li>
+          <li><strong>1-indexed 누적합 설계</strong> — <code class="inline">prefix[0] = 0</code>, <code class="inline">prefix[i] = arr[1] + ... + arr[i]</code></li>
+          <li><strong>질의 처리</strong> — <code class="inline">prefix[j] - prefix[i-1]</code></li>
+          <li><strong>오버플로</strong> — N=10⁵개의 정수 합은 int 안전하지만, 만약을 위해 long 권장</li>
+          <li><strong>출력</strong> — M=10⁵줄, StringBuilder 필수</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> N = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> M = Integer.parseInt(st.nextToken());
+
+        <span class="c">// 1) 누적합 배열 — 1-indexed로 만들면 계산이 깔끔</span>
+        <span class="c">//    prefix[0] = 0</span>
+        <span class="c">//    prefix[i] = arr[1] + arr[2] + ... + arr[i]</span>
+        <span class="k">long</span>[] prefix = <span class="k">new long</span>[N + <span class="n">1</span>];
+        st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= N; i++) {
+            <span class="k">int</span> v = Integer.parseInt(st.nextToken());
+            prefix[i] = prefix[i - <span class="n">1</span>] + v;
+        }
+
+        <span class="c">// 2) M개의 질의를 각각 O(1)에 처리</span>
+        <span class="k">for</span> (<span class="k">int</span> q = <span class="n">0</span>; q &lt; M; q++) {
+            st = <span class="k">new</span> StringTokenizer(br.readLine());
+            <span class="k">int</span> i = Integer.parseInt(st.nextToken());
+            <span class="k">int</span> j = Integer.parseInt(st.nextToken());
+
+            <span class="c">// 구간 [i..j]의 합 = prefix[j] - prefix[i-1]</span>
+            <span class="k">long</span> sum = prefix[j] - prefix[i - <span class="n">1</span>];
+            sb.append(sum).append(<span class="s">'\n'</span>);
+        }
+        System.out.print(sb);
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>1-indexed로 설계</strong>하면 <code class="inline">prefix[i-1]</code>의 i=1 케이스가 자연스럽게 처리됩니다(0이 됨). 0-indexed면 매번 경계 검사 필요.</li>
+        <li>전처리 O(N), 질의 O(1) — 시간복잡도가 극적으로 줄어듭니다.</li>
+        <li>응용 — 2차원 누적합은 <code class="inline">prefix[i][j] = prefix[i-1][j] + prefix[i][j-1] - prefix[i-1][j-1] + arr[i][j]</code>로 확장. 직사각형 영역 합을 O(1)에 답합니다.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 누적합 = <em>"끝까지의 합 - 시작 직전까지의 합"</em>. 이 한 줄을 안 잊으면 1차원, 2차원, 차분 다 통합니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">11</span>
+        <h3>투포인터 / 슬라이딩 윈도우</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">연속 부분 구간</span>
+        <span class="meta-chip">O(N)</span>
+        <span class="meta-chip">left / right 두 인덱스</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>배열을 두 개의 인덱스(<code class="inline">left</code>, <code class="inline">right</code>)로 훑으며 <strong>"창문(window)을 늘리고 줄이는"</strong> 패턴. 전체 배열을 한 번만 훑어 O(N)에 답을 냅니다.</p>
+
+      <h4>두 가지 변형</h4>
+      <ul>
+        <li><strong>슬라이딩 윈도우</strong> — 창문 크기를 조건에 맞게 늘이거나 줄이며 최적값 갱신</li>
+        <li><strong>투포인터</strong> — 두 인덱스가 다른 방향에서 만나는 경우(정렬된 배열에서 합이 X인 두 수 찾기 등)</li>
+      </ul>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"연속된 부분 수열 중 조건을 만족하는 ~"</li>
+        <li>"합이 S 이상/이하인 가장 긴/짧은 구간"</li>
+        <li>"중복 없는 가장 긴 부분 수열"</li>
+        <li>정렬된 배열에서 "두 수의 합이 X인 쌍" 찾기</li>
+      </ul>
+
+      <h4>왜 O(N)일까 — 직관</h4>
+      <p>two for문이라면 O(N²)이지만, 슬라이딩 윈도우는 <strong>left와 right가 각각 최대 N번씩만 이동</strong>합니다. 둘 다 합쳐도 2N번 → O(N). "right는 항상 전진, left는 조건에 따라 전진"이 핵심.</p>
+
+      <div class="example-box">
+        <h4>연습 예제 — 부분합 [백준 1806]</h4>
+        <p>N개의 양의 정수 배열에서 <strong>연속된 수의 합이 S 이상이 되는 가장 짧은 부분 수열의 길이</strong>를 구하라. 없다면 0. (N ≤ 100,000)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>10 15
+5 1 3 5 10 7 4 9 2 8</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>2
+
+(10 + 7 = 17 ≥ 15)</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "연속 부분 수열" + "조건 만족하는 최소/최대 길이" → 슬라이딩 윈도우의 정석</li>
+          <li><strong>윈도우 정의</strong> — [left..right] 구간이 현재 윈도우. sum은 그 구간의 합</li>
+          <li><strong>전략</strong> — right를 1칸씩 늘리면서 sum 누적. sum ≥ S가 되면 left를 최대한 당겨서 윈도우를 줄임</li>
+          <li><strong>답 갱신</strong> — sum ≥ S일 때마다 윈도우 길이를 최솟값으로 갱신</li>
+          <li><strong>도달 불가</strong> — 한 번도 갱신 안 됐으면 0 출력</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> N = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> S = Integer.parseInt(st.nextToken());
+
+        <span class="k">int</span>[] arr = <span class="k">new int</span>[N];
+        st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        <span class="c">// 슬라이딩 윈도우 변수</span>
+        <span class="k">int</span> left = <span class="n">0</span>;
+        <span class="k">int</span> sum = <span class="n">0</span>;
+        <span class="k">int</span> answer = Integer.MAX_VALUE;       <span class="c">// 최솟값을 갱신할 거니 큰 값으로 시작</span>
+
+        <span class="c">// right를 한 칸씩 전진</span>
+        <span class="k">for</span> (<span class="k">int</span> right = <span class="n">0</span>; right &lt; N; right++) {
+            sum += arr[right];                  <span class="c">// 윈도우 오른쪽 확장</span>
+
+            <span class="c">// 조건(sum ≥ S)을 만족하는 동안 왼쪽을 최대한 당겨서 윈도우 축소</span>
+            <span class="k">while</span> (sum &gt;= S) {
+                <span class="c">// 현재 윈도우 길이 (right - left + 1)로 답 갱신</span>
+                answer = Math.min(answer, right - left + <span class="n">1</span>);
+
+                <span class="c">// left를 1칸 오른쪽으로 → 윈도우에서 arr[left] 제거</span>
+                sum -= arr[left];
+                left++;
+            }
+        }
+
+        <span class="c">// 한 번도 조건을 만족 못 했다면 0</span>
+        System.out.println(answer == Integer.MAX_VALUE ? <span class="n">0</span> : answer);
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><strong>"right는 항상 전진, left는 조건에 따라 전진"</strong> — 각 인덱스가 최대 N번 → 총 O(N).</li>
+        <li>윈도우 길이는 <code class="inline">right - left + 1</code> (인덱스 차이 + 1) — 자주 헷갈리는 부분.</li>
+        <li><strong>유의 — "양의 정수"라는 조건</strong>이 슬라이딩 윈도우 가능 이유. 음수가 섞이면 윈도우를 줄였다고 sum이 줄어든다는 보장이 없어 누적합 + 이분탐색 등 다른 접근이 필요.</li>
+        <li>"가장 긴" 문제면 <code class="inline">Math.max</code>로, 조건 부등호 반대 방향으로 같은 패턴 적용.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 슬라이딩 윈도우는 <em>"right는 무조건 전진, left는 조건 만나면 추격"</em>. 한 번 훑기로 O(N²)을 O(N)으로 줄이는 마법입니다.</div>
+    </div>
+
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="num-big">12</span>
+        <h3>비트마스킹 (Bitmasking)</h3>
+      </div>
+      <div class="pattern-meta">
+        <span class="meta-chip">N ≤ 20</span>
+        <span class="meta-chip">O(2ᴺ × N)</span>
+        <span class="meta-chip">집합 상태 압축</span>
+      </div>
+
+      <h4>핵심 개념</h4>
+      <p>N개의 원소 각각의 "포함 여부"를 <strong>한 정수의 비트로 표현</strong>합니다. N=10이라면 0~1023(2¹⁰)의 정수 하나로 모든 부분집합을 표현할 수 있습니다. 메모리도 적고 비트 연산이 빠릅니다.</p>
+
+      <h4>왜 N=20까지인가</h4>
+      <p>2²⁰ ≈ 100만. 이 정도면 모든 부분집합을 순회해도 1초 안에 끝납니다. 2²⁵부터는 시간 초과 위험.</p>
+
+      <h4>핵심 비트 연산 4가지</h4>
+      <table>
+        <thead><tr><th>연산</th><th>의미</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">1 &lt;&lt; i</code></td><td>i번 비트만 1인 마스크 (예: i=2 → 0b100)</td></tr>
+          <tr><td><code class="inline">mask | (1 &lt;&lt; i)</code></td><td>i번 비트 켜기 (원소 추가)</td></tr>
+          <tr><td><code class="inline">mask &amp; ~(1 &lt;&lt; i)</code></td><td>i번 비트 끄기 (원소 제거)</td></tr>
+          <tr><td><code class="inline">(mask &amp; (1 &lt;&lt; i)) != 0</code></td><td>i번 원소가 포함됐는지 확인</td></tr>
+        </tbody>
+      </table>
+
+      <h4>언제 쓰는가</h4>
+      <ul>
+        <li>"부분집합 전체를 시도" + N ≤ 20</li>
+        <li>"방문 상태가 작은 정수로 표현 가능" — TSP(외판원), 동전 도시 방문 등</li>
+        <li>DP의 상태로 "지금까지 방문한 도시 집합"을 비트마스크로 표현</li>
+      </ul>
+
+      <div class="example-box">
+        <h4>연습 예제 — 부분수열의 합 [백준 1182]</h4>
+        <p>N개의 정수로 이루어진 수열이 있다. <strong>그 부분수열(공집합 제외) 중 합이 정확히 S가 되는 것의 개수</strong>를 구하라. (N ≤ 20)</p>
+        <div class="io">
+          <div class="io-block"><span class="io-label">INPUT</span>5 0
+-7 -3 -2 5 8</div>
+          <div class="io-block"><span class="io-label">OUTPUT</span>1
+
+(-3, -2, 5)</div>
+        </div>
+      </div>
+
+      <h4>풀이 사고 과정</h4>
+      <div class="thought-steps">
+        <ol>
+          <li><strong>유형 파악</strong> — "모든 부분수열" + N ≤ 20 → 비트마스킹 완전탐색의 정석</li>
+          <li><strong>부분집합 표현</strong> — N비트 정수 mask로 표현. i번 비트가 1이면 arr[i]를 포함</li>
+          <li><strong>전체 순회</strong> — mask를 0부터 (1&lt;&lt;N)-1까지 (총 2ᴺ개)</li>
+          <li><strong>합 계산</strong> — 각 mask마다 N개 비트를 확인해 포함된 원소를 더함 → O(N)</li>
+          <li><strong>전체 O(2ᴺ × N)</strong> — N=20이면 약 2천만, 1초 내 충분</li>
+          <li><strong>공집합 제외</strong> — mask=0은 건너뜀</li>
+        </ol>
+      </div>
+
+      <h4>완성된 풀이 코드</h4>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+
+        StringTokenizer st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">int</span> N = Integer.parseInt(st.nextToken());
+        <span class="k">int</span> S = Integer.parseInt(st.nextToken());
+
+        <span class="k">int</span>[] arr = <span class="k">new int</span>[N];
+        st = <span class="k">new</span> StringTokenizer(br.readLine());
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        <span class="k">int</span> count = <span class="n">0</span>;
+
+        <span class="c">// mask = 0 : 공집합 (제외)</span>
+        <span class="c">// mask = 1 : {arr[0]}</span>
+        <span class="c">// mask = 2 : {arr[1]}</span>
+        <span class="c">// mask = 3 : {arr[0], arr[1]}</span>
+        <span class="c">// ...</span>
+        <span class="c">// mask = (1&lt;&lt;N)-1 : 전체 집합</span>
+        <span class="k">for</span> (<span class="k">int</span> mask = <span class="n">1</span>; mask &lt; (<span class="n">1</span> &lt;&lt; N); mask++) {
+            <span class="k">int</span> sum = <span class="n">0</span>;
+
+            <span class="c">// mask의 i번째 비트가 1이면 arr[i] 더하기</span>
+            <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+                <span class="k">if</span> ((mask &amp; (<span class="n">1</span> &lt;&lt; i)) != <span class="n">0</span>) {
+                    sum += arr[i];
+                }
+            }
+
+            <span class="k">if</span> (sum == S) count++;
+        }
+
+        System.out.println(count);
+    }
+}
+</pre>
+
+      <h4>이 풀이의 핵심 포인트</h4>
+      <ul>
+        <li><code class="inline">mask &lt; (1 &lt;&lt; N)</code>이 끝까지 도는 조건 — N비트 정수 전체 순회.</li>
+        <li><strong>공집합(mask=0) 제외</strong>는 문제 조건. 시작을 <code class="inline">mask = 1</code>로 두면 자연스럽게 처리.</li>
+        <li><code class="inline">(mask &amp; (1 &lt;&lt; i)) != 0</code>으로 비트 확인. <strong>괄호 위치 주의</strong> — <code class="inline">&amp;</code>는 <code class="inline">!=</code>보다 우선순위가 낮습니다.</li>
+        <li>응용 — "지금까지 방문한 도시 집합"을 비트마스크 + DP로 표현하면 TSP가 O(N² · 2ᴺ)에 풀립니다.</li>
+      </ul>
+
+      <div class="punchline"><strong>외울 한 줄</strong> — 비트마스킹 = "<em>N개의 boolean을 한 정수로 압축</em>". N ≤ 20이면 모든 부분집합을 정수 한 변수로 순회 가능합니다.</div>
+    </div>
+
+    <div class="callout info">
+      <div class="title"><span class="icon">i</span>유형 인식 훈련법</div>
+      문제를 풀기 전에 <strong>지문만 보고 "이건 OO 유형"을 5초 안에 떠올려보고</strong> 시작하세요. 풀이 후 정답이 어떤 유형이었는지 비교하면, 30문제만 풀어도 직관이 폭발적으로 자랍니다. 이 책의 12개 패턴 각각의 <em>식별 신호</em>를 외워두는 게 합격의 절반입니다.
+    </div>
+  </section>
+
+  <!-- ============ 9장 ============ -->
+  <section class="chapter" id="ch9">
+    <div class="chapter-label">CHAPTER 09</div>
+    <h2><span class="num">09.</span>실전 풀이 전략과 디버깅</h2>
+    <p class="chapter-lead">"같은 알고리즘을 알아도 누구는 풀고 누구는 못 풉니다." 그 차이의 절반은 <strong>알고리즘이 아니라 풀이 습관</strong>에서 나옵니다. 한 문제를 30~40분 안에 끝내는 루틴과, 코딩 외적 메타 스킬을 같이 익히세요.</p>
+
+    <h3>문제 풀이의 "메타 스킬" 9가지</h3>
+    <p>알고리즘 외적인 합격 비결입니다. 잘하는 사람의 손버릇이라 봐도 됩니다. 작은 차이가 모이면 30분짜리 문제와 2시간짜리 문제가 갈립니다.</p>
+
+    <h4>① 지문을 주석으로 옮겨 적기 — 가장 강력한 한 가지</h4>
+    <p>문제를 풀기 전에 <strong>코드 맨 위에 주석으로 지문의 핵심을 옮겨 적으세요.</strong> "이해 = 정리"입니다. 지문을 적는 그 과정이 곧 이해의 과정입니다.</p>
+<pre><span class="c">// ════════════════════════════════════════════</span>
+<span class="c">// [문제] 회의실 배정</span>
+<span class="c">// N개의 회의가 있다. 각 회의는 (시작, 끝).</span>
+<span class="c">// 회의실 1개로 겹치지 않게 최대 몇 개 배정?</span>
+<span class="c">// ─────────────────────────────────────────</span>
+<span class="c">// [입력]</span>
+<span class="c">//   첫 줄: N  (1 ≤ N ≤ 100,000)</span>
+<span class="c">//   N줄  : 시작 끝</span>
+<span class="c">//</span>
+<span class="c">// [출력] 최대 회의 수 (정수 1개)</span>
+<span class="c">//</span>
+<span class="c">// [복잡도 한계] N log N 정도까지 OK</span>
+<span class="c">//</span>
+<span class="c">// [풀이 아이디어]</span>
+<span class="c">//   - 끝나는 시간으로 정렬</span>
+<span class="c">//   - 욕심껏 선택 (그리디)</span>
+<span class="c">//   - 끝 시간이 같으면 시작 빠른 것 우선 (0초 회의 처리)</span>
+<span class="c">//</span>
+<span class="c">// [코너 케이스]</span>
+<span class="c">//   - 시작 == 끝 (0초짜리)</span>
+<span class="c">//   - N == 1</span>
+<span class="c">//   - 모두 겹치는 경우 → 답 1</span>
+<span class="c">// ════════════════════════════════════════════</span>
+</pre>
+    <p><strong>왜 강력한가</strong></p>
+    <ul>
+      <li>지문 위로 자꾸 돌아가지 않게 되어 시야가 코드에 집중됩니다.</li>
+      <li>적는 동안 빠뜨린 조건을 발견합니다.</li>
+      <li>막혔을 때 본인이 정리한 노트를 다시 보면 됩니다.</li>
+      <li>라이브 코딩 면접에서는 "사고가 정리된 사람" 인상을 줍니다.</li>
+    </ul>
+
+    <h4>② 변수명은 "짧게"가 아니라 "정확하게"</h4>
+    <p>변수명을 잘 짓는 데 든 10초가 디버깅 30분을 아낍니다. <code class="inline">a, b, t, x</code> 같은 이름은 코드 외계어로 만듭니다.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">BAD</div>
+<pre style="margin:0;font-size:13px;"><span class="k">int</span>[] a = <span class="k">new int</span>[n];
+<span class="k">int</span> t = <span class="n">0</span>;
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) {
+    <span class="k">if</span> (a[i] &gt; b) t++;
+}
+</pre>
+      </div>
+      <div class="card">
+        <div class="card-label">GOOD</div>
+<pre style="margin:0;font-size:13px;"><span class="k">int</span>[] scores = <span class="k">new int</span>[n];
+<span class="k">int</span> passCount = <span class="n">0</span>;
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; n; i++) {
+    <span class="k">if</span> (scores[i] &gt; threshold) passCount++;
+}
+</pre>
+      </div>
+    </div>
+    <p><strong>예외</strong> — <code class="inline">i, j, k</code>(루프 인덱스), <code class="inline">x, y</code>(좌표), <code class="inline">dx, dy</code>(방향), <code class="inline">lo, hi, mid</code>(이분탐색) 같은 관용적 짧은 이름은 OK. <strong>의미가 약속된 짧은 이름은 오히려 가독성이 좋습니다.</strong></p>
+
+    <h4>③ 손풀이 — IDE 열기 전에 종이부터</h4>
+    <p>지문을 한 번 읽은 후 <strong>예제 입력을 종이/메모장에 손으로 풀어보세요.</strong> 손에서 안 풀리면 키보드에서도 안 풀립니다.</p>
+    <p>특히 <strong>BFS, DP, 그리디</strong>는 손으로 1~2단계만 그려보면 점화식과 정렬 기준이 동시에 보입니다. 다음의 그림이 좋은 시작입니다:</p>
+    <ul>
+      <li><strong>BFS</strong> — 격자에 거리 숫자를 한 칸씩 채워보기</li>
+      <li><strong>DP</strong> — dp 표(2차원 격자)를 그려서 점화식 적용 결과를 칸칸 채우기</li>
+      <li><strong>그리디</strong> — 예제 데이터를 정렬 기준 후보별로 정렬해보기</li>
+    </ul>
+
+    <h4>④ 의사코드부터 작성 — 코드는 그 다음</h4>
+    <p>풀이가 떠올라도 바로 키보드를 두드리지 말고 <strong>주석으로 큰 줄기를 먼저</strong> 적으세요.</p>
+<pre><span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) {
+        <span class="c">// 1) 입력 받기 — N, M, 그리고 N×M 격자</span>
+
+        <span class="c">// 2) 거리 배열 초기화 — 0(미방문)</span>
+
+        <span class="c">// 3) BFS 시작점 (0, 0)에서</span>
+        <span class="c">//    - 큐에서 꺼낸 후 4방향 탐색</span>
+        <span class="c">//    - 미방문 + 1인 칸만 큐에 넣고 거리 갱신</span>
+
+        <span class="c">// 4) dist[N-1][M-1] 출력</span>
+    }
+}
+</pre>
+    <p>이 주석 사이를 채우면 코드 완성. <strong>"일단 짜면서 생각하자"는 가장 흔한 실패 패턴</strong>입니다.</p>
+
+    <h4>⑤ 작은 함수로 잘게 쪼개기</h4>
+    <p>main 안에 모든 걸 한 덩어리로 쓰지 마세요. 50줄을 넘기 시작하면 <strong>"의미 단위로 함수 분리"</strong>를 고려하세요. 디버깅도 쉽고, 라이브 코딩에서는 설명하기도 좋습니다.</p>
+<pre><span class="c">// 좋지 않은 예 — main에 모든 게 떡 진 상태</span>
+<span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+    <span class="c">// 입력 100줄...</span>
+    <span class="c">// BFS 50줄...</span>
+    <span class="c">// 후처리 30줄...</span>
+}
+
+<span class="c">// 좋은 예 — 의미 단위로 쪼갬</span>
+<span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+    readInput();
+    bfs(<span class="n">0</span>, <span class="n">0</span>);
+    printAnswer();
+}
+</pre>
+
+    <h4>⑥ 출력 디버깅을 두려워하지 말 것</h4>
+    <p>"왜 답이 이상하지?" → 의심되는 곳마다 <code class="inline">System.err.println</code>으로 중간 상태를 찍어보세요. <strong><code class="inline">err</code>를 쓰는 이유는 표준 출력과 섞이지 않기 때문</strong>입니다. 정답 출력에 디버그가 섞여 오답되는 사고를 막아줍니다.</p>
+<pre>System.err.println(<span class="s">"[debug] dp["</span> + i + <span class="s">"] = "</span> + dp[i]);
+</pre>
+    <p>디버그가 끝나면 한 번에 찾아 지울 수 있도록 <code class="inline">[debug]</code> 같은 태그를 붙이는 습관도 좋습니다.</p>
+
+    <h4>⑦ 코너 케이스를 미리 떠올리고 적어두기</h4>
+    <p>"예제는 맞는데 제출하면 틀린다" 90%는 코너 케이스. 코드를 짜기 전에 <strong>의심스러운 케이스를 주석으로 적어두세요.</strong></p>
+    <ul>
+      <li><strong>크기의 극단</strong> — N=1, N=최대값, 빈 배열</li>
+      <li><strong>값의 극단</strong> — 0, 음수, 최대값(오버플로!)</li>
+      <li><strong>모양의 극단</strong> — 모두 같은 값, 정렬되어 있음, 역순</li>
+      <li><strong>관계의 극단</strong> — 자기 자신을 가리키는 노드, 사이클</li>
+    </ul>
+
+    <h4>⑧ 입출력 보일러플레이트 = 외워두는 템플릿</h4>
+    <p>시험 시작과 동시에 <strong>30초 안에 다음 골격</strong>이 손에서 나와야 합니다.</p>
+<pre><span class="k">import</span> java.io.*;
+<span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+        BufferedReader br = <span class="k">new</span> BufferedReader(<span class="k">new</span> InputStreamReader(System.in));
+        StringBuilder sb = <span class="k">new</span> StringBuilder();
+
+        <span class="c">// ─ 입력 ─</span>
+
+        <span class="c">// ─ 풀이 ─</span>
+
+        <span class="c">// ─ 출력 ─</span>
+        System.out.print(sb);
+    }
+}
+</pre>
+    <p>이 골격이 손가락에 익으면 시험에서 "어떻게 시작하지?"의 멍청한 5분이 사라집니다.</p>
+
+    <h4>⑨ 막혔을 때 "쉬는 1분"의 위력</h4>
+    <p>10분 동안 같은 자리에서 막혔다면 <strong>잠시 모니터에서 눈을 떼세요.</strong> 화장실에 다녀오거나 물 한 잔. 신기하게도 돌아오면 풀리는 경우가 많습니다. 뇌가 "Default Mode Network"라는 상태에서 풀이를 정리하기 때문입니다. <em>"풀려고 안 할 때 가장 잘 풀린다"</em>는 게 농담이 아닙니다.</p>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>메타 스킬을 익히는 법</div>
+      한 번에 9개를 다 도입하려 하지 마세요. <strong>1주에 하나씩, 의식적으로 적용하면서 익히세요.</strong> ① 지문 주석부터, 그 다음 ④ 의사코드, 그 다음 ⑦ 코너 케이스 적기 순서가 효과 좋습니다. 9주가 지나면 모두 자연스러워집니다.
+    </div>
+
+    <h3>한 문제 30분 루틴 (시험 기준)</h3>
+    <div class="roadmap">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>지문 정독 — 5분</h4>
+          <p>두 번 읽으세요. <strong>입력 범위, 출력 형식, 제약 조건, 예제</strong>에 동그라미를 치며 읽습니다. N의 크기가 알고리즘을 결정합니다.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>유형 판단 + 손풀이 — 5분</h4>
+          <p>코드를 치기 전에 <strong>종이/메모장에 예제를 손으로 풀어봅니다.</strong> 손에서 안 풀리는 건 키보드에서도 안 풀립니다. 유형이 안 보이면 작은 예제부터 일반화하세요.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>의사코드 작성 — 3분</h4>
+          <p>주석으로 풀이의 큰 줄기를 먼저 적고, 그 사이를 코드로 채웁니다. "일단 짜면서 생각하자"는 시간 초과의 시작입니다.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>구현 — 15분</h4>
+          <p>입출력 보일러플레이트 → 핵심 로직 → 출력. 변수명은 풀어서 쓰세요(<code class="inline">cnt</code>보다 <code class="inline">visitedCount</code>).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>테스트 — 2분</h4>
+          <p>주어진 예제 + <strong>경계 케이스(N=1, 최대, 음수, 빈 입력)</strong>를 추가로 머릿속에서 돌려봅니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="title"><span class="icon">!</span>30분 룰</div>
+      한 문제에 <strong>30~40분을 넘기면 일단 손을 떼고 다음 문제로 넘어가세요.</strong> 시험에서 1문제에 매몰되어 나머지 3문제를 못 보는 게 가장 치명적입니다. 나중에 시간이 남으면 돌아오면 됩니다.
+    </div>
+
+    <h3>"풀이가 안 보일 때" 사고 흐름</h3>
+    <ol>
+      <li><strong>작은 케이스로 손풀이</strong> — N=3, 4, 5에서 정답이 나오는 과정을 손으로 추적.</li>
+      <li><strong>완전탐색을 먼저 떠올린다</strong> — 시간이 넘쳐도 좋으니 일단 정답을 만들 수 있는 방법을 찾고, 그 다음에 최적화.</li>
+      <li><strong>유사 문제 회상</strong> — "이거랑 비슷한 거 풀었던 것 같은데" → 그 유형으로 시도.</li>
+      <li><strong>역으로 생각하기</strong> — "결과 → 원인"으로 거슬러보거나, 보조 자료구조를 추가해보세요.</li>
+      <li><strong>제약을 다시 본다</strong> — N의 크기가 의외의 힌트입니다. N ≤ 20이면 비트마스킹/백트래킹.</li>
+    </ol>
+
+    <h3>틀렸을 때 — 디버깅 체크리스트</h3>
+    <table>
+      <thead><tr><th>증상</th><th>의심해야 할 것</th></tr></thead>
+      <tbody>
+        <tr><td>예제는 맞는데 제출하면 틀림</td><td>경계 케이스(N=1, 0, 최대값), 자료형 오버플로(int→long)</td></tr>
+        <tr><td>시간 초과</td><td>입출력, 이중 for문, String 누적, HashMap 남용</td></tr>
+        <tr><td>메모리 초과</td><td>불필요한 2차원 배열, dp 차원 과다, 재귀 깊이</td></tr>
+        <tr><td>런타임 에러</td><td>배열 인덱스, 0 나누기, NullPointer, StackOverflow</td></tr>
+        <tr><td>예제도 틀림</td><td>로직 자체. 손풀이로 돌아가세요.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>입문자가 자주 하는 실수 Top 10</h3>
+    <ol>
+      <li><code class="inline">int</code> 오버플로 — 곱하기/누적합이 10⁹ 넘어가면 <code class="inline">long</code></li>
+      <li>방문 체크를 큐에 넣을 때가 아니라 꺼낼 때 하기 (BFS에서 중복 방문 발생)</li>
+      <li><code class="inline">==</code>로 문자열 비교 — Java는 반드시 <code class="inline">.equals()</code></li>
+      <li>2차원 배열의 행/열을 헷갈림 — <code class="inline">map[y][x]</code> vs <code class="inline">map[x][y]</code></li>
+      <li>0-인덱스와 1-인덱스 혼용</li>
+      <li>재귀에서 종료 조건 누락 → 스택 오버플로</li>
+      <li>입력 파싱에서 <code class="inline">trim()</code> 누락</li>
+      <li><code class="inline">Integer</code> 비교를 <code class="inline">==</code>로 — 캐시 범위 벗어나면 false</li>
+      <li>출력에서 <code class="inline">println</code> 남발</li>
+      <li>전역 상태(<code class="inline">static</code> 변수)를 테스트 케이스 사이에 초기화 안 함</li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>오답 노트 만드는 법</div>
+      틀린 문제마다 <strong>① 무엇을 놓쳤나(1줄) ② 다음번엔 어떻게 잡을까(1줄)</strong>를 적으세요. 30문제 쌓이면 "내 패턴"이 보입니다. 비슷한 실수의 80%는 5가지 정도로 수렴합니다.
+    </div>
+  </section>
+
+  <!-- ============ 10장 ============ -->
+  <section class="chapter" id="ch10">
+    <div class="chapter-label">CHAPTER 10</div>
+    <h2><span class="num">10.</span>실전 합격 팁 &amp; 멘탈 관리</h2>
+    <p class="chapter-lead">실력과 합격은 다릅니다. 같은 실력이면, <em>전략과 멘탈로 통과율이 두 배 갈립니다.</em></p>
+
+    <h3>시험 7일 전 — 마지막 일주일 루틴</h3>
+    <ul>
+      <li><strong>D-7 ~ D-4</strong> — 새로운 유형을 절대 추가하지 마세요. 약점 유형 복습만.</li>
+      <li><strong>D-3 ~ D-2</strong> — 모의고사 모드. 실제 시간 제한을 걸고 3~4문제 세트 풀기.</li>
+      <li><strong>D-1</strong> — 가벼운 복습, 입출력 보일러플레이트 손코딩, <strong>일찍 자기</strong>.</li>
+      <li><strong>D-0 아침</strong> — 평소 푸는 난이도의 쉬운 문제 1개로 워밍업. 시험 30분 전엔 기기 점검.</li>
+    </ul>
+
+    <h3>시험 당일 시간 분배 (3시간 4문제 기준)</h3>
+
+    <table>
+      <thead><tr><th>시간</th><th>할 일</th><th>주의</th></tr></thead>
+      <tbody>
+        <tr><td>0~10분</td><td>4문제 전부 훑고 난이도 매기기</td><td><strong>가장 쉬운 것부터 풀어요. </strong>1번이 가장 쉽다는 보장 없음.</td></tr>
+        <tr><td>10~50분</td><td>쉬운 1문제 풀이</td><td>실수만 안 하면 통과 1.</td></tr>
+        <tr><td>50~120분</td><td>중간 2문제 풀이</td><td>40분 룰 적용. 막히면 다음.</td></tr>
+        <tr><td>120~160분</td><td>어려운 1문제 도전</td><td>부분 점수만 노리는 풀이도 OK.</td></tr>
+        <tr><td>160~180분</td><td>전체 점검</td><td>경계 케이스, 출력 형식 재확인.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="title"><span class="icon">!</span>치명적인 함정</div>
+      <strong>1번부터 차례대로 풀지 마세요.</strong> 1번이 어렵게 나온 시험에서 "1번을 못 풀면 끝났다"고 멘탈이 무너지는 게 가장 흔한 실패 시나리오입니다. 먼저 전수조사, 그 다음 쉬운 것부터.
+    </div>
+
+    <h3>회사별 출제 경향 (체감 기준)</h3>
+    <table>
+      <thead><tr><th>회사</th><th>특징</th><th>대비 포인트</th></tr></thead>
+      <tbody>
+        <tr><td>카카오</td><td>구현 + 시뮬레이션 무거움. 지문이 길고 조건이 많음.</td><td>지문 정리 능력, 자료구조 활용, 문자열 처리</td></tr>
+        <tr><td>네이버 / 라인</td><td>알고리즘 정석. DP, 그래프, 이분탐색이 자주 출제.</td><td>유형 풀이 깊이</td></tr>
+        <tr><td>쿠팡</td><td>영어 지문, LeetCode 스타일. 자료구조 응용.</td><td>영어 지문 적응, LeetCode Medium</td></tr>
+        <tr><td>토스 / 핀테크</td><td>실무형. 과제형 또는 라이브 코딩 비중↑</td><td>가독성, 테스트 코드, 설명 능력</td></tr>
+        <tr><td>삼성 SW 역량</td><td>시뮬레이션 + 완전탐색. 매년 패턴이 비슷.</td><td>긴 구현 침착하게, 기출 반복</td></tr>
+      </tbody>
+    </table>
+
+    <h3>멘탈 관리 5계명</h3>
+    <ol>
+      <li><strong>"몰라" ≠ "못 푼다"</strong> — 처음 보는 유형도 30분 뒤엔 풀 수 있는 게 정상입니다.</li>
+      <li><strong>비교는 어제의 나하고만</strong> — SNS의 합격 후기는 1%의 표본입니다.</li>
+      <li><strong>못 풀린 문제는 자산</strong> — 시험에서 "어디서 본 듯한 문제"가 늘어납니다.</li>
+      <li><strong>슬럼프는 신호</strong> — 못 풀리는 시기는 한 단계 위로 올라가기 직전입니다.</li>
+      <li><strong>운동/수면을 줄이지 말 것</strong> — 알고리즘 실력의 절반은 체력입니다. 수면 부족은 IQ를 떨어뜨립니다.</li>
+    </ol>
+
+    <h3>합격 후기에서 추출한 공통 패턴</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">합격자 공통점 01</div>
+        <h4>매일 풀었다</h4>
+        <p>주 5일 이상 꾸준히. 양보다 <strong>빈도</strong>가 핵심.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">합격자 공통점 02</div>
+        <h4>모르면 빨리 해설을 봤다</h4>
+        <p>2시간 끙끙대지 않고 30분 뒤 해설. 대신 <em>다음 날 백지에서 다시 풀었다</em>.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">합격자 공통점 03</div>
+        <h4>오답 노트를 썼다</h4>
+        <p>틀린 이유를 글로 적었다. 비슷한 실수가 두 번 안 났다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">합격자 공통점 04</div>
+        <h4>한 언어를 끝까지 갔다</h4>
+        <p>Java/Python/C++ 사이를 옮겨다니지 않았다.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>마지막 한 마디</div>
+      코딩 테스트는 <strong>재능 시험이 아니라 노출량 시험</strong>입니다. 100문제 푼 사람과 300문제 푼 사람은 동일한 문제 앞에서 다른 사람입니다. 매일 1문제, 100일이면 당신은 이미 합격 평균선 위입니다.
+    </div>
+  </section>
+
+  <!-- ============ 부록 ============ -->
+  <section class="chapter" id="appendix">
+    <div class="chapter-label">APPENDIX</div>
+    <h2><span class="num">부록.</span>실제 기출 유형 모음</h2>
+    <p class="chapter-lead">실제로 출제됐던 문제들의 <strong>유형 · 접근법 · Java 풀이</strong>를 정리했습니다. 저작권 문제로 원문 그대로는 다루지 않으며, 핵심을 재구성한 변형 문제 형태로 제시합니다. 출처는 각 문제 상단에 표시했습니다.</p>
+
+    <div class="callout info">
+      <div class="title"><span class="icon">i</span>이 부록의 사용법</div>
+      <strong>① 문제 설명만 보고 5분 안에 접근법을 떠올려보세요.</strong> ② 막히면 "접근법" 섹션을, 그래도 막히면 코드를 보세요. ③ 풀이를 본 문제는 <strong>3일 후 백지에서 다시 풀어보세요.</strong>
+    </div>
+
+    <!-- 문제 1 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 01</span>
+        <span class="company">카카오 블라인드 (구현/시뮬레이션)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty mid">난이도 중</span>
+        <div class="tags"><span class="tag">구현</span><span class="tag">문자열</span><span class="tag">시뮬레이션</span></div>
+
+        <h4>문제 요약</h4>
+        <p>식당 영수증을 정리하는 프로그램. 메뉴 이름, 가격, 주문 횟수가 주어질 때 <strong>"가장 많이 팔린 메뉴의 매출"</strong>을 구합니다. 단, 같은 매출이 여러 개면 메뉴명 사전순으로 가장 빠른 것을 답합니다.</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"가장 많이 팔린" → 카운팅 → <code class="inline">HashMap</code></li>
+          <li>"동률이면 사전순" → 정렬 기준 2개 (매출 내림차순, 이름 오름차순)</li>
+        </ul>
+
+        <h4>접근법</h4>
+        <ol>
+          <li>메뉴별 매출을 <code class="inline">HashMap&lt;String, Long&gt;</code>에 누적</li>
+          <li><code class="inline">entrySet</code>을 List로 만든 후 비교자 2단계로 정렬</li>
+          <li>맨 앞 원소가 정답</li>
+        </ol>
+
+        <h4>Java 풀이</h4>
+<pre><span class="k">import</span> java.util.*;
+
+<span class="k">public class</span> Main {
+    <span class="k">public static</span> String solution(String[] menus, <span class="k">int</span>[] prices, <span class="k">int</span>[] counts) {
+        Map&lt;String, Long&gt; sales = <span class="k">new</span> HashMap&lt;&gt;();
+        <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; menus.length; i++) {
+            <span class="k">long</span> revenue = (<span class="k">long</span>) prices[i] * counts[i];
+            sales.merge(menus[i], revenue, Long::sum);
+        }
+        List&lt;Map.Entry&lt;String, Long&gt;&gt; list = <span class="k">new</span> ArrayList&lt;&gt;(sales.entrySet());
+        list.sort((a, b) -&gt; {
+            <span class="k">if</span> (!a.getValue().equals(b.getValue()))
+                <span class="k">return</span> Long.compare(b.getValue(), a.getValue()); <span class="c">// 매출 내림차순</span>
+            <span class="k">return</span> a.getKey().compareTo(b.getKey()); <span class="c">// 이름 오름차순</span>
+        });
+        <span class="k">return</span> list.get(<span class="n">0</span>).getKey();
+    }
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p>매출 계산은 <strong>반드시 long</strong>으로 (가격×횟수가 int 범위를 쉽게 초과). 동률 처리는 비교자 안에서 if-else로 2단계 정렬을 작성하면 깔끔합니다.</p>
+      </div>
+    </div>
+
+    <!-- 문제 2 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 02</span>
+        <span class="company">카카오 / 프로그래머스 (문자열)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty easy">난이도 하-중</span>
+        <div class="tags"><span class="tag">문자열</span><span class="tag">구현</span><span class="tag">파싱</span></div>
+
+        <h4>문제 요약</h4>
+        <p>"new_id" 같은 아이디 후보를 받아 <strong>주어진 7단계 규칙</strong>(소문자화 · 허용문자만 · 연속 마침표 축소 · 처음/끝 마침표 제거 · 빈 문자열이면 "a" · 16자 이상이면 자르고 마침표 제거 · 3자 미만이면 마지막 글자 반복)을 거쳐 최종 아이디로 변환합니다.</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"이런 규칙으로 변환하라" → 그냥 순서대로 구현하는 시뮬레이션</li>
+          <li>정규식 또는 <code class="inline">StringBuilder</code>로 단계별 처리</li>
+        </ul>
+
+        <h4>Java 풀이 (정규식 활용)</h4>
+<pre><span class="k">public</span> String solution(String s) {
+    <span class="c">// 1단계: 소문자화</span>
+    s = s.toLowerCase();
+    <span class="c">// 2단계: 허용 문자만 (소문자, 숫자, -, _, .)</span>
+    s = s.replaceAll(<span class="s">"[^a-z0-9\\-_.]"</span>, <span class="s">""</span>);
+    <span class="c">// 3단계: 연속 마침표 → 1개</span>
+    s = s.replaceAll(<span class="s">"\\.+"</span>, <span class="s">"."</span>);
+    <span class="c">// 4단계: 처음/끝 마침표 제거</span>
+    s = s.replaceAll(<span class="s">"^\\.|\\.$"</span>, <span class="s">""</span>);
+    <span class="c">// 5단계: 빈 문자열이면 "a"</span>
+    <span class="k">if</span> (s.isEmpty()) s = <span class="s">"a"</span>;
+    <span class="c">// 6단계: 16자 이상이면 자르고 끝 마침표 제거</span>
+    <span class="k">if</span> (s.length() &gt;= <span class="n">16</span>) {
+        s = s.substring(<span class="n">0</span>, <span class="n">15</span>);
+        s = s.replaceAll(<span class="s">"\\.$"</span>, <span class="s">""</span>);
+    }
+    <span class="c">// 7단계: 2자 이하이면 마지막 글자 반복</span>
+    <span class="k">while</span> (s.length() &lt; <span class="n">3</span>) {
+        s += s.charAt(s.length() - <span class="n">1</span>);
+    }
+    <span class="k">return</span> s;
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p>카카오는 <strong>"긴 지문을 정확히 옮기는 능력"</strong>을 봅니다. 단계마다 변수에 결과를 저장하고, 각 단계를 끝낸 직후 출력해보며 디버깅하세요. 정규식이 익숙하지 않다면 <code class="inline">StringBuilder</code>로 한 글자씩 처리해도 됩니다.</p>
+      </div>
+    </div>
+
+    <!-- 문제 3 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 03</span>
+        <span class="company">백준 단골 / 네이버 (BFS)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty mid">난이도 중</span>
+        <div class="tags"><span class="tag">BFS</span><span class="tag">그래프</span><span class="tag">격자</span></div>
+
+        <h4>문제 요약</h4>
+        <p>N×M 격자에서 1은 땅, 0은 바다. <strong>상하좌우로 연결된 1의 덩어리(섬)의 개수</strong>를 구합니다.</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"연결된 덩어리 개수" → BFS/DFS 전형</li>
+          <li>격자 + 4방향 → <code class="inline">dx, dy</code> 배열</li>
+        </ul>
+
+        <h4>Java 풀이 (BFS)</h4>
+<pre><span class="k">static int</span>[][] map;
+<span class="k">static boolean</span>[][] visited;
+<span class="k">static int</span> N, M;
+<span class="k">static int</span>[] dx = {-<span class="n">1</span>, <span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>};
+<span class="k">static int</span>[] dy = {<span class="n">0</span>, <span class="n">0</span>, -<span class="n">1</span>, <span class="n">1</span>};
+
+<span class="k">static void</span> bfs(<span class="k">int</span> sx, <span class="k">int</span> sy) {
+    Queue&lt;<span class="k">int</span>[]&gt; q = <span class="k">new</span> ArrayDeque&lt;&gt;();
+    q.offer(<span class="k">new int</span>[]{sx, sy});
+    visited[sx][sy] = <span class="k">true</span>;
+    <span class="k">while</span> (!q.isEmpty()) {
+        <span class="k">int</span>[] cur = q.poll();
+        <span class="k">for</span> (<span class="k">int</span> d = <span class="n">0</span>; d &lt; <span class="n">4</span>; d++) {
+            <span class="k">int</span> nx = cur[<span class="n">0</span>] + dx[d];
+            <span class="k">int</span> ny = cur[<span class="n">1</span>] + dy[d];
+            <span class="k">if</span> (nx&lt;<span class="n">0</span>||ny&lt;<span class="n">0</span>||nx&gt;=N||ny&gt;=M) <span class="k">continue</span>;
+            <span class="k">if</span> (visited[nx][ny] || map[nx][ny] == <span class="n">0</span>) <span class="k">continue</span>;
+            visited[nx][ny] = <span class="k">true</span>;
+            q.offer(<span class="k">new int</span>[]{nx, ny});
+        }
+    }
+}
+
+<span class="k">public static void</span> main(String[] args) <span class="k">throws</span> IOException {
+    <span class="c">// 입력 생략</span>
+    <span class="k">int</span> count = <span class="n">0</span>;
+    <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+        <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; M; j++) {
+            <span class="k">if</span> (map[i][j] == <span class="n">1</span> &amp;&amp; !visited[i][j]) {
+                bfs(i, j);
+                count++;
+            }
+        }
+    }
+    System.out.println(count);
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p><strong>"방문 체크는 큐에 넣을 때"</strong> 합니다. 꺼낼 때 하면 중복 방문이 발생합니다. 8방향 문제로 변형되어도 <code class="inline">dx, dy</code> 배열만 8개로 늘리면 됩니다.</p>
+      </div>
+    </div>
+
+    <!-- 문제 4 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 04</span>
+        <span class="company">백준 단골 (이분탐색/매개변수)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty mid">난이도 중</span>
+        <div class="tags"><span class="tag">이분탐색</span><span class="tag">매개변수탐색</span></div>
+
+        <h4>문제 요약</h4>
+        <p>길이가 제각각인 나무 N개를 잘라 <strong>적어도 M미터의 나무를 가져가야 합니다.</strong> 절단기 높이 H를 정수로 설정할 때, 가져갈 수 있는 <strong>H의 최댓값</strong>은? (나무 길이 ≤ 10⁹, N ≤ 10⁶)</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"최댓값/최솟값을 구하라" + 답의 범위가 명확</li>
+          <li>특정 H가 가능한지 O(N)에 검사 가능 → 매개변수 탐색</li>
+        </ul>
+
+        <h4>Java 풀이</h4>
+<pre><span class="k">static long</span> total(<span class="k">int</span>[] trees, <span class="k">int</span> h) {
+    <span class="k">long</span> sum = <span class="n">0</span>;
+    <span class="k">for</span> (<span class="k">int</span> t : trees) {
+        <span class="k">if</span> (t &gt; h) sum += t - h;
+    }
+    <span class="k">return</span> sum;
+}
+
+<span class="k">public static int</span> solve(<span class="k">int</span>[] trees, <span class="k">long</span> M) {
+    <span class="k">int</span> lo = <span class="n">0</span>, hi = <span class="n">0</span>;
+    <span class="k">for</span> (<span class="k">int</span> t : trees) hi = Math.max(hi, t);
+
+    <span class="k">int</span> ans = <span class="n">0</span>;
+    <span class="k">while</span> (lo &lt;= hi) {
+        <span class="k">int</span> mid = (lo + hi) &gt;&gt;&gt; <span class="n">1</span>;
+        <span class="k">if</span> (total(trees, mid) &gt;= M) {
+            ans = mid;       <span class="c">// 더 높게도 가능할 수 있으니 갱신 후 위로</span>
+            lo = mid + <span class="n">1</span>;
+        } <span class="k">else</span> {
+            hi = mid - <span class="n">1</span>;
+        }
+    }
+    <span class="k">return</span> ans;
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p>"H를 찾는다"가 아니라 "H를 추측하고 가능한지 검사한다"는 사고 전환이 매개변수 탐색의 본질. <strong>합이 int 범위 넘으니 반드시 long.</strong> 최댓값을 찾을 땐 "가능하면 갱신 후 더 큰 쪽으로"가 패턴입니다.</p>
+      </div>
+    </div>
+
+    <!-- 문제 5 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 05</span>
+        <span class="company">삼성 SW 역량 (시뮬레이션 + 완전탐색)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty hard">난이도 상</span>
+        <div class="tags"><span class="tag">시뮬레이션</span><span class="tag">완전탐색</span><span class="tag">백트래킹</span></div>
+
+        <h4>문제 요약</h4>
+        <p>N×N 격자에 연구소가 있고 일부는 벽, 일부는 바이러스. <strong>벽을 정확히 3개 더 세웠을 때</strong>, 바이러스가 퍼지지 않는 "안전 영역"의 최댓값을 구합니다. (N ≤ 8)</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>N이 매우 작다 → 완전탐색 가능</li>
+          <li>"정확히 3개" → 조합 선택</li>
+          <li>"퍼지는 영역" → BFS</li>
+        </ul>
+
+        <h4>접근법</h4>
+        <ol>
+          <li>빈 칸 좌표를 모아둠</li>
+          <li>그 중 3개를 고르는 모든 조합 (C(빈칸, 3))</li>
+          <li>각 조합마다 임시로 벽 세우고 BFS로 바이러스 확산</li>
+          <li>남은 0의 개수가 안전 영역 → 최댓값 갱신</li>
+        </ol>
+
+        <h4>Java 풀이 (핵심부)</h4>
+<pre><span class="k">static int</span> N, M, ans;
+<span class="k">static int</span>[][] map;
+<span class="k">static</span> List&lt;<span class="k">int</span>[]&gt; empties = <span class="k">new</span> ArrayList&lt;&gt;();
+
+<span class="k">static void</span> pickWalls(<span class="k">int</span> start, <span class="k">int</span> depth) {
+    <span class="k">if</span> (depth == <span class="n">3</span>) {
+        ans = Math.max(ans, spreadAndCount());
+        <span class="k">return</span>;
+    }
+    <span class="k">for</span> (<span class="k">int</span> i = start; i &lt; empties.size(); i++) {
+        <span class="k">int</span>[] p = empties.get(i);
+        map[p[<span class="n">0</span>]][p[<span class="n">1</span>]] = <span class="n">1</span>;        <span class="c">// 임시 벽</span>
+        pickWalls(i + <span class="n">1</span>, depth + <span class="n">1</span>);
+        map[p[<span class="n">0</span>]][p[<span class="n">1</span>]] = <span class="n">0</span>;        <span class="c">// 원복</span>
+    }
+}
+
+<span class="k">static int</span> spreadAndCount() {
+    <span class="k">int</span>[][] copy = <span class="k">new int</span>[N][M];
+    Queue&lt;<span class="k">int</span>[]&gt; q = <span class="k">new</span> ArrayDeque&lt;&gt;();
+    <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; N; i++) {
+        <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; M; j++) {
+            copy[i][j] = map[i][j];
+            <span class="k">if</span> (copy[i][j] == <span class="n">2</span>) q.offer(<span class="k">new int</span>[]{i, j});
+        }
+    }
+    <span class="c">// BFS로 2 확산 (생략)</span>
+    <span class="c">// 0의 개수 반환</span>
+    <span class="k">int</span> cnt = <span class="n">0</span>;
+    <span class="k">for</span> (<span class="k">int</span>[] r : copy) <span class="k">for</span> (<span class="k">int</span> v : r) <span class="k">if</span> (v == <span class="n">0</span>) cnt++;
+    <span class="k">return</span> cnt;
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p>삼성 SW 역량은 <strong>"완전탐색 + 시뮬레이션 + 상태 복원"</strong> 콤보가 단골입니다. 시뮬레이션 전 원본을 깊은 복사하거나, 처리 후 원상 복구하는 패턴을 익혀두세요.</p>
+      </div>
+    </div>
+
+    <!-- 문제 6 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 06</span>
+        <span class="company">백준 / 네이버 라인 (DP)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty mid">난이도 중</span>
+        <div class="tags"><span class="tag">DP</span><span class="tag">배낭문제</span></div>
+
+        <h4>문제 요약</h4>
+        <p>무게와 가치가 있는 N개의 물건, 최대 K까지 담을 수 있는 가방. <strong>가치 합을 최대로</strong> 만드는 가치 합은? (각 물건 1개씩)</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"넣을지 말지의 선택을 N번" → 0/1 배낭 DP</li>
+          <li>상태: <code class="inline">dp[i][w]</code> = i번째까지 보았고 무게 w 이하일 때 최대 가치</li>
+        </ul>
+
+        <h4>Java 풀이</h4>
+<pre><span class="c">// 2차원 DP</span>
+<span class="k">int</span>[][] dp = <span class="k">new int</span>[N + <span class="n">1</span>][K + <span class="n">1</span>];
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= N; i++) {
+    <span class="k">for</span> (<span class="k">int</span> w = <span class="n">0</span>; w &lt;= K; w++) {
+        dp[i][w] = dp[i - <span class="n">1</span>][w];  <span class="c">// 안 넣음</span>
+        <span class="k">if</span> (w &gt;= weight[i]) {
+            dp[i][w] = Math.max(dp[i][w],
+                                dp[i - <span class="n">1</span>][w - weight[i]] + value[i]); <span class="c">// 넣음</span>
+        }
+    }
+}
+System.out.println(dp[N][K]);
+
+<span class="c">// 1차원 최적화 (메모리 절약): 무게는 반드시 내림차순으로!</span>
+<span class="k">int</span>[] dp1 = <span class="k">new int</span>[K + <span class="n">1</span>];
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= N; i++) {
+    <span class="k">for</span> (<span class="k">int</span> w = K; w &gt;= weight[i]; w--) {
+        dp1[w] = Math.max(dp1[w], dp1[w - weight[i]] + value[i]);
+    }
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p>1차원 최적화에서 <strong>무게 루프를 내림차순으로</strong> 도는 이유는 "같은 물건을 두 번 쓰지 않기 위해서"입니다. 오름차순으로 돌면 무한 배낭(같은 물건 여러 개)이 됩니다.</p>
+      </div>
+    </div>
+
+    <!-- 문제 7 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 07</span>
+        <span class="company">쿠팡 / LeetCode 스타일 (자료구조)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty mid">난이도 중</span>
+        <div class="tags"><span class="tag">PriorityQueue</span><span class="tag">힙</span><span class="tag">스케줄링</span></div>
+
+        <h4>문제 요약</h4>
+        <p>N개의 작업이 있고 각 작업은 <em>마감일</em>과 <em>보상</em>을 가집니다. 한 번에 한 작업만 처리 가능하며 각 작업은 1일 소요됩니다. <strong>얻을 수 있는 보상의 최댓값</strong>은?</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"가능한 한 큰 보상을 챙겨야" → 그리디</li>
+          <li>"마감일까지만 가능" + "취소도 가능" → 최소 힙으로 "현재 채택한 작업들"을 관리</li>
+        </ul>
+
+        <h4>접근법</h4>
+        <ol>
+          <li>마감일 오름차순 정렬</li>
+          <li>최소 힙에 보상을 넣고 채택. 단, 마감일을 넘으면 가장 작은 보상 작업을 꺼내고 새것 채택</li>
+          <li>마지막에 힙에 남은 보상의 합이 정답</li>
+        </ol>
+
+        <h4>Java 풀이</h4>
+<pre><span class="k">public int</span> maxProfit(<span class="k">int</span>[][] jobs) { <span class="c">// jobs[i] = {deadline, reward}</span>
+    Arrays.sort(jobs, (a, b) -&gt; a[<span class="n">0</span>] - b[<span class="n">0</span>]);
+    PriorityQueue&lt;Integer&gt; pq = <span class="k">new</span> PriorityQueue&lt;&gt;(); <span class="c">// 최소 힙</span>
+
+    <span class="k">for</span> (<span class="k">int</span>[] job : jobs) {
+        pq.offer(job[<span class="n">1</span>]);
+        <span class="k">if</span> (pq.size() &gt; job[<span class="n">0</span>]) {
+            pq.poll(); <span class="c">// 가장 작은 보상 버림</span>
+        }
+    }
+    <span class="k">int</span> sum = <span class="n">0</span>;
+    <span class="k">while</span> (!pq.isEmpty()) sum += pq.poll();
+    <span class="k">return</span> sum;
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p>그리디인데 <strong>"잘못 골랐으면 더 좋은 것이 왔을 때 바꿔치기"</strong>가 가능한 구조에서는 <em>최소 힙으로 후회 없는 선택</em>을 만들 수 있습니다. 이 패턴은 회의실, 작업 스케줄링, 발사대 문제 등으로 변형됩니다.</p>
+      </div>
+    </div>
+
+    <!-- 문제 8 -->
+    <div class="problem">
+      <div class="problem-head">
+        <span class="pno">PROBLEM 08</span>
+        <span class="company">백준 단골 (그래프 - 다익스트라)</span>
+      </div>
+      <div class="problem-body">
+        <span class="difficulty hard">난이도 상</span>
+        <div class="tags"><span class="tag">다익스트라</span><span class="tag">그래프</span><span class="tag">최단경로</span></div>
+
+        <h4>문제 요약</h4>
+        <p>방향 그래프와 시작점이 주어집니다. 시작점에서 <strong>모든 정점까지의 최단 거리</strong>를 구합니다. (간선 가중치 양수, V ≤ 20,000, E ≤ 300,000)</p>
+
+        <h4>핵심 신호</h4>
+        <ul>
+          <li>"한 점에서 모든 점까지 최단" + 양수 가중치 → 다익스트라</li>
+          <li>V, E의 크기 → 인접 리스트 + 우선순위 큐 (O(E log V))</li>
+        </ul>
+
+        <h4>Java 풀이</h4>
+<pre><span class="k">static</span> List&lt;<span class="k">int</span>[]&gt;[] graph;  <span class="c">// graph[u] = list of {v, w}</span>
+
+<span class="k">static int</span>[] dijkstra(<span class="k">int</span> V, <span class="k">int</span> start) {
+    <span class="k">int</span>[] dist = <span class="k">new int</span>[V + <span class="n">1</span>];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[start] = <span class="n">0</span>;
+
+    PriorityQueue&lt;<span class="k">int</span>[]&gt; pq = <span class="k">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; a[<span class="n">1</span>] - b[<span class="n">1</span>]);
+    pq.offer(<span class="k">new int</span>[]{start, <span class="n">0</span>});
+
+    <span class="k">while</span> (!pq.isEmpty()) {
+        <span class="k">int</span>[] cur = pq.poll();
+        <span class="k">int</span> u = cur[<span class="n">0</span>], d = cur[<span class="n">1</span>];
+        <span class="k">if</span> (d &gt; dist[u]) <span class="k">continue</span>;
+        <span class="k">for</span> (<span class="k">int</span>[] e : graph[u]) {
+            <span class="k">int</span> v = e[<span class="n">0</span>], w = e[<span class="n">1</span>];
+            <span class="k">if</span> (dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.offer(<span class="k">new int</span>[]{v, dist[v]});
+            }
+        }
+    }
+    <span class="k">return</span> dist;
+}
+</pre>
+
+        <h4>이 문제에서 배울 점</h4>
+        <p><code class="inline">if (d &gt; dist[u]) continue;</code> 한 줄이 핵심입니다. 같은 노드가 우선순위 큐에 여러 번 들어가는데, 더 짧은 거리로 이미 처리된 노드의 옛 항목을 무시해야 시간 초과를 막을 수 있습니다.</p>
+      </div>
+    </div>
+
+    <!-- 추천 문제 리스트 -->
+    <h3>유형별 추천 연습 문제 (백준/프로그래머스 번호)</h3>
+    <table>
+      <thead><tr><th>유형</th><th>난이도순 추천</th></tr></thead>
+      <tbody>
+        <tr><td>입출력</td><td>백준 11718, 11719, 10172</td></tr>
+        <tr><td>완전탐색</td><td>백준 2231, 2503, 2309</td></tr>
+        <tr><td>정렬/그리디</td><td>백준 1931(회의실), 11399(ATM), 2839(설탕 배달)</td></tr>
+        <tr><td>이분탐색</td><td>백준 1654(랜선), 2805(나무), 2110(공유기)</td></tr>
+        <tr><td>BFS/DFS</td><td>백준 1926(그림), 2667(단지), 7576(토마토)</td></tr>
+        <tr><td>DP</td><td>백준 11726(2×n 타일링), 1932(정수 삼각형), 12865(평범한 배낭)</td></tr>
+        <tr><td>그래프</td><td>백준 1753(다익스트라), 1197(MST), 1976(연결 확인 - DSU)</td></tr>
+        <tr><td>구현/시뮬</td><td>프로그래머스 신규아이디, 키패드 누르기, 카카오 카드뽑기</td></tr>
+        <tr><td>해시</td><td>프로그래머스 폰켓몬, 완주하지 못한 선수, 베스트앨범</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <div class="title"><span class="icon">✓</span>주의 — 모든 문제를 다 풀려 하지 말 것</div>
+      위 문제들을 <strong>"빠짐없이"</strong>가 아니라 <strong>"이해될 때까지"</strong> 푸세요. 유형당 3~5문제만 깊게 풀어도 충분합니다. 같은 문제를 3번 다시 푸는 것이 새 문제 3개를 한 번씩 푸는 것보다 강합니다.
+    </div>
+
+    <h3>참고 사이트 정리</h3>
+    <ul>
+      <li><strong>백준</strong> (acmicpc.net) — 문제 수 압도적. 단계별 풀어보기로 시작.</li>
+      <li><strong>프로그래머스</strong> (programmers.co.kr) — 카카오 기출 + 채용 직결. UI/입출력이 친절.</li>
+      <li><strong>LeetCode</strong> (leetcode.com) — 해외 빅테크 대비. 영어 적응에도 도움.</li>
+      <li><strong>solved.ac</strong> — 백준 문제의 난이도 티어 시각화. 약점 추적에 유용.</li>
+    </ul>
+  </section>
+
+  <!-- ============ 마무리 ============ -->
+  <section class="ending">
+    <div class="big">합격을 응원합니다.</div>
+    <p>"오늘의 한 문제가 내일의 한 줄을 결정합니다."<br>이 책이 당신의 100일을 함께한 동료가 되기를.</p>
+    <div class="sig">JAVA CODING TEST GUIDEBOOK · 2026 EDITION · FIN</div>
+  </section>
+
+</div>
+</body>
+</html>
