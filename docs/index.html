@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI와 LLM을 이해하고 업무에 활용하기 위한 정적 문서 모음">
+  <title>Books</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f6f2;
+      --card: #ffffff;
+      --fg: #1b2028;
+      --muted: #6b7280;
+      --line: #e4e0d6;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111318;
+        --card: #161920;
+        --fg: #e7e9ee;
+        --muted: #9ca3af;
+        --line: #2a2e37;
+        --accent: #60a5fa;
+        --accent-soft: #1b2436;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+        "Noto Sans KR", sans-serif;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+    main {
+      width: min(100% - 2rem, 56rem);
+      margin: 0 auto;
+      padding: clamp(2.5rem, 7vw, 5rem) 0;
+    }
+    header {
+      margin-bottom: 2rem;
+    }
+    .eyebrow {
+      margin: 0 0 0.55rem;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 38rem;
+      margin: 0.85rem 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+      gap: 1rem;
+    }
+    article {
+      min-height: 11rem;
+      padding: 1.35rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    article h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.2rem;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    article p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    article a {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-top: 1.25rem;
+      color: var(--accent);
+      font-weight: 800;
+      text-decoration: none;
+    }
+    article a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+    article:focus-within {
+      outline: 3px solid var(--accent-soft);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Static Books</p>
+      <h1>문서 목록</h1>
+      <p class="intro">AI와 LLM을 이해하고 업무에 활용하기 위한 HTML 문서 모음입니다.</p>
+    </header>
+    <section class="list" aria-label="문서">
+      <article>
+        <div>
+          <h2>LLM 업무 활용 가이드</h2>
+          <p>LLM을 실제 업무 흐름에 적용하는 방법과 예시를 정리한 문서입니다.</p>
+        </div>
+        <a href="about-llm.html">문서 열기</a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
