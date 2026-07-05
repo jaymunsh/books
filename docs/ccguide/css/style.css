@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
+
 /* =========================================================
    Claude Code 완벽 가이드 · 스타일시트
    - 공식 문서 스타일 (Anthropic 톤)
@@ -19,8 +21,8 @@
   --space-8: 64px;
 
   /* Typography */
-  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+  --font-sans: "Noto Sans KR", "Pretendard", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", "D2Coding", "Menlo", "Consolas",
     "Liberation Mono", monospace;
 
