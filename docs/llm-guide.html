@@ -10,7 +10,7 @@
 (function(){
   var t = null;
   try { t = localStorage.getItem('llmguide-theme'); } catch(e){}
-  if (!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  if (!t) t = 'light';
   document.documentElement.dataset.theme = t;
   var lv = null;
   try { lv = localStorage.getItem('llmguide-maxlevel'); } catch(e){}
@@ -429,7 +429,7 @@ a.term:hover { text-decoration: none; border-bottom-style: solid; }
 <main id="content">
 
 <h1>LLM의 모든 것</h1>
-<p class="part-desc">입문부터 심화까지 — 대규모 언어 모델(LLM)의 원리, 사용법, 응용, 생태계를 담은 가이드북 겸 용어사전. <br><small>최종 수정: 2026-07 · 외부 의존성 없는 단일 HTML 파일</small></p>
+<p class="part-desc">입문부터 심화까지 — 대규모 언어 모델(LLM)의 원리, 사용법, 응용, 생태계를 담은 가이드북 겸 용어사전. <br><small>지은이 문성혁 · 최종 수정: 2026-07 · 외부 의존성 없는 단일 HTML 파일</small></p>
 
 <!-- ===== PART:0 START ===== -->
 <section class="part" id="part0">
@@ -3842,7 +3842,7 @@ console.log(resp.content);</code></pre>
 </div>
 
 <hr>
-<p style="text-align:center;color:var(--fg-soft);">여기까지 읽어주셔서 감사합니다. 이 책이 LLM이라는 지형을 헤쳐 나가는 지도가 되었기를 바랍니다.<br><small>LLM의 모든 것 · 최종 수정 2026-07 · 단일 HTML 가이드북</small></p>
+<p style="text-align:center;color:var(--fg-soft);">여기까지 읽어주셔서 감사합니다. 이 책이 LLM이라는 지형을 헤쳐 나가는 지도가 되었기를 바랍니다.<br><small>LLM의 모든 것 · 지은이 문성혁 · 최종 수정 2026-07 · 단일 HTML 가이드북</small></p>
 </section>
 <!-- CH:I END -->
 
