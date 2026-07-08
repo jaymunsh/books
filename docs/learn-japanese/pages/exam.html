@@ -111,7 +111,8 @@
 
     .link-stack {
       display: grid;
-      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
       margin: 26px 0 22px;
     }
 
@@ -120,17 +121,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       border-radius: 8px;
-      padding: 9px 10px;
+      padding: 8px;
     }
 
     .book-link {
       border: 1px solid var(--line);
       background: var(--paper);
       color: var(--ink);
+      min-height: 42px;
       font-weight: 800;
-      box-shadow: var(--shadow);
+      font-size: 12.5px;
+      line-height: 1.25;
+    }
+
+    .book-link.book-home {
+      grid-column: 1 / -1;
+    }
+
+    .book-link.active {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--seal);
     }
 
     .book-link small {
@@ -138,6 +151,10 @@
       color: var(--ink-faint);
       font-size: 11px;
       font-weight: 700;
+    }
+
+    .book-link.active small {
+      color: inherit;
     }
 
     .level-list {
@@ -302,6 +319,32 @@
       color: var(--navy);
     }
 
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-card {
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      background: var(--sidebar);
+      padding: 12px;
+    }
+
+    .info-card b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--seal);
+      font-size: 12px;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
     .panel,
     .set-card {
       border: 1px solid var(--line);
@@ -359,6 +402,35 @@
     .exam-grid {
       display: grid;
       gap: 14px;
+    }
+
+    .exam-section {
+      display: grid;
+      gap: 12px;
+    }
+
+    .exam-section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding: 4px 2px 10px;
+    }
+
+    .exam-section-head h3 {
+      margin: 0;
+      color: var(--seal);
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: -.015em;
+    }
+
+    .exam-section-head small {
+      color: var(--ink-faint);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
     }
 
     .set-card {
@@ -580,7 +652,10 @@
       .timer { text-align: left; }
       .set-meta { justify-content: flex-start; }
       .choices,
+      .info-grid,
       .result-grid { grid-template-columns: 1fr; }
+      .exam-section-head { display: grid; }
+      .exam-section-head small { white-space: normal; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -603,10 +678,11 @@
       <p class="sub">시간 제한 풀이와 자동 채점</p>
       <p class="author">지은이 문성혁</p>
       <div class="link-stack">
-        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="vocabulary.html"><span>단어장 보기<small>검색과 반복 암기</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="practice.html"><span>문제 은행 보기<small>문제와 정답 해설</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="review.html"><span>오답노트 보기<small>틀린 문제 다시 풀기</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link book-home" href="../index.html" data-book-return><span>책으로 돌아가기<small>마지막 본문 위치</small></span></a>
+        <a class="book-link" href="vocabulary.html"><span>단어장<small>어휘 검색</small></span></a>
+        <a class="book-link" href="practice.html"><span>문제 은행<small>이어 풀기</small></span></a>
+        <a class="book-link" href="exam.html"><span>모의고사<small>실전 형식</small></span></a>
+        <a class="book-link" href="review.html"><span>오답노트<small>다시 풀기</small></span></a>
       </div>
       <div class="kicker">Levels</div>
       <nav class="level-list" id="levelNav" aria-label="모의고사 레벨"></nav>
@@ -631,7 +707,8 @@
     </main>
   </div>
 
-  <script src="data/practice/manifest.js"></script>
+  <script src="../data/practice/manifest.js"></script>
+  <script src="../assets/navigation-state.js"></script>
   <script>
     var meta = window.PRACTICE_META;
     var bank = window.PRACTICE_BANK;
@@ -639,11 +716,78 @@
     var loadingLevels = {};
     var loadedFiles = {};
     var loadingFiles = {};
-    var examTimes = { n5: 50, n4: 65, n3: 95, n2: 115, n1: 125 };
     var wrongNoteKey = "jgb-wrong-notes";
+    JGB_NAV.restorePageHash("exam", function (hash) {
+      return meta.levels.some(function (level) { return level.id === hash; });
+    });
+    var savedPage = JGB_NAV.readPage("exam") || {};
+    var examTimes = { n5: 90, n4: 115, n3: 140, n2: 155, n1: 165 };
+    var examSpecs = {
+      n1: {
+        pass: 100,
+        sections: [
+          { label: "언어지식(문자·어휘·문법)+독해", time: 110, sections: ["vocab", "grammar", "reading"] },
+          { label: "청해", time: 55, sections: ["listening"] }
+        ],
+        scoring: [
+          { label: "언어지식", range: 60, pass: 19, sections: ["vocab", "grammar"] },
+          { label: "독해", range: 60, pass: 19, sections: ["reading"] },
+          { label: "청해", range: 60, pass: 19, sections: ["listening"] }
+        ]
+      },
+      n2: {
+        pass: 90,
+        sections: [
+          { label: "언어지식(문자·어휘·문법)+독해", time: 105, sections: ["vocab", "grammar", "reading"] },
+          { label: "청해", time: 50, sections: ["listening"] }
+        ],
+        scoring: [
+          { label: "언어지식", range: 60, pass: 19, sections: ["vocab", "grammar"] },
+          { label: "독해", range: 60, pass: 19, sections: ["reading"] },
+          { label: "청해", range: 60, pass: 19, sections: ["listening"] }
+        ]
+      },
+      n3: {
+        pass: 95,
+        sections: [
+          { label: "언어지식(문자·어휘)", time: 30, sections: ["vocab"] },
+          { label: "언어지식(문법)+독해", time: 70, sections: ["grammar", "reading"] },
+          { label: "청해", time: 40, sections: ["listening"] }
+        ],
+        scoring: [
+          { label: "언어지식", range: 60, pass: 19, sections: ["vocab", "grammar"] },
+          { label: "독해", range: 60, pass: 19, sections: ["reading"] },
+          { label: "청해", range: 60, pass: 19, sections: ["listening"] }
+        ]
+      },
+      n4: {
+        pass: 90,
+        sections: [
+          { label: "언어지식(문자·어휘)", time: 25, sections: ["vocab"] },
+          { label: "언어지식(문법)+독해", time: 55, sections: ["grammar", "reading"] },
+          { label: "청해", time: 35, sections: ["listening"] }
+        ],
+        scoring: [
+          { label: "언어지식+독해", range: 120, pass: 38, sections: ["vocab", "grammar", "reading"] },
+          { label: "청해", range: 60, pass: 19, sections: ["listening"] }
+        ]
+      },
+      n5: {
+        pass: 80,
+        sections: [
+          { label: "언어지식(문자·어휘)", time: 20, sections: ["vocab"] },
+          { label: "언어지식(문법)+독해", time: 40, sections: ["grammar", "reading"] },
+          { label: "청해", time: 30, sections: ["listening"] }
+        ],
+        scoring: [
+          { label: "언어지식+독해", range: 120, pass: 38, sections: ["vocab", "grammar", "reading"] },
+          { label: "청해", range: 60, pass: 19, sections: ["listening"] }
+        ]
+      }
+    };
     var state = {
       level: location.hash.replace("#", "") || "n2",
-      mode: "full",
+      mode: savedPage.mode === "quick" ? "quick" : "full",
       started: false,
       submitted: false,
       timeExpired: false,
@@ -653,6 +797,7 @@
       examSets: [],
       answers: {}
     };
+    var didRestoreScroll = false;
 
     function escapeHTML(value) {
       return String(value || "").replace(/[&<>"']/g, function (char) {
@@ -676,6 +821,27 @@
     function labelSection(id) {
       var section = sectionById(id);
       return section ? section.label : "영역";
+    }
+
+    function specForLevel(levelId) {
+      return examSpecs[levelId || state.level] || examSpecs.n2;
+    }
+
+    function officialSectionSummary(spec) {
+      return spec.sections.map(function (section) {
+        return section.label + " " + section.time + "분";
+      }).join(" · ");
+    }
+
+    function officialPassSummary(spec) {
+      return "총점 " + spec.pass + "/180 이상, " + spec.scoring.map(function (group) {
+        return group.label + " " + group.pass + "/" + group.range + " 이상";
+      }).join(" · ");
+    }
+
+    function sitePath(path) {
+      if (!path || path.indexOf("../") === 0 || path.indexOf("/") === 0) return path;
+      return "../" + path;
     }
 
     function formatTime(seconds) {
@@ -752,7 +918,7 @@
       if (loadingFiles[file]) return loadingFiles[file];
       loadingFiles[file] = new Promise(function (resolve, reject) {
         var script = document.createElement("script");
-        script.src = file;
+        script.src = sitePath(file);
         script.onload = function () {
           loadedFiles[file] = true;
           resolve();
@@ -816,6 +982,7 @@
 
     function renderIntro() {
       document.getElementById("startBtn").textContent = "시험 시작";
+      var spec = specForLevel();
       var minutes = state.mode === "full" ? examTimes[state.level] : 45;
       document.getElementById("examRoot").innerHTML =
         '<section class="panel">' +
@@ -826,6 +993,12 @@
             '<span class="pill navy">' + minutes + '분 제한</span>' +
             '<span class="pill">제출 후 자동 채점</span>' +
             '<span class="pill">오답 해설 포함</span>' +
+          '</div>' +
+          '<div class="info-grid">' +
+            '<div class="info-card"><b>시험 교시</b><p>' + escapeHTML(officialSectionSummary(spec)) + '</p></div>' +
+            '<div class="info-card"><b>공식 시간</b><p>전체 실전 ' + examTimes[state.level] + '분 기준이다. 약식은 45분으로 짧게 훈련한다.</p></div>' +
+            '<div class="info-card"><b>합격 기준</b><p>' + escapeHTML(officialPassSummary(spec)) + '</p></div>' +
+            '<div class="info-card"><b>시험 일정</b><p>JLPT는 보통 7월과 12월에 시행된다. 2026년 공식 시험일은 7월 5일, 12월 6일이며 해외 도시는 회차가 다를 수 있다.</p></div>' +
           '</div>' +
         '</section>';
     }
@@ -873,22 +1046,42 @@
       if (!state.submitted) return "";
       var score = scoreExam();
       var rate = score.total ? Math.round(score.correct / score.total * 100) : 0;
-      var sectionCards = meta.sections.map(function (section) {
-        var stat = score.sectionStats[section.id] || { total: 0, correct: 0 };
-        var sectionRate = stat.total ? Math.round(stat.correct / stat.total * 100) : 0;
-        return '<div class="score-card"><b>' + escapeHTML(section.label) + '</b><strong>' +
-          stat.correct + ' / ' + stat.total + '</strong><span class="exam-note">' + sectionRate + '%</span></div>';
+      var spec = specForLevel();
+      var scaledTotal = 0;
+      var groupCards = spec.scoring.map(function (group) {
+        var total = 0;
+        var correct = 0;
+        group.sections.forEach(function (section) {
+          var stat = score.sectionStats[section] || { total: 0, correct: 0 };
+          total += stat.total;
+          correct += stat.correct;
+        });
+        var scaled = total ? Math.round(correct / total * group.range) : 0;
+        scaledTotal += scaled;
+        return '<div class="score-card"><b>' + escapeHTML(group.label) + '</b><strong>' +
+          scaled + ' / ' + group.range + '</strong><span class="exam-note">원점수 ' + correct + ' / ' + total + ' · 기준 ' + group.pass + ' 이상</span></div>';
       }).join("");
-      var verdict = rate >= 75 ? "합격권 유지" : rate >= 65 ? "합격권 근접" : "재복습 필요";
+      var sectionPass = spec.scoring.every(function (group) {
+        var total = 0;
+        var correct = 0;
+        group.sections.forEach(function (section) {
+          var stat = score.sectionStats[section] || { total: 0, correct: 0 };
+          total += stat.total;
+          correct += stat.correct;
+        });
+        return total ? Math.round(correct / total * group.range) >= group.pass : false;
+      });
+      var verdict = scaledTotal >= spec.pass && sectionPass ? "연습 환산 합격권" : rate >= 65 ? "합격권 근접" : "재복습 필요";
       return '<section class="panel" id="resultPanel">' +
         '<h3>' + (state.timeExpired ? "시간 종료 채점" : "모의고사 결과") + '</h3>' +
         '<div class="summary-row">' +
           '<span class="pill">정답 ' + score.correct + ' / ' + score.total + '</span>' +
-          '<span class="pill navy">정답률 ' + rate + '%</span>' +
+          '<span class="pill navy">연습 환산 ' + scaledTotal + ' / 180</span>' +
+          '<span class="pill">공식 총점 기준 ' + spec.pass + ' 이상</span>' +
           '<span class="pill">' + verdict + '</span>' +
         '</div>' +
-        '<div class="result-grid">' + sectionCards + '</div>' +
-        '<p>이 기준은 연습용 합격권 판단이다. 틀리거나 비워 둔 문제는 오답노트에 저장된다.</p>' +
+        '<div class="result-grid">' + groupCards + '</div>' +
+        '<p>이 점수는 문제은행 정답률을 JLPT 공개 배점 구조에 맞춘 연습용 환산이다. 실제 JLPT는 원점수와 최종 점수 변환 방식이 다르므로, 틀리거나 비워 둔 문제를 오답노트에서 다시 정리한다.</p>' +
         '<div class="summary-row"><a class="action secondary" href="review.html#' + escapeHTML(state.level) + '">오답노트에서 다시 풀기</a></div>' +
       '</section>';
     }
@@ -906,7 +1099,7 @@
         : '<p class="lock-note">대본은 제출 후 표시된다.</p>';
       return '<div class="audio-card">' +
         '<p class="audio-title">청해 음성</p>' +
-        '<audio controls preload="metadata" src="' + escapeHTML(set.audio) + '"></audio>' +
+        '<audio controls preload="metadata" src="' + escapeHTML(sitePath(set.audio)) + '"></audio>' +
         transcript +
       '</div>';
     }
@@ -953,6 +1146,17 @@
       '</article>';
     }
 
+    function renderExamSection(section) {
+      var sets = state.examSets.filter(function (set) {
+        return section.sections.indexOf(set.section) !== -1;
+      });
+      if (!sets.length) return "";
+      return '<section class="exam-section">' +
+        '<div class="exam-section-head"><h3>' + escapeHTML(section.label) + '</h3><small>' + section.time + '분</small></div>' +
+        sets.map(renderSet).join("") +
+      '</section>';
+    }
+
     function bindInputs() {
       document.querySelectorAll(".option-input").forEach(function (input) {
         input.addEventListener("change", function (event) {
@@ -964,12 +1168,14 @@
 
     function renderExam() {
       var total = countQuestions(state.examSets);
+      var spec = specForLevel();
       document.getElementById("examRoot").innerHTML =
         resultHTML() +
         '<div class="exam-bar">' +
           '<div><div class="summary-row">' +
             '<span class="pill">' + escapeHTML(labelLevel(state.level)) + '</span>' +
             '<span class="pill navy">' + (state.mode === "full" ? "전체 실전" : "약식") + '</span>' +
+            '<span class="pill navy">공식 시간 ' + examTimes[state.level] + '분</span>' +
             '<span class="pill">세트 ' + state.examSets.length + '개</span>' +
             '<span class="pill">문항 ' + total + '개</span>' +
           '</div><div class="exam-note" id="progressText"></div></div>' +
@@ -978,7 +1184,7 @@
         '<div class="summary-row">' +
           (state.submitted ? '<button class="action secondary" id="retryBtn" type="button">다시 풀기</button>' : '<button class="action" id="submitBtn" type="button">제출하고 채점</button>') +
         '</div>' +
-        '<section class="exam-grid">' + state.examSets.map(renderSet).join("") + '</section>';
+        '<section class="exam-grid">' + spec.sections.map(renderExamSection).join("") + '</section>';
       renderProgress();
       renderClock();
       bindInputs();
@@ -1037,11 +1243,22 @@
       document.getElementById("themeBtn").textContent = "◐";
     }
 
+    function restoreScrollOnce() {
+      if (didRestoreScroll) return;
+      didRestoreScroll = true;
+      JGB_NAV.restorePageScroll("exam");
+    }
+
     function init() {
       if (!levelById(state.level)) state.level = "n2";
       renderNav();
       setThemeGlyph();
       renderIntro();
+      JGB_NAV.decorateLinks();
+      JGB_NAV.trackPage("exam", function () {
+        return { hash: state.level, mode: state.mode };
+      });
+      restoreScrollOnce();
       document.getElementById("startBtn").disabled = false;
     }
 
@@ -1053,6 +1270,7 @@
       state.mode = event.target.value;
       resetExam();
       renderNav();
+      JGB_NAV.savePage("exam", { hash: state.level, mode: state.mode });
     });
     document.getElementById("themeBtn").addEventListener("click", function () {
       var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
@@ -1065,6 +1283,7 @@
       state.level = levelById(next) ? next : "n2";
       resetExam();
       renderNav();
+      restoreScrollOnce();
     });
 
     init();

@@ -119,7 +119,8 @@
 
     .link-stack {
       display: grid;
-      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
       margin: 26px 0 22px;
     }
 
@@ -128,17 +129,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       border-radius: 8px;
-      padding: 9px 10px;
+      padding: 8px;
     }
 
     .book-link {
       border: 1px solid var(--line);
       background: var(--paper);
       color: var(--ink);
+      min-height: 42px;
       font-weight: 800;
-      box-shadow: var(--shadow);
+      font-size: 12.5px;
+      line-height: 1.25;
+    }
+
+    .book-link.book-home {
+      grid-column: 1 / -1;
+    }
+
+    .book-link.active {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--seal);
     }
 
     .book-link small {
@@ -146,6 +159,10 @@
       color: var(--ink-faint);
       font-size: 11px;
       font-weight: 700;
+    }
+
+    .book-link.active small {
+      color: var(--seal);
     }
 
     .level-list {
@@ -205,7 +222,7 @@
 
     .controls {
       display: grid;
-      grid-template-columns: 1fr auto auto auto;
+      grid-template-columns: minmax(0, 1fr) auto auto auto auto;
       gap: 8px;
       margin: 0 0 20px;
     }
@@ -226,6 +243,7 @@
 
     .search,
     .select,
+    .action,
     .theme {
       height: 40px;
       border: 1px solid var(--line);
@@ -239,6 +257,25 @@
     }
 
     .select { padding: 0 10px; }
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-color: var(--seal);
+      background: var(--seal);
+      color: var(--paper);
+      padding: 0 12px;
+      cursor: pointer;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .action.secondary {
+      border-color: var(--line);
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
     .theme {
       min-width: 40px;
       cursor: pointer;
@@ -263,6 +300,89 @@
     .practice-grid {
       display: grid;
       gap: 14px;
+    }
+
+    .flow-panel {
+      display: none;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .flow-panel.open {
+      display: grid;
+    }
+
+    .flow-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 12px;
+    }
+
+    .flow-title {
+      margin: 0 0 4px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .flow-note {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .flow-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .flow-choice {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .flow-choice button {
+      width: 100%;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--sidebar);
+      color: var(--ink);
+      padding: 9px 10px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .flow-choice button.correct {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
+    .flow-choice button.wrong {
+      border-color: var(--navy);
+      background: var(--navy-soft);
+      color: var(--navy);
+    }
+
+    .flow-answer {
+      border-radius: 9px;
+      background: var(--seal-soft);
+      color: var(--ink-soft);
+      padding: 12px;
+      font-size: 14px;
     }
 
     .set-card {
@@ -472,6 +592,8 @@
       .main { padding: 28px 20px 64px; }
       .controls { grid-template-columns: 1fr auto; }
       .select { grid-column: 1 / -1; }
+      .action { grid-column: 1 / -1; width: 100%; }
+      .flow-head { display: grid; }
       .set-head { display: grid; }
       .set-meta { justify-content: flex-start; }
       .choices { grid-template-columns: 1fr; }
@@ -497,10 +619,11 @@
       <p class="sub">N5부터 N1까지 실전 문제와 정답 해설</p>
       <p class="author">지은이 문성혁</p>
       <div class="link-stack">
-        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="vocabulary.html"><span>단어장 보기<small>검색과 반복 암기</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="exam.html"><span>모의고사 보기<small>시간 제한 채점</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="review.html"><span>오답노트 보기<small>틀린 문제 다시 풀기</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link book-home" href="../index.html" data-book-return><span>책으로 돌아가기<small>마지막 본문 위치</small></span></a>
+        <a class="book-link" href="vocabulary.html"><span>단어장<small>어휘 검색</small></span></a>
+        <a class="book-link" href="practice.html"><span>문제 은행<small>이어 풀기</small></span></a>
+        <a class="book-link" href="exam.html"><span>모의고사<small>실전 형식</small></span></a>
+        <a class="book-link" href="review.html"><span>오답노트<small>다시 풀기</small></span></a>
       </div>
       <div class="kicker">Levels</div>
       <nav class="level-list" id="levelNav" aria-label="문제 은행 레벨"></nav>
@@ -518,15 +641,18 @@
           </div>
           <select class="select" id="levelSelect" aria-label="레벨 선택"></select>
           <select class="select" id="sectionSelect" aria-label="영역 선택"></select>
+          <button class="action secondary" id="flowBtn" type="button">한 문제씩 풀기</button>
           <button class="theme" id="themeBtn" type="button" aria-label="테마 전환">◐</button>
         </div>
         <div class="status-row" id="status"></div>
+        <section class="flow-panel" id="flowPanel" aria-live="polite"></section>
         <section class="practice-grid" id="practiceGrid" aria-live="polite"></section>
       </div>
     </main>
   </div>
 
-  <script src="data/practice/manifest.js"></script>
+  <script src="../data/practice/manifest.js"></script>
+  <script src="../assets/navigation-state.js"></script>
   <script>
     var meta = window.PRACTICE_META;
     var bank = window.PRACTICE_BANK;
@@ -535,11 +661,23 @@
     var loadedFiles = {};
     var loadingFiles = {};
     var wrongNoteKey = "jgb-wrong-notes";
+    JGB_NAV.restorePageHash("practice", function (hash) {
+      return hash === "all" || meta.levels.some(function (level) { return level.id === hash; });
+    });
+    var savedPage = JGB_NAV.readPage("practice") || {};
     var state = {
       level: location.hash.replace("#", "") || "n5",
-      section: "all",
-      query: ""
+      section: savedPage.section || "all",
+      query: savedPage.query || ""
     };
+    var flowState = {
+      active: false,
+      pool: [],
+      index: 0,
+      answered: false,
+      picked: null
+    };
+    var didRestoreScroll = false;
 
     function escapeHTML(value) {
       return String(value || "").replace(/[&<>"']/g, function (char) {
@@ -569,13 +707,18 @@
       document.getElementById("themeBtn").textContent = "◐";
     }
 
+    function sitePath(path) {
+      if (!path || path.indexOf("../") === 0 || path.indexOf("/") === 0) return path;
+      return "../" + path;
+    }
+
     function ensureFile(file) {
       if (!file) return Promise.resolve();
       if (loadedFiles[file]) return Promise.resolve();
       if (loadingFiles[file]) return loadingFiles[file];
       loadingFiles[file] = new Promise(function (resolve, reject) {
         var script = document.createElement("script");
-        script.src = file;
+        script.src = sitePath(file);
         script.onload = function () {
           loadedFiles[file] = true;
           resolve();
@@ -635,6 +778,40 @@
         if (query && textOfSet(set).indexOf(query) === -1) return false;
         return true;
       });
+    }
+
+    function interleaveQuestionItems(items) {
+      var groups = meta.sections.reduce(function (acc, section) {
+        acc[section.id] = [];
+        return acc;
+      }, {});
+      items.forEach(function (item) {
+        if (!groups[item.set.section]) groups[item.set.section] = [];
+        groups[item.set.section].push(item);
+      });
+      var ordered = [];
+      var added = true;
+      while (added) {
+        added = false;
+        meta.sections.forEach(function (section) {
+          var item = groups[section.id] && groups[section.id].shift();
+          if (item) {
+            ordered.push(item);
+            added = true;
+          }
+        });
+      }
+      return ordered;
+    }
+
+    function buildFlowPool() {
+      var items = [];
+      filteredSets().forEach(function (set) {
+        set.questions.forEach(function (question) {
+          items.push({ set: set, question: question });
+        });
+      });
+      return state.section === "all" ? interleaveQuestionItems(items) : items;
     }
 
     function formatTranscript(text) {
@@ -708,7 +885,7 @@
       var passage = set.passage ? '<div class="passage"><p class="passage-title">문제 자료</p><p>' + escapeHTML(set.passage) + '</p></div>' : "";
       var audio = set.audio ? '<div class="audio-card">' +
         '<p class="audio-title">청해 음성</p>' +
-        '<audio controls preload="metadata" src="' + escapeHTML(set.audio) + '"></audio>' +
+        '<audio controls preload="metadata" src="' + escapeHTML(sitePath(set.audio)) + '"></audio>' +
         '<details class="transcript">' +
           '<summary>대본 보기</summary>' +
           '<div class="script-lines">' + formatTranscript(set.transcript) + '</div>' +
@@ -767,6 +944,98 @@
       document.title = "일본어 가이드북 문제 은행 · " + title;
     }
 
+    function renderFlow() {
+      var panel = document.getElementById("flowPanel");
+      document.getElementById("flowBtn").textContent = flowState.active ? "이어 풀기 닫기" : "한 문제씩 풀기";
+      panel.classList.toggle("open", flowState.active);
+      if (!flowState.active) {
+        panel.innerHTML = "";
+        return;
+      }
+      if (!flowState.pool.length) {
+        panel.innerHTML = '<div class="empty">현재 필터로 이어 풀 문제가 없습니다.</div>';
+        return;
+      }
+      var item = flowState.pool[flowState.index % flowState.pool.length];
+      var set = item.set;
+      var question = item.question;
+      var correctChoice = question.choices[question.answer];
+      var passage = set.passage ? '<div class="passage"><p class="passage-title">문제 자료</p><p>' + escapeHTML(set.passage) + '</p></div>' : "";
+      var audio = set.audio ? '<div class="audio-card"><p class="audio-title">청해 음성</p><audio controls preload="metadata" src="' + escapeHTML(sitePath(set.audio)) + '"></audio>' +
+        (flowState.answered ? '<details class="transcript"><summary>대본 보기</summary><div class="script-lines">' + formatTranscript(set.transcript) + '</div></details>' : "") + '</div>' : "";
+      var choices = question.choices.map(function (choice, choiceIndex) {
+        var classes = "";
+        if (flowState.answered && choiceIndex === question.answer) classes = " correct";
+        if (flowState.answered && choiceIndex === flowState.picked && choiceIndex !== question.answer) classes = " wrong";
+        return '<li><button class="' + classes + '" type="button" data-choice="' + choiceIndex + '"' +
+          (flowState.answered ? " disabled" : "") + '>' + (choiceIndex + 1) + ". " + escapeHTML(choice) + '</button></li>';
+      }).join("");
+      var answer = flowState.answered ? '<div class="flow-answer"><b class="correct">정답 ' + (question.answer + 1) + '번</b> · ' +
+        escapeHTML(correctChoice) + '<br>' + escapeHTML(question.explanation) +
+        (flowState.picked === question.answer ? "" : '<br>틀린 문제는 오답노트에 저장되었습니다.') + '</div>' : "";
+      panel.innerHTML =
+        '<div class="flow-head"><div><h3 class="flow-title">이어 풀기 · ' + escapeHTML(labelSection(set.section)) + '</h3>' +
+        '<p class="flow-note">' + escapeHTML(labelLevel(set.level)) + " · " + escapeHTML(set.title) + " · " + (flowState.index + 1) + " / " + flowState.pool.length + '</p></div>' +
+        '<div class="flow-actions"><button class="action secondary" type="button" data-flow="reshuffle">다시 섞기</button></div></div>' +
+        passage + audio +
+        '<div class="question"><p class="prompt">' + escapeHTML(question.prompt) + '</p><ol class="flow-choice">' + choices + '</ol></div>' +
+        answer +
+        '<div class="flow-actions">' +
+          '<button class="action" type="button" data-flow="next"' + (flowState.answered ? "" : " disabled") + '>다음 문제</button>' +
+          '<button class="action secondary" type="button" data-flow="close">닫기</button>' +
+        '</div>';
+    }
+
+    function refreshFlowPool() {
+      if (!flowState.active) {
+        renderFlow();
+        return;
+      }
+      flowState.pool = buildFlowPool();
+      flowState.index = Math.min(flowState.index, Math.max(0, flowState.pool.length - 1));
+      flowState.answered = false;
+      flowState.picked = null;
+      renderFlow();
+    }
+
+    function answerFlow(choiceIndex) {
+      if (!flowState.active || flowState.answered || !flowState.pool.length) return;
+      var item = flowState.pool[flowState.index % flowState.pool.length];
+      flowState.picked = Number(choiceIndex);
+      flowState.answered = true;
+      if (flowState.picked !== item.question.answer) saveWrongQuestion(item.set.id, item.question.id);
+      renderFlow();
+    }
+
+    function nextFlow() {
+      if (!flowState.pool.length) return;
+      flowState.index = (flowState.index + 1) % flowState.pool.length;
+      flowState.answered = false;
+      flowState.picked = null;
+      renderFlow();
+    }
+
+    function toggleFlow(forceOpen) {
+      flowState.active = typeof forceOpen === "boolean" ? forceOpen : !flowState.active;
+      if (!flowState.active) {
+        renderFlow();
+        return;
+      }
+      ensureCurrentData().then(function () {
+        flowState.index = 0;
+        flowState.answered = false;
+        flowState.picked = null;
+        flowState.pool = buildFlowPool();
+        renderFlow();
+      });
+    }
+
+    function restoreScrollOnce() {
+      if (didRestoreScroll) return;
+      didRestoreScroll = true;
+      JGB_NAV.restorePageScroll("practice");
+    }
+
     function render() {
       renderLevelNav();
       document.getElementById("levelSelect").value = state.level;
@@ -778,6 +1047,7 @@
         document.getElementById("practiceGrid").innerHTML = sets.length
           ? sets.map(renderSet).join("")
           : '<div class="empty">조건에 맞는 문제가 없습니다.</div>';
+        refreshFlowPool();
       }).catch(function () {
         document.getElementById("practiceGrid").innerHTML = '<div class="empty">문제 데이터를 불러오지 못했습니다.</div>';
       });
@@ -785,6 +1055,11 @@
 
     renderOptions();
     setThemeGlyph();
+    JGB_NAV.decorateLinks();
+    JGB_NAV.trackPage("practice", function () {
+      return { hash: state.level, section: state.section, query: state.query };
+    });
+    document.getElementById("search").value = state.query;
     document.getElementById("levelSelect").addEventListener("change", function (event) {
       location.hash = event.target.value;
     });
@@ -795,6 +1070,18 @@
     document.getElementById("search").addEventListener("input", function (event) {
       state.query = event.target.value;
       render();
+    });
+    document.getElementById("flowBtn").addEventListener("click", function () {
+      toggleFlow();
+    });
+    document.getElementById("flowPanel").addEventListener("click", function (event) {
+      var choice = event.target.closest("[data-choice]");
+      var action = event.target.closest("[data-flow]");
+      if (choice) answerFlow(choice.dataset.choice);
+      if (!action) return;
+      if (action.dataset.flow === "next") nextFlow();
+      if (action.dataset.flow === "close") toggleFlow(false);
+      if (action.dataset.flow === "reshuffle") toggleFlow(true);
     });
     document.getElementById("themeBtn").addEventListener("click", function () {
       var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
@@ -812,14 +1099,14 @@
     window.addEventListener("hashchange", function () {
       var next = location.hash.replace("#", "") || "n5";
       state.level = next === "all" || levelById(next) ? next : "n5";
-      render();
+      render().then(restoreScrollOnce);
     });
 
     if (!levelById(state.level) && state.level !== "all") {
       state.level = "n5";
       location.hash = "n5";
     }
-    render();
+    render().then(restoreScrollOnce);
   </script>
 </body>
 </html>

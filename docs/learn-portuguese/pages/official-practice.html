@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Celpe-Bras 공식 자료와 공개 문서를 연결하고, 기출 자료를 시간 제한 풀이와 답안 클리닉으로 바꾸는 학습실."
+    >
+    <title>공식 자료 활용실 | 브라질식 포르투갈어 가이드북</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <script>
+      const savedTheme = localStorage.getItem("lp-theme");
+      if (savedTheme === "dark") {
+        document.documentElement.dataset.theme = "dark";
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="../index.html#top" aria-label="브라질식 포르투갈어 가이드북 홈">
+          <span class="brand-mark" aria-hidden="true">BR</span>
+          <span>
+            <span class="brand-title">Português do Brasil</span>
+          </span>
+        </a>
+        <button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4.5a1 1 0 0 1 1 1v1.2a1 1 0 1 1-2 0V5.5a1 1 0 0 1 1-1Zm0 12.8a5.3 5.3 0 1 0 0-10.6 5.3 5.3 0 0 0 0 10.6Zm7.5-5.3a1 1 0 0 1-1 1h-1.2a1 1 0 1 1 0-2h1.2a1 1 0 0 1 1 1ZM6.7 12a1 1 0 0 1-1 1H4.5a1 1 0 1 1 0-2h1.2a1 1 0 0 1 1 1Zm10.6-6.7a1 1 0 0 1 1.4 1.4l-.8.9a1 1 0 0 1-1.5-1.4l.9-.9ZM7.6 16.4a1 1 0 0 1 0 1.5l-.9.8a1 1 0 1 1-1.4-1.4l.9-.9a1 1 0 0 1 1.4 0Zm11.1.9a1 1 0 0 1-1.4 1.4l-.9-.8a1 1 0 0 1 1.5-1.5l.8.9ZM7.6 6.2a1 1 0 1 1-1.4 1.4l-.9-.9a1 1 0 0 1 1.4-1.4l.9.9Z"/>
+          </svg>
+          <span data-theme-label>다크 모드</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="resource-page" id="main-content" tabindex="-1">
+      <nav class="resource-nav" aria-label="자료실 이동">
+        <a href="../index.html#resource-library">교재로 돌아가기</a>
+        <a href="roadmap.html">합격 로드맵</a>
+        <a href="official-practice.html" aria-current="page">공식 자료</a>
+        <a href="resources/theme-pack.html">주제팩</a>
+        <a href="resources/expression-bank.html">표현 은행</a>
+        <a href="resources/reading-summary.html">독해·요약</a>
+        <a href="genre-bank.html">장르 은행</a>
+        <a href="oral-bank.html">구술 은행</a>
+        <a href="korean-errors.html">오류집</a>
+        <a href="vocabulary.html">단어장</a>
+        <a href="practice.html">기출형 연습</a>
+        <a href="listening.html">듣기 자료</a>
+        <a href="celpe-tasks.html">Celpe-Bras 과제</a>
+        <a href="mock-exam.html">모의시험</a>
+        <a href="answer-clinic.html">답안 클리닉</a>
+      </nav>
+
+      <section class="resource-hero">
+        <p class="eyebrow">Official Practice Room</p>
+        <h1>공식 자료 활용실</h1>
+        <p>
+          이 페이지는 공식 자료를 복제하지 않습니다. Inep와 Sistema Celpe-Bras의 공개 자료로 이동한 뒤,
+          실제 시험 자료를 시간 제한 풀이, 답안 분석, 재작성 루틴으로 바꾸는 방법을 정리합니다.
+        </p>
+      </section>
+
+      <nav class="resource-jump" aria-label="공식 자료 활용실 내부 이동">
+        <span>활용 순서</span>
+        <a href="#official-sources">공식 링크</a>
+        <a href="#official-korea">국내 확인</a>
+        <a href="#official-operations">시험 운영</a>
+        <a href="#official-anatomy">시험 구성</a>
+        <a href="#official-routine">풀이 절차</a>
+        <a href="#official-debrief">분석표</a>
+        <a href="#official-output">산출 기준</a>
+      </nav>
+
+      <section class="resource-section source-panel" id="official-sources">
+        <div class="section-heading compact">
+          <p class="eyebrow">Verified Links</p>
+          <h2>먼저 확인할 공식 자료</h2>
+          <p>최신 일정과 공지는 반드시 공식 사이트에서 다시 확인합니다. 아래 링크는 학습 동선을 위한 출발점입니다.</p>
+        </div>
+        <ul class="source-list">
+          <li>
+            <a href="https://celpebras.inep.gov.br/" target="_blank" rel="noreferrer">Sistema Celpe-Bras</a>
+            <span>신청, 참가자 정보, 결과 확인 등 실제 운영 시스템으로 이동합니다.</span>
+          </li>
+          <li>
+            <a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/legislacao/celpe-bras" target="_blank" rel="noreferrer">Inep Celpe-Bras 법령·공지 모음</a>
+            <span>연도별 edital, portaria, 결과 관련 공지를 확인하는 허브입니다.</span>
+          </li>
+          <li>
+            <a href="https://www.gov.br/inep/pt-br/acesso-a-informacao/perguntas-frequentes/celpe-bras" target="_blank" rel="noreferrer">Inep Celpe-Bras FAQ</a>
+            <span>신청 절차, 시스템 접속, 참가자 정보 입력 등 행정 절차를 점검합니다.</span>
+          </li>
+          <li>
+            <a href="https://download.inep.gov.br/publicacoes/institucionais/avaliacoes_e_exames_da_educacao_basica/documento_base_do_exame_celpe_bras.pdf" target="_blank" rel="noreferrer">Documento-base do Exame Celpe-Bras</a>
+            <span>시험이 어떤 능력을 평가하는지 이해할 때 참고하는 공식 기반 문서입니다.</span>
+          </li>
+          <li>
+            <a href="https://download.inep.gov.br/publicacoes/institucionais/avaliacoes_e_exames_da_educacao_basica/caderno_tarefas_comentadas_celpebras_edicao_2019_2_segunda_edicao.pdf" target="_blank" rel="noreferrer">Caderno de Tarefas Comentadas</a>
+            <span>공개 과제와 해설을 통해 답안이 어떻게 읽히는지 분석합니다.</span>
+          </li>
+          <li>
+            <a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/celpe-bras" target="_blank" rel="noreferrer">Inep Celpe-Bras 뉴스</a>
+            <span>최근 시행, 게시물, 일정 변경 여부를 확인합니다.</span>
+          </li>
+          <li>
+            <a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/celpe-bras/inscricoes-abertas-para-o-celpe-bras-2026-1" target="_blank" rel="noreferrer">Celpe-Bras 2026/1 공지 예시</a>
+            <span>2026/1 일정처럼 실제 회차별 접수, 시험일, 결과일이 어떻게 공지되는지 확인합니다.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="resource-section source-panel" id="official-korea">
+        <div class="section-heading compact">
+          <p class="eyebrow">Korea Checkpoints</p>
+          <h2>한국에서 최신 정보를 확인하는 순서</h2>
+          <p>
+            국내 응시자는 공식 회차 정보와 현장 운영 공지를 나누어 봐야 합니다.
+            접수 가능 포스트, 정원, 응시료 납부, 구술 시간은 회차와 포스트마다 달라질 수 있으므로,
+            아래 순서대로 같은 정보를 두 번 확인합니다.
+          </p>
+        </div>
+        <div class="table-wrap card-table-wrap">
+          <table class="resource-table responsive-card-table">
+            <thead>
+              <tr>
+                <th>확인처</th>
+                <th>확인할 내용</th>
+                <th>주의점</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="확인처">Sistema Celpe-Bras</td>
+                <td data-label="확인할 내용">현재 회차에 실제로 열려 있는 한국 내 posto aplicador, 잔여 vagas, 참가자 정보, 결과와 인증서.</td>
+                <td data-label="주의점">최종 기준입니다. 한국 포스트가 이전 회차에 운영되었더라도 이번 회차에 보인다는 뜻은 아닙니다.</td>
+              </tr>
+              <tr>
+                <td data-label="확인처">주한브라질대사관 교육 안내</td>
+                <td data-label="확인할 내용">Celpe-Bras의 한국어 개요, 브라질 유학·PEC-G 관련 정보, 대사관 공식 안내와 SNS 공지.</td>
+                <td data-label="주의점">회차별 접수 확정은 INEP와 Sistema에서 다시 대조합니다.</td>
+              </tr>
+              <tr>
+                <td data-label="확인처">서울 포스트: 한국외국어대학교</td>
+                <td data-label="확인할 내용">서울에서 시행되는 경우 학과 공지, 포스트 연락, 캠퍼스 안내, 현장 지시.</td>
+                <td data-label="주의점">서울 포스트가 매 회차 열리는지, 정원이 남아 있는지는 접수 기간에 Sistema에서 확인합니다.</td>
+              </tr>
+              <tr>
+                <td data-label="확인처">부산 포스트: 부산외국어대학교</td>
+                <td data-label="확인할 내용">부산 포스트의 접수 일정, 응시료 납부 안내, 시험장 위치, 구술 시간 안내.</td>
+                <td data-label="주의점">현장 납부·메일 안내는 포스트 공지를 따르되, 신청 자체는 INEP 시스템 접수와 연결해서 확인합니다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="source-list">
+          <li>
+            <a href="https://www.gov.br/mre/pt-br/embaixada-seul/korean/edu" target="_blank" rel="noreferrer">주한브라질대사관 교육 안내</a>
+            <span>한국어로 Celpe-Bras와 브라질 유학 관련 기본 정보를 확인합니다.</span>
+          </li>
+          <li>
+            <a href="https://portuguese.hufs.ac.kr/portuguese/4741/subview.do" target="_blank" rel="noreferrer">한국외국어대학교 포르투갈어과 자격시험 게시판</a>
+            <span>서울 포스트 관련 공지가 올라오는지 확인합니다.</span>
+          </li>
+          <li>
+            <a href="https://celpebufs.jjunho.org/" target="_blank" rel="noreferrer">BUFS Celpe-Bras 포스트 안내</a>
+            <span>부산 포스트의 회차별 일정, 응시료, 장소, 연락 안내를 확인합니다.</span>
+          </li>
+          <li>
+            <a href="https://www.bufs.ac.kr/bbs/board.php?bo_table=portu_board&amp;sca=%EC%9D%BC%EB%B0%98%EA%B3%B5%EC%A7%80&amp;wr_id=278" target="_blank" rel="noreferrer">부산외국어대학교 Celpe-Bras 공지 예시</a>
+            <span>국내 포스트가 응시료 납부와 당일 준비물을 어떻게 안내하는지 참고합니다.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="resource-section" id="official-operations">
+        <div class="section-heading compact">
+          <p class="eyebrow">Exam Operations</p>
+          <h2>시험 일정·시간·접수 정보 빠른표</h2>
+          <p>
+            일정, 접수 기간, 응시료, 시험 장소는 매 회차 edital과 posto aplicador 공지가 우선입니다.
+            아래 표는 2026년 7월 8일 확인 기준으로 교재에 고정해도 되는 구조 정보와, 매번 다시 확인해야 하는 운영 정보를 구분합니다.
+          </p>
+        </div>
+        <div class="table-wrap card-table-wrap">
+          <table class="resource-table responsive-card-table">
+            <thead>
+              <tr>
+                <th>항목</th>
+                <th>현재 교재에 넣을 기준</th>
+                <th>시험 전 다시 확인할 곳</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="항목">시험 일정</td>
+                <td data-label="현재 교재에 넣을 기준">회차별 edital에 따릅니다. 2026/1 예시는 접수 마감 2026년 3월 6일, 시험 2026년 4월 28일-5월 1일, 결과 2026년 6월 30일이었습니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">Inep Celpe-Bras 뉴스, 법령·공지 모음, Sistema Celpe-Bras</td>
+              </tr>
+              <tr>
+                <td data-label="항목">쓰기 파트</td>
+                <td data-label="현재 교재에 넣을 기준">최대 3시간, 네 개의 생산 과제입니다. 비디오, 오디오, 글 자료를 이해하고 목적 있는 글로 바꿉니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">Inep FAQ와 해당 회차 edital</td>
+              </tr>
+              <tr>
+                <td data-label="항목">구술 파트</td>
+                <td data-label="현재 교재에 넣을 기준">약 20분 면대면 대화입니다. 처음 약 5분은 신청 때 작성한 질문지 기반, 이후 약 15분은 세 가지 주제 자료 기반으로 진행됩니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">Inep FAQ, 참가자 영역의 구술 일정</td>
+              </tr>
+              <tr>
+                <td data-label="항목">접수 절차</td>
+                <td data-label="현재 교재에 넣을 기준">Sistema Celpe-Bras에서 계정 정보, 질문지, 서류를 입력하고, 접수 요약을 보관합니다. posto가 homologação을 완료했는지 확인해야 합니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">Sistema Celpe-Bras, 선택한 posto aplicador</td>
+              </tr>
+              <tr>
+                <td data-label="항목">응시료</td>
+                <td data-label="현재 교재에 넣을 기준">응시료는 posto와 edital에 따라 확인합니다. Inep가 정한 상한과 posto의 납부 절차가 우선입니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">해당 회차 edital, 선택한 posto aplicador</td>
+              </tr>
+              <tr>
+                <td data-label="항목">당일 준비물</td>
+                <td data-label="현재 교재에 넣을 기준">신청 때 입력한 원본 신분증 또는 여권처럼 사진이 있는 유효한 원본 문서를 지참합니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">Inep FAQ, cartão de confirmação, posto 안내</td>
+              </tr>
+              <tr>
+                <td data-label="항목">결과와 등급</td>
+                <td data-label="현재 교재에 넣을 기준">최소 Intermediário부터 인증서가 나오며, Avançado Superior는 4.26-5.00 구간입니다.</td>
+                <td data-label="시험 전 다시 확인할 곳">Sistema Celpe-Bras 결과/인증서 영역, Inep 결과 공지</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="prompt-sheet">
+          <div class="prompt-meta">
+            <span>Before registration</span>
+            <strong>접수 전 체크리스트</strong>
+          </div>
+          <ol>
+            <li>이번 회차 edital에서 접수 시작일, 마감일, 시험 적용 기간, 결과 발표일을 확인합니다.</li>
+            <li>응시 가능한 posto aplicador와 잔여 vagas를 확인합니다. 한 posto에 접수하고 다른 곳에서 시험을 볼 수 없습니다.</li>
+            <li>구술 파트 첫 5분에 쓰이는 참가자 질문지를 자세히 작성합니다.</li>
+            <li>응시료 납부와 homologação 상태를 posto와 시스템에서 확인합니다.</li>
+            <li>시험 전 cartão de confirmação, 신분증 원본, 구술 시간 예약 정보를 다시 확인합니다.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="resource-section" id="official-anatomy">
+        <div class="section-heading compact">
+          <p class="eyebrow">Exam Anatomy</p>
+          <h2>공식 자료를 볼 때 읽어야 할 구조</h2>
+          <p>문제 지문을 읽기 전에 자료, 행동, 독자, 목적을 분리합니다. 이 네 가지가 답안의 뼈대입니다.</p>
+        </div>
+        <div class="table-wrap card-table-wrap">
+          <table class="resource-table responsive-card-table">
+            <thead>
+              <tr>
+                <th>구성</th>
+                <th>자료 유형</th>
+                <th>해야 할 일</th>
+                <th>훈련 포인트</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="구성">Tarefa I</td>
+                <td data-label="자료 유형">비디오 기반</td>
+                <td data-label="해야 할 일">보고 들은 정보를 특정 독자에게 맞는 글로 바꿉니다.</td>
+                <td data-label="훈련 포인트">장면, 화자, 핵심 사건을 빠르게 잡고 세부를 과하게 옮기지 않습니다.</td>
+              </tr>
+              <tr>
+                <td data-label="구성">Tarefa II</td>
+                <td data-label="자료 유형">오디오 기반</td>
+                <td data-label="해야 할 일">들은 내용을 목적 있는 산출물로 재구성합니다.</td>
+                <td data-label="훈련 포인트">숫자, 날짜, 이유, 요청 사항을 표시하고 문장으로 새로 씁니다.</td>
+              </tr>
+              <tr>
+                <td data-label="구성">Tarefa III-IV</td>
+                <td data-label="자료 유형">글 자료 기반</td>
+                <td data-label="해야 할 일">읽은 내용을 요약, 의견, 요청, 홍보, 제안 등으로 변환합니다.</td>
+                <td data-label="훈련 포인트">자료 문장을 복사하지 않고 독자와 장르에 맞는 순서로 재배열합니다.</td>
+              </tr>
+              <tr>
+                <td data-label="구성">Parte Oral</td>
+                <td data-label="자료 유형">질문지와 elementos provocadores</td>
+                <td data-label="해야 할 일">개인 경험, 사회적 주제, 제시 자료에 대해 상호작용합니다.</td>
+                <td data-label="훈련 포인트">외운 답을 말하지 말고 질문 방향에 맞춰 예시와 이유를 바꿉니다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="resource-section" id="official-routine">
+        <div class="section-heading compact">
+          <p class="eyebrow">Practice Protocol</p>
+          <h2>공식 자료 1회분 풀이 절차</h2>
+          <p>공식 자료는 많이 보는 것보다 한 회분을 시험처럼 풀고, 같은 답안을 다시 쓰는 것이 중요합니다.</p>
+        </div>
+        <div class="check-grid">
+          <article>
+            <h3>1. 먼저 시간 제한</h3>
+            <p>자료를 미리 분석하지 말고 실제 시간처럼 풉니다. 모르는 단어가 있어도 답안을 끝까지 완성합니다.</p>
+          </article>
+          <article>
+            <h3>2. 조건 네 가지 표시</h3>
+            <p>자료, 행동, 독자, 목적을 다른 색으로 표시합니다. 답안에서 빠진 조건이 있으면 감점 위험입니다.</p>
+          </article>
+          <article>
+            <h3>3. 답안 클리닉 적용</h3>
+            <p>문법보다 과제 수행, 자료 재구성, 장르, 정확도 순서로 고칩니다.</p>
+          </article>
+          <article>
+            <h3>4. 같은 과제 재작성</h3>
+            <p>새 문제로 넘어가기 전에 같은 답안을 한 번 더 씁니다. 최고등급 준비는 재작성에서 차이가 납니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="official-debrief">
+        <div class="section-heading compact">
+          <p class="eyebrow">Debrief Sheet</p>
+          <h2>공식 기출 분석표</h2>
+          <p>풀이 후 아래 표를 채우면 공식 자료가 단순 독해 자료가 아니라 답안 훈련 자료가 됩니다.</p>
+        </div>
+        <div class="table-wrap card-table-wrap">
+          <table class="resource-table responsive-card-table">
+            <thead>
+              <tr>
+                <th>항목</th>
+                <th>기록할 내용</th>
+                <th>답안 점검 질문</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="항목">자료</td>
+                <td data-label="기록할 내용">영상, 음성, 기사, 공지문에서 반드시 써야 하는 정보</td>
+                <td data-label="답안 점검 질문">자료의 핵심을 내 문장으로 바꿨는가?</td>
+              </tr>
+              <tr>
+                <td data-label="항목">행동</td>
+                <td data-label="기록할 내용">알리기, 설득하기, 요청하기, 제안하기, 신고하기 등</td>
+                <td data-label="답안 점검 질문">독자가 답안을 읽고 무엇을 해야 하는지 분명한가?</td>
+              </tr>
+              <tr>
+                <td data-label="항목">독자</td>
+                <td data-label="기록할 내용">친구, 기관, 신문 독자, 학교, 지역 주민 등</td>
+                <td data-label="답안 점검 질문">호칭, 어조, 마무리가 독자에게 맞는가?</td>
+              </tr>
+              <tr>
+                <td data-label="항목">장르</td>
+                <td data-label="기록할 내용">이메일, carta, comunicado, texto de opinião, relatório 등</td>
+                <td data-label="답안 점검 질문">그 장르에서 기대하는 시작과 끝이 있는가?</td>
+              </tr>
+              <tr>
+                <td data-label="항목">오류</td>
+                <td data-label="기록할 내용">반복된 전치사, 시제, 성수 일치, 문체, 철자 오류</td>
+                <td data-label="답안 점검 질문">다음 답안에서 같은 오류를 먼저 찾을 수 있는가?</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="resource-section" id="official-output">
+        <div class="section-heading compact">
+          <p class="eyebrow">Output Targets</p>
+          <h2>최고등급 목표 산출량</h2>
+          <p>공식 자료는 마지막 두세 주에 몰아서 보는 것이 아니라, 중급 이후부터 주기적으로 산출물로 바꿔야 합니다.</p>
+        </div>
+        <div class="resource-grid two">
+          <article class="resource-card">
+            <span class="tag tag-green">쓰기</span>
+            <h3>공식 자료 기반 답안 20개</h3>
+            <p>기출형 답안과 별개로 공식 공개 자료 기반 답안을 누적합니다. 최소 절반은 재작성까지 끝냅니다.</p>
+          </article>
+          <article class="resource-card">
+            <span class="tag tag-blue">구술</span>
+            <h3>요소 자료 반응 녹음 20개</h3>
+            <p>이미지나 짧은 글을 보고 1분 의견, 2분 확장 답변, 꼬리 질문 대응을 녹음합니다.</p>
+          </article>
+          <article class="resource-card">
+            <span class="tag tag-yellow">분석</span>
+            <h3>공식 과제 분석표 10장</h3>
+            <p>자료, 행동, 독자, 목적, 장르를 분리해 기록합니다. 같은 장르가 반복되면 답안 틀이 보입니다.</p>
+          </article>
+          <article class="resource-card">
+            <span class="tag tag-red">교정</span>
+            <h3>반복 오류 10개 제거</h3>
+            <p>오답 로그에서 가장 자주 나오는 오류부터 줄입니다. 고급 답안은 새 표현보다 반복 오류 감소가 중요합니다.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>공식 자료 활용실은 공식 자료로 이동하는 학습 안내 페이지입니다.</p>
+      <a href="answer-clinic.html">답안 클리닉으로 이동</a>
+    </footer>
+
+    <script src="../assets/script.js"></script>
+  </body>
+</html>

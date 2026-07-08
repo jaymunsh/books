@@ -121,7 +121,8 @@
 
     .link-stack {
       display: grid;
-      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
       margin: 26px 0 22px;
     }
 
@@ -130,17 +131,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       border-radius: 8px;
-      padding: 9px 10px;
+      padding: 8px;
     }
 
     .book-link {
       border: 1px solid var(--line);
       background: var(--paper);
       color: var(--ink);
+      min-height: 42px;
       font-weight: 800;
-      box-shadow: var(--shadow);
+      font-size: 12.5px;
+      line-height: 1.25;
+    }
+
+    .book-link.book-home {
+      grid-column: 1 / -1;
+    }
+
+    .book-link.active {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--seal);
     }
 
     .book-link small {
@@ -148,6 +161,10 @@
       color: var(--ink-faint);
       font-size: 11px;
       font-weight: 700;
+    }
+
+    .book-link.active small {
+      color: inherit;
     }
 
     .level-list {
@@ -523,10 +540,11 @@
       <p class="sub">틀린 문제 저장과 다시 풀기</p>
       <p class="author">지은이 문성혁</p>
       <div class="link-stack">
-        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="vocabulary.html"><span>단어장 보기<small>암기 상태 저장</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="practice.html"><span>문제 은행 보기<small>문제와 정답 해설</small></span><span aria-hidden="true">↗</span></a>
-        <a class="book-link" href="exam.html"><span>모의고사 보기<small>시간 제한 채점</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link book-home" href="../index.html" data-book-return><span>책으로 돌아가기<small>마지막 본문 위치</small></span></a>
+        <a class="book-link" href="vocabulary.html"><span>단어장<small>어휘 검색</small></span></a>
+        <a class="book-link" href="practice.html"><span>문제 은행<small>이어 풀기</small></span></a>
+        <a class="book-link" href="exam.html"><span>모의고사<small>실전 형식</small></span></a>
+        <a class="book-link" href="review.html"><span>오답노트<small>다시 풀기</small></span></a>
       </div>
       <div class="kicker">Levels</div>
       <nav class="level-list" id="levelNav" aria-label="오답노트 레벨"></nav>
@@ -553,21 +571,27 @@
     </main>
   </div>
 
-  <script src="data/practice/manifest.js"></script>
+  <script src="../data/practice/manifest.js"></script>
+  <script src="../assets/navigation-state.js"></script>
   <script>
     var meta = window.PRACTICE_META;
     var bank = window.PRACTICE_BANK;
     var wrongNoteKey = "jgb-wrong-notes";
     var loadedFiles = {};
     var currentItems = [];
+    JGB_NAV.restorePageHash("review", function (hash) {
+      return hash === "all" || meta.levels.some(function (level) { return level.id === hash; });
+    });
+    var savedPage = JGB_NAV.readPage("review") || {};
     var state = {
       level: location.hash.replace("#", "") || "all",
-      section: "all",
-      query: "",
+      section: savedPage.section || "all",
+      query: savedPage.query || "",
       checked: false,
       answers: {},
       lastResult: null
     };
+    var didRestoreScroll = false;
 
     function escapeHTML(value) {
       return String(value || "").replace(/[&<>"']/g, function (char) {
@@ -621,11 +645,16 @@
       return date.getFullYear() + "." + String(date.getMonth() + 1).padStart(2, "0") + "." + String(date.getDate()).padStart(2, "0");
     }
 
+    function sitePath(path) {
+      if (!path || path.indexOf("../") === 0 || path.indexOf("/") === 0) return path;
+      return "../" + path;
+    }
+
     function ensureFile(file) {
       if (loadedFiles[file]) return Promise.resolve();
       loadedFiles[file] = new Promise(function (resolve, reject) {
         var script = document.createElement("script");
-        script.src = file;
+        script.src = sitePath(file);
         script.onload = resolve;
         script.onerror = function () { reject(new Error(file + " 로드 실패")); };
         document.body.appendChild(script);
@@ -711,7 +740,7 @@
       var picked = Object.prototype.hasOwnProperty.call(state.answers, item.key) ? Number(state.answers[item.key]) : null;
       var lastPicked = item.note.picked === null || typeof item.note.picked === "undefined" ? "미응답" : "지난 선택 " + (Number(item.note.picked) + 1) + "번";
       var passage = set.passage ? '<div class="passage"><p class="passage-title">문제 자료</p><p>' + escapeHTML(set.passage) + '</p></div>' : "";
-      var audio = set.audio ? '<div class="audio-card"><p class="audio-title">청해 음성</p><audio controls preload="metadata" src="' + escapeHTML(set.audio) + '"></audio>' +
+      var audio = set.audio ? '<div class="audio-card"><p class="audio-title">청해 음성</p><audio controls preload="metadata" src="' + escapeHTML(sitePath(set.audio)) + '"></audio>' +
         '<details class="transcript"><summary>대본 보기</summary><div class="script-lines">' + formatTranscript(set.transcript) + '</div></details></div>' : "";
       var choices = question.choices.map(function (choice, choiceIndex) {
         var checked = picked === choiceIndex;
@@ -805,9 +834,23 @@
       document.getElementById("themeBtn").textContent = "◐";
     }
 
+    function restoreScrollOnce() {
+      if (didRestoreScroll) return;
+      didRestoreScroll = true;
+      JGB_NAV.restorePageScroll("review");
+    }
+
     renderNav();
     setThemeGlyph();
-    ensureAllData().then(render).catch(function () {
+    document.getElementById("search").value = state.query;
+    JGB_NAV.decorateLinks();
+    JGB_NAV.trackPage("review", function () {
+      return { hash: state.level, section: state.section, query: state.query };
+    });
+    ensureAllData().then(function () {
+      render();
+      restoreScrollOnce();
+    }).catch(function () {
       document.getElementById("reviewGrid").innerHTML = '<div class="empty">문제 데이터를 불러오지 못했다.</div>';
     });
 
@@ -816,6 +859,7 @@
       state.level = next === "all" || levelById(next) ? next : "all";
       state.checked = false;
       render();
+      restoreScrollOnce();
     });
 
     document.getElementById("search").addEventListener("input", function (event) {

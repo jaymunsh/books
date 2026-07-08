@@ -246,6 +246,12 @@
       background: var(--sel);
     }
 
+    .resource-link.active {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
     .search-icon {
       position: absolute;
       left: 11px;
@@ -439,14 +445,24 @@
       margin-top: 0;
     }
 
-    .part-label {
+    .part-toggle {
       display: grid;
+      width: 100%;
       gap: 2px;
-      padding: 0 var(--space-2);
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      padding: 6px var(--space-2);
       margin-bottom: var(--space-2);
+      cursor: pointer;
+      text-align: left;
     }
 
-    .part-label .pnum {
+    .part-toggle:hover {
+      background: var(--sel);
+    }
+
+    .part-toggle .pnum {
       color: var(--seal);
       font-size: 10.5px;
       font-weight: 700;
@@ -454,10 +470,25 @@
       text-transform: uppercase;
     }
 
-    .part-label .pt {
+    .part-toggle .pt {
       color: var(--ink-soft);
       font-size: 12px;
       font-weight: 700;
+    }
+
+    .part-toggle .pt::after {
+      color: var(--ink-faint);
+      content: " 접기";
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .part.collapsed .part-toggle .pt::after {
+      content: " 펼치기";
+    }
+
+    .part.collapsed .part-chapters {
+      display: none;
     }
 
     .navlink {
@@ -1344,19 +1375,19 @@
         </button>
       </div>
       <div class="resource-stack">
-        <a class="resource-link" href="vocabulary.html">
+        <a class="resource-link" href="pages/vocabulary.html">
           <span>핵심 단어장<small>문자부터 N1까지</small></span>
           <span aria-hidden="true">↗</span>
         </a>
-        <a class="resource-link" href="practice.html">
+        <a class="resource-link" href="pages/practice.html">
           <span>실전 문제 은행<small>문제와 정답 해설</small></span>
           <span aria-hidden="true">↗</span>
         </a>
-        <a class="resource-link" href="exam.html">
+        <a class="resource-link" href="pages/exam.html">
           <span>실전 모의고사<small>시간 제한 자동 채점</small></span>
           <span aria-hidden="true">↗</span>
         </a>
-        <a class="resource-link" href="review.html">
+        <a class="resource-link" href="pages/review.html">
           <span>오답노트<small>틀린 문제 다시 풀기</small></span>
           <span aria-hidden="true">↗</span>
         </a>
@@ -1374,6 +1405,7 @@
 
   <script src="data/vocabulary.js"></script>
   <script src="data/lesson-guides.js"></script>
+  <script src="assets/navigation-state.js"></script>
   <script>
     window.CONTENT = {};
 
@@ -1405,6 +1437,21 @@
         <li><b>N2</b>: 기능어 문형, 문어체, 긴 독해와 실제 속도의 청해를 훈련한다.</li>
         <li><b>N1</b>: 추상어, 논설문, 함축 청해, 고급 문어체를 실제 자료로 버틴다.</li>
       </ol>
+      <div class="table-wrap"><table>
+        <thead><tr><th>급수</th><th>공식 시험 교시</th><th>시험 시간</th><th>합격 판단</th></tr></thead>
+        <tbody>
+          <tr><td>N1</td><td>언어지식(문자·어휘·문법)+독해 / 청해</td><td>110분 / 55분</td><td>총점 100점 이상, 각 영역 19점 이상</td></tr>
+          <tr><td>N2</td><td>언어지식(문자·어휘·문법)+독해 / 청해</td><td>105분 / 50분</td><td>총점 90점 이상, 각 영역 19점 이상</td></tr>
+          <tr><td>N3</td><td>문자·어휘 / 문법+독해 / 청해</td><td>30분 / 70분 / 40분</td><td>총점 95점 이상, 각 영역 19점 이상</td></tr>
+          <tr><td>N4</td><td>문자·어휘 / 문법+독해 / 청해</td><td>25분 / 55분 / 35분</td><td>총점 90점 이상, 언어지식+독해 38점, 청해 19점 이상</td></tr>
+          <tr><td>N5</td><td>문자·어휘 / 문법+독해 / 청해</td><td>20분 / 40분 / 30분</td><td>총점 80점 이상, 언어지식+독해 38점, 청해 19점 이상</td></tr>
+        </tbody>
+        <caption>JLPT 공식 기준의 교시 구성과 시간. 실제 점수는 원점수 단순 합산이 아니라 환산 점수로 통지된다.</caption>
+      </table></div>
+      <div class="box law">
+        <div class="box-label">시험 일정 확인</div>
+        <p>JLPT는 보통 7월과 12월에 시행된다. 2026년 공식 일정은 1회 시험 2026년 7월 5일, 2회 시험 2026년 12월 6일이다. 해외 시험장은 도시별로 7월 또는 12월 중 한 번만 열릴 수 있으므로, 접수 전에는 반드시 본인 도시의 실시 기관 일정을 확인한다.</p>
+      </div>
 
       <h3>0.3 전체 로드맵</h3>
       <p>권장 흐름은 N5 3개월, N4 3개월, N3 4개월, N2 6개월, N1 8-12개월이다. 하루 30분이면 30개월에 가깝고, 하루 1-2시간을 꾸준히 확보하면 24개월 안팎도 가능하다.</p>
@@ -2090,17 +2137,53 @@
       return ch.title.indexOf(prefix) === 0 ? ch.title : prefix + ch.title;
     }
 
+    var navPartStateKey = "jgb-book-nav-parts";
+    var openParts = {};
+
+    function readOpenParts() {
+      try {
+        return JSON.parse(localStorage.getItem(navPartStateKey) || "{}") || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function writeOpenParts() {
+      try {
+        localStorage.setItem(navPartStateKey, JSON.stringify(openParts));
+      } catch (error) {
+        return false;
+      }
+      return true;
+    }
+
+    function partIdForChapter(id) {
+      var found = BOOK.find(function (part) {
+        return part.chapters.some(function (ch) { return ch.id === id; });
+      });
+      return found ? found.id : BOOK[0].id;
+    }
+
     function renderNav() {
       var nav = document.getElementById("bookNav");
+      var currentId = getChapter(location.hash.replace("#", "") || "ch00").id;
+      var currentPartId = partIdForChapter(currentId);
+      var savedParts = readOpenParts();
+      var hasSavedParts = Object.keys(savedParts).length > 0;
+      openParts = hasSavedParts ? savedParts : {};
       nav.innerHTML = BOOK.map(function (part) {
-        return '<section class="part"><div class="part-label"><span class="pnum">' +
+        var isOpen = hasSavedParts ? openParts[part.id] !== false : part.id === currentPartId;
+        openParts[part.id] = isOpen;
+        return '<section class="part' + (isOpen ? "" : " collapsed") + '" data-part="' + part.id + '">' +
+          '<button class="part-toggle" type="button" aria-expanded="' + String(isOpen) + '" data-part="' + part.id + '"><span class="pnum">' +
           escapeHTML(part.num) + '</span><span class="pt">' + escapeHTML(part.title) +
-          '</span></div>' + part.chapters.map(function (ch) {
+          '</span></button><div class="part-chapters">' + part.chapters.map(function (ch) {
             return '<a class="navlink" href="#' + ch.id + '" data-id="' + ch.id +
               '"><span class="cnum">' + escapeHTML(ch.num) + '</span><span>' +
               escapeHTML(ch.title) + '</span></a>';
-          }).join("") + '</section>';
+          }).join("") + '</div></section>';
       }).join("");
+      writeOpenParts();
     }
 
     var EXAMPLE_BANK = {
@@ -2270,7 +2353,7 @@
       var level = words[0].level || "all";
       return '<section class="vocab-box" aria-label="이 장의 핵심 단어"><div class="vocab-box-head">' +
         '<div class="vocab-box-title">이 장의 핵심 단어</div>' +
-        '<a class="vocab-box-link" href="vocabulary.html#' + escapeHTML(level) + '">전체 단어장 보기</a></div>' +
+        '<a class="vocab-box-link" href="pages/vocabulary.html#' + escapeHTML(level) + '">전체 단어장 보기</a></div>' +
         '<table class="vocab-mini"><tbody>' + words.map(function (word) {
           return '<tr><td><b>' + escapeHTML(word.kana) + '</b><small>' + escapeHTML(word.kanji || word.pos) +
             '</small></td><td>' + escapeHTML(word.meaning) + '</td><td>' + escapeHTML(word.note) + '</td></tr>';
@@ -2408,6 +2491,16 @@
       document.querySelectorAll(".navlink").forEach(function (link) {
         link.classList.toggle("active", link.dataset.id === ch.id);
       });
+      document.querySelectorAll(".part").forEach(function (partNode) {
+        var isCurrentPart = partNode.dataset.part === partIdForChapter(ch.id);
+        if (isCurrentPart && partNode.classList.contains("collapsed")) {
+          partNode.classList.remove("collapsed");
+          openParts[partNode.dataset.part] = true;
+          var toggle = partNode.querySelector(".part-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "true");
+          writeOpenParts();
+        }
+      });
       renderPager(ch.id);
       setDrawer(false);
     }
@@ -2468,7 +2561,9 @@
 
     function syncRoute() {
       var id = location.hash.replace("#", "") || "ch00";
-      renderDoc(getChapter(id).id);
+      var ch = getChapter(id);
+      renderDoc(ch.id);
+      JGB_NAV.saveBookLocation(ch.id);
     }
 
     function setDrawer(open) {
@@ -2487,9 +2582,15 @@
       }
     }
 
+    JGB_NAV.restoreBookHash();
     renderNav();
     setDrawer(false);
     syncRoute();
+    JGB_NAV.decorateLinks();
+    JGB_NAV.trackBook(function () {
+      return getChapter(location.hash.replace("#", "") || "ch00").id;
+    });
+    JGB_NAV.restoreBookScroll();
 
     window.addEventListener("hashchange", syncRoute);
     window.addEventListener("resize", function () {
@@ -2516,6 +2617,16 @@
         var open = !document.body.classList.contains("nav-open");
         setDrawer(open);
       });
+    });
+    document.getElementById("bookNav").addEventListener("click", function (event) {
+      var toggle = event.target.closest(".part-toggle");
+      if (!toggle) return;
+      var part = toggle.closest(".part");
+      var nextOpen = part.classList.contains("collapsed");
+      part.classList.toggle("collapsed", !nextOpen);
+      toggle.setAttribute("aria-expanded", String(nextOpen));
+      openParts[part.dataset.part] = nextOpen;
+      writeOpenParts();
     });
     document.querySelector(".backdrop").addEventListener("click", function () {
       setDrawer(false);

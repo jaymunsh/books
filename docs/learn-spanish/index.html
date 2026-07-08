@@ -1,0 +1,4141 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="CEFR A1부터 DELE C2까지 이어지는 스페인어 마스터 가이드북"
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbfaf7'/%3E%3Cpath d='M10 8h12v16H10zM13 12h6M13 16h6M13 20h4' fill='none' stroke='%23b3432f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+    >
+    <title>스페인어 마스터 가이드북</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --surface-page: #fbfaf7;
+        --surface-primary: #ffffff;
+        --surface-secondary: #f4f1eb;
+        --surface-elevated: #fffdf8;
+        --text-primary: #24211f;
+        --text-secondary: #6d665f;
+        --text-tertiary: #9a9188;
+        --border-default: #ded7ce;
+        --border-subtle: #ece6dc;
+        --accent-primary: #b3432f;
+        --accent-hover: #8f3224;
+        --accent-secondary: #1f6c7a;
+        --accent-soft: #f5dfd7;
+        --status-success: #3f7a49;
+        --status-warning: #94661e;
+        --shadow-soft: 0 18px 50px color-mix(in srgb, var(--text-primary) 10%, transparent);
+        --shadow-hover: 0 12px 32px color-mix(in srgb, var(--text-primary) 8%, transparent);
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-5: 20px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-10: 40px;
+        --space-12: 48px;
+        --space-16: 64px;
+        --space-20: 80px;
+        --radius-card: 8px;
+        --radius-feature: 12px;
+        --font-primary: "Noto Sans KR", Aptos, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-editorial: Georgia, "Times New Roman", serif;
+        --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --surface-page: #141312;
+        --surface-primary: #1d1b19;
+        --surface-secondary: #24211e;
+        --surface-elevated: #2b2723;
+        --text-primary: #f5f0e8;
+        --text-secondary: #c8beb2;
+        --text-tertiary: #8e8378;
+        --border-default: #3d3833;
+        --border-subtle: #312d29;
+        --accent-primary: #ff8a72;
+        --accent-hover: #ffad9c;
+        --accent-secondary: #7ac8d6;
+        --accent-soft: #513129;
+        --status-success: #8ccf96;
+        --status-warning: #e7bd6f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(--space-5);
+      }
+
+      [id] {
+        scroll-margin-top: var(--space-5);
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, color-mix(in srgb, var(--accent-soft) 42%, transparent), transparent 30rem),
+          linear-gradient(180deg, var(--surface-page), var(--surface-secondary));
+        color: var(--text-primary);
+        font-family: var(--font-primary);
+        font-size: 16px;
+        line-height: 1.7;
+        letter-spacing: 0;
+        transition: background-color 240ms ease-in-out, color 240ms ease-in-out;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: var(--accent-primary);
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--accent-primary) 70%, transparent);
+        outline-offset: 3px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: var(--space-4);
+        top: var(--space-4);
+        z-index: 20;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        color: var(--text-primary);
+        transform: translateY(-160%);
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .page-shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        padding: var(--space-5) 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-3);
+        min-width: 0;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        display: inline-grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        color: var(--accent-primary);
+        box-shadow: var(--shadow-soft);
+        flex: 0 0 auto;
+      }
+
+      .brand-text {
+        display: grid;
+        min-width: 0;
+      }
+
+      .brand-title {
+        font-size: 16px;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      .brand-subtitle {
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .top-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex: 0 0 auto;
+      }
+
+      .resource-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .resource-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.2;
+        transition: border-color 150ms ease-out, color 150ms ease-out, background-color 150ms ease-out;
+      }
+
+      .resource-link:hover {
+        border-color: var(--accent-primary);
+        background: var(--surface-elevated);
+        color: var(--accent-primary);
+      }
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        min-height: 40px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        color: var(--text-primary);
+        cursor: pointer;
+        font: 700 14px/1.2 var(--font-primary);
+        transition: transform 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+      }
+
+      .theme-toggle:active {
+        transform: translateY(1px);
+      }
+
+      .theme-toggle svg,
+      .brand-mark svg,
+      .section-icon svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 760px);
+        gap: var(--space-8);
+        align-items: start;
+        padding: var(--space-12) 0 var(--space-10);
+      }
+
+      .hero-copy {
+        max-width: 760px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin: 0 0 var(--space-4);
+        color: var(--accent-primary);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.4;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        color: var(--text-primary);
+        max-width: 760px;
+        margin-bottom: var(--space-5);
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: 0;
+        text-wrap: balance;
+        word-break: keep-all;
+      }
+
+      .lead {
+        max-width: 680px;
+        margin-bottom: 0;
+        color: var(--text-secondary);
+        font-size: 18px;
+        line-height: 1.75;
+        word-break: keep-all;
+      }
+
+      .byline {
+        margin: calc(-1 * var(--space-2)) 0 var(--space-5);
+        color: var(--text-tertiary);
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.5;
+        word-break: keep-all;
+      }
+
+      .mobile-title-break {
+        display: inline;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: var(--space-8);
+        align-items: start;
+        padding-bottom: var(--space-20);
+      }
+
+      .toc {
+        position: sticky;
+        top: var(--space-4);
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      .panel {
+        min-width: 0;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: color-mix(in srgb, var(--surface-primary) 90%, transparent);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .toc-panel {
+        padding: var(--space-4);
+      }
+
+      .panel-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        margin: 0 0 var(--space-4);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .book-toc {
+        display: grid;
+        gap: var(--space-2);
+        max-height: calc(100dvh - 220px);
+        margin: 0;
+        padding: 0 var(--space-1) 0 0;
+        overflow: auto;
+        list-style: none;
+        scrollbar-width: thin;
+      }
+
+      .book-toc ol {
+        display: grid;
+        gap: var(--space-1);
+        margin: var(--space-1) 0 var(--space-2);
+        padding-left: var(--space-4);
+        list-style: none;
+      }
+
+      .book-toc li {
+        min-width: 0;
+      }
+
+      .toc-node {
+        display: block;
+        min-height: auto;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid transparent;
+        border-radius: var(--radius-card);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        word-break: keep-all;
+        transition: border-color 150ms ease-out, background-color 150ms ease-out, color 150ms ease-out;
+      }
+
+      .toc-node:hover,
+      .toc-node.is-active {
+        border-color: var(--border-default);
+        background: var(--surface-secondary);
+        color: var(--text-primary);
+      }
+
+      .toc-node.toc-part {
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .toc-node.toc-chapter {
+        color: var(--text-primary);
+        font-weight: 800;
+      }
+
+      .toc-node.toc-sub {
+        padding-left: var(--space-4);
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .level-code {
+        display: inline-grid;
+        width: 44px;
+        height: 34px;
+        place-items: center;
+        border-radius: var(--radius-card);
+        background: var(--accent-soft);
+        color: var(--accent-primary);
+        font: 800 12px/1 var(--font-mono);
+      }
+
+      .level-copy {
+        min-width: 0;
+      }
+
+      .level-title {
+        display: block;
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.35;
+        word-break: keep-all;
+      }
+
+      .level-meta {
+        display: block;
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .content {
+        display: grid;
+        gap: var(--space-8);
+        min-width: 0;
+      }
+
+      .chapter {
+        padding: var(--space-8);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: var(--surface-primary);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .chapter-header {
+        display: grid;
+        gap: var(--space-4);
+        padding-bottom: var(--space-6);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .chapter-kicker {
+        color: var(--accent-secondary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .chapter h2 {
+        color: var(--text-primary);
+        margin-bottom: 0;
+        font-size: 40px;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: 0;
+        word-break: keep-all;
+        text-wrap: balance;
+      }
+
+      .chapter-intro {
+        max-width: 700px;
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 18px;
+        line-height: 1.75;
+        word-break: keep-all;
+      }
+
+      .lesson-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-4);
+        margin-top: var(--space-6);
+      }
+
+      .lesson-grid.compact-outline {
+        margin-top: var(--space-8);
+      }
+
+      .compact-outline .lesson-card {
+        min-height: 0;
+      }
+
+      .book-manuscript {
+        display: grid;
+        gap: var(--space-8);
+        margin-top: var(--space-8);
+      }
+
+      .book-page {
+        display: grid;
+        gap: var(--space-6);
+        padding: var(--space-8);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background:
+          linear-gradient(90deg, color-mix(in srgb, var(--border-subtle) 40%, transparent), transparent 18px),
+          var(--surface-elevated);
+      }
+
+      .book-page-header {
+        display: grid;
+        gap: var(--space-2);
+        padding-bottom: var(--space-5);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .book-page-kicker {
+        color: var(--accent-secondary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .book-page h3 {
+        color: var(--text-primary);
+        margin: 0;
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 1.2;
+        letter-spacing: 0;
+        word-break: keep-all;
+        text-wrap: balance;
+      }
+
+      .book-lead {
+        max-width: 680px;
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 17px;
+        line-height: 1.8;
+        word-break: keep-all;
+      }
+
+      .book-section {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .book-section h4 {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.4;
+        word-break: keep-all;
+      }
+
+      .book-section p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 16px;
+        line-height: 1.85;
+        word-break: keep-all;
+      }
+
+      .extended-guide {
+        display: grid;
+        gap: var(--space-10);
+        margin-top: var(--space-10);
+      }
+
+      .level-book {
+        display: grid;
+        gap: var(--space-6);
+      }
+
+      .level-header {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-6);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: var(--surface-primary);
+      }
+
+      .level-header h2 {
+        margin: 0;
+        font-size: 30px;
+        line-height: 1.25;
+        word-break: keep-all;
+      }
+
+      .level-header p {
+        max-width: 760px;
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 17px;
+        line-height: 1.8;
+        word-break: keep-all;
+      }
+
+      .focus-list {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .focus-list li {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: var(--space-3);
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.7;
+        word-break: keep-all;
+      }
+
+      .focus-list li span:last-child,
+      .level-header p,
+      .reading-interlude p {
+        word-break: keep-all;
+        overflow-wrap: normal;
+      }
+
+      .focus-list span:first-child {
+        display: inline-grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent-soft) 60%, transparent);
+        color: var(--accent-primary);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .reading-interlude {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-6);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: var(--surface-primary);
+      }
+
+      .reading-interlude h3 {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.3;
+        word-break: keep-all;
+      }
+
+      .reading-interlude p {
+        margin: 0;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        word-break: keep-all;
+      }
+
+      .source-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .source-list a {
+        display: inline-flex;
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        color: var(--accent-secondary);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.4;
+      }
+
+      .grammar-table {
+        display: grid;
+        overflow: hidden;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+      }
+
+      .grammar-row {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr) minmax(0, 1.2fr);
+        gap: var(--space-4);
+        padding: var(--space-4);
+        border-top: 1px solid var(--border-subtle);
+        background: color-mix(in srgb, var(--surface-primary) 78%, transparent);
+      }
+
+      .grammar-row:first-child {
+        border-top: 0;
+      }
+
+      .grammar-label {
+        color: var(--accent-primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .grammar-es {
+        font-family: var(--font-editorial);
+        font-size: 18px;
+        line-height: 1.55;
+      }
+
+      .grammar-note {
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .dialogue {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-5);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+      }
+
+      .dialogue-line {
+        display: grid;
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: var(--space-3);
+        align-items: baseline;
+      }
+
+      .speaker {
+        color: var(--accent-primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .speech {
+        font-family: var(--font-editorial);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .exercise-list {
+        display: grid;
+        gap: var(--space-3);
+        margin: 0;
+        padding-left: var(--space-5);
+        color: var(--text-secondary);
+      }
+
+      .exercise-list li {
+        padding-left: var(--space-1);
+        line-height: 1.75;
+        word-break: keep-all;
+      }
+
+      .book-note {
+        padding: var(--space-5);
+        border-left: 4px solid var(--accent-primary);
+        border-radius: var(--radius-card);
+        background: color-mix(in srgb, var(--accent-soft) 46%, transparent);
+      }
+
+      .book-note strong {
+        display: block;
+        margin-bottom: var(--space-2);
+      }
+
+      .book-note p {
+        margin: 0;
+        color: var(--text-secondary);
+        line-height: 1.75;
+        word-break: keep-all;
+      }
+
+      .learning-loop {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+
+      .learning-card {
+        display: grid;
+        gap: var(--space-2);
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+      }
+
+      .learning-card strong {
+        color: var(--accent-primary);
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .learning-card .grammar-es {
+        font-size: 17px;
+      }
+
+      .learning-card p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .lesson-card {
+        min-height: 180px;
+        padding: var(--space-5);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .lesson-card.is-current {
+        background:
+          linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 48%, transparent), transparent 64%),
+          var(--surface-elevated);
+      }
+
+      .lesson-card h3 {
+        margin-bottom: var(--space-3);
+        font-size: 21px;
+        line-height: 1.35;
+        letter-spacing: 0;
+        word-break: keep-all;
+      }
+
+      .lesson-card p,
+      .lesson-card li {
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.65;
+        word-break: keep-all;
+      }
+
+      .lesson-card ul {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding-left: var(--space-5);
+      }
+
+      .chapter-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin-top: var(--space-4);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: var(--space-1) var(--space-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-secondary);
+        color: var(--text-secondary);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .section-icon {
+        display: inline-grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        margin-bottom: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        color: var(--accent-primary);
+        background: var(--accent-soft);
+      }
+
+      .reading-block {
+        display: grid;
+        gap: var(--space-5);
+        padding: var(--space-6);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background:
+          linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 50%, transparent), transparent 58%),
+          var(--surface-elevated);
+      }
+
+      .reading-block h3 {
+        margin-bottom: 0;
+        font-size: 28px;
+        line-height: 1.25;
+        word-break: keep-all;
+      }
+
+      .reading-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-5);
+      }
+
+      .practice-panel {
+        display: grid;
+        gap: var(--space-5);
+        padding: var(--space-6);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: var(--surface-primary);
+      }
+
+      .practice-panel h3 {
+        margin-bottom: 0;
+        font-size: 28px;
+        line-height: 1.25;
+        word-break: keep-all;
+      }
+
+      .phrase-table {
+        display: grid;
+        overflow: hidden;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+      }
+
+      .phrase-row {
+        display: grid;
+        grid-template-columns: minmax(120px, 0.9fr) minmax(0, 1.1fr) minmax(0, 1.2fr);
+        gap: var(--space-4);
+        padding: var(--space-4);
+        border-top: 1px solid var(--border-subtle);
+        background: var(--surface-elevated);
+      }
+
+      .phrase-row:first-child {
+        border-top: 0;
+      }
+
+      .phrase-label {
+        color: var(--accent-primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .phrase-es {
+        font-family: var(--font-editorial);
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .phrase-ko {
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.55;
+        word-break: keep-all;
+      }
+
+      .exam-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+
+      .exam-card {
+        min-height: 132px;
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .exam-card strong {
+        display: block;
+        margin-bottom: var(--space-2);
+        color: var(--accent-secondary);
+        font-size: 14px;
+      }
+
+      .exam-card span {
+        display: block;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.55;
+        word-break: keep-all;
+      }
+
+      .exam-overview {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+
+      .exam-overview-card {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .exam-overview-card h5 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 16px;
+        line-height: 1.35;
+        word-break: keep-all;
+      }
+
+      .exam-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .exam-meta li {
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        color: var(--text-secondary);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.4;
+      }
+
+      .exam-task-list {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .exam-task-list li {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: var(--space-3);
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.55;
+        word-break: keep-all;
+      }
+
+      .exam-task-list strong {
+        color: var(--accent-primary);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .exam-source {
+        margin: var(--space-4) 0 0;
+        color: var(--text-tertiary);
+        font-size: 12px;
+        line-height: 1.5;
+        word-break: keep-all;
+      }
+
+      .exam-source a {
+        color: var(--accent-secondary);
+        font-weight: 800;
+      }
+
+      .listening-materials {
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      .audio-card {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .audio-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--space-3);
+      }
+
+      .audio-card h5 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.35;
+        word-break: keep-all;
+      }
+
+      .audio-level {
+        flex: 0 0 auto;
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        color: var(--accent-secondary);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.4;
+      }
+
+      .audio-prompt {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.65;
+        word-break: keep-all;
+      }
+
+      .audio-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .audio-button {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--accent-primary);
+        border-radius: var(--radius-card);
+        background: var(--accent-primary);
+        color: var(--surface-primary);
+        font: 800 13px/1 var(--font-primary);
+        cursor: pointer;
+      }
+
+      .audio-button:hover {
+        border-color: var(--accent-hover);
+        background: var(--accent-hover);
+        color: var(--surface-primary);
+      }
+
+      .audio-button svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      .audio-status {
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .audio-progress {
+        position: relative;
+        width: 100%;
+        height: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border-subtle);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--surface-secondary) 72%, transparent);
+      }
+
+      .audio-progress-bar {
+        display: block;
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      }
+
+      .transcript-details {
+        border-top: 1px solid var(--border-subtle);
+        padding-top: var(--space-3);
+      }
+
+      .transcript-details summary {
+        width: max-content;
+        color: var(--accent-secondary);
+        font-size: 13px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .transcript-text {
+        margin: var(--space-3) 0 0;
+        font-family: var(--font-editorial);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .quote-card {
+        padding: var(--space-5);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: color-mix(in srgb, var(--surface-primary) 80%, transparent);
+      }
+
+      .quote-card p {
+        margin-bottom: var(--space-3);
+        font-family: var(--font-editorial);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .quote-card small {
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .checklist {
+        display: grid;
+        gap: var(--space-3);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .checklist li {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: var(--space-3);
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .checkmark {
+        display: inline-grid;
+        width: 22px;
+        height: 22px;
+        place-items: center;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--status-success) 18%, transparent);
+        color: var(--status-success);
+        font: 800 13px/1 var(--font-mono);
+      }
+
+      .chapter-outline {
+        display: grid;
+        gap: var(--space-4);
+        padding: var(--space-6);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: var(--surface-primary);
+      }
+
+      .chapter-outline h2 {
+        margin-bottom: var(--space-1);
+        font-size: 28px;
+        line-height: 1.25;
+      }
+
+      .outline-list {
+        display: grid;
+        gap: var(--space-3);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .outline-list li {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: var(--space-3);
+        align-items: start;
+        padding: var(--space-3) 0;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .outline-list li:first-child {
+        border-top: 0;
+      }
+
+      .outline-number {
+        color: var(--accent-primary);
+        font: 800 14px/1.5 var(--font-mono);
+      }
+
+      .outline-title {
+        display: block;
+        font-weight: 800;
+        line-height: 1.45;
+        word-break: keep-all;
+      }
+
+      .outline-desc {
+        display: block;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .outline-list a {
+        color: inherit;
+      }
+
+      .outline-list a:hover .outline-title {
+        color: var(--accent-primary);
+      }
+
+      .appendix-grid {
+        display: grid;
+        gap: var(--space-6);
+      }
+
+      .footer {
+        padding: var(--space-10) 0 var(--space-16);
+        color: var(--text-tertiary);
+        font-size: 14px;
+        text-align: center;
+      }
+
+      @media (max-width: 1039px) {
+        .hero {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+        }
+
+        .book-toc {
+          max-height: none;
+          overflow: visible;
+        }
+
+        .exam-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 719px) {
+        .page-shell {
+          width: min(100% - 24px, 1180px);
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-wrap: wrap;
+        }
+
+        .brand-title {
+          white-space: normal;
+        }
+
+        .top-actions {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .resource-nav {
+          min-width: 0;
+          flex: 1 1 auto;
+        }
+
+        .resource-link {
+          flex: 1 1 0;
+          padding-inline: var(--space-2);
+          font-size: 12px;
+        }
+
+        .theme-toggle span {
+          display: none;
+        }
+
+        .hero {
+          padding: var(--space-8) 0;
+        }
+
+        h1 {
+          font-size: 38px;
+          line-height: 1.12;
+        }
+
+        .mobile-title-break {
+          display: block;
+        }
+
+        .lead,
+        .chapter-intro,
+        .lesson-card p,
+        .lesson-card li,
+        .outline-title,
+        .outline-desc,
+        .checklist li {
+          font-size: 16px;
+          word-break: keep-all;
+          overflow-wrap: normal;
+        }
+
+        .lesson-grid,
+        .reading-columns,
+        .exam-overview,
+        .learning-loop,
+        .exam-grid,
+        .phrase-row,
+        .grammar-row,
+        .dialogue-line {
+          grid-template-columns: 1fr;
+        }
+
+        .exam-task-list li {
+          grid-template-columns: 1fr;
+          gap: var(--space-1);
+        }
+
+        .chapter,
+        .chapter-outline,
+        .practice-panel,
+        .book-page {
+          padding: var(--space-5);
+        }
+
+        .chapter h2 {
+          font-size: 30px;
+        }
+
+        .book-page h3 {
+          font-size: 26px;
+        }
+
+        .book-section p,
+        .book-lead,
+        .grammar-note,
+        .exercise-list li,
+        .book-note p {
+          word-break: keep-all;
+          overflow-wrap: normal;
+        }
+
+        .practice-panel h3,
+        .reading-block h3 {
+          font-size: 24px;
+        }
+
+        .reading-block {
+          padding: var(--space-5);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 바로가기</a>
+    <div class="page-shell">
+      <header class="topbar" aria-label="사이트 머리말">
+        <a class="brand" href="#top" aria-label="스페인어 마스터 가이드북 처음으로">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 4.8h9.5a3.5 3.5 0 0 1 3.5 3.5v10.9H8.5A3.5 3.5 0 0 1 5 15.7z"></path>
+              <path d="M8.4 8.3h6.4"></path>
+              <path d="M8.4 11.8h4.8"></path>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-title">스페인어 마스터 가이드북</span>
+            <span class="brand-subtitle">A1부터 DELE C2까지</span>
+          </span>
+        </a>
+        <div class="top-actions">
+          <nav class="resource-nav" aria-label="보조 학습 자료">
+            <a class="resource-link" href="pages/vocab.html">단어장</a>
+            <a class="resource-link" href="pages/mock-exams.html">기출형 문제</a>
+          </nav>
+          <button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v2"></path>
+              <path d="M12 19v2"></path>
+              <path d="m4.9 4.9 1.4 1.4"></path>
+              <path d="m17.7 17.7 1.4 1.4"></path>
+              <path d="M3 12h2"></path>
+              <path d="M19 12h2"></path>
+              <path d="m4.9 19.1 1.4-1.4"></path>
+              <path d="m17.7 6.3 1.4-1.4"></path>
+              <circle cx="12" cy="12" r="4"></circle>
+            </svg>
+            <span>다크 모드</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="hero" id="top" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">CEFR 기반 커리큘럼</p>
+          <h1 id="page-title">
+            입문부터 DELE <span class="mobile-title-break">C2까지,</span><br>
+            <span>읽히는 스페인어 <span class="mobile-title-break">가이드북</span></span>
+          </h1>
+          <p class="byline">지은이 문성혁</p>
+          <p class="lead">
+            문법, 어휘와 표현, 의사소통 실전, 문화 읽기를 한 흐름으로 엮는 장기 학습서입니다.
+            첫 화면은 전체 목차를 빠르게 훑고, 바로 Part 0의 첫 장으로 들어가도록 구성했습니다.
+          </p>
+        </div>
+      </section>
+
+      <div class="layout">
+        <aside class="toc" aria-label="책 목차">
+          <nav class="panel toc-panel">
+            <p class="panel-title">목차 <span>Part 0-C2</span></p>
+            <ol class="book-toc">
+              <li>
+                <a class="toc-node toc-part is-active" aria-current="location" href="#part-0" data-spy-link>
+                  Part 0. 오리엔테이션
+                </a>
+                <ol>
+                  <li><a class="toc-node toc-chapter" href="#part0-world" data-spy-link>1장. 스페인어의 세계</a></li>
+                  <li><a class="toc-node toc-chapter" href="#part0-pronunciation" data-spy-link>2장. 발음과 문자</a></li>
+                  <li><a class="toc-node toc-chapter" href="#part0-strategy" data-spy-link>3장. 학습 전략</a></li>
+                  <li><a class="toc-node toc-chapter" href="#part0-flow" data-spy-link>매 장의 고정 흐름</a></li>
+                </ol>
+              </li>
+              <li>
+                <a class="toc-node toc-part" href="#part-a1" data-spy-link>
+                  Part 1. A1 생존 스페인어
+                </a>
+                <ol>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-4" data-spy-link>4장. 첫 만남과 인사</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-4-greeting" data-spy-link>인사는 문장의 문을 여는 장치다</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-4-ser" data-spy-link>ser 동사로 정보 말하기</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-4-dialogue" data-spy-link>첫 대화</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-4-exercise" data-spy-link>연습</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-5" data-spy-link>5장. 나와 내 주변 소개하기</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-5-adjectives" data-spy-link>형용사는 명사를 따라간다</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-5-ser-estar" data-spy-link>ser와 estar의 첫 차이</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-5-exercise" data-spy-link>연습</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-6" data-spy-link>6장. 일상의 현재</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-6-regular" data-spy-link>규칙동사의 기본 모양</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-6-routine" data-spy-link>하루 일과로 묶기</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-6-exercise" data-spy-link>연습</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-7" data-spy-link>7장. 취향과 감정</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-7-gustar" data-spy-link>좋아하는 대상이 주인공이다</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-7-frequency" data-spy-link>빈도 부사로 습관 붙이기</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-7-exercise" data-spy-link>연습</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-8" data-spy-link>8장. 장소와 위치</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-8-hay-estar" data-spy-link>hay와 estar</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-8-prepositions" data-spy-link>위치 전치사</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-8-exercise" data-spy-link>연습</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-9" data-spy-link>9장. 생존 회화</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-9-ordering" data-spy-link>주문하기</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-9-questions" data-spy-link>의문사 한눈에 보기</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-9-exercise" data-spy-link>연습</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#chapter-10" data-spy-link>10장. DELE A1 완전 대비</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-structure" data-spy-link>시험 전체 구조</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-scoring" data-spy-link>채점과 합격 기준</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-task-types" data-spy-link>과제 유형 한눈에 보기</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-reading" data-spy-link>독해는 어떻게 나오는가</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-listening" data-spy-link>듣기는 어떻게 나오는가</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-listening-drill" data-spy-link>듣기 실전 훈련</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-listening-materials" data-spy-link>듣기 자료</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-writing" data-spy-link>쓰기는 어떻게 나오는가</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-speaking" data-spy-link>말하기는 어떻게 나오는가</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-exam" data-spy-link>영역별 실전 전략</a></li>
+                      <li><a class="toc-node toc-sub" href="#chapter-10-finish" data-spy-link>A1 마무리 기준</a></li>
+                    </ol>
+                  </li>
+                  <li><a class="toc-node toc-chapter" href="#a1-exercise-bank" data-spy-link>A1 연습문제와 해답 기준</a></li>
+                  <li><a class="toc-node toc-chapter" href="#reading-break-1" data-spy-link>쉬어가기 ①. 첫 이야기책 펼치기</a></li>
+                  <li id="extended-toc-anchor"></li>
+                  <li>
+                    <a class="toc-node toc-chapter" href="#outline" data-spy-link>부록과 완성 기준</a>
+                    <ol>
+                      <li><a class="toc-node toc-sub" href="#appendix-verbs" data-spy-link>동사 변화표</a></li>
+                      <li><a class="toc-node toc-sub" href="#appendix-tenses" data-spy-link>시제 지도</a></li>
+                      <li><a class="toc-node toc-sub" href="#appendix-vocab" data-spy-link>주제별 어휘집</a></li>
+                      <li><a class="toc-node toc-sub" href="#appendix-regional" data-spy-link>스페인과 중남미 표현</a></li>
+                      <li><a class="toc-node toc-sub" href="#appendix-dele" data-spy-link>DELE 루브릭</a></li>
+                      <li><a class="toc-node toc-sub" href="#appendix-answers" data-spy-link>해답과 해설</a></li>
+                    </ol>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </nav>
+        </aside>
+
+        <main class="content" id="main">
+          <article class="chapter" id="part-0">
+            <header class="chapter-header">
+              <span class="chapter-kicker">Part 0. 오리엔테이션</span>
+              <h2>스페인어와 친해지기</h2>
+              <p class="chapter-intro">
+                첫 파트의 목적은 학습자를 곧장 문법표로 밀어 넣지 않는 것입니다.
+                스페인어가 어디에서 쓰이고, 어떤 발음 체계를 가지며, 어떻게 공부하면 오래 버틸 수 있는지부터 잡습니다.
+              </p>
+            </header>
+
+            <section class="book-manuscript" aria-label="Part 0 책 본문">
+              <article class="book-page" id="part0-world">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">1장. 스페인어의 세계</span>
+                  <h3>스페인어는 하나의 나라가 아니라 하나의 생활권이다</h3>
+                  <p class="book-lead">
+                    스페인어를 배운다는 것은 스페인 한 나라의 문장을 외우는 일이 아닙니다.
+                    스페인, 멕시코, 콜롬비아, 아르헨티나, 페루, 칠레, 미국의 히스패닉 공동체까지
+                    이어지는 거대한 언어권에 들어가는 일입니다.
+                  </p>
+                </header>
+                <section class="book-section" id="part0-world-map">
+                  <h4>어디에서 쓰이는가</h4>
+                  <p>
+                    스페인어는 유럽과 아메리카 대륙을 가로질러 쓰입니다. 나라별 발음과 어휘는 조금씩 다르지만,
+                    A1-A2 단계에서는 공통 문장부터 익히면 됩니다. 처음부터 모든 지역 차이를 외우려 하지 말고,
+                    vosotros와 ustedes, coche와 carro처럼 자주 보이는 차이만 표시해 두면 충분합니다.
+                  </p>
+                </section>
+                <section class="book-section" id="part0-world-cefr">
+                  <h4>CEFR과 DELE의 역할</h4>
+                  <div class="grammar-table" role="table" aria-label="CEFR과 DELE 개관">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">A1-A2</span>
+                      <span class="grammar-es" role="cell">usuario básico</span>
+                      <span class="grammar-note" role="cell">자기소개, 생활 회화, 과거 경험, 간단한 문제 해결을 다룹니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">B1-B2</span>
+                      <span class="grammar-es" role="cell">usuario independiente</span>
+                      <span class="grammar-note" role="cell">경험과 의견을 설명하고, 긴 지문과 사회 이슈를 처리합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">C1-C2</span>
+                      <span class="grammar-es" role="cell">usuario competente</span>
+                      <span class="grammar-note" role="cell">문체, 전문 텍스트, 지역 변이, 통합 과제를 다룹니다.</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="part0-world-method">
+                  <h4>이 책을 읽는 방법</h4>
+                  <p>
+                    각 장은 문법 설명으로 시작하지만 목표는 문법 자체가 아닙니다. 문법을 하나 배운 뒤 바로
+                    표현, 짧은 대화, 읽을거리로 옮겨 갑니다. 장 끝의 읽는 재미 코너는 쉬어가는 장식이 아니라
+                    방금 배운 구조가 실제 텍스트에서 어떻게 살아나는지 확인하는 복습 장치입니다.
+                  </p>
+                </section>
+              </article>
+
+              <article class="book-page" id="part0-pronunciation">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">2장. 발음과 문자</span>
+                  <h3>스페인어는 보이는 대로 읽는 힘에서 시작한다</h3>
+                  <p class="book-lead">
+                    스페인어 발음의 장점은 철자와 소리의 관계가 비교적 안정적이라는 점입니다.
+                    처음부터 원어민처럼 빠르게 말하려 하지 말고, 모음과 강세를 안정시키면 읽기와 듣기가 동시에 좋아집니다.
+                  </p>
+                </header>
+                <section class="book-section" id="part0-pronunciation-vowels">
+                  <h4>모음 5개를 흔들리지 않게 읽기</h4>
+                  <div class="grammar-table" role="table" aria-label="스페인어 모음">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">a e i o u</span>
+                      <span class="grammar-es" role="cell">casa, mesa, vino, solo, luna</span>
+                      <span class="grammar-note" role="cell">한국어식 이중모음으로 흐리지 말고 짧고 분명하게 읽습니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">강세</span>
+                      <span class="grammar-es" role="cell">hablo, café, teléfono</span>
+                      <span class="grammar-note" role="cell">끝 글자와 악센트 부호를 보고 어느 음절을 밀어 줄지 정합니다.</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="part0-pronunciation-consonants">
+                  <h4>한국인이 먼저 잡아야 할 자음</h4>
+                  <p>
+                    r과 rr은 가장 오래 걸리는 소리입니다. 처음에는 완벽한 떨림보다 pero와 perro를 구분하려는
+                    의식이 중요합니다. ñ은 niño처럼 하나의 글자이고, j와 g는 목 뒤쪽에서 나는 거친 소리입니다.
+                    c와 z는 지역에 따라 발음이 달라질 수 있으므로 이 책에서는 먼저 공통 이해를 목표로 둡니다.
+                  </p>
+                </section>
+                <section class="book-section" id="part0-pronunciation-rhythm">
+                  <h4>억양과 리듬</h4>
+                  <p>
+                    스페인어 문장은 한국어보다 음절 박자가 또렷합니다. 긴 문장을 한 번에 읽으려 하지 말고,
+                    의미 단위로 끊어 읽습니다. Me llamo Ana / y vivo en Seúl처럼 작은 덩어리를 만들면
+                    말하기와 듣기 모두 안정됩니다.
+                  </p>
+                </section>
+              </article>
+
+              <article class="book-page" id="part0-strategy">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">3장. 학습 전략</span>
+                  <h3>오래 가는 공부는 외우는 단위를 잘게 정한다</h3>
+                  <p class="book-lead">
+                    스페인어는 처음에는 발음이 쉽고, 중간부터 동사 변화와 성수 일치가 부담으로 다가옵니다.
+                    그래서 처음부터 단어 하나씩이 아니라 문장 덩어리와 반복 주기로 공부해야 합니다.
+                  </p>
+                </header>
+                <section class="book-section" id="part0-strategy-vocab">
+                  <h4>명사는 성별과 함께 외운다</h4>
+                  <p>
+                    libro만 외우면 실제 문장에서 막힙니다. el libro, un libro, este libro처럼 관사와 함께
+                    익혀야 형용사와 지시사가 따라옵니다. 여성 명사도 la casa, una casa, esta casa처럼
+                    작은 묶음으로 외우면 A1의 성수 일치가 훨씬 가벼워집니다.
+                  </p>
+                </section>
+                <section class="book-section" id="part0-strategy-verbs">
+                  <h4>동사는 표보다 장면으로 반복한다</h4>
+                  <p>
+                    hablar 동사표를 한 번에 외우는 것보다 Me llamo, Vivo en, Trabajo en처럼 실제 자기소개에
+                    필요한 형태부터 고정합니다. 동사 변화는 매일 조금씩 다시 만나는 방식이 가장 안정적입니다.
+                    이 책은 각 레벨에서 필요한 동사 형태를 장면 안에서 반복하도록 구성되어 있습니다.
+                  </p>
+                </section>
+                <section class="book-section" id="part0-strategy-tools">
+                  <h4>사전, 앱, 원어민 콘텐츠를 나누어 쓴다</h4>
+                  <p>
+                    사전은 뜻을 확인하는 도구이고, 앱은 반복을 만드는 도구이며, 원어민 콘텐츠는 리듬을 익히는 도구입니다.
+                    셋을 한꺼번에 완벽히 쓰려 하지 말고, 처음에는 사전으로 성별과 예문을 확인하고 앱으로 짧게 반복한 뒤,
+                    노래나 짧은 영상에서 이미 아는 표현을 찾는 방식으로 충분합니다.
+                  </p>
+                </section>
+              </article>
+
+              <article class="book-page" id="part0-flow">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">매 장의 고정 흐름</span>
+                  <h3>문법에서 시작해 읽을거리로 닫는다</h3>
+                  <p class="book-lead">
+                    이 가이드북의 장 구조는 반복됩니다. 독자는 매번 같은 순서를 만나기 때문에,
+                    새 문법을 배울 때도 어디에서 무엇을 해야 하는지 헤매지 않습니다.
+                  </p>
+                </header>
+                <section class="book-section" id="part0-flow-order">
+                  <h4>문법, 표현, 실전, 문화</h4>
+                  <div class="grammar-table" role="table" aria-label="장 구성 흐름">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">문법</span>
+                      <span class="grammar-es" role="cell">forma y uso</span>
+                      <span class="grammar-note" role="cell">형태를 외우기보다 언제 쓰는지부터 잡습니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">표현</span>
+                      <span class="grammar-es" role="cell">frases útiles</span>
+                      <span class="grammar-note" role="cell">바로 말할 수 있는 덩어리 문장을 붙입니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">실전</span>
+                      <span class="grammar-es" role="cell">situación real</span>
+                      <span class="grammar-note" role="cell">주문, 길 묻기, 의견 말하기처럼 장면 안에서 씁니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">읽기</span>
+                      <span class="grammar-es" role="cell">lectura breve</span>
+                      <span class="grammar-note" role="cell">이야기, 기사, 노래, 문화 글로 자연스럽게 복습합니다.</span>
+                    </div>
+                  </div>
+                </section>
+              </article>
+            </section>
+          </article>
+
+          <article class="chapter" id="part-a1">
+            <header class="chapter-header">
+              <span class="chapter-kicker">Part 1. A1 — 입문</span>
+              <h2>생존 스페인어</h2>
+              <p class="chapter-intro">
+                A1의 목표는 스페인어권에서 처음 만난 사람에게 나를 소개하고,
+                일상과 취향, 장소, 가격, 간단한 요청을 말할 수 있게 되는 것입니다.
+                문법은 작게 쪼개되 모든 장을 실제 말하기 장면으로 닫습니다.
+              </p>
+            </header>
+
+            <section class="book-manuscript" aria-label="A1 책 본문">
+              <article class="book-page" id="chapter-4">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">4장. 첫 만남과 인사</span>
+                  <h3>처음 만난 사람에게 나를 소개하기</h3>
+                  <p class="book-lead">
+                    A1의 첫 장은 문법 설명보다 말문을 여는 데서 시작합니다.
+                    스페인어권에서 처음 만난 사람에게 할 수 있는 가장 짧은 말은 인사, 이름,
+                    출신, 직업입니다. 이 네 가지를 말할 수 있으면 ser 동사의 첫 쓰임도 자연스럽게 따라옵니다.
+                  </p>
+                </header>
+                <section class="book-section" id="chapter-4-greeting">
+                  <h4>1. 인사는 문장의 문을 여는 장치다</h4>
+                  <p>
+                    Hola는 가장 넓게 쓰는 인사입니다. 시간대가 분명할 때는 Buenos días,
+                    Buenas tardes, Buenas noches를 씁니다. 처음에는 Hola 하나만으로도 충분하지만,
+                    실제 대화에서는 Hola 뒤에 시간대 인사를 붙이면 더 자연스럽습니다.
+                  </p>
+                </section>
+                <section class="book-section" id="chapter-4-ser">
+                  <h4>2. ser 동사로 변하지 않는 정보를 말한다</h4>
+                  <div class="grammar-table" role="table" aria-label="ser 동사 기초 활용">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">yo</span>
+                      <span class="grammar-es" role="cell">soy</span>
+                      <span class="grammar-note" role="cell">Yo soy coreano. 나는 한국인입니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">tú</span>
+                      <span class="grammar-es" role="cell">eres</span>
+                      <span class="grammar-note" role="cell">Tú eres estudiante. 너는 학생이야.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">usted</span>
+                      <span class="grammar-es" role="cell">es</span>
+                      <span class="grammar-note" role="cell">Usted es profesor. 선생님이십니다.</span>
+                    </div>
+                  </div>
+                  <p>
+                    ser는 이름, 국적, 직업처럼 비교적 안정적인 정보를 말할 때 먼저 만납니다.
+                    한국어에서는 주어를 자주 생략하지만, 스페인어는 동사 모양이 주어 정보를 품고 있어서
+                    soy만 보아도 “나는”이라는 뜻이 이미 들어 있습니다.
+                  </p>
+                </section>
+                <section class="book-section" id="chapter-4-dialogue">
+                  <h4>3. 첫 대화</h4>
+                  <div class="dialogue" aria-label="첫 만남 대화">
+                    <div class="dialogue-line">
+                      <span class="speaker">A</span>
+                      <span class="speech">Hola. Buenos días. Me llamo Mina.</span>
+                    </div>
+                    <div class="dialogue-line">
+                      <span class="speaker">B</span>
+                      <span class="speech">Mucho gusto. Soy Carlos. Soy de México.</span>
+                    </div>
+                    <div class="dialogue-line">
+                      <span class="speaker">A</span>
+                      <span class="speech">Encantada. Soy de Corea. Soy estudiante.</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-4-exercise">
+                  <h4>연습</h4>
+                  <ol class="exercise-list">
+                    <li>Me llamo 뒤에 자신의 이름을 넣어 세 번 소리 내어 말해 보세요.</li>
+                    <li>Soy de 뒤에 Corea, España, México, Argentina를 넣어 문장을 바꿔 보세요.</li>
+                    <li>처음 만난 사람에게 쓰는 말투라면 tú보다 usted가 더 안전한 상황을 하나 떠올려 보세요.</li>
+                  </ol>
+                </section>
+              </article>
+
+              <article class="book-page" id="chapter-5">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">5장. 나와 내 주변 소개하기</span>
+                  <h3>사람을 묘사하는 첫 문장들</h3>
+                  <p class="book-lead">
+                    자기소개 다음에는 주변 사람을 소개합니다. 가족, 외모, 성격을 말하려면
+                    명사와 형용사의 성수 일치가 필요합니다. 스페인어의 형용사는 혼자 고정되어 있지 않고,
+                    꾸미는 명사의 성과 수에 맞춰 옷을 갈아입습니다.
+                  </p>
+                </header>
+                <section class="book-section" id="chapter-5-adjectives">
+                  <h4>1. 형용사는 명사를 따라간다</h4>
+                  <div class="grammar-table" role="table" aria-label="형용사 성수 일치">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">남성 단수</span>
+                      <span class="grammar-es" role="cell">mi hermano alto</span>
+                      <span class="grammar-note" role="cell">키 큰 내 남동생 또는 오빠</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">여성 단수</span>
+                      <span class="grammar-es" role="cell">mi hermana alta</span>
+                      <span class="grammar-note" role="cell">키 큰 내 여동생 또는 언니</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">복수</span>
+                      <span class="grammar-es" role="cell">mis amigos simpáticos</span>
+                      <span class="grammar-note" role="cell">친절한 내 친구들</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-5-ser-estar">
+                  <h4>2. ser와 estar의 첫 차이</h4>
+                  <p>
+                    ser는 “그 사람이 어떤 사람인가”를 말할 때 편합니다. Mi madre es médica처럼
+                    직업을 말하거나, Mi amigo es simpático처럼 성격을 말할 수 있습니다.
+                    estar는 상태나 위치를 말할 때 먼저 익힙니다. Estoy bien은 지금 괜찮다는 뜻이고,
+                    Mi padre está en casa는 아버지가 집에 있다는 뜻입니다.
+                  </p>
+                </section>
+                <section class="book-section" id="chapter-5-exercise">
+                  <h4>연습</h4>
+                  <ol class="exercise-list">
+                    <li>Mi madre es 뒤에 직업 하나를 넣어 문장을 만들어 보세요.</li>
+                    <li>alto, simpático, amable 중 하나를 골라 가족 한 명을 묘사하세요.</li>
+                    <li>Estoy bien과 Estoy cansado의 차이를 한국어로 설명해 보세요.</li>
+                  </ol>
+                </section>
+              </article>
+
+              <article class="book-page" id="chapter-6">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">6장. 일상의 현재</span>
+                  <h3>매일 하는 일을 현재시제로 말하기</h3>
+                  <p class="book-lead">
+                    A1에서 가장 오래 쓰는 시제는 현재시제입니다. 지금 이 순간만 말하는 시제가 아니라,
+                    매일 반복하는 일과 일반적인 사실까지 넓게 담당합니다. “나는 공부한다”, “우리는 산다”,
+                    “그들은 일한다” 같은 문장이 여기서 만들어집니다.
+                  </p>
+                </header>
+                <section class="book-section" id="chapter-6-regular">
+                  <h4>1. 규칙동사의 기본 모양</h4>
+                  <div class="grammar-table" role="table" aria-label="규칙동사 현재시제">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">-ar</span>
+                      <span class="grammar-es" role="cell">hablar → hablo, hablas, habla</span>
+                      <span class="grammar-note" role="cell">말하다. Hablo español. 나는 스페인어를 말한다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">-er</span>
+                      <span class="grammar-es" role="cell">comer → como, comes, come</span>
+                      <span class="grammar-note" role="cell">먹다. Como pan. 나는 빵을 먹는다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">-ir</span>
+                      <span class="grammar-es" role="cell">vivir → vivo, vives, vive</span>
+                      <span class="grammar-note" role="cell">살다. Vivo en Seúl. 나는 서울에 산다.</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-6-routine">
+                  <h4>2. 하루 일과로 묶기</h4>
+                  <p>
+                    Me levanto a las siete. Trabajo por la mañana. Estudio español por la noche.
+                    이 세 문장만으로도 하루의 뼈대가 생깁니다. A1에서는 완벽한 긴 문장보다
+                    짧은 문장을 정확한 순서로 이어 말하는 능력이 더 중요합니다.
+                  </p>
+                </section>
+                <section class="book-section" id="chapter-6-exercise">
+                  <h4>연습</h4>
+                  <ol class="exercise-list">
+                    <li>Hablo, como, vivo를 사용해 자기 일상 문장 세 개를 만드세요.</li>
+                    <li>a las ocho, por la mañana, por la noche 중 하나를 붙여 시간을 더하세요.</li>
+                    <li>levantarse처럼 se가 붙은 재귀동사는 “나 자신에게 일어나는 행동”으로 먼저 이해하세요.</li>
+                  </ol>
+                </section>
+              </article>
+
+              <article class="book-page" id="chapter-7">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">7장. 취향과 감정</span>
+                  <h3>좋아하는 것을 말하는 gustar</h3>
+                  <p class="book-lead">
+                    Me gusta el café는 직역하면 “커피가 나에게 마음에 든다”에 가깝습니다.
+                    한국어의 “나는 커피를 좋아한다”와 어순이 달라서 처음에는 낯설지만,
+                    구조를 한 번 잡으면 음악, 음식, 취미를 말할 때 계속 쓰게 됩니다.
+                  </p>
+                </header>
+                <section class="book-section" id="chapter-7-gustar">
+                  <h4>1. 좋아하는 대상이 주인공이다</h4>
+                  <div class="grammar-table" role="table" aria-label="gustar 구문">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">단수</span>
+                      <span class="grammar-es" role="cell">Me gusta el café.</span>
+                      <span class="grammar-note" role="cell">커피 하나의 개념이 마음에 든다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">복수</span>
+                      <span class="grammar-es" role="cell">Me gustan las películas.</span>
+                      <span class="grammar-note" role="cell">영화들이 마음에 든다. 대상이 복수라 gustan이 된다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">강조</span>
+                      <span class="grammar-es" role="cell">Me encanta la música.</span>
+                      <span class="grammar-note" role="cell">정말 좋아할 때 encantar를 쓴다.</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-7-frequency">
+                  <h4>2. 빈도 부사로 습관을 붙이기</h4>
+                  <p>
+                    Siempre estudio por la noche. A veces cocino. Nunca fumo.
+                    빈도 부사는 말하는 사람의 생활 패턴을 보여 줍니다. A1 회화에서는 취미를 말한 뒤
+                    siempre, a veces, nunca를 붙이는 것만으로도 대답이 훨씬 자연스러워집니다.
+                  </p>
+                </section>
+                <section class="book-section" id="chapter-7-exercise">
+                  <h4>연습</h4>
+                  <ol class="exercise-list">
+                    <li>Me gusta 뒤에 단수 명사 세 개를 넣고, Me gustan 뒤에 복수 명사 세 개를 넣으세요.</li>
+                    <li>encantar, interesar 중 하나를 골라 자신의 취향 문장 두 개를 만드세요.</li>
+                    <li>siempre, a veces, nunca를 사용해 취미를 얼마나 자주 하는지 세 문장으로 말하세요.</li>
+                  </ol>
+                </section>
+              </article>
+
+              <article class="book-page" id="chapter-8">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">8장. 장소와 위치</span>
+                  <h3>어디에 무엇이 있는지 말하기</h3>
+                  <p class="book-lead">
+                    길을 묻거나 동네를 설명하려면 “있다”를 두 가지로 나누어야 합니다.
+                    처음 소개하는 존재에는 hay를, 이미 알고 있는 대상의 위치에는 estar를 씁니다.
+                  </p>
+                </header>
+                <section class="book-section" id="chapter-8-hay-estar">
+                  <h4>1. hay와 estar</h4>
+                  <div class="grammar-table" role="table" aria-label="hay와 estar 비교">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">hay</span>
+                      <span class="grammar-es" role="cell">Hay una farmacia cerca.</span>
+                      <span class="grammar-note" role="cell">근처에 약국 하나가 있다. 처음 꺼내는 정보다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">estar</span>
+                      <span class="grammar-es" role="cell">La farmacia está a la derecha.</span>
+                      <span class="grammar-note" role="cell">그 약국은 오른쪽에 있다. 이미 아는 대상의 위치다.</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-8-prepositions">
+                  <h4>2. 위치 전치사</h4>
+                  <p>
+                    cerca de는 가까이에, lejos de는 멀리에, delante de는 앞에,
+                    detrás de는 뒤에라는 뜻입니다. 길 안내에서는 a la derecha와 a la izquierda를
+                    먼저 익히면 식당, 역, 호텔을 찾는 상황에 바로 쓸 수 있습니다.
+                  </p>
+                </section>
+                <section class="book-section" id="chapter-8-exercise">
+                  <h4>연습</h4>
+                  <ol class="exercise-list">
+                    <li>Hay una cafetería cerca를 출발점으로 병원, 역, 은행이 있다는 문장을 만드세요.</li>
+                    <li>La farmacia está a la derecha처럼 이미 아는 장소의 위치를 세 문장으로 설명하세요.</li>
+                    <li>자신의 동네를 네 문장으로 소개하되 hay와 estar를 각각 두 번 이상 쓰세요.</li>
+                  </ol>
+                </section>
+              </article>
+
+              <article class="book-page" id="chapter-9">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">9장. 생존 회화</span>
+                  <h3>카페와 가게에서 필요한 질문</h3>
+                  <p class="book-lead">
+                    여행자의 A1은 질문에서 힘을 얻습니다. 완벽한 설명을 못 해도 가격, 장소,
+                    원하는 물건을 물을 수 있으면 상황을 해결할 수 있습니다.
+                  </p>
+                </header>
+                <section class="book-section" id="chapter-9-ordering">
+                  <h4>1. 주문하기</h4>
+                  <div class="dialogue" aria-label="카페 주문 대화">
+                    <div class="dialogue-line">
+                      <span class="speaker">손님</span>
+                      <span class="speech">Quiero un café, por favor.</span>
+                    </div>
+                    <div class="dialogue-line">
+                      <span class="speaker">직원</span>
+                      <span class="speech">Claro. ¿Algo más?</span>
+                    </div>
+                    <div class="dialogue-line">
+                      <span class="speaker">손님</span>
+                      <span class="speech">No, gracias. ¿Cuánto cuesta?</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-9-questions">
+                  <h4>2. 의문사 한눈에 보기</h4>
+                  <div class="grammar-table" role="table" aria-label="A1 의문사">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">qué</span>
+                      <span class="grammar-es" role="cell">¿Qué es esto?</span>
+                      <span class="grammar-note" role="cell">이것은 무엇입니까?</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">dónde</span>
+                      <span class="grammar-es" role="cell">¿Dónde está el baño?</span>
+                      <span class="grammar-note" role="cell">화장실은 어디에 있습니까?</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">cuánto</span>
+                      <span class="grammar-es" role="cell">¿Cuánto cuesta?</span>
+                      <span class="grammar-note" role="cell">얼마입니까?</span>
+                    </div>
+                  </div>
+                </section>
+                <section class="book-section" id="chapter-9-exercise">
+                  <h4>연습</h4>
+                  <ol class="exercise-list">
+                    <li>¿Qué es esto?, ¿Dónde está el baño?, ¿Cuánto cuesta?를 상황에 맞게 한 번씩 소리 내어 말하세요.</li>
+                    <li>카페에서 주문할 때 필요한 문장 세 개를 만들고, 마지막에는 감사 표현을 붙이세요.</li>
+                    <li>가게에서 가격, 색상, 수량을 묻는 질문을 각각 하나씩 쓰세요.</li>
+                  </ol>
+                </section>
+              </article>
+
+              <article class="book-page" id="chapter-10">
+                <header class="book-page-header">
+                  <span class="book-page-kicker">10장. DELE A1 완전 대비</span>
+                  <h3>A1에서 요구하는 것은 정확하고 짧은 수행이다</h3>
+                  <p class="book-lead">
+                    DELE A1은 어려운 문법 지식을 묻는 시험이 아닙니다. 익숙한 생활 장면에서
+                    필요한 정보를 찾고, 아주 짧은 글을 쓰고, 준비된 범위 안에서 말할 수 있는지를 봅니다.
+                    그래서 이 장에서는 문법 복습보다 실제 시험지가 어떤 모양으로 나오는지부터 봅니다.
+                  </p>
+                </header>
+
+                <section class="book-section" id="chapter-10-structure">
+                  <h4>시험 전체 구조</h4>
+                  <p>
+                    DELE A1은 네 개의 시험으로 나뉩니다. 독해와 듣기는 정답을 고르는 과제가 많고,
+                    쓰기와 말하기는 아주 짧은 실제 의사소통을 수행하는 방식입니다. 공식 공개 형식은
+                    2020년 개정 형식을 기준으로 읽어두면 됩니다.
+                  </p>
+                  <div class="exam-overview" aria-label="DELE A1 시험 전체 구조">
+                    <article class="exam-overview-card">
+                      <h5>1. 독해 이해</h5>
+                      <ul class="exam-meta">
+                        <li>45분</li>
+                        <li>4개 과제</li>
+                        <li>25문항</li>
+                        <li>25점</li>
+                      </ul>
+                      <ul class="exam-task-list">
+                        <li><strong>자료</strong><span>공지, 광고, 메시지, 안내문, 짧은 소개 글처럼 일상에서 바로 보는 텍스트가 나옵니다.</span></li>
+                        <li><strong>핵심</strong><span>이름, 장소, 시간, 날짜, 가격, 취미, 직업처럼 눈에 보이는 정보를 빠르게 찾습니다.</span></li>
+                      </ul>
+                    </article>
+                    <article class="exam-overview-card">
+                      <h5>2. 듣기 이해</h5>
+                      <ul class="exam-meta">
+                        <li>25분</li>
+                        <li>4개 과제</li>
+                        <li>25문항</li>
+                        <li>25점</li>
+                      </ul>
+                      <ul class="exam-task-list">
+                        <li><strong>자료</strong><span>안내 방송, 짧은 대화, 자기소개, 약속 시간, 주문 상황처럼 짧고 분명한 음성이 나옵니다.</span></li>
+                        <li><strong>핵심</strong><span>모든 단어를 받아쓰려 하지 말고 숫자, 장소, 사람, 물건, 선택지를 먼저 표시합니다.</span></li>
+                      </ul>
+                    </article>
+                    <article class="exam-overview-card">
+                      <h5>3. 쓰기 표현과 상호작용</h5>
+                      <ul class="exam-meta">
+                        <li>25분</li>
+                        <li>2개 과제</li>
+                        <li>25점</li>
+                      </ul>
+                      <ul class="exam-task-list">
+                        <li><strong>자료</strong><span>개인 정보 양식, 짧은 메시지, 엽서, 이메일처럼 목적이 분명한 글을 씁니다.</span></li>
+                        <li><strong>핵심</strong><span>길게 쓰는 시험이 아닙니다. 요구된 정보를 빠뜨리지 않고, 성수 일치와 동사 형태를 안정적으로 맞춥니다.</span></li>
+                      </ul>
+                    </article>
+                    <article class="exam-overview-card">
+                      <h5>4. 말하기 표현과 상호작용</h5>
+                      <ul class="exam-meta">
+                        <li>10분</li>
+                        <li>준비 10분</li>
+                        <li>3개 과제</li>
+                        <li>25점</li>
+                      </ul>
+                      <ul class="exam-task-list">
+                        <li><strong>자료</strong><span>자기소개, 익숙한 주제 말하기, 시험관과의 짧은 대화가 이어집니다.</span></li>
+                        <li><strong>핵심</strong><span>완벽한 문장보다 멈추지 않는 짧은 수행이 중요합니다. 인사, 정정, 다시 묻기 표현을 준비합니다.</span></li>
+                      </ul>
+                    </article>
+                  </div>
+                  <p class="exam-source">
+                    구조 기준:
+                    <a href="https://examenes.cervantes.es/es/dele/examenes/a1">Instituto Cervantes DELE A1 공식 안내</a>,
+                    <a href="https://examenes.cervantes.es/es/dele/preparar-prueba">DELE 준비 자료와 시험 모델</a>
+                  </p>
+                </section>
+
+                <section class="book-section" id="chapter-10-scoring">
+                  <h4>채점과 합격 기준</h4>
+                  <p>
+                    네 영역은 각각 25점, 총점은 100점입니다. A1에서는 점수표를 두 묶음으로 봅니다.
+                    독해와 쓰기를 합친 묶음, 듣기와 말하기를 합친 묶음에서 각각 30점 이상을 받아야
+                    최종 합격입니다. 한 영역이 조금 낮아도 같은 묶음의 다른 영역으로 보완할 수 있지만,
+                    어느 한 묶음 전체가 무너지면 합격하기 어렵습니다.
+                  </p>
+                  <div class="grammar-table" role="table" aria-label="DELE A1 채점 묶음">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">1묶음</span>
+                      <span class="grammar-es" role="cell">독해 25점 + 쓰기 25점</span>
+                      <span class="grammar-note" role="cell">읽은 정보를 짧은 글로 옮길 수 있는지를 함께 봅니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">2묶음</span>
+                      <span class="grammar-es" role="cell">듣기 25점 + 말하기 25점</span>
+                      <span class="grammar-note" role="cell">들은 정보를 실제 대화로 처리할 수 있는지를 함께 봅니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">목표</span>
+                      <span class="grammar-es" role="cell">각 묶음 30점 이상</span>
+                      <span class="grammar-note" role="cell">총점만 높이는 공부보다 네 영역을 균형 있게 준비해야 합니다.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-task-types">
+                  <h4>과제 유형 한눈에 보기</h4>
+                  <div class="grammar-table" role="table" aria-label="DELE A1 과제 유형">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">독해</span>
+                      <span class="grammar-es" role="cell">aviso, anuncio, mensaje</span>
+                      <span class="grammar-note" role="cell">짧은 공지, 광고, 메시지에서 이름·시간·장소·가격을 고릅니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">듣기</span>
+                      <span class="grammar-es" role="cell">diálogo breve, aviso</span>
+                      <span class="grammar-note" role="cell">짧은 대화와 안내를 듣고 사람, 물건, 시간, 장소를 표시합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">쓰기</span>
+                      <span class="grammar-es" role="cell">formulario, mensaje corto</span>
+                      <span class="grammar-note" role="cell">개인 정보 양식과 아주 짧은 메시지를 요구 조건에 맞게 씁니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">말하기</span>
+                      <span class="grammar-es" role="cell">presentación, interacción</span>
+                      <span class="grammar-note" role="cell">자기소개, 익숙한 주제 말하기, 시험관과의 짧은 상호작용을 수행합니다.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-reading">
+                  <h4>독해는 어떻게 나오는가</h4>
+                  <p>
+                    독해는 문학 지문을 읽는 시험이 아니라 생활 문서를 처리하는 시험입니다. 광고에서 가격을 찾고,
+                    안내문에서 시간을 찾고, 짧은 메시지에서 누가 어디에 가는지 고릅니다. 문제를 풀 때는 먼저
+                    선택지의 명사와 숫자에 밑줄을 긋고, 본문에서 같은 정보나 비슷한 표현을 찾습니다.
+                  </p>
+                  <div class="grammar-table" role="table" aria-label="DELE A1 독해 과제 예시">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">광고</span>
+                      <span class="grammar-es" role="cell">Abierto de 9:00 a 14:00.</span>
+                      <span class="grammar-note" role="cell">영업 시간, 요일, 위치를 찾는 문제가 자주 나옵니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">메시지</span>
+                      <span class="grammar-es" role="cell">Nos vemos en la estación.</span>
+                      <span class="grammar-note" role="cell">만나는 장소와 약속 시간을 정확히 잡습니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">소개</span>
+                      <span class="grammar-es" role="cell">Soy médica y vivo en Lima.</span>
+                      <span class="grammar-note" role="cell">직업, 국적, 거주지, 취미를 연결합니다.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-listening">
+                  <h4>듣기는 어떻게 나오는가</h4>
+                  <p>
+                    듣기는 실제로 별도 시험입니다. DELE A1에서는 약 25분 동안 네 개 과제를 풀고,
+                    녹음된 짧은 말에서 필요한 정보를 고릅니다. 긴 강의를 이해하는 시험이 아니라
+                    안내, 짧은 대화, 자기소개, 약속, 주문처럼 생활 장면의 단서를 잡는 시험입니다.
+                    선택지를 먼저 읽어 숫자, 시간, 장소, 음식, 사람 이름을 표시해두면 들을 때
+                    무엇을 기다려야 하는지 분명해집니다.
+                  </p>
+                  <div class="phrase-table" role="table" aria-label="DELE A1 듣기 신호 표현">
+                    <div class="phrase-row" role="row">
+                      <span class="phrase-label" role="cell">시간</span>
+                      <span class="phrase-es" role="cell">a las ocho, por la tarde</span>
+                      <span class="phrase-ko" role="cell">약속, 수업, 출발 시간을 고르는 단서입니다.</span>
+                    </div>
+                    <div class="phrase-row" role="row">
+                      <span class="phrase-label" role="cell">장소</span>
+                      <span class="phrase-es" role="cell">en la farmacia, cerca del hotel</span>
+                      <span class="phrase-ko" role="cell">위치 전치사와 장소 명사가 같이 들립니다.</span>
+                    </div>
+                    <div class="phrase-row" role="row">
+                      <span class="phrase-label" role="cell">선택</span>
+                      <span class="phrase-es" role="cell">Quiero café, no té.</span>
+                      <span class="phrase-ko" role="cell">부정어 no 뒤에 바뀌는 선택지를 놓치지 않습니다.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-listening-drill">
+                  <h4>듣기 실전 훈련</h4>
+                  <p>
+                    듣기 시험은 “스페인어를 많이 들었다”만으로 안정되지 않습니다. 문제지를 먼저 읽고,
+                    들을 단서를 예측하고, 두 번째 재생에서 답을 확정하는 순서가 필요합니다.
+                    공식 모델의 오디오와 전사문을 함께 쓰되, 전사문은 마지막 확인용으로만 봅니다.
+                  </p>
+                  <div class="grammar-table" role="table" aria-label="DELE A1 듣기 훈련 단계">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">듣기 전</span>
+                      <span class="grammar-es" role="cell">hora, lugar, persona, objeto</span>
+                      <span class="grammar-note" role="cell">선택지에서 숫자, 장소, 사람, 물건을 먼저 표시하고 어떤 단어가 들릴지 예측합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">1회 듣기</span>
+                      <span class="grammar-es" role="cell">idea general</span>
+                      <span class="grammar-note" role="cell">정답을 확정하려 하지 말고 장면과 화자의 목적만 잡습니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">2회 듣기</span>
+                      <span class="grammar-es" role="cell">dato exacto</span>
+                      <span class="grammar-note" role="cell">시간, 가격, 장소처럼 답이 되는 정확한 단서를 표시합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">오답 정리</span>
+                      <span class="grammar-es" role="cell">transcripción al final</span>
+                      <span class="grammar-note" role="cell">전사문은 먼저 보지 않습니다. 채점 후 안 들린 이유가 속도, 어휘, 발음, 문제 요구 중 무엇인지 적습니다.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-listening-materials">
+                  <h4>듣기 자료</h4>
+                  <p>
+                    아래 샘플은 브라우저의 스페인어 음성 합성으로 재생합니다. 실제 시험 음원은 아니므로
+                    리듬과 문제 풀이 순서를 익히는 데 쓰고, 시험 직전에는 반드시 Instituto Cervantes의
+                    공식 모델 오디오로 같은 방식의 훈련을 반복하세요.
+                  </p>
+                  <div class="listening-materials" aria-label="DELE A1 듣기 샘플">
+                    <article class="audio-card">
+                      <div class="audio-card-header">
+                        <h5>샘플 1. 역 안내 방송</h5>
+                        <span class="audio-level">A1</span>
+                      </div>
+                      <p class="audio-prompt">질문: 기차는 몇 시에 출발합니까?</p>
+                      <div class="audio-controls">
+                        <button class="audio-button" type="button" data-listen-lang="es-ES" data-listen-rate="0.82" data-listen-text="Atención, por favor. El tren a Madrid sale a las ocho y cuarto de la mañana. La vía es la número tres.">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                          재생
+                        </button>
+                        <span class="audio-status" aria-live="polite"></span>
+                      </div>
+                      <div class="audio-progress" role="progressbar" aria-label="재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <span class="audio-progress-bar"></span>
+                      </div>
+                      <ol class="exercise-list">
+                        <li>A. 8:00</li>
+                        <li>B. 8:15</li>
+                        <li>C. 8:30</li>
+                      </ol>
+                      <details class="transcript-details">
+                        <summary>전사문과 정답 보기</summary>
+                        <p class="transcript-text">Atención, por favor. El tren a Madrid sale a las ocho y cuarto de la mañana. La vía es la número tres.</p>
+                        <p class="audio-prompt">정답: B. ocho y cuarto는 8시 15분입니다.</p>
+                      </details>
+                    </article>
+                    <article class="audio-card">
+                      <div class="audio-card-header">
+                        <h5>샘플 2. 카페 대화</h5>
+                        <span class="audio-level">A1</span>
+                      </div>
+                      <p class="audio-prompt">질문: 손님은 무엇을 주문합니까?</p>
+                      <div class="audio-controls">
+                        <button class="audio-button" type="button" data-listen-lang="es-ES" data-listen-rate="0.82" data-listen-text="Buenos días. Quiero un café con leche y una botella de agua, por favor. No quiero té.">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                          재생
+                        </button>
+                        <span class="audio-status" aria-live="polite"></span>
+                      </div>
+                      <div class="audio-progress" role="progressbar" aria-label="재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <span class="audio-progress-bar"></span>
+                      </div>
+                      <ol class="exercise-list">
+                        <li>A. 커피와 물</li>
+                        <li>B. 차와 물</li>
+                        <li>C. 커피와 빵</li>
+                      </ol>
+                      <details class="transcript-details">
+                        <summary>전사문과 정답 보기</summary>
+                        <p class="transcript-text">Buenos días. Quiero un café con leche y una botella de agua, por favor. No quiero té.</p>
+                        <p class="audio-prompt">정답: A. café con leche와 agua가 핵심 단서입니다.</p>
+                      </details>
+                    </article>
+                    <article class="audio-card">
+                      <div class="audio-card-header">
+                        <h5>샘플 3. 친구의 음성 메시지</h5>
+                        <span class="audio-level">A1</span>
+                      </div>
+                      <p class="audio-prompt">질문: Ana는 어디에서 기다립니까?</p>
+                      <div class="audio-controls">
+                        <button class="audio-button" type="button" data-listen-lang="es-ES" data-listen-rate="0.82" data-listen-text="Hola, soy Ana. Estoy en la biblioteca, cerca de la puerta principal. Te espero aquí a las cinco.">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                          재생
+                        </button>
+                        <span class="audio-status" aria-live="polite"></span>
+                      </div>
+                      <div class="audio-progress" role="progressbar" aria-label="재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <span class="audio-progress-bar"></span>
+                      </div>
+                      <ol class="exercise-list">
+                        <li>A. 도서관</li>
+                        <li>B. 역</li>
+                        <li>C. 카페</li>
+                      </ol>
+                      <details class="transcript-details">
+                        <summary>전사문과 정답 보기</summary>
+                        <p class="transcript-text">Hola, soy Ana. Estoy en la biblioteca, cerca de la puerta principal. Te espero aquí a las cinco.</p>
+                        <p class="audio-prompt">정답: A. biblioteca가 장소 단서입니다.</p>
+                      </details>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-writing">
+                  <h4>쓰기는 어떻게 나오는가</h4>
+                  <p>
+                    쓰기는 멋진 글을 쓰는 시험이 아니라 필요한 정보를 빠짐없이 넣는 시험입니다. 개인 정보 양식에서는
+                    이름, 국적, 주소, 직업, 생년월일을 정확히 쓰고, 짧은 메시지에서는 인사, 목적, 시간이나 장소,
+                    마무리 표현을 넣습니다.
+                  </p>
+                  <div class="dialogue-card" aria-label="DELE A1 짧은 이메일 예시">
+                    <div class="dialogue-line">
+                      <span>Saludo</span>
+                      <p>Hola, Ana:</p>
+                    </div>
+                    <div class="dialogue-line">
+                      <span>Propósito</span>
+                      <p>El sábado voy a Madrid.</p>
+                    </div>
+                    <div class="dialogue-line">
+                      <span>Detalle</span>
+                      <p>Llego a las diez y quiero comer contigo.</p>
+                    </div>
+                    <div class="dialogue-line">
+                      <span>Cierre</span>
+                      <p>Un abrazo, Minjun.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-speaking">
+                  <h4>말하기는 어떻게 나오는가</h4>
+                  <p>
+                    말하기는 준비 시간 10분을 활용한 뒤 시험관 앞에서 약 10분 동안 진행됩니다. 자기소개,
+                    익숙한 주제에 대한 짧은 말하기, 시험관과의 상호작용이 핵심입니다. 대답은 길 필요가 없지만,
+                    질문을 이해하고 한 문장씩 이어가는 힘이 필요합니다.
+                  </p>
+                  <div class="grammar-table" role="table" aria-label="DELE A1 말하기 과제 예시">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">자기소개</span>
+                      <span class="grammar-es" role="cell">Me llamo... Soy de...</span>
+                      <span class="grammar-note" role="cell">이름, 국적, 직업, 가족, 취미를 준비합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">주제 말하기</span>
+                      <span class="grammar-es" role="cell">Mi rutina, mi ciudad, mi familia</span>
+                      <span class="grammar-note" role="cell">하루 일과, 동네, 가족처럼 A1 주제 안에서 말합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">상호작용</span>
+                      <span class="grammar-es" role="cell">¿Puede repetir, por favor?</span>
+                      <span class="grammar-note" role="cell">못 들었을 때 다시 묻는 표현도 점수 방어에 도움이 됩니다.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="book-section" id="chapter-10-exam">
+                  <h4>영역별 실전 전략</h4>
+                  <div class="grammar-table" role="table" aria-label="DELE A1 영역별 실전 전략">
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">독해</span>
+                      <span class="grammar-es" role="cell">nombre, hora, lugar, precio</span>
+                      <span class="grammar-note" role="cell">이름, 시간, 장소, 가격처럼 눈에 보이는 정보를 먼저 찾습니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">듣기</span>
+                      <span class="grammar-es" role="cell">número, persona, lugar</span>
+                      <span class="grammar-note" role="cell">선택지를 먼저 읽고, 들을 때 기다릴 단서를 정합니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">작문</span>
+                      <span class="grammar-es" role="cell">Me llamo... Vivo en...</span>
+                      <span class="grammar-note" role="cell">자기소개, 짧은 메시지, 개인 정보 양식을 정확히 씁니다.</span>
+                    </div>
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">회화</span>
+                      <span class="grammar-es" role="cell">Hola. Soy... Me gusta...</span>
+                      <span class="grammar-note" role="cell">인사, 출신, 직업, 취향, 장소 묻기를 막힘없이 말합니다.</span>
+                    </div>
+                  </div>
+                </section>
+                <div class="book-note" id="chapter-10-finish">
+                  <strong>A1 마무리 기준</strong>
+                  <p>
+                    이 파트가 끝났다면 긴 이야기를 할 필요는 없습니다. 대신 짧은 안내문에서 정보를 찾고,
+                    천천히 말하는 대화에서 시간과 장소를 듣고, 자기소개 메시지를 쓰고, 시험관에게
+                    이름·출신·직업·취향·하루 일과를 말할 수 있어야 합니다. 그 네 가지가 A2로
+                    넘어가는 출발선입니다.
+                  </p>
+                </div>
+              </article>
+            </section>
+
+            <section class="practice-panel" id="a1-exercise-bank" aria-labelledby="a1-exercise-bank-title">
+              <div>
+                <p class="eyebrow">A1 마무리 연습</p>
+                <h3 id="a1-exercise-bank-title">연습문제와 해답 기준</h3>
+              </div>
+              <div class="grammar-table" role="table" aria-label="A1 마무리 연습문제">
+                <div class="grammar-row" role="row">
+                  <span class="grammar-label" role="cell">문법</span>
+                  <span class="grammar-es" role="cell">Soy / estoy / hay</span>
+                  <span class="grammar-note" role="cell">자기소개 4문장, 현재 상태 2문장, 동네 소개 3문장을 쓰고 동사 선택이 자연스러운지 확인합니다.</span>
+                </div>
+                <div class="grammar-row" role="row">
+                  <span class="grammar-label" role="cell">회화</span>
+                  <span class="grammar-es" role="cell">Quiero..., ¿Dónde está...?</span>
+                  <span class="grammar-note" role="cell">카페 주문, 길 묻기, 가격 질문을 각각 두 턴 이상의 짧은 대화로 만듭니다.</span>
+                </div>
+                <div class="grammar-row" role="row">
+                  <span class="grammar-label" role="cell">독해</span>
+                  <span class="grammar-es" role="cell">nombre, hora, lugar, precio</span>
+                  <span class="grammar-note" role="cell">광고나 메시지를 읽는다고 가정하고 이름, 시간, 장소, 가격 단서를 표시합니다.</span>
+                </div>
+                <div class="grammar-row" role="row">
+                  <span class="grammar-label" role="cell">해답 기준</span>
+                  <span class="grammar-es" role="cell">claro, completo, correcto</span>
+                  <span class="grammar-note" role="cell">정답은 하나로 고정되지 않습니다. 요구 정보를 빠뜨리지 않고, 동사와 성수 일치가 맞고, 상대가 이해할 수 있으면 통과입니다.</span>
+                </div>
+              </div>
+              <div class="book-note">
+                <strong>A1 자기점검</strong>
+                <p>
+                  막히는 부분이 있으면 해당 장으로 돌아갑니다. ser와 estar가 흔들리면 4-5장,
+                  현재시제와 일상이 흔들리면 6장, 질문과 주문이 막히면 8-9장을 다시 읽습니다.
+                  시험을 준비한다면 이 연습을 말로 한 번, 글로 한 번 끝내야 A2로 넘어갈 준비가 됩니다.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-grid compact-outline" aria-label="A1 장 목차 요약">
+              <div class="lesson-card is-current">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M7 8a4 4 0 0 1 8 0"></path>
+                    <path d="M5 20a6 6 0 0 1 12 0"></path>
+                    <path d="M17 9h4"></path>
+                    <path d="M19 7v4"></path>
+                  </svg>
+                </span>
+                <h3>4장. 첫 만남과 인사</h3>
+                <p>
+                  인사, 이름, 국적, 직업을 말하면서 명사의 성과 수,
+                  관사, 주격 인칭대명사, ser 동사를 처음 묶어 봅니다.
+                </p>
+                <div class="chapter-tags" aria-label="4장 핵심">
+                  <span class="tag">ser</span>
+                  <span class="tag">관사</span>
+                  <span class="tag">tú / usted</span>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 18c1.4-3 3.6-4.5 6.5-4.5S15.6 15 17 18"></path>
+                    <circle cx="10.5" cy="8" r="3"></circle>
+                    <path d="M17 11.5a3.5 3.5 0 0 1 3 3.5"></path>
+                    <path d="M16.5 5.5a2.5 2.5 0 0 1 0 5"></path>
+                  </svg>
+                </span>
+                <h3>5장. 나와 내 주변 소개하기</h3>
+                <p>
+                  가족, 외모, 성격을 말하며 형용사의 성수 일치,
+                  소유형용사, estar와 ser의 첫 차이를 익힙니다.
+                </p>
+                <div class="chapter-tags" aria-label="5장 핵심">
+                  <span class="tag">형용사</span>
+                  <span class="tag">estar</span>
+                  <span class="tag">숫자 0-100</span>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="8"></circle>
+                    <path d="M12 7v5l3 2"></path>
+                  </svg>
+                </span>
+                <h3>6장. 일상의 현재</h3>
+                <p>
+                  하루 일과, 요일, 날짜, 시간을 현재시제로 말합니다.
+                  규칙동사와 주요 불규칙 동사를 함께 배치합니다.
+                </p>
+                <div class="chapter-tags" aria-label="6장 핵심">
+                  <span class="tag">현재시제</span>
+                  <span class="tag">ir / tener</span>
+                  <span class="tag">재귀동사</span>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path>
+                  </svg>
+                </span>
+                <h3>7장. 취향과 감정</h3>
+                <p>
+                  좋아하는 것, 취미, 여가를 말하며 gustar 구문과
+                  siempre, a veces, nunca 같은 빈도 표현을 붙입니다.
+                </p>
+                <div class="chapter-tags" aria-label="7장 핵심">
+                  <span class="tag">gustar</span>
+                  <span class="tag">encantar</span>
+                  <span class="tag">빈도 부사</span>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11z"></path>
+                    <circle cx="12" cy="10" r="2"></circle>
+                  </svg>
+                </span>
+                <h3>8장. 장소와 위치</h3>
+                <p>
+                  집, 동네, 도시를 묘사하고 길을 묻습니다.
+                  hay와 estar, 위치 전치사, 지시사를 한 장에서 정리합니다.
+                </p>
+                <div class="chapter-tags" aria-label="8장 핵심">
+                  <span class="tag">hay / estar</span>
+                  <span class="tag">전치사</span>
+                  <span class="tag">este / ese</span>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 6h14l-1.5 12h-11z"></path>
+                    <path d="M8 6a4 4 0 0 1 8 0"></path>
+                    <path d="M8.5 11h7"></path>
+                  </svg>
+                </span>
+                <h3>9장. 생존 회화</h3>
+                <p>
+                  카페, 식당, 가게에서 주문하고 가격을 묻습니다.
+                  qué, dónde, cuánto, por qué까지 의문사를 총정리합니다.
+                </p>
+                <div class="chapter-tags" aria-label="9장 핵심">
+                  <span class="tag">주문하기</span>
+                  <span class="tag">가격</span>
+                  <span class="tag">의문사</span>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <span class="section-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 4h12v16H6z"></path>
+                    <path d="M9 8h6"></path>
+                    <path d="M9 12h6"></path>
+                    <path d="M9 16h3"></path>
+                  </svg>
+                </span>
+                <h3>10장. DELE A1 완전 대비</h3>
+                <p>
+                  독해, 듣기, 작문, 회화의 시험 구조를 확인하고,
+                  A1에서 기대되는 짧은 자기소개와 생활 과제를 모의고사로 점검합니다.
+                </p>
+                <div class="chapter-tags" aria-label="10장 핵심">
+                  <span class="tag">독해</span>
+                  <span class="tag">듣기</span>
+                  <span class="tag">회화</span>
+                </div>
+              </div>
+            </section>
+          </article>
+
+          <section class="practice-panel" aria-labelledby="a1-sample-title">
+            <div>
+              <p class="eyebrow">4장 첫 학습 샘플</p>
+              <h3 id="a1-sample-title">처음 만났을 때 바로 쓰는 문장</h3>
+            </div>
+            <div class="phrase-table" role="table" aria-label="A1 첫 만남 예문">
+              <div class="phrase-row" role="row">
+                <span class="phrase-label" role="cell">인사</span>
+                <span class="phrase-es" role="cell">Hola. Buenos días.</span>
+                <span class="phrase-ko" role="cell">안녕하세요. 좋은 아침입니다.</span>
+              </div>
+              <div class="phrase-row" role="row">
+                <span class="phrase-label" role="cell">이름</span>
+                <span class="phrase-es" role="cell">Me llamo Mina.</span>
+                <span class="phrase-ko" role="cell">제 이름은 미나입니다.</span>
+              </div>
+              <div class="phrase-row" role="row">
+                <span class="phrase-label" role="cell">국적</span>
+                <span class="phrase-es" role="cell">Soy de Corea.</span>
+                <span class="phrase-ko" role="cell">저는 한국에서 왔습니다.</span>
+              </div>
+              <div class="phrase-row" role="row">
+                <span class="phrase-label" role="cell">직업</span>
+                <span class="phrase-es" role="cell">Soy estudiante.</span>
+                <span class="phrase-ko" role="cell">저는 학생입니다.</span>
+              </div>
+            </div>
+            <ul class="checklist" aria-label="4장 학습 메모">
+              <li><span class="checkmark">1</span><span>ser는 신분, 국적, 직업처럼 비교적 안정적인 정보를 말할 때 먼저 만납니다.</span></li>
+              <li><span class="checkmark">2</span><span>tú와 usted는 친밀도와 상황을 보여 주는 선택입니다. 처음에는 usted를 기본값으로 두면 안전합니다.</span></li>
+              <li><span class="checkmark">3</span><span>문장을 통째로 외운 뒤, 이름과 국적만 바꾸며 말하기 연습을 시작합니다.</span></li>
+            </ul>
+          </section>
+
+          <section class="practice-panel" aria-labelledby="dele-a1-title">
+            <div>
+              <p class="eyebrow">DELE A1 대비</p>
+              <h3 id="dele-a1-title">A1 마지막 장에서 확인할 것</h3>
+            </div>
+            <div class="exam-grid" aria-label="DELE A1 영역별 준비">
+              <div class="exam-card">
+                <strong>독해</strong>
+                <span>짧은 안내문, 광고, 메시지에서 이름, 시간, 장소, 가격 같은 정보를 찾습니다.</span>
+              </div>
+              <div class="exam-card">
+                <strong>듣기</strong>
+                <span>천천히 말하는 자기소개, 주문, 약속 시간을 듣고 핵심 정보를 표시합니다.</span>
+              </div>
+              <div class="exam-card">
+                <strong>작문</strong>
+                <span>개인 정보 양식과 짧은 이메일을 쓸 수 있는지 점검합니다.</span>
+              </div>
+              <div class="exam-card">
+                <strong>회화</strong>
+                <span>인사, 자기소개, 취향, 장소 묻기처럼 정해진 생활 과제를 말합니다.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="reading-block" id="reading-break-1" aria-labelledby="reading-title">
+            <div>
+              <p class="eyebrow">쉬어가기 ①</p>
+              <h3 id="reading-title">첫 이야기책 펼치기</h3>
+            </div>
+            <div class="reading-columns">
+              <div class="quote-card">
+                <p>
+                  El Ratoncito Pérez vive en una caja pequeña. La caja está cerca de la cama.
+                  Hay un diente debajo de la almohada.
+                </p>
+                <small>현재시제, ser/estar, hay 중심의 쉬운 각색 예시</small>
+              </div>
+              <ul class="checklist" aria-label="이 코너의 학습 효과">
+                <li><span class="checkmark">1</span><span>El Ratoncito Pérez 각색본으로 현재시제와 hay를 자연스럽게 복습합니다.</span></li>
+                <li><span class="checkmark">2</span><span>스페인 사람들의 늦은 저녁 문화, José와 Pepe 같은 애칭 이야기를 짧게 읽습니다.</span></li>
+                <li><span class="checkmark">3</span><span>La Bamba처럼 반복 구조가 뚜렷한 노래로 A1 문장 리듬을 익힙니다.</span></li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="extended-guide" class="extended-guide" aria-label="A2부터 C2까지 전체 본문"></section>
+
+          <section class="chapter-outline" id="outline" aria-labelledby="outline-title">
+            <div>
+              <p class="eyebrow">부록</p>
+              <h2 id="outline-title">마지막에 다시 찾는 참고 장치</h2>
+            </div>
+            <ol class="outline-list">
+              <li>
+                <span class="outline-number">A</span>
+                <span>
+                  <a href="#appendix-verbs" data-spy-link>
+                    <span class="outline-title">동사 변화표</span>
+                    <span class="outline-desc">규칙 3종과 자주 쓰는 불규칙 동사를 한눈에 다시 봅니다.</span>
+                  </a>
+                </span>
+              </li>
+              <li>
+                <span class="outline-number">B</span>
+                <span>
+                  <a href="#appendix-tenses" data-spy-link>
+                    <span class="outline-title">시제 총정리</span>
+                    <span class="outline-desc">직설법, 접속법, 명령법의 역할을 레벨별로 연결합니다.</span>
+                  </a>
+                </span>
+              </li>
+              <li>
+                <span class="outline-number">C</span>
+                <span>
+                  <a href="#appendix-vocab" data-spy-link>
+                    <span class="outline-title">주제별 어휘집과 관용 표현</span>
+                    <span class="outline-desc">A1-C2에서 반복되는 어휘를 생활, 사회, 학술, 문화 영역으로 묶습니다.</span>
+                  </a>
+                </span>
+              </li>
+            </ol>
+            <div class="appendix-grid">
+              <section class="book-section" id="appendix-verbs">
+                <h4>동사 변화표</h4>
+                <div class="grammar-table" role="table" aria-label="동사 변화 핵심 표">
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">-ar</span>
+                    <span class="grammar-es" role="cell">hablar: hablo, hablé, hablaba, hablaré</span>
+                    <span class="grammar-note" role="cell">현재, 단순과거, 불완료과거, 미래의 기준형으로 삼습니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">-er</span>
+                    <span class="grammar-es" role="cell">comer: como, comí, comía, comeré</span>
+                    <span class="grammar-note" role="cell">현재와 단순과거의 어미 차이를 먼저 고정합니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">-ir</span>
+                    <span class="grammar-es" role="cell">vivir: vivo, viví, vivía, viviré</span>
+                    <span class="grammar-note" role="cell">-er와 비슷하지만 nosotros와 vosotros 일부 형태에서 차이가 납니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">불규칙</span>
+                    <span class="grammar-es" role="cell">ser, estar, ir, tener, hacer, decir, poder</span>
+                    <span class="grammar-note" role="cell">A1-B1에서 가장 먼저 자동화해야 하는 동사입니다.</span>
+                  </div>
+                </div>
+              </section>
+              <section class="book-section" id="appendix-tenses">
+                <h4>시제 총정리</h4>
+                <ul class="focus-list">
+                  <li><span>1</span><span>현재는 사실, 습관, 지금의 상태를 말합니다. A1의 기본 시제입니다.</span></li>
+                  <li><span>2</span><span>단순과거는 끝난 사건을 앞으로 밀고, 불완료과거는 배경과 습관을 펼칩니다.</span></li>
+                  <li><span>3</span><span>현재완료는 과거 일을 현재와 연결하고, 과거완료는 과거보다 더 앞선 일을 표시합니다.</span></li>
+                  <li><span>4</span><span>접속법은 사실보다 바람, 의심, 평가, 목적, 조건을 드러내는 방식입니다.</span></li>
+                  <li><span>5</span><span>명령법은 지시뿐 아니라 조언, 부탁, 안내, 요리법에서 자연스럽게 씁니다.</span></li>
+                </ul>
+              </section>
+              <section class="book-section" id="appendix-vocab">
+                <h4>주제별 어휘집</h4>
+                <div class="grammar-table" role="table" aria-label="주제별 어휘">
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">생활</span>
+                    <span class="grammar-es" role="cell">familia, casa, trabajo, salud, comida</span>
+                    <span class="grammar-note" role="cell">A1-A2의 회화와 생활 문서에서 반복됩니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">사회</span>
+                    <span class="grammar-es" role="cell">educación, empleo, consumo, tecnología</span>
+                    <span class="grammar-note" role="cell">B1-B2의 의견 글과 토론에서 근거를 세우는 어휘입니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">학술</span>
+                    <span class="grammar-es" role="cell">hipótesis, evidencia, consecuencia, matiz</span>
+                    <span class="grammar-note" role="cell">C1-C2의 논증, 요약, 통합 과제에서 필요합니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">관용</span>
+                    <span class="grammar-es" role="cell">estar hecho polvo, meter la pata</span>
+                    <span class="grammar-note" role="cell">직역보다 장면과 감정을 함께 외워야 오래 남습니다.</span>
+                  </div>
+                </div>
+              </section>
+              <section class="book-section" id="appendix-regional">
+                <h4>스페인과 중남미 표현</h4>
+                <div class="grammar-table" role="table" aria-label="지역별 어휘 대조">
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">자동차</span>
+                    <span class="grammar-es" role="cell">coche / carro / auto</span>
+                    <span class="grammar-note" role="cell">스페인과 중남미에서 선호하는 말이 다릅니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">컴퓨터</span>
+                    <span class="grammar-es" role="cell">ordenador / computadora</span>
+                    <span class="grammar-note" role="cell">스페인에서는 ordenador, 중남미에서는 computadora가 널리 쓰입니다.</span>
+                  </div>
+                  <div class="grammar-row" role="row">
+                    <span class="grammar-label" role="cell">2인칭</span>
+                    <span class="grammar-es" role="cell">vosotros / ustedes / vos</span>
+                    <span class="grammar-note" role="cell">시험에서는 표준형을 우선하되 실제 콘텐츠에서는 지역 차이를 인식합니다.</span>
+                  </div>
+                </div>
+              </section>
+              <section class="book-section" id="appendix-dele">
+                <h4>DELE 루브릭</h4>
+                <ul class="focus-list">
+                  <li><span>1</span><span>독해와 듣기는 모든 단어를 아는지보다 과제에서 요구한 정보를 찾는지가 핵심입니다.</span></li>
+                  <li><span>2</span><span>쓰기는 과제 조건 충족, 구성, 어휘 범위, 문법 정확도를 함께 봅니다.</span></li>
+                  <li><span>3</span><span>말하기는 유창성, 상호작용, 발음, 어휘와 문법 범위를 종합적으로 봅니다.</span></li>
+                  <li><span>4</span><span>A1-B2는 영역별 시험 구조를 분리해서 훈련하고, C1-C2는 자료 통합과 변환을 중심에 둡니다.</span></li>
+                </ul>
+              </section>
+              <section class="book-section" id="appendix-answers">
+                <h4>해답과 해설</h4>
+                <div class="book-note">
+                  <strong>이 가이드북의 해답 기준</strong>
+                  <p>
+                    객관식 독해와 듣기는 정답을 하나로 고정하지만, 말하기와 쓰기 연습은 정답보다 수행 기준을 봅니다.
+                    요구한 정보가 들어갔는지, 시제와 성수 일치가 무너지지 않았는지, 상대가 의도를 이해할 수 있는지
+                    세 가지를 먼저 체크합니다. 모의고사 해설은 틀린 선택지가 왜 매력적으로 보였는지까지 적어
+                    다음 풀이에서 같은 함정을 피하게 합니다.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <footer class="footer">
+        <p>지은이 문성혁 · 단일 HTML 가이드북입니다. Part 0부터 DELE C2와 부록까지 한 파일에서 읽도록 구성했습니다.</p>
+      </footer>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const toggle = document.querySelector("[data-theme-toggle]");
+      const urlTheme = new URLSearchParams(window.location.search).get("theme");
+      const storedTheme = localStorage.getItem("spanish-guide-theme");
+
+      function setTheme(theme) {
+        const isDark = theme === "dark";
+        root.dataset.theme = theme;
+        toggle.setAttribute("aria-pressed", String(isDark));
+        toggle.setAttribute("aria-label", isDark ? "라이트 모드로 전환" : "다크 모드로 전환");
+        toggle.querySelector("span").textContent = isDark ? "라이트 모드" : "다크 모드";
+        localStorage.setItem("spanish-guide-theme", theme);
+      }
+
+      setTheme(urlTheme === "dark" || urlTheme === "light" ? urlTheme : storedTheme || "light");
+
+      toggle.addEventListener("click", () => {
+        setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+      });
+
+      const guideLevels = [
+        {
+          id: "part-a2",
+          toc: "Part 2. A2 과거와 미래",
+          label: "Part 2. A2 — 초급: 과거와 미래로 확장하기",
+          title: "짧은 생존 회화에서 경험과 사건으로 넘어간다",
+          intro:
+            "A2는 현재만 말하던 학습자가 지금 하고 있는 일, 방금 한 일, 어제 있었던 일, 예전에 반복되던 일을 구분하는 단계입니다. 여행, 병원, 관공서, 쇼핑처럼 생활 장면이 넓어지고 대명사와 명령형으로 문장이 짧아집니다.",
+          chapters: [
+            {
+              number: 11,
+              title: "지금 하고 있는 일과 계획",
+              lead:
+                "현재진행형과 근접 미래는 A2의 출발점입니다. 지금 하는 일과 곧 할 일을 구분하면 약속, 예약, 여행 계획을 훨씬 자연스럽게 말할 수 있습니다.",
+              focus: ["estar + gerundio로 진행 중인 행동 말하기", "ir a + infinitivo로 가까운 계획 말하기", "tener que, hay que, deber로 의무와 필요 표현하기"],
+              practice: "오늘 저녁 일정, 이번 주말 계획, 해야 할 일을 세 문장씩 써 봅니다. Voy a estudiar, Tengo que llamar, Estoy preparando처럼 동사 덩어리를 통째로 익힙니다.",
+              reading: "뉴스 한 토막: 마드리드의 한 학생이 시험 주간을 준비하는 하루를 현재진행과 근접 미래로 읽습니다."
+            },
+            {
+              number: 12,
+              title: "경험 말하기 — 현재완료",
+              lead:
+                "현재완료는 과거 일을 말하지만 시선은 현재에 붙어 있습니다. 오늘, 이번 주, 지금까지의 경험을 말할 때 A1 문장이 바로 생활 기록으로 확장됩니다.",
+              focus: ["haber + participio 형태 만들기", "ya, todavía no, alguna vez로 완료와 미완료 구분하기", "he estado, he visto, he comido처럼 자주 쓰는 덩어리 익히기"],
+              practice: "오늘 한 일 다섯 개와 아직 하지 않은 일 세 개를 씁니다. Ya he desayunado, Todavía no he llamado처럼 부사를 문장 안에 고정합니다.",
+              reading: "이야기 한 소절: 처음 바르셀로나에 도착한 여행자의 첫날 기록을 현재완료로 읽습니다."
+            },
+            {
+              number: 13,
+              title: "지나간 사건 — 단순과거",
+              lead:
+                "단순과거는 사건을 앞으로 밀어 가는 시제입니다. 어제 한 일, 여행에서 일어난 일, 인물의 일생처럼 끝난 사건을 시간순으로 말합니다.",
+              focus: ["-ar, -er, -ir 단순과거 규칙형", "fui, tuve, hice, pude 같은 핵심 불규칙", "ayer, anoche, hace dos días로 시간 프레임 세우기"],
+              practice: "지난 주말을 여섯 문장으로 씁니다. 문장마다 시간 표현을 하나씩 붙여 사건의 순서를 분명히 합니다.",
+              reading: "스포츠 기사: 한 선수의 데뷔와 우승을 단순과거 동사로 따라갑니다."
+            },
+            {
+              number: 14,
+              title: "그때 그 시절 — 불완료과거",
+              lead:
+                "불완료과거는 사건이 아니라 배경과 습관을 보여 줍니다. 어린 시절, 예전 생활, 여행지의 분위기를 말할 때 문장이 갑자기 이야기처럼 들립니다.",
+              focus: ["-aba, -ía 형태로 반복되던 행동 말하기", "era, estaba, había로 배경 묘사하기", "단순과거는 사건, 불완료과거는 배경이라는 역할 구분"],
+              practice: "어린 시절의 동네, 좋아하던 음식, 자주 하던 일을 불완료과거로 쓰고 마지막에 단순과거 사건 하나를 붙입니다.",
+              reading: "전설 한 소절: 산 조르디 이야기에서 배경은 불완료과거, 사건은 단순과거로 나뉩니다."
+            },
+            {
+              number: 15,
+              title: "목적어 대명사 정복",
+              lead:
+                "대명사는 문장을 짧고 자연스럽게 만듭니다. 같은 명사를 반복하지 않고 lo, la, le, se lo로 바꾸면 실제 대화 속도가 올라갑니다.",
+              focus: ["직접목적대명사 lo, la, los, las", "간접목적대명사 le, les와 se로 바뀌는 구조", "동사 앞, 부정사 뒤, 명령형 뒤라는 위치 규칙"],
+              practice: "Compro el libro를 Lo compro로, Doy el libro a Ana를 Se lo doy로 바꾸는 변환 연습을 합니다.",
+              reading: "밈과 농담 해부: 같은 명사를 계속 반복하면 왜 스페인어 대화가 어색해지는지 짧은 대화로 봅니다."
+            },
+            {
+              number: 16,
+              title: "비교와 선호",
+              lead:
+                "A2의 비교 표현은 쇼핑, 여행, 음식 선택에 바로 연결됩니다. 더 싸다, 덜 붐빈다, 제일 좋다처럼 판단을 붙일 수 있어야 합니다.",
+              focus: ["más que, menos que, tan como", "el más, la más로 최상급 말하기", "mejor, peor, mayor, menor 같은 불규칙 비교"],
+              practice: "두 도시, 두 식당, 두 물건을 비교합니다. 가격, 위치, 분위기, 취향을 한 문단으로 묶습니다.",
+              reading: "문화 한 입: 스페인과 멕시코의 아침 식사를 비교하는 짧은 기사 형식 텍스트를 읽습니다."
+            },
+            {
+              number: 17,
+              title: "지시와 부탁 — 명령법 입문",
+              lead:
+                "명령법은 강하게 지시하는 문법만이 아닙니다. 길 안내, 요리법, 부탁, 조언처럼 생활 속에서 가장 실용적인 형태로 먼저 등장합니다.",
+              focus: ["긍정 명령 tú와 usted", "대명사가 명령형 뒤에 붙는 방식", "por favor, un momento로 명령을 부탁으로 부드럽게 만들기"],
+              practice: "길 안내 세 문장과 요리법 네 문장을 씁니다. Gira, sigue, corta, añade처럼 행동 동사를 먼저 익힙니다.",
+              reading: "문화 한 입: 토르티야 데 파타타 레시피를 읽으며 명령형이 실제 문장에 어떻게 쌓이는지 봅니다."
+            },
+            {
+              number: 18,
+              title: "실용 생활 회화",
+              lead:
+                "A2의 마지막 생활 장면은 몸, 관공서, 전화, 날씨입니다. 낯선 상황에서 필요한 말만 정확히 꺼내는 것이 목표입니다.",
+              focus: ["doler 동사로 아픈 곳 말하기", "은행, 우체국, 병원, 약국 기본 표현", "전화에서 이름, 번호, 용건을 천천히 확인하기"],
+              practice: "약국에서 증상을 말하고, 우체국에서 소포를 보내고, 전화로 예약 시간을 바꾸는 세 장면을 짧은 대화로 만듭니다.",
+              reading: "뉴스 한 토막: 갑작스러운 폭염 안내문을 읽고 시간, 장소, 주의 사항을 표시합니다."
+            },
+            {
+              number: 19,
+              title: "DELE A2 완전 대비",
+              lead:
+                "A2 시험은 A1보다 텍스트가 길어지고 과거 경험과 생활 문제 해결이 본격적으로 나옵니다. 읽기와 쓰기, 듣기와 말하기를 따로 공부하지 말고 같은 생활 장면으로 묶어 준비합니다.",
+              exam: {
+                source: "https://examenes.cervantes.es/es/dele/examenes/a2",
+                structure: [
+                  { title: "독해 이해", meta: ["60분", "4개 과제", "25문항", "25점"], task: "공지, 이메일, 안내문, 짧은 기사에서 구체 정보를 찾고 글의 목적을 고릅니다." },
+                  { title: "듣기 이해", meta: ["40분", "4개 과제", "25문항", "25점"], task: "일상 대화, 안내 방송, 짧은 설명에서 시간, 장소, 이유, 화자의 의도를 파악합니다." },
+                  { title: "쓰기 표현과 상호작용", meta: ["45분", "2개 과제", "25점"], task: "짧은 메시지와 개인 경험 글을 씁니다. 과거시제와 연결어가 핵심입니다." },
+                  { title: "말하기 표현과 상호작용", meta: ["12분", "준비 12분", "3개 과제", "25점"], task: "자기 경험, 사진 묘사, 역할극을 짧고 정확하게 수행합니다." }
+                ],
+                groups: [
+                  "1묶음은 독해 25점과 쓰기 25점입니다. 두 영역을 합쳐 최소 기준을 넘겨야 하므로 읽은 정보를 짧은 글로 옮기는 연습이 필요합니다.",
+                  "2묶음은 듣기 25점과 말하기 25점입니다. 들은 정보를 실제 대화에서 다시 쓰는 능력이 함께 평가됩니다.",
+                  "합격 목표는 총점 60점 이상과 묶음별 안정권입니다. 한 영역만 몰아서 올리는 공부는 위험합니다."
+                ],
+                taskTypes: [
+                  { label: "독해", example: "anuncio, correo, aviso", note: "광고, 이메일, 안내문에서 목적과 세부 정보를 고릅니다." },
+                  { label: "듣기", example: "diálogo, mensaje, anuncio", note: "짧은 대화와 안내에서 선택지와 맞는 정보를 찾습니다." },
+                  { label: "쓰기", example: "mensaje, experiencia", note: "개인 경험, 초대, 요청, 답장을 짧은 문단으로 씁니다." },
+                  { label: "말하기", example: "presentación, foto, rol", note: "자기소개, 사진 묘사, 역할극으로 생활 문제를 해결합니다." }
+                ],
+                timePlan: [
+                  "독해 60분은 쉬운 정보 찾기부터 풀고, 긴 지문은 마지막에 다시 확인합니다.",
+                  "듣기 40분은 선택지를 먼저 읽어 숫자, 장소, 사람, 이유를 기다립니다.",
+                  "쓰기 45분은 10분 계획, 25분 작성, 10분 성수 일치와 동사 형태 점검으로 나눕니다.",
+                  "말하기 준비 12분에는 완전한 원고 대신 주제별 키워드와 연결 표현만 적습니다."
+                ],
+                strategies: ["과거시제 표를 외우는 것보다 여행담과 문제 해결 장면으로 말해 봅니다.", "쓰기에서는 인사, 목적, 세부 정보, 마무리 순서를 고정합니다.", "말하기 준비 시간에는 완전한 원고보다 키워드 네 개를 적습니다."],
+                checklist: [
+                  "현재진행, 현재완료, 단순과거, 불완료과거를 한 장면 안에서 구분할 수 있어야 합니다.",
+                  "lo, la, le, se lo 같은 대명사를 짧은 대화에 넣어 말할 수 있어야 합니다.",
+                  "비교, 가격, 길 안내, 병원·약국 표현을 바로 꺼낼 수 있어야 합니다."
+                ],
+                model: "모의고사는 여행 예약 변경, 병원 방문, 주말 경험 글쓰기처럼 A2 생활 장면 하나로 네 영역을 묶어 구성합니다."
+              }
+            }
+          ],
+          interlude: {
+            id: "reading-break-2",
+            title: "쉬어가기 ② — 과거시제는 이야기 속에서 배운다",
+            text:
+              "A2의 읽을거리는 사건과 배경을 나누는 감각을 키웁니다. 전설, 여행담, 스포츠 기사처럼 시간의 흐름이 분명한 텍스트를 읽으면 단순과거와 불완료과거가 문법표가 아니라 서술 도구로 보입니다.",
+            items: ["산 조르디와 용: 배경 묘사와 사건 전개 나누기", "La Llorona: 반복되던 소문과 어느 날 벌어진 사건", "스포츠 일대기: nació, debutó, ganó처럼 전형적인 단순과거 읽기"]
+          }
+        },
+        {
+          id: "part-b1",
+          toc: "Part 3. B1 자립하는 스페인어",
+          label: "Part 3. B1 — 중급: 자립하는 스페인어",
+          title: "혼자 설명하고 의견을 붙이는 단계",
+          intro:
+            "B1은 여행자 문장을 넘어 자신의 경험, 계획, 의견, 문제 해결을 말하는 단계입니다. 과거 시제를 완성하고 접속법의 문을 열며, 길어진 문장을 연결하는 힘을 만듭니다.",
+          chapters: [
+            { number: 20, title: "과거 시제 완전 정복", lead: "B1의 첫 과제는 과거 서술을 안정시키는 것입니다. 사건, 배경, 이전 사건을 구분해야 이야기가 흔들리지 않습니다.", focus: ["단순과거와 불완료과거 심화", "과거완료 pluscuamperfecto", "entonces, de repente, mientras로 이야기 연결하기"], practice: "여행 중 생긴 문제를 배경, 사건, 결과 순서로 씁니다. Había reservado처럼 이전 사건을 한 번 이상 넣습니다.", reading: "돈키호테 풍차 장면을 B1 수준으로 각색해 사건 전개와 배경 묘사를 분리합니다." },
+            { number: 21, title: "미래와 가정", lead: "미래시제와 조건법은 예측, 약속, 공손한 부탁에 쓰입니다. 실제 대화에서는 정중함을 만드는 장치로 더 자주 만납니다.", focus: ["futuro simple로 예측과 약속 말하기", "condicional로 부탁과 조언 말하기", "quizá, probablemente로 확률 표현하기"], practice: "친구에게 여행 조언을 합니다. Yo iría, deberías, será mejor처럼 조건법과 미래를 함께 씁니다.", reading: "뉴스 한 토막: 내년 관광 전망 기사에서 미래시제의 추측 용법을 찾습니다." },
+            { number: 22, title: "접속법의 문 열기", lead: "접속법은 형태보다 쓰임이 먼저입니다. 바람, 요청, 감정, 의심처럼 화자의 태도가 들어갈 때 문장이 바뀝니다.", focus: ["presente de subjuntivo 형태", "quiero que, espero que, me alegra que", "no creo que, es importante que"], practice: "친구에게 바라는 점, 걱정하는 점, 추천하는 점을 각각 접속법으로 씁니다.", reading: "노래 후렴 속 ojalá, espero que를 찾아 접속법이 감정과 기대를 싣는 방식을 봅니다." },
+            { number: 23, title: "명령과 금지", lead: "B1의 명령법은 부정 명령과 usted, ustedes까지 확장됩니다. 안내문, 규칙, 조언에서 거의 매일 만나는 문법입니다.", focus: ["부정 명령 no + subjuntivo", "usted와 ustedes 명령", "대명사 결합과 강세 부호"], practice: "박물관 안내문, 여행 조언, 건강 수칙을 긍정 명령과 부정 명령으로 만듭니다.", reading: "문화 한 입: 스페인 공공장소 안내문을 읽고 금지 표현을 모읍니다." },
+            { number: 24, title: "문장 연결하기", lead: "관계대명사와 접속사는 B1 문장을 길게 만들지만, 목표는 길이가 아니라 정보의 질서입니다.", focus: ["que, quien, donde로 명사 설명하기", "aunque, sin embargo, por eso", "짧은 문장을 논리적 문단으로 묶기"], practice: "좋아하는 도시를 소개하며 장소, 사람, 이유를 관계절로 붙입니다.", reading: "짧은 여행 블로그를 읽고 관계절이 어떤 명사를 설명하는지 표시합니다." },
+            { number: 25, title: "se의 모든 것", lead: "se는 스페인어 중급의 관문입니다. 재귀, 상호, 수동, 무인칭, 무의지 표현을 구분하면 문장이 훨씬 스페인어답게 변합니다.", focus: ["재귀와 상호 se", "수동 se와 무인칭 se", "se me olvidó, se me cayó 같은 무의지 표현"], practice: "일상 실수 세 가지를 se me 구조로 말합니다. 책임을 부드럽게 흐리는 뉘앙스를 익힙니다.", reading: "농담 해부: 컵이 스스로 깨진 듯 말하는 se me rompió의 웃음 포인트를 봅니다." },
+            { number: 26, title: "남의 말 전하기", lead: "간접화법은 들은 말, 읽은 말, 지시받은 내용을 다시 전달하는 기술입니다. B1에서는 기본 시제 일치의 감각을 잡습니다.", focus: ["decir que + 직설법", "preguntar si / qué / dónde", "명령과 요청을 전달하기"], practice: "친구의 메시지, 선생님의 안내, 호텔 직원의 설명을 간접화법으로 바꿉니다.", reading: "인터뷰 기사 일부를 읽고 직접 인용과 간접 전달의 차이를 표시합니다." },
+            { number: 27, title: "주제별 어휘·표현 확장 I", lead: "B1부터는 문법만으로 버티기 어렵습니다. 일, 여행, 건강, 환경처럼 반복 출제되는 주제 어휘를 문장 단위로 묶습니다.", focus: ["구직과 직업 표현", "예약, 교통, 문제 해결", "건강과 라이프스타일, 환경 기초"], practice: "하나의 여행 문제를 이메일, 전화, 대면 대화 세 형식으로 바꿔 봅니다.", reading: "뉴스 한 토막: 도시 자전거 정책 기사를 읽고 교통·환경 어휘를 묶습니다." },
+            { number: 28, title: "스페인어권 문화 산책 I", lead: "문화 장은 배경지식이 아니라 실제 이해력의 일부입니다. 지역, 축제, 변이를 알면 텍스트의 맥락이 보입니다.", focus: ["스페인의 자치주와 주요 축제", "중남미 주요 국가 개관", "vosotros, ustedes, vos의 첫 구분"], practice: "한 국가를 골라 위치, 수도, 대표 문화, 스페인어 특징을 짧게 발표합니다.", reading: "문화 한 입: 스페인과 아르헨티나의 2인칭 사용 차이를 대화로 봅니다." },
+            {
+              number: 29,
+              title: "DELE B1 완전 대비",
+              lead: "B1은 독립적인 사용자 단계입니다. 긴 글을 완벽히 분석하기보다 핵심 정보를 찾고, 자신의 경험과 의견을 일관된 문단으로 말하고 쓰는 능력이 중요합니다.",
+              exam: {
+                source: "https://examenes.cervantes.es/es/dele/examenes/b1",
+                structure: [
+                  { title: "독해 이해", meta: ["70분", "5개 과제", "30문항", "25점"], task: "광고, 기사, 설명문, 개인 글에서 주제, 목적, 세부 정보를 파악합니다." },
+                  { title: "듣기 이해", meta: ["40분", "5개 과제", "30문항", "25점"], task: "대화, 안내, 인터뷰에서 화자의 태도와 주요 정보를 듣습니다." },
+                  { title: "쓰기 표현과 상호작용", meta: ["60분", "2개 과제", "25점"], task: "개인 경험 글, 의견 글, 메시지를 문단 구조로 씁니다." },
+                  { title: "말하기 표현과 상호작용", meta: ["15분", "준비 15분", "4개 과제", "25점"], task: "주제 발표, 사진 묘사, 역할극, 대화 대응을 수행합니다." }
+                ],
+                groups: [
+                  "1묶음은 독해와 쓰기입니다. 읽은 상황을 이해한 뒤 경험·의견 글로 재구성할 수 있어야 합니다.",
+                  "2묶음은 듣기와 말하기입니다. 들은 내용의 핵심을 잡고 같은 주제로 말할 수 있어야 합니다.",
+                  "B1은 자립 사용자 단계이므로 완벽한 문장보다 일관된 흐름과 과제 완성이 중요합니다."
+                ],
+                taskTypes: [
+                  { label: "독해", example: "texto informativo, opinión breve", note: "짧은 기사, 안내문, 개인 글에서 주제와 세부 정보를 찾습니다." },
+                  { label: "듣기", example: "entrevista, conversación", note: "대화와 인터뷰에서 화자의 목적, 태도, 구체 정보를 구분합니다." },
+                  { label: "쓰기", example: "experiencia, opinión, mensaje", note: "경험담과 짧은 의견 글을 문단 구조로 씁니다." },
+                  { label: "말하기", example: "exposición, foto, interacción", note: "주제 말하기, 사진 묘사, 역할극을 끊기지 않게 수행합니다." }
+                ],
+                timePlan: [
+                  "독해 70분은 먼저 제목과 첫 문장으로 글의 목적을 잡고 문제로 돌아갑니다.",
+                  "듣기 40분은 선택지를 동사와 명사 중심으로 미리 표시합니다.",
+                  "쓰기 60분은 과제 요구사항 확인, 작성, 동사·성수 점검 순서로 씁니다.",
+                  "말하기 준비 15분에는 서론, 세부 정보 세 개, 마무리 표현만 적습니다."
+                ],
+                strategies: ["과거 경험을 배경, 사건, 의견 순서로 말하는 틀을 고정합니다.", "쓰기에서는 접속사보다 문단의 목적을 먼저 정합니다.", "말하기 사진 묘사는 위치, 사람, 행동, 추측 순서로 처리합니다."],
+                checklist: [
+                  "단순과거, 불완료과거, 과거완료를 이야기 안에서 구분할 수 있어야 합니다.",
+                  "접속법 현재를 바람, 요청, 감정, 의심 문장에 넣을 수 있어야 합니다.",
+                  "사진 묘사와 역할극에서 다시 묻기, 정정하기, 이유 말하기가 가능해야 합니다."
+                ],
+                model: "모의고사는 여행 문제, 건강 습관, 직업 경험처럼 B1 빈출 주제를 하나씩 묶어 네 영역으로 풉니다."
+              }
+            }
+          ],
+          interlude: { id: "reading-break-3", title: "쉬어가기 ③ — 드디어 돈키호테", text: "B1에서는 스페인어권의 유명한 이야기와 대중문화가 본격적으로 들어옵니다. 원문 전체는 아직 어렵지만, 각색문과 짧은 발췌를 통해 문법이 실제 이야기에서 어떻게 움직이는지 봅니다.", items: ["돈키호테 풍차 장면: 착각, 주장, 반박의 언어", "엘도라도 전설: 과거 시제와 욕망의 이야기", "스페인어권 미신 기사: 접속법으로 행운을 빌기"] }
+        },
+        {
+          id: "part-b2",
+          toc: "Part 4. B2 논리적으로 말하기",
+          label: "Part 4. B2 — 중상급: 논리적으로 말하기",
+          title: "긴 지문과 사회 이슈를 다루는 단계",
+          intro:
+            "B2는 의견을 말하는 수준을 넘어 근거를 배열하고 반박을 처리하는 단계입니다. 접속법을 과거와 가정으로 확장하고, 격식 있는 글쓰기와 토론을 본격적으로 연습합니다.",
+          chapters: [
+            { number: 30, title: "접속법 심화 I — 시간과 목적", lead: "미래의 조건, 목적, 양보를 말할 때 접속법이 다시 등장합니다. 같은 aunque라도 사실인지 가능성인지에 따라 법이 달라집니다.", focus: ["cuando + subjuntivo", "para que 목적절", "aunque + 직설법/접속법 뉘앙스"], practice: "여행 계획, 회사 규칙, 환경 캠페인 문장을 시간절과 목적절로 씁니다.", reading: "뉴스 한 토막: 축제 안전 수칙에서 para que와 cuando를 찾습니다." },
+            { number: 31, title: "접속법 심화 II — 과거로 확장", lead: "감정, 의심, 평가가 과거 사건을 향하면 접속법도 과거로 확장됩니다. B2의 문장 밀도가 여기서 올라갑니다.", focus: ["접속법 현재완료 haya hablado", "접속법 불완료과거 hablara", "접속법 과거완료 hubiera hablado"], practice: "후회, 평가, 의심 문장을 현재와 과거 시점으로 바꿔 봅니다.", reading: "사설 일부를 읽고 평가 표현 뒤의 접속법을 표시합니다." },
+            { number: 32, title: "가정문 3형식", lead: "가정문은 현실, 비현실, 과거 반사실을 구분합니다. 단순한 if 문장이 아니라 후회, 조언, 비판을 만드는 핵심 장치입니다.", focus: ["si + presente", "si + imperfecto de subjuntivo + condicional", "si + pluscuamperfecto de subjuntivo + condicional compuesto"], practice: "복권, 여행, 직업 선택을 소재로 세 종류의 si 문장을 만듭니다.", reading: "El Gordo 당첨자 인터뷰 형식에서 과거 반사실 구조를 읽습니다." },
+            { number: 33, title: "간접화법과 시제 일치 완성", lead: "B2에서는 단순한 dijo que를 넘어 명령, 질문, 과거 발화를 정확히 옮깁니다. 뉴스와 인터뷰 이해에 직접 연결됩니다.", focus: ["시제 후퇴와 유지", "명령문의 간접화", "의문문의 간접화"], practice: "인터뷰 문장 다섯 개를 기사문 문체로 바꿉니다.", reading: "신문 기사에서 인용부호 없는 발화 전달을 찾아봅니다." },
+            { number: 34, title: "뉘앙스의 문법", lead: "por/para, ser/estar, 수동태, 전치사 결합은 중급 이후 글의 정확성을 좌우합니다. 뜻을 아는 것보다 쓰임을 가르는 힘이 필요합니다.", focus: ["por vs para 완전 정리", "동사+전치사 결합", "ser/estar + 형용사 의미 변화와 수동태"], practice: "같은 형용사가 ser와 estar 뒤에서 어떻게 달라지는지 예문을 만듭니다.", reading: "문화 기사에서 전치사 결합 표현을 표시하고 한국어 직역을 피합니다." },
+            { number: 35, title: "논증과 토론", lead: "B2의 핵심은 의견의 길이가 아니라 구조입니다. 주장, 근거, 반박, 양보, 결론이 보이도록 말하고 씁니다.", focus: ["의견 제시와 반박 표현", "찬반 논거 배열", "en cuanto a, no obstante, a pesar de que"], practice: "원격근무, 관광, SNS 중 하나를 골라 찬반 양쪽 논거를 씁니다.", reading: "시에스타 논쟁 찬반 사설을 나란히 읽고 연결사를 비교합니다." },
+            { number: 36, title: "주제별 어휘·표현 확장 II", lead: "경제, 기술, 정치, 예술 주제는 B2의 긴 지문과 토론에서 반복됩니다. 단어를 목록이 아니라 논점별 묶음으로 익힙니다.", focus: ["경제와 소비", "기술과 SNS", "정치와 사회 이슈, 관용 표현"], practice: "하나의 사회 이슈를 원인, 결과, 해결책 세 문단으로 요약합니다.", reading: "풍자 뉴스 형식을 읽고 과장과 비판의 표현을 분리합니다." },
+            { number: 37, title: "격식 있는 글쓰기", lead: "B2 글쓰기는 친구에게 보내는 메시지를 넘어 불만, 요청, 지원, 리뷰처럼 목적이 분명한 글을 요구합니다.", focus: ["격식 이메일과 편지", "불만과 요청의 완곡한 표현", "기사 요약과 리뷰 쓰기"], practice: "호텔 불만 메일, 장학금 지원 메일, 영화 리뷰를 각각 120-150단어로 씁니다.", reading: "격식 편지 모델을 읽고 인사말, 요구, 근거, 마무리 표현을 표시합니다." },
+            { number: 38, title: "스페인어권 문화 산책 II", lead: "B2에서는 문화 텍스트를 정보로만 읽지 않습니다. 역사, 영화, 음악, 문학이 논증 주제와 결합합니다.", focus: ["스페인어권 영화와 음악", "스페인 내전과 중남미 독립의 큰 흐름", "문화 비교를 의견 글에 녹이기"], practice: "영화 한 편이나 노래 한 곡을 소개하고 사회적 배경을 한 문단 붙입니다.", reading: "짧은 영화 리뷰를 읽고 평가 형용사와 근거 표현을 모읍니다." },
+            {
+              number: 39,
+              title: "DELE B2 완전 대비",
+              lead: "B2 시험은 긴 텍스트와 사회적 주제를 다룹니다. 핵심은 모든 내용을 이해하는 것이 아니라 과제에서 요구한 정보, 태도, 논리 구조를 정확히 잡는 것입니다.",
+              exam: {
+                source: "https://examenes.cervantes.es/es/dele/examenes/b2",
+                structure: [
+                  { title: "독해 이해", meta: ["70분", "4개 과제", "36문항", "25점"], task: "긴 기사, 의견문, 설명문에서 논지, 세부 정보, 문맥상 의미를 파악합니다." },
+                  { title: "듣기 이해", meta: ["40분", "5개 과제", "30문항", "25점"], task: "강연, 인터뷰, 대화에서 화자의 의도와 주장을 듣습니다." },
+                  { title: "쓰기 표현과 상호작용", meta: ["80분", "2개 과제", "25점"], task: "자료를 바탕으로 격식 글, 의견 글, 논설문을 씁니다." },
+                  { title: "말하기 표현과 상호작용", meta: ["20분", "준비 20분", "3개 과제", "25점"], task: "자료 해석, 의견 발표, 토론형 상호작용을 수행합니다." }
+                ],
+                groups: [
+                  "1묶음은 독해와 쓰기입니다. 긴 자료를 이해하고 논리적인 글로 재구성하는 능력을 봅니다.",
+                  "2묶음은 듣기와 말하기입니다. 강연·인터뷰의 주장을 듣고 자신의 의견으로 대응해야 합니다.",
+                  "B2는 단순 정보 찾기보다 논지, 화자의 태도, 반론 처리, 격식 있는 표현이 점수 차이를 만듭니다."
+                ],
+                taskTypes: [
+                  { label: "독해", example: "artículo, ensayo, foro", note: "문단 기능, 빈칸, 문맥상 어휘, 전체 논지를 묻는 문제가 나옵니다." },
+                  { label: "듣기", example: "conferencia, entrevista, debate", note: "화자의 주장, 동의·반대, 암시된 태도를 듣습니다." },
+                  { label: "쓰기", example: "carta formal, texto argumentativo", note: "격식 편지와 의견 글에서 주장, 근거, 요구사항을 정리합니다." },
+                  { label: "말하기", example: "lámina, opinión, debate", note: "자료를 설명하고 해석한 뒤 시험관과 의견을 주고받습니다." }
+                ],
+                timePlan: [
+                  "독해 70분은 지문을 처음부터 번역하지 말고 문단 역할을 표시하며 읽습니다.",
+                  "듣기 40분은 각 녹음 전 선택지의 관점 차이를 먼저 확인합니다.",
+                  "쓰기 80분은 개요 15분, 작성 50분, 격식·연결어·동사 점검 15분으로 둡니다.",
+                  "말하기 준비 20분은 자료 묘사보다 주장과 근거, 반론 대비에 씁니다."
+                ],
+                strategies: ["독해는 문단별 기능을 먼저 표시합니다.", "작문은 주장 하나와 근거 두 개, 반론 처리 하나로 뼈대를 세웁니다.", "말하기 자료는 묘사보다 해석과 의견으로 빨리 넘어갑니다."],
+                checklist: [
+                  "접속법 과거, 가정문 3형식, 간접화법을 의견 글 안에서 쓸 수 있어야 합니다.",
+                  "por/para, ser/estar, 전치사 결합의 실수를 줄여야 합니다.",
+                  "사회 이슈에 대해 찬성, 반대, 양보, 결론을 한 흐름으로 말할 수 있어야 합니다."
+                ],
+                model: "모의고사는 관광 규제, 디지털 교육, 소비 습관 같은 사회 이슈를 중심으로 자료 읽기, 듣기, 쓰기, 발표를 연결합니다."
+              }
+            }
+          ],
+          interlude: { id: "reading-break-4", title: "쉬어가기 ④ — 진짜 신문과 진짜 문학의 문턱", text: "B2의 쉬어가기는 원문 맛을 살립니다. 사설, 풍자 뉴스, 유명 문학 첫 문장, 대중음악을 통해 문법이 논지와 정서에 붙는 순간을 봅니다.", items: ["백년의 고독 첫 문장 구조 맛보기", "시에스타 찬반 사설 비교", "이별 노래 속 가정문과 후회 표현"] }
+        },
+        {
+          id: "part-c1",
+          toc: "Part 5. C1 정교하고 유창하게",
+          label: "Part 5. C1 — 고급: 정교하고 유창하게",
+          title: "텍스트를 재구성하고 문체를 선택하는 단계",
+          intro:
+            "C1은 정확한 문장 생산을 넘어 자료를 요약, 재구성, 논평하는 단계입니다. 격식과 구어를 오가고, 연어와 문체를 다루며, 전문 분야의 텍스트를 자기 언어로 바꿉니다.",
+          chapters: [
+            { number: 40, title: "고급 문법 마무리", lead: "C1에서는 새 문법보다 선택의 정확성이 중요합니다. 직설법과 접속법, 완료시제, 강조구문을 맥락에 맞게 고릅니다.", focus: ["접속법 총정리", "미래완료와 조건법 완료", "al + infinitivo와 강조 구문"], practice: "같은 내용을 중립문, 강조문, 완곡문으로 바꿔 봅니다.", reading: "칼럼 문장에서 Lo que..., Fue... quien 구조를 찾아 강조 효과를 읽습니다." },
+            { number: 41, title: "문체와 레지스터", lead: "C1 학습자는 말할 줄 아는 것을 상황에 맞게 바꿔야 합니다. 회의, 발표, 친한 대화, 공식 문서의 언어는 다릅니다.", focus: ["격식체와 구어체 전환", "완곡어법과 헤징", "cabe destacar, dicho lo cual 같은 문어체 표현"], practice: "친구에게 보낸 메시지를 교수에게 보내는 이메일로 바꿉니다.", reading: "El País식 칼럼 문체에서 논지를 부드럽게 여는 표현을 봅니다." },
+            { number: 42, title: "어휘의 깊이", lead: "C1 어휘는 더 어려운 단어가 아니라 더 정확한 조합입니다. pedir, solicitar, rogar처럼 뜻이 가까운 단어의 거리감을 익힙니다.", focus: ["유의어 뉘앙스", "연어 colocaciones", "관용구와 접두사·접미사"], practice: "자주 쓰는 한국어 표현 열 개를 자연스러운 스페인어 연어로 바꿉니다.", reading: "보르헤스 초단편 일부를 읽고 단어 선택이 분위기를 만드는 방식을 봅니다." },
+            { number: 43, title: "전문 분야의 스페인어", lead: "학술, 비즈니스, 뉴스 스페인어는 정보 구조가 다릅니다. 핵심은 전문용어 암기가 아니라 텍스트 유형별 목적을 읽는 것입니다.", focus: ["학술 텍스트 읽기와 논평", "회의, 협상, 프레젠테이션", "사설과 뉴스 분석"], practice: "짧은 보고서를 읽고 목적, 근거, 한계, 제안을 네 문단으로 요약합니다.", reading: "비즈니스 기사에서 수치, 원인, 전망 표현을 분리합니다." },
+            { number: 44, title: "긴 호흡의 담화", lead: "C1에서는 여러 정보를 받아 자신의 구조로 다시 말합니다. 요약은 줄이는 일이 아니라 논리적 재배치입니다.", focus: ["구조화된 발표", "텍스트 요약과 재구성", "빠른 방송과 강연 듣기"], practice: "강연 요지를 세 문단으로 요약하고 마지막 문단에 자신의 평가를 붙입니다.", reading: "라디오 인터뷰 요약문을 읽고 화자별 입장을 분리합니다." },
+            { number: 45, title: "스페인어권 문학 읽기 입문", lead: "문학은 고급 문법의 전시장입니다. 문장 순서, 은유, 시제 전환, 화자의 거리감을 천천히 읽습니다.", focus: ["단편소설과 시 강독", "문학 텍스트의 문체", "원문과 학습자용 주석을 함께 읽기"], practice: "짧은 시 한 편을 산문으로 풀어 쓰고, 이미지와 감정을 분리합니다.", reading: "네루다의 사물 예찬 시를 통해 일상 명사가 은유로 바뀌는 방식을 봅니다." },
+            {
+              number: 46,
+              title: "DELE C1 완전 대비",
+              lead: "C1 시험은 언어 지식을 분리해서 묻지 않고 통합합니다. 듣고 쓰고, 읽고 말하며, 여러 자료를 재구성하는 힘이 핵심입니다.",
+              exam: {
+                source: "https://examenes.cervantes.es/es/dele/examenes/c1",
+                structure: [
+                  { title: "독해와 언어 사용", meta: ["90분", "5개 과제", "40문항"], task: "긴 텍스트의 구조, 어휘, 문법 선택을 함께 처리합니다." },
+                  { title: "듣기 이해와 언어 사용", meta: ["50분", "4개 과제", "30문항"], task: "강연, 토론, 방송을 듣고 태도와 세부 정보를 파악합니다." },
+                  { title: "듣기+쓰기 통합", meta: ["80분", "2개 과제"], task: "들은 자료를 바탕으로 요약, 논평, 격식 글을 씁니다." },
+                  { title: "독해+말하기 통합", meta: ["20분", "준비 20분"], task: "자료를 읽고 발표한 뒤 시험관과 상호작용합니다." }
+                ],
+                groups: [
+                  "C1은 네 개 시험이 분리되어 보이지만 실제 준비는 통합형입니다. 읽기, 듣기, 쓰기, 말하기가 한 주제로 이어집니다.",
+                  "독해와 언어 사용에서는 긴 텍스트의 구조, 어휘 선택, 문법 정확성이 함께 평가됩니다.",
+                  "통합 과제에서는 자료의 표현을 베끼는 것이 아니라 핵심 정보를 자기 구조로 재배열해야 합니다."
+                ],
+                taskTypes: [
+                  { label: "독해", example: "texto largo, huecos, léxico", note: "긴 글의 구조, 문맥상 어휘, 문장 연결, 함축 의미를 처리합니다." },
+                  { label: "듣기", example: "conferencia, debate, radio", note: "빠른 발화에서 논지, 태도, 세부 정보를 동시에 잡습니다." },
+                  { label: "쓰기", example: "resumen, comentario, texto formal", note: "들은 자료를 요약하고 평가하거나 격식 있는 글로 재구성합니다." },
+                  { label: "말하기", example: "exposición, interacción", note: "읽은 자료를 바탕으로 발표하고 추가 질문에 즉흥적으로 답합니다." }
+                ],
+                timePlan: [
+                  "독해 90분은 먼저 전체 구조, 다음 세부 문항, 마지막 언어 사용 문제 순서로 배분합니다.",
+                  "듣기 50분은 화자별 입장과 논거를 기호로 표시합니다.",
+                  "쓰기 80분은 자료 요약과 자신의 평가가 섞이지 않도록 문단을 분리합니다.",
+                  "말하기 준비 20분은 자료 핵심, 발표 순서, 예상 반문 세 가지를 적습니다."
+                ],
+                strategies: ["자료의 문장을 베끼지 말고 기능을 재구성합니다.", "작문은 요약과 평가의 경계를 분명히 합니다.", "말하기는 자료 설명, 핵심 주장, 개인 평가 순서로 잡습니다."],
+                checklist: [
+                  "격식체와 구어체를 상황에 따라 바꿀 수 있어야 합니다.",
+                  "요약문에서 원자료의 논지와 자신의 의견을 구분해야 합니다.",
+                  "연어, 문어체 연결 표현, 완곡어법을 자연스럽게 쓸 수 있어야 합니다."
+                ],
+                model: "모의고사는 기사, 강연, 그래프를 한 주제로 묶어 요약문과 발표문으로 재구성합니다."
+              }
+            }
+          ],
+          interlude: { id: "reading-break-5", title: "쉬어가기 ⑤ — 원어민이 읽는 것을 그대로 읽기", text: "C1의 쉬어가기는 각색보다 원문에 가깝게 갑니다. 짧은 문학, 칼럼, 영화 대사를 통해 고급 문체와 연어를 실제 리듬으로 만납니다.", items: ["보르헤스 초단편: 짧지만 밀도 높은 문장", "네루다 시: 은유와 감각어", "El Secreto de Sus Ojos: 아르헨티나 억양과 감정 표현"] }
+        },
+        {
+          id: "part-c2",
+          toc: "Part 6. C2 원어민의 경지",
+          label: "Part 6. C2 — 최상급: 원어민의 경지",
+          title: "언어를 해석하고 변형하고 유지하는 단계",
+          intro:
+            "C2는 모든 것을 안다는 뜻이 아니라 낯선 텍스트와 발화를 안정적으로 처리하고, 뉘앙스와 지역 변이를 이해하며, 여러 자료를 통합해 정확한 결과물을 만드는 단계입니다.",
+          chapters: [
+            { number: 47, title: "뉘앙스의 완성", lead: "C2에서는 정답 문법보다 선택의 효과가 중요합니다. 같은 뜻의 형태도 문체, 지역, 화자의 태도에 따라 다르게 들립니다.", focus: ["hablara와 hablase의 문체감", "형용사 위치와 의미 변화", "아이러니, 함축, 언어유희"], practice: "같은 문장을 네 가지 말투로 다시 씁니다.", reading: "짧은 칼럼에서 말하지 않은 의미와 반어를 표시합니다." },
+            { number: 48, title: "지역 변이와 사회언어학", lead: "C2의 듣기와 읽기는 표준 스페인어 하나로 끝나지 않습니다. 지역, 세대, 계층, 매체에 따라 달라지는 언어를 인식합니다.", focus: ["스페인 내 변이", "중남미 변이와 voseo", "속어, 유행어, 사회적 거리"], practice: "같은 요청을 스페인, 멕시코, 아르헨티나식 표현으로 비교합니다.", reading: "세 나라 신문의 같은 사건 보도를 비교하며 어휘와 문체 차이를 봅니다." },
+            { number: 49, title: "고급 텍스트 정복", lead: "법률, 행정, 과학, 문학 텍스트는 목적과 문체가 다릅니다. C2에서는 텍스트 유형을 알아보고 적절한 읽기 전략을 선택합니다.", focus: ["문학 작품 강독", "법률·행정·과학 텍스트", "기사, 에세이, 편지로 문체 전환"], practice: "하나의 사실 자료를 기사문, 공식 안내문, 개인 의견문으로 바꿉니다.", reading: "행정 공지의 명사화와 수동 표현을 풀어 자연스러운 요약문으로 바꿉니다." },
+            { number: 50, title: "통합 언어 운용 — C2 핵심 기술", lead: "C2의 핵심은 통합입니다. 듣기와 독해 자료를 합쳐 요약하고, 서로 충돌하는 정보를 비교하며, 자신의 판단을 제시합니다.", focus: ["듣기+독해 통합 요약", "여러 자료 기반 발표와 토론", "한국인 고급 학습자의 잔존 오류 클리닉"], practice: "기사 두 개와 인터뷰 하나를 읽고 공통 주장, 차이, 자신의 평가를 250단어로 씁니다.", reading: "논평문에서 자료 인용, 반박, 결론이 어떻게 연결되는지 분석합니다." },
+            { number: 51, title: "번역과 미디어로 완성하기", lead: "최상급 학습은 시험 이후에도 이어집니다. 번역, 자막 없는 시청, 팟캐스트, 독서 루틴으로 언어 감각을 유지합니다.", focus: ["한-서 번역으로 표현력 다듬기", "자막 없는 영화와 팟캐스트", "원어민 수준 유지 루틴"], practice: "한국어 기사 한 문단을 스페인어로 옮긴 뒤 직역투를 제거합니다.", reading: "부에나 비스타 소셜 클럽부터 로살리아까지 시대별 가사를 문화 맥락으로 읽습니다." },
+            {
+              number: 52,
+              title: "DELE C2 완전 대비",
+              lead: "C2 시험은 세 개의 통합 시험으로 구성됩니다. 자료를 이해하는 능력과 그 자료를 바탕으로 말하고 쓰는 능력을 한꺼번에 평가합니다.",
+              exam: {
+                source: "https://examenes.cervantes.es/es/dele/examenes/c2",
+                structure: [
+                  { title: "언어 사용, 독해, 듣기", meta: ["105분", "6개 과제"], task: "여러 유형의 텍스트와 음성을 바탕으로 의미, 구조, 어휘 선택을 처리합니다." },
+                  { title: "통합 능력: 듣기·독해·쓰기", meta: ["150분", "3개 과제"], task: "여러 자료를 종합해 요약, 논평, 재구성된 글을 씁니다." },
+                  { title: "통합 능력: 독해·말하기", meta: ["20분", "준비 30분", "3개 과제"], task: "자료를 바탕으로 발표하고 심층 상호작용을 수행합니다." }
+                ],
+                groups: [
+                  "C2는 세 개의 통합 시험으로 구성됩니다. 한 기능만 따로 잘하는지보다 여러 자료를 동시에 처리하는지를 봅니다.",
+                  "첫 시험은 언어 사용, 독해, 듣기를 묶어 고급 텍스트와 발화의 의미·구조·어휘 선택을 평가합니다.",
+                  "두 번째와 세 번째 시험은 자료를 종합해 글과 발표로 재구성하는 능력을 평가합니다."
+                ],
+                taskTypes: [
+                  { label: "통합 1", example: "uso de la lengua, lectura, audición", note: "텍스트와 음성을 오가며 어휘, 구조, 의미, 함축을 처리합니다." },
+                  { label: "통합 2", example: "síntesis escrita", note: "듣기와 읽기 자료를 결합해 요약, 논평, 재구성 글을 씁니다." },
+                  { label: "통합 3", example: "presentación y debate", note: "읽은 자료를 바탕으로 발표하고 심층 질문에 대응합니다." },
+                  { label: "난도", example: "registro, variedad, inferencia", note: "지역 변이, 레지스터, 아이러니, 암시된 의미까지 처리해야 합니다." }
+                ],
+                timePlan: [
+                  "첫 시험 105분은 자료 유형이 바뀔 때마다 목적을 다시 확인합니다.",
+                  "쓰기 150분은 자료별 입장 표, 통합 개요, 작성, 최종 점검 순서로 진행합니다.",
+                  "말하기 준비 30분은 발표 원고보다 논점 지도와 전환 표현을 만드는 데 씁니다.",
+                  "긴 시험이므로 정확성보다 먼저 정보 누락과 자료 간 관계 오류를 막습니다."
+                ],
+                strategies: ["세부 정보보다 자료 간 관계를 먼저 잡습니다.", "쓰기에서는 출처별 입장을 분리한 뒤 자신의 구조로 합칩니다.", "말하기는 발표 원고를 외우기보다 논점 지도와 전환 표현을 준비합니다."],
+                checklist: [
+                  "지역 변이와 문체 차이를 듣고 읽을 때 알아차려야 합니다.",
+                  "여러 자료의 공통점, 충돌점, 전제를 표로 정리할 수 있어야 합니다.",
+                  "고급 학습자의 잔존 오류인 전치사, 연어, 관사, 레지스터를 마지막에 점검해야 합니다."
+                ],
+                model: "최종 모의고사는 같은 사회·문화 이슈에 대한 기사, 강연, 인터뷰를 묶고, 요약문·논평문·발표를 모두 수행하게 구성합니다."
+              }
+            }
+          ],
+          interlude: { id: "reading-break-6", title: "쉬어가기 ⑥ — 처음으로 돌아가서", text: "마지막 쉬어가기는 A1에서 만났던 쉬운 텍스트를 원문으로 다시 읽는 장면에서 시작합니다. 같은 이야기의 난도가 달라 보이지 않는 순간, 학습의 거리가 눈에 보입니다.", items: ["El Ratoncito Pérez 원문판 다시 읽기", "코르타사르 초단편으로 독자와 이야기의 경계 보기", "세 나라 신문의 같은 사건 비교", "언어유희와 농담을 번역 없이 이해하기"] }
+        }
+      ];
+
+      const officialExamSources = [
+        { label: "DELE A1", href: "https://examenes.cervantes.es/es/dele/examenes/a1" },
+        { label: "DELE A2", href: "https://examenes.cervantes.es/es/dele/examenes/a2" },
+        { label: "DELE B1", href: "https://examenes.cervantes.es/es/dele/examenes/b1" },
+        { label: "DELE B2", href: "https://examenes.cervantes.es/es/dele/examenes/b2" },
+        { label: "DELE C1", href: "https://examenes.cervantes.es/es/dele/examenes/c1" },
+        { label: "DELE C2", href: "https://examenes.cervantes.es/es/dele/examenes/c2" }
+      ];
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function renderFocusList(items) {
+        return `<ul class="focus-list">${items
+          .map((item, index) => `<li><span>${index + 1}</span><span>${escapeHtml(item)}</span></li>`)
+          .join("")}</ul>`;
+      }
+
+      function renderExamOverview(structure, label) {
+        return `<div class="exam-overview" aria-label="${escapeHtml(label)}">${structure
+          .map(
+            (area) => `
+              <article class="exam-overview-card">
+                <h5>${escapeHtml(area.title)}</h5>
+                <ul class="exam-meta">${area.meta.map((meta) => `<li>${escapeHtml(meta)}</li>`).join("")}</ul>
+                <ul class="exam-task-list">
+                  <li><strong>과제</strong><span>${escapeHtml(area.task)}</span></li>
+                </ul>
+              </article>`
+          )
+          .join("")}</div>`;
+      }
+
+      function renderExamRows(rows, label) {
+        return `<div class="grammar-table" role="table" aria-label="${escapeHtml(label)}">${rows
+          .map(
+            (row) => `
+              <div class="grammar-row" role="row">
+                <span class="grammar-label" role="cell">${escapeHtml(row.label)}</span>
+                <span class="grammar-es" role="cell">${escapeHtml(row.example)}</span>
+                <span class="grammar-note" role="cell">${escapeHtml(row.note)}</span>
+              </div>`
+          )
+          .join("")}</div>`;
+      }
+
+      function renderListeningTraining(chapter) {
+        const id = `chapter-${chapter.number}`;
+        const listeningArea =
+          chapter.exam.structure.find((area) => area.title.includes("듣기") || area.title.includes("auditiva")) ||
+          chapter.exam.structure.find((area) => area.task.includes("음성") || area.task.includes("들은")) ||
+          chapter.exam.structure[0];
+        const listeningTask =
+          chapter.exam.taskTypes.find((task) => task.label.includes("듣기") || task.example.includes("audición")) ||
+          chapter.exam.taskTypes.find((task) => task.note.includes("음성") || task.note.includes("들은")) ||
+          chapter.exam.taskTypes[0];
+        return `
+          <section class="book-section" id="${id}-listening-training">
+            <h4>듣기 실전 훈련</h4>
+            <p>
+              ${escapeHtml(listeningArea.title)}는 ${escapeHtml(listeningArea.meta.join(", "))} 구조로 준비합니다.
+              핵심은 모든 단어를 듣는 것이 아니라 문제에서 요구한 정보와 화자의 의도를 잡는 것입니다.
+              공식 모델 오디오를 풀 때는 전사문을 먼저 보지 말고, 채점 후에만 안 들린 부분을 확인합니다.
+            </p>
+            <div class="grammar-table" role="table" aria-label="${escapeHtml(chapter.title)} 듣기 훈련 루틴">
+              <div class="grammar-row" role="row">
+                <span class="grammar-label" role="cell">예측</span>
+                <span class="grammar-es" role="cell">${escapeHtml(listeningTask.example)}</span>
+                <span class="grammar-note" role="cell">선택지의 차이를 먼저 표시하고 어떤 단어, 숫자, 태도가 들릴지 예상합니다.</span>
+              </div>
+              <div class="grammar-row" role="row">
+                <span class="grammar-label" role="cell">1회 듣기</span>
+                <span class="grammar-es" role="cell">tema, intención, contexto</span>
+                <span class="grammar-note" role="cell">주제, 장면, 화자의 목적을 잡습니다. 이 단계에서 답을 무리하게 확정하지 않습니다.</span>
+              </div>
+              <div class="grammar-row" role="row">
+                <span class="grammar-label" role="cell">2회 듣기</span>
+                <span class="grammar-es" role="cell">dato, actitud, relación</span>
+                <span class="grammar-note" role="cell">${escapeHtml(listeningTask.note)} 정답 근거가 되는 음성 단서를 한두 단어로 적습니다.</span>
+              </div>
+              <div class="grammar-row" role="row">
+                <span class="grammar-label" role="cell">복기</span>
+                <span class="grammar-es" role="cell">audio + transcripción</span>
+                <span class="grammar-note" role="cell">틀린 이유를 속도, 발음, 어휘, 문제 요구 오해 중 하나로 분류하고 같은 유형을 다시 풉니다.</span>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      const listeningSamplesByChapter = {
+        19: [
+          {
+            title: "예약 변경 음성 메시지",
+            level: "A2",
+            rate: 0.88,
+            text: "Hola, buenas tardes. Llamo para cambiar mi reserva. Tenía una mesa para dos personas a las ocho, pero prefiero a las nueve, si es posible.",
+            question: "질문: 화자는 무엇을 바꾸고 싶어 합니까?",
+            choices: ["A. 예약 시간", "B. 사람 수", "C. 식당 위치"],
+            answer: "정답: A. a las ocho에서 a las nueve로 바꾸고 싶다고 말합니다."
+          },
+          {
+            title: "약국에서 증상 설명",
+            level: "A2",
+            rate: 0.88,
+            text: "Me duele la cabeza desde ayer y tengo un poco de fiebre. No puedo dormir bien. ¿Tiene algo para el dolor?",
+            question: "질문: 이 사람에게 있는 증상은 무엇입니까?",
+            choices: ["A. 머리 통증과 열", "B. 배 통증과 기침", "C. 다리 통증"],
+            answer: "정답: A. me duele la cabeza와 tengo fiebre가 핵심입니다."
+          }
+        ],
+        29: [
+          {
+            title: "짧은 인터뷰",
+            level: "B1",
+            rate: 0.94,
+            text: "Cuando era niña vivía en Valencia, pero el año pasado me mudé a Bilbao por trabajo. Al principio fue difícil, aunque ahora me gusta mucho la ciudad.",
+            question: "질문: 화자는 왜 Bilbao로 이사했습니까?",
+            choices: ["A. 공부 때문에", "B. 일 때문에", "C. 가족 때문에"],
+            answer: "정답: B. por trabajo가 이유입니다."
+          },
+          {
+            title: "여행 문제 상황",
+            level: "B1",
+            rate: 0.94,
+            text: "Perdimos el autobús porque salimos tarde del hotel. Entonces compramos otros billetes y llegamos a Granada por la noche.",
+            question: "질문: 이들은 왜 버스를 놓쳤습니까?",
+            choices: ["A. 호텔에서 늦게 나와서", "B. 표를 잃어버려서", "C. 목적지를 잘못 알아서"],
+            answer: "정답: A. porque salimos tarde del hotel이 원인입니다."
+          }
+        ],
+        39: [
+          {
+            title: "라디오 토론 발췌",
+            level: "B2",
+            rate: 1,
+            text: "A mi juicio, limitar el número de turistas en el centro histórico no es una medida contra el turismo, sino una forma de proteger la vida de los vecinos.",
+            question: "질문: 화자의 핵심 입장은 무엇입니까?",
+            choices: ["A. 관광 제한은 필요하다", "B. 관광은 완전히 금지해야 한다", "C. 주민 문제는 중요하지 않다"],
+            answer: "정답: A. 관광을 반대하는 것이 아니라 주민 생활을 보호하는 조치라고 말합니다."
+          },
+          {
+            title: "강연 도입부",
+            level: "B2",
+            rate: 1,
+            text: "Hoy vamos a analizar cómo las redes sociales han cambiado la manera de consumir noticias. No hablaremos solo de tecnología, sino también de confianza.",
+            question: "질문: 강연의 주제는 무엇입니까?",
+            choices: ["A. 뉴스 소비와 신뢰", "B. 온라인 쇼핑", "C. 여행 기술"],
+            answer: "정답: A. redes sociales, consumir noticias, confianza가 주제 단서입니다."
+          }
+        ],
+        46: [
+          {
+            title: "강연 요지 파악",
+            level: "C1",
+            rate: 1.05,
+            text: "Aunque los datos parecen optimistas, conviene interpretarlos con prudencia. El crecimiento se concentra en tres sectores y no refleja necesariamente una mejora general.",
+            question: "질문: 화자의 태도는 무엇에 가깝습니까?",
+            choices: ["A. 신중한 해석", "B. 무조건적 낙관", "C. 완전한 반대"],
+            answer: "정답: A. con prudencia와 no refleja necesariamente가 신중함을 나타냅니다."
+          },
+          {
+            title: "자료 통합 과제용 발화",
+            level: "C1",
+            rate: 1.05,
+            text: "El informe destaca avances en educación digital, pero la entrevista señala que muchas zonas rurales siguen sin conexión estable.",
+            question: "질문: 두 자료의 관계는 무엇입니까?",
+            choices: ["A. 한 자료가 다른 자료를 보완한다", "B. 두 자료가 완전히 같은 말만 한다", "C. 둘 다 교육을 부정한다"],
+            answer: "정답: A. 보고서는 발전을 말하고 인터뷰는 한계를 보완합니다."
+          }
+        ],
+        52: [
+          {
+            title: "고급 담화의 함축",
+            level: "C2",
+            rate: 1.08,
+            text: "No es que la propuesta carezca de interés; el problema es que presupone unas condiciones institucionales que, por ahora, distan mucho de estar garantizadas.",
+            question: "질문: 화자의 평가는 무엇입니까?",
+            choices: ["A. 아이디어는 흥미롭지만 조건이 부족하다", "B. 제안은 전혀 가치가 없다", "C. 조건은 이미 충분하다"],
+            answer: "정답: A. carezca de interés를 부정한 뒤 조건이 보장되지 않았다고 말합니다."
+          },
+          {
+            title: "지역 변이와 레지스터",
+            level: "C2",
+            rate: 1.08,
+            text: "La ponente alterna un registro académico con expresiones coloquiales, no por descuido, sino para acercar un tema técnico a un público amplio.",
+            question: "질문: 화자가 설명하는 문체 전환의 목적은 무엇입니까?",
+            choices: ["A. 청중에게 기술 주제를 가깝게 만들기", "B. 발표의 격식을 낮추어 실수 감추기", "C. 지역 표현을 모두 피하기"],
+            answer: "정답: A. acercar un tema técnico a un público amplio가 목적입니다."
+          }
+        ]
+      };
+
+      function renderPlayIcon() {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>';
+      }
+
+      function renderListeningMaterials(chapter) {
+        const id = `chapter-${chapter.number}`;
+        const samples = listeningSamplesByChapter[chapter.number] || [];
+        if (!samples.length) {
+          return "";
+        }
+
+        return `
+          <section class="book-section" id="${id}-listening-materials">
+            <h4>듣기 자료</h4>
+            <p>
+              이 샘플은 브라우저 음성 합성으로 재생됩니다. 실제 DELE 공식 음원은 아니므로,
+              장면 예측, 핵심 단서 표시, 전사문 확인 순서를 연습하는 용도로 사용하세요.
+            </p>
+            <div class="listening-materials" aria-label="${escapeHtml(chapter.title)} 듣기 샘플">
+              ${samples
+                .map(
+                  (sample) => `
+                    <article class="audio-card">
+                      <div class="audio-card-header">
+                        <h5>${escapeHtml(sample.title)}</h5>
+                        <span class="audio-level">${escapeHtml(sample.level)}</span>
+                      </div>
+                      <p class="audio-prompt">${escapeHtml(sample.question)}</p>
+                      <div class="audio-controls">
+                        <button class="audio-button" type="button" data-listen-lang="es-ES" data-listen-rate="${sample.rate}" data-listen-text="${escapeHtml(sample.text)}">
+                          ${renderPlayIcon()}
+                          재생
+                        </button>
+                        <span class="audio-status" aria-live="polite"></span>
+                      </div>
+                      <div class="audio-progress" role="progressbar" aria-label="재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <span class="audio-progress-bar"></span>
+                      </div>
+                      <ol class="exercise-list">
+                        ${sample.choices.map((choice) => `<li>${escapeHtml(choice)}</li>`).join("")}
+                      </ol>
+                      <details class="transcript-details">
+                        <summary>전사문과 정답 보기</summary>
+                        <p class="transcript-text">${escapeHtml(sample.text)}</p>
+                        <p class="audio-prompt">${escapeHtml(sample.answer)}</p>
+                      </details>
+                    </article>`
+                )
+                .join("")}
+            </div>
+          </section>`;
+      }
+
+      function getChapterLearningSupport(chapter) {
+        const firstFocus = chapter.focus[0] || "핵심 문법";
+        if (chapter.number < 20) {
+          return {
+            level: "A2",
+            model: "Esta semana he cambiado mis planes porque tenía que ir al médico.",
+            reframe: "Ayer cambié mis planes. / Antes iba al médico por la mañana.",
+            outputLabel: "80단어 생활 메시지",
+            output:
+              "시간 표현을 먼저 고르고, 현재완료·단순과거·불완료과거 중 하나를 선택해 일정 변경이나 경험담을 짧게 씁니다.",
+            trap:
+              "A2 감점은 과거 표현을 섞을 때 자주 납니다. hoy, esta semana, ayer, antes 같은 시간표지를 먼저 확인한 뒤 동사를 고르세요.",
+            firstFocus
+          };
+        }
+        if (chapter.number < 30) {
+          return {
+            level: "B1",
+            model: "Aunque al principio fue difícil, al final encontré una solución.",
+            reframe: "Me gustaría que... / Es importante que... / Si pudiera, cambiaría...",
+            outputLabel: "120단어 경험·의견문",
+            output:
+              "배경, 사건, 해결, 평가를 네 문장 덩어리로 나누고 aunque, por eso, al final 중 두 개 이상을 넣습니다.",
+            trap:
+              "B1에서는 문장을 길게 만드는 것보다 정보 순서가 중요합니다. 원인, 사건, 결과, 의견이 섞이면 쉬운 문법도 낮게 보입니다.",
+            firstFocus
+          };
+        }
+        if (chapter.number < 40) {
+          return {
+            level: "B2",
+            model: "Sin embargo, esta medida también puede perjudicar a algunos vecinos.",
+            reframe: "Por un lado... / No obstante... / Sería recomendable...",
+            outputLabel: "180단어 논증문",
+            output:
+              "주장 하나, 근거 두 개, 반론 처리 하나, 결론 하나로 개요를 만든 뒤 문단마다 기능을 분리합니다.",
+            trap:
+              "B2 답안은 찬반 나열에서 멈추면 약합니다. 반대 근거를 인정한 뒤 왜 자신의 결론이 더 설득력 있는지 보여 주세요.",
+            firstFocus
+          };
+        }
+        if (chapter.number < 47) {
+          return {
+            level: "C1",
+            model: "El texto plantea una cuestión relevante, aunque conviene matizar su alcance.",
+            reframe: "Cabe destacar que... / Dicho lo cual... / Desde esta perspectiva...",
+            outputLabel: "160-220단어 통합 요약",
+            output:
+              "자료의 핵심 주장, 근거, 한계, 자신의 평가를 분리하고 원문 표현을 그대로 베끼지 않도록 다시 씁니다.",
+            trap:
+              "C1에서는 요약과 평가의 경계가 흐려지면 감점됩니다. 원자료가 말한 것과 내가 판단한 것을 문단으로 분리하세요.",
+            firstFocus
+          };
+        }
+        return {
+          level: "C2",
+          model: "A la luz de ambos textos, cabe distinguir entre correlación y causalidad.",
+          reframe: "No se trata de..., sino de... / Dista mucho de... / Subyace una premisa...",
+          outputLabel: "250-320단어 통합 재구성",
+          output:
+            "여러 자료의 공통점, 충돌점, 전제, 신뢰도, 함축을 표로 잡은 뒤 하나의 논리 흐름으로 재구성합니다.",
+          trap:
+            "C2에서는 어려운 단어보다 해석의 정밀도가 중요합니다. 자료의 전제와 한계, 레지스터 차이를 분리하지 않으면 답안이 평면적으로 보입니다.",
+          firstFocus
+        };
+      }
+
+      function renderChapterLearningLab(chapter) {
+        const id = `chapter-${chapter.number}`;
+        const support = getChapterLearningSupport(chapter);
+        return `
+          <section class="book-section" id="${id}-learning-lab">
+            <h4>예문과 변형 훈련</h4>
+            <div class="learning-loop" aria-label="${escapeHtml(chapter.title)} 예문 변형 훈련">
+              <article class="learning-card">
+                <strong>모델 문장</strong>
+                <span class="grammar-es">${escapeHtml(support.model)}</span>
+                <p>${escapeHtml(support.level)}에서는 ${escapeHtml(support.firstFocus)}을 표에서 끝내지 않고 실제 장면의 한 문장으로 옮겨야 합니다.</p>
+              </article>
+              <article class="learning-card">
+                <strong>바꿔 말하기</strong>
+                <span class="grammar-es">${escapeHtml(support.reframe)}</span>
+                <p>같은 의미를 시제, 연결어, 레지스터만 바꿔 세 번 말하면 말하기와 쓰기의 자동성이 올라갑니다.</p>
+              </article>
+              <article class="learning-card">
+                <strong>산출 과제</strong>
+                <span class="grammar-es">${escapeHtml(support.outputLabel)}</span>
+                <p>${escapeHtml(support.output)}</p>
+              </article>
+            </div>
+          </section>
+          <section class="book-section" id="${id}-error-loop">
+            <h4>오답 포인트</h4>
+            <div class="book-note">
+              <strong>${chapter.number}장 감점 방지</strong>
+              <p>${escapeHtml(support.trap)} 마지막에는 ${escapeHtml(support.firstFocus)}이 실제 문장 안에서 정확히 작동하는지 다시 확인합니다.</p>
+            </div>
+          </section>`;
+      }
+
+      function renderChapterExercise(chapter) {
+        const id = `chapter-${chapter.number}`;
+        const firstFocus = chapter.focus[0] || "핵심 문법";
+        const secondFocus = chapter.focus[1] || "핵심 표현";
+        return `
+          <section class="book-section" id="${id}-exercise">
+            <h4>연습문제</h4>
+            <ol class="exercise-list">
+              <li>${escapeHtml(firstFocus)}를 사용해 자기 상황에 맞는 스페인어 문장 세 개를 쓰세요.</li>
+              <li>${escapeHtml(secondFocus)}를 실제 대화 장면에 넣어 두 턴 이상의 짧은 대화를 만드세요.</li>
+              <li>${escapeHtml(chapter.practice)} 이 활동을 말로 한 번, 글로 한 번 수행하세요.</li>
+              <li>${escapeHtml(chapter.reading)} 읽은 뒤 새 표현 세 개와 다시 쓰고 싶은 문장 하나를 표시하세요.</li>
+            </ol>
+          </section>`;
+      }
+
+      function renderAnswerGuide(chapter) {
+        const id = `chapter-${chapter.number}`;
+        return `
+          <section class="book-section" id="${id}-answer">
+            <h4>해답과 자기점검</h4>
+            <div class="book-note">
+              <strong>${chapter.number}장 확인 기준</strong>
+              <p>
+                이 장의 연습은 열린 답입니다. 정답은 하나로 고정하지 말고,
+                배운 문법 형태가 맞는지, 문장이 실제 상황에서 이해되는지, 같은 표현을
+                단어만 바꿔 다시 말할 수 있는지를 확인하세요. 세 항목 중 두 항목 이상이
+                안정적이면 다음 장으로 넘어가고, 문법 형태가 흔들리면 핵심 문법과 표현으로 돌아갑니다.
+              </p>
+            </div>
+          </section>`;
+      }
+
+      function renderExamMiniTask(chapter) {
+        const id = `chapter-${chapter.number}`;
+        const tasks = chapter.exam.taskTypes.slice(0, 4);
+        return `
+          <section class="book-section" id="${id}-mini-test">
+            <h4>실전 미니 과제</h4>
+            <div class="grammar-table" role="table" aria-label="${escapeHtml(chapter.title)} 실전 미니 과제">
+              ${tasks
+                .map(
+                  (task) => `
+                    <div class="grammar-row" role="row">
+                      <span class="grammar-label" role="cell">${escapeHtml(task.label)}</span>
+                      <span class="grammar-es" role="cell">${escapeHtml(task.example)}</span>
+                      <span class="grammar-note" role="cell">${escapeHtml(task.note)} 이 유형을 10분 안에 한 번 풀고, 틀린 이유를 한 줄로 적습니다.</span>
+                    </div>`
+                )
+                .join("")}
+            </div>
+          </section>`;
+      }
+
+      function renderExamRubric(chapter) {
+        const id = `chapter-${chapter.number}`;
+        return `
+          <section class="book-section" id="${id}-rubric">
+            <h4>해답 기준과 오답 정리</h4>
+            <ul class="focus-list">
+              <li><span>1</span><span>독해와 듣기는 정답뿐 아니라 정답 근거가 나온 줄, 문장, 음성 단서를 함께 표시합니다.</span></li>
+              <li><span>2</span><span>쓰기와 말하기는 과제 조건 충족, 정보 배열, 문법 정확성, 전달 가능성을 순서대로 점검합니다.</span></li>
+              <li><span>3</span><span>틀린 문제는 어휘 부족, 문법 혼동, 시간 부족, 문제 요구 오해 중 하나로 분류해 다음 모의고사 전에 다시 봅니다.</span></li>
+              <li><span>4</span><span>${escapeHtml(chapter.exam.checklist[0] || "시험 전 체크리스트")} 이 항목을 실제 답안에 적용했는지 확인합니다.</span></li>
+            </ul>
+          </section>`;
+      }
+
+      function renderNormalChapter(chapter) {
+        const id = `chapter-${chapter.number}`;
+        return `
+          <article class="book-page" id="${id}">
+            <header class="book-page-header">
+              <span class="book-page-kicker">${chapter.number}장</span>
+              <h3>${escapeHtml(chapter.title)}</h3>
+              <p class="book-lead">${escapeHtml(chapter.lead)}</p>
+            </header>
+            <section class="book-section" id="${id}-focus">
+              <h4>핵심 문법과 표현</h4>
+              ${renderFocusList(chapter.focus)}
+            </section>
+            <section class="book-section" id="${id}-practice">
+              <h4>의사소통 실전</h4>
+              <p>${escapeHtml(chapter.practice)}</p>
+            </section>
+            <section class="book-section" id="${id}-reading">
+              <h4>읽는 재미</h4>
+              <p>${escapeHtml(chapter.reading)}</p>
+            </section>
+            ${renderChapterLearningLab(chapter)}
+            ${renderChapterExercise(chapter)}
+            ${renderAnswerGuide(chapter)}
+          </article>`;
+      }
+
+      function renderExamChapter(chapter) {
+        const id = `chapter-${chapter.number}`;
+        return `
+          <article class="book-page" id="${id}">
+            <header class="book-page-header">
+              <span class="book-page-kicker">${chapter.number}장. DELE 대비</span>
+              <h3>${escapeHtml(chapter.title)}</h3>
+              <p class="book-lead">${escapeHtml(chapter.lead)}</p>
+            </header>
+            <section class="book-section" id="${id}-structure">
+              <h4>시험 구조</h4>
+              ${renderExamOverview(chapter.exam.structure, `${chapter.title} 시험 구조`)}
+            </section>
+            <section class="book-section" id="${id}-groups">
+              <h4>시험 묶음과 합격 기준</h4>
+              ${renderFocusList(chapter.exam.groups)}
+            </section>
+            <section class="book-section" id="${id}-tasks">
+              <h4>과제 유형 한눈에 보기</h4>
+              ${renderExamRows(chapter.exam.taskTypes, `${chapter.title} 과제 유형`)}
+            </section>
+            ${renderListeningTraining(chapter)}
+            ${renderListeningMaterials(chapter)}
+            <section class="book-section" id="${id}-timing">
+              <h4>시간 운용</h4>
+              ${renderFocusList(chapter.exam.timePlan)}
+            </section>
+            <section class="book-section" id="${id}-strategy">
+              <h4>영역별 전략</h4>
+              ${renderFocusList(chapter.exam.strategies)}
+            </section>
+            <section class="book-section" id="${id}-checklist">
+              <h4>시험 전 체크리스트</h4>
+              ${renderFocusList(chapter.exam.checklist)}
+            </section>
+            <section class="book-section" id="${id}-model">
+              <h4>모의고사와 해설 방향</h4>
+              <p>${escapeHtml(chapter.exam.model)}</p>
+              <p class="exam-source">
+                공식 구조 기준:
+                <a href="${chapter.exam.source}">Instituto Cervantes ${escapeHtml(chapter.title.replace(" 완전 대비", ""))} 공식 안내</a>
+              </p>
+            </section>
+            ${renderExamMiniTask(chapter)}
+            ${renderExamRubric(chapter)}
+          </article>`;
+      }
+
+      function renderLevel(level) {
+        return `
+          <section class="level-book" id="${level.id}" aria-labelledby="${level.id}-title">
+            <header class="level-header">
+              <span class="chapter-kicker">${escapeHtml(level.label)}</span>
+              <h2 id="${level.id}-title">${escapeHtml(level.title)}</h2>
+              <p>${escapeHtml(level.intro)}</p>
+            </header>
+            <div class="book-manuscript">
+              ${level.chapters.map((chapter) => (chapter.exam ? renderExamChapter(chapter) : renderNormalChapter(chapter))).join("")}
+            </div>
+            <section class="reading-interlude" id="${level.interlude.id}">
+              <p class="eyebrow">쉬어가기</p>
+              <h3>${escapeHtml(level.interlude.title)}</h3>
+              <p>${escapeHtml(level.interlude.text)}</p>
+              ${renderFocusList(level.interlude.items)}
+            </section>
+          </section>`;
+      }
+
+      function renderExtendedToc() {
+        return guideLevels
+          .map(
+            (level) => `
+              <li>
+                <a class="toc-node toc-part" href="#${level.id}" data-spy-link>${escapeHtml(level.toc)}</a>
+                <ol>
+                  ${level.chapters
+                    .map((chapter) => {
+                      const id = `chapter-${chapter.number}`;
+                      const subsections = chapter.exam
+                        ? [
+                            [`${id}-structure`, "시험 구조"],
+                            [`${id}-groups`, "시험 묶음과 합격 기준"],
+                            [`${id}-tasks`, "과제 유형 한눈에 보기"],
+                            [`${id}-listening-training`, "듣기 실전 훈련"],
+                            [`${id}-listening-materials`, "듣기 자료"],
+                            [`${id}-timing`, "시간 운용"],
+                            [`${id}-strategy`, "영역별 전략"],
+                            [`${id}-checklist`, "시험 전 체크리스트"],
+                            [`${id}-model`, "모의고사와 해설 방향"],
+                            [`${id}-mini-test`, "실전 미니 과제"],
+                            [`${id}-rubric`, "해답 기준과 오답 정리"]
+                          ]
+                        : [
+                            [`${id}-focus`, "핵심 문법과 표현"],
+                            [`${id}-practice`, "의사소통 실전"],
+                            [`${id}-reading`, "읽는 재미"],
+                            [`${id}-learning-lab`, "예문과 변형 훈련"],
+                            [`${id}-error-loop`, "오답 포인트"],
+                            [`${id}-exercise`, "연습문제"],
+                            [`${id}-answer`, "해답과 자기점검"]
+                          ];
+                      return `
+                        <li>
+                          <a class="toc-node toc-chapter" href="#${id}" data-spy-link>${chapter.number}장. ${escapeHtml(chapter.title)}</a>
+                          <ol>
+                            ${subsections
+                              .map(([href, title]) => `<li><a class="toc-node toc-sub" href="#${href}" data-spy-link>${escapeHtml(title)}</a></li>`)
+                              .join("")}
+                          </ol>
+                        </li>`;
+                    })
+                    .join("")}
+                  <li><a class="toc-node toc-chapter" href="#${level.interlude.id}" data-spy-link>${escapeHtml(level.interlude.title)}</a></li>
+                </ol>
+              </li>`
+          )
+          .join("");
+      }
+
+      function renderOfficialSources() {
+        return `
+          <section class="practice-panel" aria-labelledby="official-sources-title">
+            <div>
+              <p class="eyebrow">공식 시험 정보</p>
+              <h3 id="official-sources-title">DELE 구조 확인용 공식 링크</h3>
+            </div>
+            <ul class="source-list">
+              ${officialExamSources.map((source) => `<li><a href="${source.href}">${escapeHtml(source.label)}</a></li>`).join("")}
+            </ul>
+          </section>`;
+      }
+
+      function renderExtendedGuide() {
+        const tocAnchor = document.getElementById("extended-toc-anchor");
+        const guide = document.getElementById("extended-guide");
+        if (!tocAnchor || !guide) {
+          return;
+        }
+
+        tocAnchor.outerHTML = renderExtendedToc();
+        guide.innerHTML = `${guideLevels.map(renderLevel).join("")}${renderOfficialSources()}`;
+      }
+
+      renderExtendedGuide();
+
+      const audioButtons = Array.from(document.querySelectorAll("[data-listen-text]"));
+      let spanishVoices = [];
+      let audioProgressFrame = 0;
+
+      function refreshSpanishVoices() {
+        if (!("speechSynthesis" in window)) {
+          return;
+        }
+        spanishVoices = window.speechSynthesis
+          .getVoices()
+          .filter((voice) => voice.lang.toLowerCase().startsWith("es"));
+      }
+
+      function getSpanishVoice(lang) {
+        if (!spanishVoices.length) {
+          refreshSpanishVoices();
+        }
+        const normalized = lang.toLowerCase();
+        return (
+          spanishVoices.find((voice) => voice.lang.toLowerCase() === normalized) ||
+          spanishVoices.find((voice) => voice.lang.toLowerCase().startsWith("es-es")) ||
+          spanishVoices[0] ||
+          null
+        );
+      }
+
+      function setAudioStatus(button, text) {
+        const status = button.parentElement?.querySelector(".audio-status");
+        if (status) {
+          status.textContent = text;
+        }
+      }
+
+      function getAudioProgress(button) {
+        return button.closest(".audio-card")?.querySelector(".audio-progress");
+      }
+
+      function setAudioProgress(button, percent) {
+        const progress = getAudioProgress(button);
+        if (!progress) {
+          return;
+        }
+        const value = Math.max(0, Math.min(100, Math.round(percent)));
+        const bar = progress.querySelector(".audio-progress-bar");
+        if (bar) {
+          bar.style.width = `${value}%`;
+        }
+        progress.setAttribute("aria-valuenow", String(value));
+      }
+
+      function resetAudioProgress() {
+        if (audioProgressFrame) {
+          cancelAnimationFrame(audioProgressFrame);
+          audioProgressFrame = 0;
+        }
+        audioButtons.forEach((button) => setAudioProgress(button, 0));
+      }
+
+      function estimateAudioDuration(text, rate) {
+        const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+        const normalizedRate = Number.isFinite(rate) && rate > 0 ? rate : 0.9;
+        const baseWordsPerMinute = 135;
+        const duration = (wordCount / baseWordsPerMinute) * 60000 / normalizedRate;
+        return Math.max(2400, Math.min(18000, duration));
+      }
+
+      function startAudioProgress(button, duration) {
+        if (audioProgressFrame) {
+          cancelAnimationFrame(audioProgressFrame);
+        }
+        const startedAt = performance.now();
+        const tick = (now) => {
+          const elapsed = now - startedAt;
+          const percent = Math.min(96, (elapsed / duration) * 100);
+          setAudioProgress(button, percent);
+          if (percent < 96) {
+            audioProgressFrame = requestAnimationFrame(tick);
+          }
+        };
+        setAudioProgress(button, 0);
+        audioProgressFrame = requestAnimationFrame(tick);
+      }
+
+      function finishAudioProgress(button) {
+        if (audioProgressFrame) {
+          cancelAnimationFrame(audioProgressFrame);
+          audioProgressFrame = 0;
+        }
+        setAudioProgress(button, 100);
+      }
+
+      function resetAudioButtons() {
+        resetAudioProgress();
+        audioButtons.forEach((button) => {
+          button.removeAttribute("aria-pressed");
+          setAudioStatus(button, "");
+        });
+      }
+
+      function speakListeningSample(button) {
+        if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+          setAudioStatus(button, "이 브라우저는 음성 재생을 지원하지 않습니다.");
+          return;
+        }
+
+        const text = button.dataset.listenText || "";
+        const lang = button.dataset.listenLang || "es-ES";
+        const rate = Number(button.dataset.listenRate || "0.9");
+        window.speechSynthesis.cancel();
+        resetAudioButtons();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = Number.isFinite(rate) ? rate : 0.9;
+        utterance.pitch = 1;
+        const voice = getSpanishVoice(lang);
+        if (voice) {
+          utterance.voice = voice;
+        }
+
+        button.setAttribute("aria-pressed", "true");
+        setAudioStatus(button, voice ? "재생 중" : "스페인어 음성이 없으면 기본 음성으로 재생됩니다.");
+        startAudioProgress(button, estimateAudioDuration(text, utterance.rate));
+        utterance.onend = () => {
+          button.removeAttribute("aria-pressed");
+          setAudioStatus(button, "재생 완료");
+          finishAudioProgress(button);
+        };
+        utterance.onerror = () => {
+          button.removeAttribute("aria-pressed");
+          setAudioStatus(button, "재생할 수 없습니다.");
+          setAudioProgress(button, 0);
+        };
+        window.speechSynthesis.speak(utterance);
+      }
+
+      if ("speechSynthesis" in window) {
+        refreshSpanishVoices();
+        window.speechSynthesis.addEventListener("voiceschanged", refreshSpanishVoices);
+      }
+
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-listen-text]");
+        if (!button) {
+          return;
+        }
+        speakListeningSample(button);
+      });
+
+      const tocLinks = Array.from(document.querySelectorAll("[data-spy-link]"));
+      const tocTargets = tocLinks
+        .map((link) => {
+          const id = link.getAttribute("href").slice(1);
+          return { id, link, target: document.getElementById(id) };
+        })
+        .filter((entry) => entry.target);
+
+      function setActiveToc(id) {
+        tocTargets.forEach(({ link }) => {
+          const isActive = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("is-active", isActive);
+          if (isActive) {
+            link.setAttribute("aria-current", "location");
+            const tocList = link.closest(".book-toc");
+            if (tocList && tocList.scrollHeight > tocList.clientHeight) {
+              const linkTop = link.offsetTop;
+              const linkBottom = linkTop + link.offsetHeight;
+              const viewTop = tocList.scrollTop;
+              const viewBottom = viewTop + tocList.clientHeight;
+              if (linkTop < viewTop) {
+                tocList.scrollTop = Math.max(0, linkTop - 12);
+              } else if (linkBottom > viewBottom) {
+                tocList.scrollTop = linkBottom - tocList.clientHeight + 12;
+              }
+            }
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      function updateActiveToc() {
+        const anchorY = window.scrollY + 88;
+        let active = tocTargets[0];
+
+        tocTargets.forEach((entry) => {
+          const targetY = entry.target.getBoundingClientRect().top + window.scrollY;
+          if (targetY <= anchorY) {
+            active = entry;
+          }
+        });
+
+        if (active) {
+          setActiveToc(active.id);
+        }
+      }
+
+      let tocTicking = false;
+      function requestTocUpdate() {
+        if (tocTicking) {
+          return;
+        }
+        tocTicking = true;
+        requestAnimationFrame(() => {
+          updateActiveToc();
+          tocTicking = false;
+        });
+      }
+
+      tocLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          const id = link.getAttribute("href").slice(1);
+          setActiveToc(id);
+        });
+      });
+
+      window.addEventListener("scroll", requestTocUpdate, { passive: true });
+      window.addEventListener("resize", requestTocUpdate);
+      updateActiveToc();
+    </script>
+  </body>
+</html>

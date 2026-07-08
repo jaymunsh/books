@@ -1,0 +1,4354 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DELE 공식 모델 시험으로 넘어가기 전 풀어보는 스페인어 기출형 문제">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbfaf7'/%3E%3Cpath d='M10 8h12v16H10zM13 12h6M13 16h6M13 20h4' fill='none' stroke='%23b3432f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+    >
+    <title>스페인어 기출형 문제</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --surface-page: #fbfaf7;
+        --surface-primary: #ffffff;
+        --surface-secondary: #f4f1eb;
+        --surface-elevated: #fffdf8;
+        --text-primary: #24211f;
+        --text-secondary: #6d665f;
+        --text-tertiary: #9a9188;
+        --border-default: #ded7ce;
+        --border-subtle: #ece6dc;
+        --accent-primary: #b3432f;
+        --accent-secondary: #1f6c7a;
+        --accent-soft: #f5dfd7;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-5: 20px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-10: 40px;
+        --space-12: 48px;
+        --radius-card: 8px;
+        --radius-feature: 12px;
+        --font-primary: "Noto Sans KR", Aptos, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-editorial: Georgia, "Times New Roman", serif;
+        --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+        --shadow-soft: 0 18px 50px color-mix(in srgb, var(--text-primary) 10%, transparent);
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --surface-page: #141312;
+        --surface-primary: #1d1b19;
+        --surface-secondary: #24211e;
+        --surface-elevated: #2b2723;
+        --text-primary: #f5f0e8;
+        --text-secondary: #c8beb2;
+        --text-tertiary: #8e8378;
+        --border-default: #3d3833;
+        --border-subtle: #312d29;
+        --accent-primary: #ff8a72;
+        --accent-secondary: #7ac8d6;
+        --accent-soft: #513129;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, color-mix(in srgb, var(--accent-soft) 42%, transparent), transparent 30rem),
+          linear-gradient(180deg, var(--surface-page), var(--surface-secondary));
+        color: var(--text-primary);
+        font-family: var(--font-primary);
+        line-height: 1.7;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: var(--accent-primary);
+      }
+
+      :focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--accent-primary) 70%, transparent);
+        outline-offset: 3px;
+      }
+
+      .shell {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+        padding-bottom: var(--space-12);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        padding: var(--space-5) 0;
+      }
+
+      .brand,
+      .actions {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .brand-mark {
+        display: inline-grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        color: var(--accent-primary);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .brand-mark svg,
+      .theme-toggle svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+
+      .brand-title {
+        display: block;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .brand-subtitle {
+        display: block;
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .nav-link,
+      .theme-toggle,
+      .source-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        color: var(--text-secondary);
+        font: 800 13px/1.2 var(--font-primary);
+        cursor: pointer;
+      }
+
+      .source-link {
+        width: max-content;
+        color: var(--accent-secondary);
+      }
+
+      .hero-note {
+        margin: 0;
+        color: var(--text-tertiary);
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.5;
+        word-break: keep-all;
+      }
+
+      .nav-link:hover,
+      .theme-toggle:hover,
+      .source-link:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+      }
+
+      .hero,
+      .section,
+      .exam-card {
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-feature);
+        background: var(--surface-primary);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .hero {
+        display: grid;
+        gap: var(--space-5);
+        padding: var(--space-8);
+        margin-bottom: var(--space-8);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--accent-primary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-bottom: 0;
+        font-size: 56px;
+        font-weight: 800;
+        line-height: 1.05;
+        word-break: keep-all;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin-bottom: 0;
+        color: var(--text-secondary);
+        font-size: 18px;
+        line-height: 1.75;
+        word-break: keep-all;
+      }
+
+      .byline {
+        margin: calc(-1 * var(--space-2)) 0 var(--space-1);
+        color: var(--text-tertiary);
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.5;
+        word-break: keep-all;
+      }
+
+      .anchor-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin-bottom: var(--space-6);
+      }
+
+      .anchor-nav a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .section {
+        display: grid;
+        gap: var(--space-4);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
+
+      .section h2 {
+        margin-bottom: 0;
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .section-lead {
+        margin-bottom: 0;
+        color: var(--text-secondary);
+        word-break: keep-all;
+      }
+
+      .workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+
+      .workflow-card {
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .workflow-card strong {
+        display: block;
+        margin-bottom: var(--space-2);
+        color: var(--accent-primary);
+        font-size: 13px;
+      }
+
+      .workflow-card span {
+        display: block;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .mock-mode-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: var(--space-4);
+      }
+
+      .mode-panel {
+        display: grid;
+        gap: var(--space-4);
+        padding: var(--space-5);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .mode-panel h3 {
+        margin-bottom: 0;
+        font-size: 18px;
+        line-height: 1.35;
+      }
+
+      .mode-field {
+        display: grid;
+        gap: var(--space-2);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .mode-field select,
+      .score-field input {
+        width: 100%;
+        min-height: 42px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--text-primary);
+        font: 800 14px/1.2 var(--font-primary);
+      }
+
+      .timer-display {
+        display: grid;
+        gap: var(--space-1);
+        padding: var(--space-5);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+      }
+
+      .timer-time {
+        font: 800 44px/1 var(--font-mono);
+        color: var(--accent-primary);
+      }
+
+      .timer-label {
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .mode-action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .mode-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        min-height: 40px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--text-secondary);
+        font: 800 13px/1.2 var(--font-primary);
+        cursor: pointer;
+      }
+
+      .mode-button:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+      }
+
+      .mode-button svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+
+      .score-input-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+
+      .score-field {
+        display: grid;
+        gap: var(--space-2);
+        padding: var(--space-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+      }
+
+      .score-field span {
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.45;
+        word-break: keep-all;
+      }
+
+      .score-field small {
+        color: var(--text-tertiary);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .score-result {
+        display: grid;
+        gap: var(--space-2);
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-left: 4px solid var(--accent-secondary);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+      }
+
+      .score-result[data-state="pass"] {
+        border-left-color: var(--status-success);
+      }
+
+      .score-result[data-state="risk"] {
+        border-left-color: var(--status-warning);
+      }
+
+      .score-result[data-state="fail"] {
+        border-left-color: var(--accent-primary);
+      }
+
+      .score-result strong {
+        color: var(--text-primary);
+      }
+
+      .score-result p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .history-list {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding-left: var(--space-5);
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .history-list li {
+        word-break: keep-all;
+      }
+
+      .readiness-checklist {
+        display: grid;
+        gap: var(--space-2);
+      }
+
+      .readiness-check {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: var(--space-3);
+        align-items: start;
+        padding: var(--space-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--text-secondary);
+        cursor: pointer;
+      }
+
+      .readiness-check input {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        accent-color: var(--accent-primary);
+      }
+
+      .readiness-check strong {
+        display: block;
+        color: var(--text-primary);
+        font-size: 14px;
+        line-height: 1.45;
+        word-break: keep-all;
+      }
+
+      .readiness-check span {
+        display: block;
+        margin-top: var(--space-1);
+        font-size: 13px;
+        line-height: 1.55;
+        word-break: keep-all;
+      }
+
+      .level-plan-grid,
+      .listening-grid,
+      .sample-grid,
+      .full-paper-grid,
+      .answer-key-grid,
+      .bplus-track-grid,
+      .drill-grid,
+      .tracker-layout,
+      .official-structure-grid {
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      .level-plan-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .listening-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .sample-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .full-paper-grid,
+      .answer-key-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+      }
+
+      .bplus-track-grid,
+      .drill-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .official-structure-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tracker-layout {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      }
+
+      .level-plan-card,
+      .listening-card,
+      .sample-card,
+      .score-card,
+      .paper-card,
+      .paper-task,
+      .answer-key-card,
+      .track-card,
+      .structure-card,
+      .drill-card,
+      .tracker-panel {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .level-plan-card h3,
+      .listening-card h3,
+      .sample-card h3,
+      .paper-card h3,
+      .paper-task h4,
+      .answer-key-card h3,
+      .track-card h3,
+      .structure-card h3,
+      .drill-card h3,
+      .tracker-panel h3 {
+        margin-bottom: 0;
+        font-size: 17px;
+        line-height: 1.35;
+        word-break: keep-all;
+      }
+
+      .paper-card {
+        align-content: start;
+      }
+
+      .paper-task {
+        background: var(--surface-primary);
+      }
+
+      .paper-task h4 {
+        color: var(--accent-primary);
+        font-size: 15px;
+      }
+
+      .paper-task .spanish {
+        font-size: 16px;
+      }
+
+      .answer-key-card {
+        align-content: start;
+        background: var(--surface-primary);
+      }
+
+      .answer-key-card strong {
+        color: var(--accent-primary);
+      }
+
+      .answer-key-card p {
+        margin-bottom: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.65;
+        word-break: keep-all;
+      }
+
+      .weak-answer {
+        margin: 0;
+        padding: var(--space-4);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface-primary));
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.65;
+        word-break: keep-all;
+      }
+
+      .structure-card {
+        align-content: start;
+      }
+
+      .tracker-panel {
+        align-content: start;
+      }
+
+      .structure-list {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .structure-list li {
+        display: grid;
+        gap: var(--space-1);
+        padding: var(--space-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+      }
+
+      .structure-list strong {
+        color: var(--text-primary);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .structure-list span {
+        color: var(--text-secondary);
+        font-size: 13px;
+        line-height: 1.55;
+        word-break: keep-all;
+      }
+
+      .track-card strong,
+      .drill-card strong {
+        color: var(--accent-primary);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .track-card p,
+      .drill-card p {
+        margin-bottom: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .plan-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .plan-meta li {
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        color: var(--text-secondary);
+        font: 800 12px/1.4 var(--font-mono);
+      }
+
+      .plan-list,
+      .sample-list {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding-left: var(--space-5);
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .plan-list li,
+      .sample-list li {
+        word-break: keep-all;
+      }
+
+      .readiness-note {
+        margin: 0;
+        padding: var(--space-4);
+        border-left: 4px solid var(--accent-primary);
+        border-radius: var(--radius-card);
+        background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface-elevated));
+        color: var(--text-secondary);
+        word-break: keep-all;
+      }
+
+      .listen-controls {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+      }
+
+      .listen-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        min-height: 40px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--accent-secondary);
+        font: 800 13px/1.2 var(--font-primary);
+        cursor: pointer;
+      }
+
+      .listen-button:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+      }
+
+      .listen-button svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      .listen-status {
+        min-height: 20px;
+        color: var(--text-tertiary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .listen-progress {
+        overflow: hidden;
+        height: 8px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 999px;
+        background: var(--surface-primary);
+      }
+
+      .listen-progress-bar {
+        display: block;
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--accent-primary);
+      }
+
+      .sample-meta {
+        margin: 0;
+        color: var(--accent-secondary);
+        font: 800 12px/1.4 var(--font-mono);
+      }
+
+      .sample-answer {
+        margin: 0;
+        padding: var(--space-4);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.7;
+        word-break: keep-all;
+      }
+
+      .sample-answer strong {
+        display: block;
+        margin-bottom: var(--space-1);
+        color: var(--text-primary);
+      }
+
+      .model-dialogue {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding: var(--space-4);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .model-dialogue dt {
+        color: var(--accent-secondary);
+        font-weight: 800;
+      }
+
+      .model-dialogue dd {
+        margin: 0;
+        font-family: var(--font-editorial);
+      }
+
+      .tracker-form {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .tracker-field {
+        display: grid;
+        gap: var(--space-2);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .tracker-field select,
+      .tracker-field input,
+      .tracker-field textarea {
+        width: 100%;
+        min-height: 42px;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-primary);
+        color: var(--text-primary);
+        font: 700 14px/1.45 var(--font-primary);
+      }
+
+      .tracker-field textarea {
+        min-height: 92px;
+        resize: vertical;
+      }
+
+      .tracker-log {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding-left: var(--space-5);
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .tracker-log li {
+        word-break: keep-all;
+      }
+
+      .score-table {
+        display: grid;
+        gap: var(--space-2);
+      }
+
+      .score-row {
+        display: grid;
+        grid-template-columns: minmax(96px, 0.8fr) minmax(0, 1.3fr) minmax(0, 1.4fr);
+        gap: var(--space-3);
+        align-items: start;
+        padding: var(--space-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .score-row strong {
+        color: var(--accent-primary);
+        font-size: 14px;
+      }
+
+      .score-row span,
+      .score-row p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .exam-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+      }
+
+      .exam-card {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-5);
+        box-shadow: none;
+      }
+
+      .exam-card h3 {
+        margin-bottom: 0;
+        font-size: 18px;
+      }
+
+      .level {
+        display: inline-flex;
+        align-items: center;
+        align-self: start;
+        justify-self: start;
+        width: max-content;
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        color: var(--accent-secondary);
+        font: 800 12px/1.4 var(--font-mono);
+      }
+
+      .prompt {
+        color: var(--text-secondary);
+        word-break: keep-all;
+      }
+
+      .spanish {
+        margin: 0;
+        padding: var(--space-4);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+        font-family: var(--font-editorial);
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .choices {
+        margin: 0;
+        padding-left: var(--space-5);
+        color: var(--text-secondary);
+      }
+
+      .choices li {
+        word-break: keep-all;
+        overflow-wrap: break-word;
+      }
+
+      .task-list {
+        display: grid;
+        gap: var(--space-2);
+        margin: 0;
+        padding-left: var(--space-5);
+        color: var(--text-secondary);
+      }
+
+      .task-list li {
+        word-break: keep-all;
+      }
+
+      .rubric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+
+      .rubric-card {
+        padding: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        background: var(--surface-elevated);
+      }
+
+      .rubric-card h3 {
+        margin-bottom: var(--space-2);
+        color: var(--accent-primary);
+        font-size: 15px;
+      }
+
+      .rubric-card p {
+        margin-bottom: 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .answer {
+        border-top: 1px solid var(--border-subtle);
+        padding-top: var(--space-3);
+      }
+
+      .answer summary {
+        color: var(--accent-secondary);
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      @media (max-width: 920px) {
+        .mock-mode-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .bplus-track-grid,
+        .drill-grid,
+        .tracker-layout,
+        .full-paper-grid,
+        .answer-key-grid,
+        .official-structure-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .level-plan-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .listening-grid,
+        .sample-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .shell {
+          width: min(100% - 24px, 1080px);
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-wrap: wrap;
+        }
+
+        .actions {
+          width: 100%;
+        }
+
+        .nav-link {
+          flex: 1;
+        }
+
+        .theme-toggle span {
+          display: none;
+        }
+
+        .hero,
+        .section,
+        .exam-card {
+          padding: var(--space-5);
+        }
+
+        h1 {
+          font-size: 38px;
+          line-height: 1.12;
+        }
+
+        .anchor-nav a {
+          flex: 1 1 96px;
+        }
+
+        .exam-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .workflow-grid,
+        .rubric-grid,
+        .level-plan-grid,
+        .listening-grid,
+        .sample-grid,
+        .full-paper-grid,
+        .answer-key-grid,
+        .bplus-track-grid,
+        .drill-grid,
+        .tracker-layout,
+        .official-structure-grid,
+        .score-input-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .score-row {
+          grid-template-columns: 1fr;
+        }
+
+        .source-link {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="../index.html" aria-label="가이드북으로 돌아가기">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 4.8h9.5a3.5 3.5 0 0 1 3.5 3.5v10.9H8.5A3.5 3.5 0 0 1 5 15.7z"></path><path d="M8.4 8.3h6.4"></path><path d="M8.4 11.8h4.8"></path></svg>
+          </span>
+          <span>
+            <span class="brand-title">스페인어 기출형 문제</span>
+            <span class="brand-subtitle">공식 모델 시험 전 점검</span>
+          </span>
+        </a>
+        <div class="actions">
+          <a class="nav-link" href="../index.html">가이드북</a>
+          <a class="nav-link" href="vocab.html">단어장</a>
+          <button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2"></path><path d="M12 19v2"></path><path d="m4.9 4.9 1.4 1.4"></path><path d="m17.7 17.7 1.4 1.4"></path><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="m4.9 19.1 1.4-1.4"></path><path d="m17.7 6.3 1.4-1.4"></path><circle cx="12" cy="12" r="4"></circle></svg>
+            <span>다크 모드</span>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">Mock Exam Bank</p>
+          <h1>기출은 공식 모델로, 평소 훈련은 기출형으로 한다</h1>
+          <p class="byline">지은이 문성혁</p>
+          <p class="lead">
+            실제 공개 자료는 Instituto Cervantes의 공식 모델 시험, 오디오, 전사문, 정답이 기준입니다.
+            이 페이지는 그 자료를 풀기 전에 형식과 풀이 순서를 익히는 연습장입니다.
+          </p>
+          <a class="source-link" href="https://examenes.cervantes.es/es/dele/preparar-prueba">공식 DELE 준비 자료 열기</a>
+          <p class="hero-note">공식 시험 구조와 준비 자료 링크 확인일: 2026년 7월 8일</p>
+        </section>
+
+        <nav class="anchor-nav" aria-label="기출형 문제 빠른 이동">
+          <a href="#exam-basics">시험 기본 안내</a>
+          <a href="#workflow">풀이 순서</a>
+          <a href="#exam-mode">모의고사 모드</a>
+          <a href="#readiness-helper">응시 판단</a>
+          <a href="#full-mock">실전 세트</a>
+          <a href="#b1-b2-full">B1/B2 1회분</a>
+          <a href="#final-supplement">최종 보충팩</a>
+          <a href="#pass-gap-pack">합격 갭</a>
+          <a href="#official-use">공식 자료 사용법</a>
+          <a href="#bplus-track">B1+ 합격 트랙</a>
+          <a href="#listening-lab">듣기 훈련</a>
+          <a href="#production-samples">답안 예시</a>
+          <a href="#explanation-loop">해설 루프</a>
+          <a href="#a1-a2">A1-A2</a>
+          <a href="#b1-b2">B1-B2</a>
+          <a href="#c1-c2">C1-C2</a>
+          <a href="#rubric">채점 기준</a>
+          <a href="#official">공식 자료</a>
+        </nav>
+
+        <section class="section" id="exam-basics">
+          <h2>DELE 시험 기본 안내</h2>
+          <p class="section-lead">
+            DELE는 Instituto Cervantes가 운영하는 스페인어 공인 시험입니다. 이 페이지의 일정과 행정 정보는
+            2026년 7월 8일 공식 안내를 기준으로 정리했으며, 실제 접수 전에는 반드시 공식 일정과 응시 센터 공지를 다시 확인하세요.
+          </p>
+          <div class="official-structure-grid" aria-label="DELE 시험 행정 기본 안내">
+            <article class="structure-card">
+              <span class="level">일정</span>
+              <h3>2026년 남은 주요 회차</h3>
+              <ul class="structure-list">
+                <li><strong>10월 16일</strong><span>일반 B1, B2, C1. 접수 마감은 2026년 9월 2일입니다.</span></li>
+                <li><strong>10월 17일</strong><span>일반 A2. 접수 마감은 2026년 9월 2일입니다.</span></li>
+                <li><strong>11월 13일</strong><span>학교용 A1, A2/B1, B2/C1 및 일반 A2. 접수 마감은 2026년 9월 30일입니다.</span></li>
+                <li><strong>11월 14일</strong><span>일반 A1, B1, B2, C1, C2. 접수 마감은 2026년 9월 30일입니다.</span></li>
+              </ul>
+            </article>
+            <article class="structure-card">
+              <span class="level">접수</span>
+              <h3>어디서 신청하나</h3>
+              <ul class="structure-list">
+                <li><strong>스페인</strong><span>일반 DELE는 Cervantes 포털에서 온라인으로 접수합니다.</span></li>
+                <li><strong>스페인 외 국가</strong><span>각 DELE 시험 센터를 통해 접수합니다. 센터별 마감, 결제, 서류 안내가 다를 수 있습니다.</span></li>
+                <li><strong>응시료</strong><span>레벨과 국가, 시험 센터에 따라 다르므로 공식 가격표와 현지 센터 공지를 확인합니다.</span></li>
+                <li><strong>이메일</strong><span>접수, 고사장 안내, 성적 통지가 이메일로 올 수 있으므로 개인 이메일을 정확히 입력합니다.</span></li>
+              </ul>
+            </article>
+            <article class="structure-card">
+              <span class="level">당일</span>
+              <h3>시험장에 가져갈 것</h3>
+              <ul class="structure-list">
+                <li><strong>신분증</strong><span>접수 때 사용한 사진이 있는 공식 신분증 또는 여권 원본을 준비합니다.</span></li>
+                <li><strong>접수 확인</strong><span>등록 확인서와 센터가 보낸 convocatoria, 즉 시험 소집 안내를 확인합니다.</span></li>
+                <li><strong>시간표</strong><span>필기시험과 구술시험 시간이 같은 날이 아닐 수 있으므로 센터 안내를 우선합니다.</span></li>
+                <li><strong>마킹</strong><span>답안지 작성 방식, 수험 정보 기입, 필기구 규정은 시험 센터 안내를 따릅니다.</span></li>
+              </ul>
+            </article>
+            <article class="structure-card">
+              <span class="level">결과</span>
+              <h3>성적 확인과 이후 절차</h3>
+              <ul class="structure-list">
+                <li><strong>발표</strong><span>대부분 필기시험 후 약 2개월, 5월과 11월 회차는 약 3개월을 기준으로 안내됩니다.</span></li>
+                <li><strong>통지</strong><span>성적 공개는 접수 때 등록한 이메일로 안내되고, 포털에서 공식 성적 증명을 확인합니다.</span></li>
+                <li><strong>APTO</strong><span>합격자는 공식 디지털 diploma와 성적 증명서를 받을 수 있습니다.</span></li>
+                <li><strong>재검토</strong><span>성적에 이의가 있으면 정해진 기간 안에 공식 절차로 재검토를 신청합니다.</span></li>
+              </ul>
+            </article>
+          </div>
+          <div class="answer-key-grid" aria-label="한국 내 DELE 응시처 안내">
+            <article class="answer-key-card">
+              <span class="level">국내 응시</span>
+              <h3>한국에서는 어디서 보나</h3>
+              <p>
+                한국 내 DELE 응시는 Instituto Cervantes de Seúl이 안내하는 국내 시험 센터를 기준으로 확인합니다.
+                2026년 공식 안내 기준으로 서울은 Instituto Cervantes de Seúl과 한국외국어대학교 HUFS DELE Center가 확인되고,
+                인천·경기·부산은 Daekyo DELE Center 안내를 함께 확인합니다.
+              </p>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">회차별 확인</span>
+              <h3>도시와 레벨은 매번 다를 수 있음</h3>
+              <p>
+                한국 내 시험은 회차에 따라 서울, 인천, 경기, 부산 등 운영 도시와 제공 레벨이 달라질 수 있습니다.
+                접수 전에는 목표 레벨이 해당 도시와 날짜에 열리는지, 구술시험 날짜가 필기와 같은 날인지 센터 공지를 확인하세요.
+              </p>
+            </article>
+          </div>
+          <div class="mode-action-row" aria-label="DELE 행정 공식 링크">
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/cuando">공식 일정</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/inscribirse">접수 방법</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/cuanto">응시료</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/calificaciones">성적 안내</a>
+            <a class="source-link" href="https://seul.cervantes.es/es/examenes_espanol/diplomas_dele/centros_de_examen_dele.htm">국내 시험 센터</a>
+            <a class="source-link" href="https://seul.cervantes.es/es/examenes_espanol/diplomas_dele/plazos_precios_descuentos_dele.htm">국내 마감·가격</a>
+          </div>
+        </section>
+
+        <section class="section" id="workflow">
+          <h2>공식 모델 시험 전에 지킬 풀이 순서</h2>
+          <p class="section-lead">
+            공식 모델 시험은 실제 시간으로 풀어야 의미가 있습니다. 그 전에는 아래 네 단계를 고정해두면
+            독해, 듣기, 쓰기, 말하기에서 같은 실수를 반복하지 않습니다.
+          </p>
+          <div class="workflow-grid">
+            <article class="workflow-card">
+              <strong>1. 요구 확인</strong>
+              <span>문제에서 묻는 것이 사람, 장소, 시간, 목적, 태도 중 무엇인지 먼저 표시합니다.</span>
+            </article>
+            <article class="workflow-card">
+              <strong>2. 단서 예측</strong>
+              <span>선택지나 조건에서 들리거나 보일 가능성이 높은 단어를 미리 골라둡니다.</span>
+            </article>
+            <article class="workflow-card">
+              <strong>3. 답 확정</strong>
+              <span>느낌으로 고르지 말고, 지문이나 발화에서 답을 지지하는 표현을 하나 찾습니다.</span>
+            </article>
+            <article class="workflow-card">
+              <strong>4. 오답 기록</strong>
+              <span>어휘 부족, 문법 오해, 시간 관리, 문제 요구 착각 중 어디서 틀렸는지 분류합니다.</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="exam-mode">
+          <h2>실전 모의고사 모드</h2>
+          <p class="section-lead">
+            한 레벨을 고르고 제한 시간을 켠 뒤, 영역별 점수를 입력하면 합격권인지 바로 판정합니다.
+            이 판정은 공식 성적표가 아니라 공식 채점 구조를 바탕으로 한 자가 훈련용 점검입니다.
+          </p>
+          <div class="mock-mode-layout">
+            <article class="mode-panel" aria-labelledby="timer-title">
+              <h3 id="timer-title">타이머와 진행 순서</h3>
+              <label class="mode-field">
+                <span>응시 레벨</span>
+                <select data-exam-level aria-label="모의고사 레벨 선택">
+                  <option value="A1">A1</option>
+                  <option value="A2">A2</option>
+                  <option value="B1">B1</option>
+                  <option value="B2">B2</option>
+                  <option value="C1">C1</option>
+                  <option value="C2">C2</option>
+                </select>
+              </label>
+              <div class="timer-display" aria-live="polite">
+                <span class="timer-time" data-timer-display>00:00:00</span>
+                <span class="timer-label" data-timer-label>레벨을 고르면 전체 실전 시간이 표시됩니다.</span>
+              </div>
+              <div class="mode-action-row">
+                <button class="mode-button" type="button" data-timer-start>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  시작
+                </button>
+                <button class="mode-button" type="button" data-timer-pause>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5v14"></path><path d="M14 5v14"></path></svg>
+                  일시정지
+                </button>
+                <button class="mode-button" type="button" data-timer-reset>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v6h6"></path></svg>
+                  초기화
+                </button>
+              </div>
+              <ul class="plan-meta" data-exam-meta></ul>
+              <ol class="plan-list" data-exam-task-list></ol>
+            </article>
+
+            <article class="mode-panel" aria-labelledby="score-title">
+              <h3 id="score-title">점수 입력과 합격 판정</h3>
+              <p class="prompt" data-score-guide>
+                각 영역 점수를 입력하세요. A1-C1은 두 그룹, C2는 세 시험을 따로 봅니다.
+              </p>
+              <div class="score-input-grid" data-score-fields></div>
+              <div class="score-result" data-score-result data-state="risk" aria-live="polite">
+                <strong>점수 입력 대기</strong>
+                <p>점수를 입력하면 그룹별 합격권과 다음 훈련 우선순위를 표시합니다.</p>
+              </div>
+              <div class="mode-action-row">
+                <button class="mode-button" type="button" data-score-save>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>
+                  결과 저장
+                </button>
+                <button class="mode-button" type="button" data-score-clear>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path></svg>
+                  기록 비우기
+                </button>
+              </div>
+              <ol class="history-list" data-score-history aria-label="최근 모의고사 결과"></ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="readiness-helper">
+          <h2>응시 판단 보조도구</h2>
+          <p class="section-lead">
+            이 도구는 답안을 채점하지 않습니다. 공식 모델 시험을 실제 조건으로 풀었는지, 오답과 전사문을 분석했는지,
+            쓰기·말하기 산출물을 점검했는지를 바탕으로 시험 신청 전 상태를 정리합니다.
+          </p>
+
+          <div class="tracker-layout" aria-label="DELE 응시 판단 체크리스트">
+            <article class="tracker-panel">
+              <h3>준비 상태 체크</h3>
+              <label class="tracker-field">
+                <span>목표 레벨</span>
+                <select data-readiness-level aria-label="응시 판단 목표 레벨">
+                  <option>A1</option>
+                  <option>A2</option>
+                  <option>B1</option>
+                  <option>B2</option>
+                  <option>C1</option>
+                  <option>C2</option>
+                </select>
+              </label>
+
+              <div class="readiness-checklist" data-readiness-checklist>
+                <label class="readiness-check">
+                  <input type="checkbox" data-readiness-check="official-model" data-critical="true">
+                  <span>
+                    <strong>공식 모델 시험 1회분을 실제 시간으로 풀었다</strong>
+                    <span>중간에 전사문, 정답표, 해설을 보지 않고 끝까지 진행했습니다.</span>
+                  </span>
+                </label>
+                <label class="readiness-check">
+                  <input type="checkbox" data-readiness-check="answer-sheet">
+                  <span>
+                    <strong>공식 답안지 형식과 마킹 순서를 확인했다</strong>
+                    <span>객관식 답안 이동, 쓰기 답안 작성 위치, 수험 정보 기입 방식을 확인했습니다.</span>
+                  </span>
+                </label>
+                <label class="readiness-check">
+                  <input type="checkbox" data-readiness-check="official-review" data-critical="true">
+                  <span>
+                    <strong>오답, 정답표, 듣기 전사문 분석을 끝냈다</strong>
+                    <span>틀린 이유를 어휘 부족, 조건 오해, 시간 부족, 발화 단서 누락으로 분류했습니다.</span>
+                  </span>
+                </label>
+                <label class="readiness-check">
+                  <input type="checkbox" data-readiness-check="production-samples">
+                  <span>
+                    <strong>쓰기와 말하기 산출물을 최소 3개씩 남겼다</strong>
+                    <span>자신이 쓴 답안과 녹음 파일을 보고 조건 누락과 구조 문제를 수정했습니다.</span>
+                  </span>
+                </label>
+                <label class="readiness-check">
+                  <input type="checkbox" data-readiness-check="weak-retrain" data-critical="true">
+                  <span>
+                    <strong>반복 오류 유형을 한 번 이상 재훈련했다</strong>
+                    <span>같은 실수가 두 번 나온 영역은 새 문제를 풀기 전에 해당 유형만 다시 연습했습니다.</span>
+                  </span>
+                </label>
+                <label class="readiness-check">
+                  <input type="checkbox" data-readiness-check="exam-day">
+                  <span>
+                    <strong>시험 당일 운영을 점검했다</strong>
+                    <span>준비물, 이동 시간, 쉬는 시간, 마지막 5분 답안 확인 순서를 정했습니다.</span>
+                  </span>
+                </label>
+              </div>
+
+              <div class="mode-action-row">
+                <button class="mode-button" type="button" data-readiness-save>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>
+                  상태 저장
+                </button>
+                <button class="mode-button" type="button" data-readiness-clear>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path></svg>
+                  초기화
+                </button>
+              </div>
+            </article>
+
+            <article class="tracker-panel">
+              <h3>판단 결과</h3>
+              <div class="score-result" data-readiness-result data-state="risk" aria-live="polite">
+                <strong>체크 대기</strong>
+                <p>준비 항목을 체크하면 응시 가능성 판단과 다음 보강 순서를 표시합니다.</p>
+              </div>
+              <ol class="tracker-log" data-readiness-next aria-label="응시 전 다음 행동"></ol>
+              <p class="readiness-note">
+                이 결과는 공식 합격 보증이 아니라 시험 신청 전 판단 보조입니다. 실제 문제, 오디오, 정답표는 공식 자료로 확인하세요.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="full-mock">
+          <h2>레벨별 실전 1회분 구성표</h2>
+          <p class="section-lead">
+            아래 표는 공식 모델 시험을 풀기 전, 같은 날 한 번에 돌려볼 훈련 세트입니다.
+            실제 공개 시험지는 Cervantes 공식 PDF와 오디오를 사용하고, 이 표는 시간 배분과 산출물 기준을 고정하는 용도입니다.
+          </p>
+          <div class="level-plan-grid">
+            <article class="level-plan-card">
+              <span class="level">A1</span>
+              <h3>생활 정보 정확도 점검</h3>
+              <ul class="plan-meta">
+                <li>독해 45분</li>
+                <li>듣기 25분</li>
+                <li>쓰기 25분</li>
+                <li>말하기 10분</li>
+              </ul>
+              <ol class="plan-list">
+                <li>시간, 장소, 사람, 물건 단서를 표시한다.</li>
+                <li>개인 정보 양식과 짧은 메시지를 완성한다.</li>
+                <li>자기소개를 6문장으로 녹음한다.</li>
+                <li>두 묶음 모두 30점 이상을 목표로 한다.</li>
+              </ol>
+            </article>
+            <article class="level-plan-card">
+              <span class="level">A2</span>
+              <h3>일상 문제 해결 세트</h3>
+              <ul class="plan-meta">
+                <li>독해 60분</li>
+                <li>듣기 40분</li>
+                <li>쓰기 45분</li>
+                <li>말하기 12분</li>
+              </ul>
+              <ol class="plan-list">
+                <li>과거 경험, 약속 변경, 여행 문제를 한 주제로 묶는다.</li>
+                <li>쓰기에는 장소, 시간, 이유, 감정을 모두 넣는다.</li>
+                <li>사진 묘사는 위치, 행동, 추측, 의견 순서로 말한다.</li>
+                <li>단순과거와 불완료과거 혼동을 오답표에 남긴다.</li>
+              </ol>
+            </article>
+            <article class="level-plan-card">
+              <span class="level">B1</span>
+              <h3>경험과 의견 완성 세트</h3>
+              <ul class="plan-meta">
+                <li>독해 70분</li>
+                <li>듣기 40분</li>
+                <li>쓰기 60분</li>
+                <li>말하기 15분</li>
+              </ul>
+              <ol class="plan-list">
+                <li>글의 목적과 화자의 태도를 근거와 함께 표시한다.</li>
+                <li>쓰기 답안은 배경, 문제, 해결, 마무리로 나눈다.</li>
+                <li>말하기는 경험, 이유, 변화, 계획을 끊기지 않게 말한다.</li>
+                <li>완벽한 문장보다 과제 조건 누락을 먼저 막는다.</li>
+              </ol>
+            </article>
+            <article class="level-plan-card">
+              <span class="level">B2</span>
+              <h3>논증과 반론 처리 세트</h3>
+              <ul class="plan-meta">
+                <li>독해 70분</li>
+                <li>듣기 40분</li>
+                <li>쓰기 80분</li>
+                <li>말하기 20분</li>
+              </ul>
+              <ol class="plan-list">
+                <li>문단 기능, 대조, 반론, 결론 신호를 표시한다.</li>
+                <li>쓰기에는 주장 1개, 근거 2개, 반론 처리 1개를 넣는다.</li>
+                <li>말하기는 자료 묘사보다 해석과 의견으로 빨리 넘어간다.</li>
+                <li>사회 주제 어휘와 연결어를 과하게 반복하지 않는다.</li>
+              </ol>
+            </article>
+            <article class="level-plan-card">
+              <span class="level">C1</span>
+              <h3>요약과 재구성 세트</h3>
+              <ul class="plan-meta">
+                <li>독해 90분</li>
+                <li>듣기 50분</li>
+                <li>통합 쓰기 80분</li>
+                <li>통합 말하기 20분</li>
+              </ul>
+              <ol class="plan-list">
+                <li>자료의 문장을 베끼지 않고 기능을 바꿔 쓴다.</li>
+                <li>요약 문단과 자신의 평가 문단을 분리한다.</li>
+                <li>발표 준비에는 논점, 순서, 예상 반문만 적는다.</li>
+                <li>문체와 레지스터가 과제 상황에 맞는지 확인한다.</li>
+              </ol>
+            </article>
+            <article class="level-plan-card">
+              <span class="level">C2</span>
+              <h3>통합 분석과 즉흥 대응 세트</h3>
+              <ul class="plan-meta">
+                <li>통합 105분</li>
+                <li>쓰기 150분</li>
+                <li>말하기 준비 30분</li>
+                <li>발표 20분</li>
+              </ul>
+              <ol class="plan-list">
+                <li>자료별 입장, 숨은 전제, 충돌 지점을 표로 분리한다.</li>
+                <li>쓰기에서는 자료를 합쳐 자기 결론으로 재구성한다.</li>
+                <li>말하기는 원고 암기보다 논점 지도를 준비한다.</li>
+                <li>지역 변이, 문체, 아이러니, 함축을 따로 점검한다.</li>
+              </ol>
+            </article>
+          </div>
+          <p class="readiness-note">
+            합격권 판단은 “내용을 이해했다”가 아니라 제한 시간 안에 답안, 녹음, 오답표까지 남겼는지로 봅니다.
+            공식 모델 시험 2회 연속에서 시간 초과가 없고 같은 유형의 실수가 반복되지 않으면 응시 준비가 된 상태에 가깝습니다.
+          </p>
+        </section>
+
+        <section class="section" id="b1-b2-full">
+          <h2>B1/B2 실전 1회분 문제지</h2>
+          <p class="section-lead">
+            공식 공개 시험지를 대체하지 않는 사설 훈련 세트입니다. 다만 B1과 B2의 공식 과제 흐름에 맞춰
+            독해, 듣기, 쓰기, 말하기를 한 번에 돌리고 정답·해설·감점 포인트까지 확인하도록 구성했습니다.
+          </p>
+
+          <div class="full-paper-grid" aria-label="B1과 B2 실전 1회분 문제지">
+            <article class="paper-card">
+              <span class="level">B1 1회분</span>
+              <h3>경험과 일상 문제 해결</h3>
+              <ul class="plan-meta">
+                <li>독해 70분</li>
+                <li>듣기 40분</li>
+                <li>쓰기 60분</li>
+                <li>말하기 준비 15분</li>
+              </ul>
+
+              <section class="paper-task">
+                <h4>Prueba 1. 독해</h4>
+                <p class="spanish">A. Curso intensivo de conversación: martes y jueves, 18:00-19:30. Nivel intermedio. B. Intercambio de idiomas en la biblioteca: gratis, sábados por la mañana. C. Taller de fotografía para principiantes: salida práctica al parque el domingo. D. Club de lectura: novela breve y debate mensual.</p>
+                <ol class="task-list">
+                  <li>민수는 돈을 내지 않고 스페인어로 말할 사람을 찾습니다. 알맞은 공지는?</li>
+                  <li>Laura는 카메라를 처음 배우고 싶고 주말에 시간이 있습니다. 알맞은 공지는?</li>
+                  <li>직장인은 퇴근 뒤 말하기 수업을 찾습니다. 알맞은 공지는?</li>
+                </ol>
+                <p class="spanish">Te escribo porque la empresa de transporte perdió mi maleta durante el viaje a Valencia. En la maleta había ropa, documentos y un cargador. Ya llamé dos veces, pero nadie me ha dado una solución. Les pido que revisen el caso y me informen antes del viernes.</p>
+                <ol class="choices" start="4">
+                  <li>글쓴이의 목적은 무엇입니까? A. 여행 예약 B. 분실물 해결 요청 C. 호텔 불만</li>
+                  <li>글쓴이가 원하는 것은 무엇입니까? A. 금요일 전 답변 B. 새 여행 일정 C. 충전기 구매</li>
+                </ol>
+                <p class="spanish">Cuando Clara se mudó a Madrid, pensó que sería fácil hacer amigos. Sin embargo, durante los primeros meses se sintió sola. Todo cambió cuando empezó a participar en un grupo de senderismo: allí conoció a personas con intereses parecidos y recuperó la confianza.</p>
+                <ol class="choices" start="6">
+                  <li>Clara의 변화 원인은? A. 직장 변경 B. 취미 모임 참여 C. 가족 방문</li>
+                  <li>글의 핵심은? A. 새 도시 적응 B. 여행 비용 C. 건강 문제</li>
+                </ol>
+                <p class="spanish">Complete con la opción adecuada: Primero me pareció difícil, ___ después entendí que solo necesitaba practicar. / No fui a clase ___ estaba enfermo.</p>
+                <ol class="choices" start="8">
+                  <li>A. pero B. porque C. aunque</li>
+                  <li>A. pero B. porque C. sin embargo</li>
+                </ol>
+              </section>
+
+              <section class="paper-task">
+                <h4>Prueba 2. 듣기</h4>
+                <p class="spanish">1. “La excursión del sábado se cancela por la lluvia. El dinero se devolverá en la oficina a partir del lunes.”</p>
+                <ol class="choices" start="10">
+                  <li>무엇이 취소됩니까? A. 여행 B. 사무실 C. 월요일 수업</li>
+                </ol>
+                <p class="spanish">2. “No estoy enfadada con el restaurante; la comida estaba bien. Lo que me molestó fue esperar cuarenta minutos sin ninguna explicación.”</p>
+                <ol class="choices" start="11">
+                  <li>화자가 불만인 점은? A. 음식 B. 대기와 설명 부족 C. 가격</li>
+                </ol>
+                <p class="spanish">3. “Si quieres mejorar tu español, no estudies solo listas de palabras. Lee textos cortos, repite frases y habla aunque cometas errores.”</p>
+                <ol class="choices" start="12">
+                  <li>화자의 조언은? A. 단어장만 보기 B. 실수해도 말하기 C. 문법을 피하기</li>
+                </ol>
+                <p class="spanish">4. “El nuevo centro cultural tendrá biblioteca, salas de estudio y un pequeño teatro. La cafetería abrirá el mes que viene.”</p>
+                <ol class="choices" start="13">
+                  <li>아직 열리지 않은 시설은? A. 카페 B. 도서관 C. 극장</li>
+                </ol>
+                <p class="spanish">5. “Me gustó vivir en el campo, pero necesitaba estar más cerca del hospital donde trabajo. Por eso volví a la ciudad.”</p>
+                <ol class="choices" start="14">
+                  <li>이사한 이유는? A. 직장 접근성 B. 집값 C. 가족 요청</li>
+                </ol>
+              </section>
+
+              <section class="paper-task">
+                <h4>Prueba 3. 쓰기</h4>
+                <ol class="task-list">
+                  <li>Tarea 1: 친구가 한국 여행을 계획합니다. 100-120단어로 계절, 교통, 음식, 주의할 점을 조언하세요.</li>
+                  <li>Tarea 2: 최근 배운 취미나 기술에 대해 130-150단어로 쓰세요. 시작 이유, 어려움, 현재 변화, 앞으로 계획을 포함합니다.</li>
+                </ol>
+                <p class="weak-answer"><strong>부족한 답안 예</strong> Corea es muy bonita. Hay comida buena. Puedes venir en verano. Me gusta Corea. Hay metro. Es interesante. 이 답안은 조건이 대부분 빠지고 문단 구조가 없습니다.</p>
+                <p class="sample-answer"><strong>합격권 예시</strong> Si vienes a Corea, te recomiendo viajar en primavera u otoño porque el tiempo es más agradable. En Seúl puedes moverte fácilmente en metro, pero conviene comprar una tarjeta de transporte. También deberías probar comida local como bibimbap o mandu. Si visitas templos o casas tradicionales, es mejor hablar en voz baja y respetar las normas del lugar. Cuando llegues, escríbeme y te ayudaré a preparar una ruta sencilla.</p>
+              </section>
+
+              <section class="paper-task">
+                <h4>Prueba 4. 말하기</h4>
+                <ol class="task-list">
+                  <li>발표: 기억에 남는 여행이나 경험을 2분 동안 말합니다.</li>
+                  <li>대화: 시험관이 “왜 기억에 남나요?”, “다시 하고 싶나요?”라고 묻습니다.</li>
+                  <li>사진 묘사: 카페에서 공부하는 사람들을 묘사하고 상황을 추측합니다.</li>
+                  <li>상황극: 친구와 주말 계획을 정하고 시간과 장소를 조정합니다.</li>
+                </ol>
+                <dl class="model-dialogue">
+                  <dt>시험관</dt>
+                  <dd>¿Por qué fue especial esa experiencia?</dd>
+                  <dt>응시자</dt>
+                  <dd>Fue especial porque viajé solo por primera vez. Al principio estaba nervioso, pero después aprendí a organizarme y hablar con más gente.</dd>
+                </dl>
+              </section>
+            </article>
+
+            <article class="paper-card">
+              <span class="level">B2 1회분</span>
+              <h3>논증과 자료 해석</h3>
+              <ul class="plan-meta">
+                <li>독해 70분</li>
+                <li>듣기 40분</li>
+                <li>쓰기 80분</li>
+                <li>말하기 준비 20분</li>
+              </ul>
+
+              <section class="paper-task">
+                <h4>Prueba 1. 독해</h4>
+                <p class="spanish">En muchas ciudades, la bicicleta se presenta como una solución limpia y barata. No obstante, su éxito no depende solo de la voluntad individual: requiere carriles seguros, conexión con el transporte público y normas claras para evitar conflictos con peatones. Cuando estas condiciones faltan, la medida acaba beneficiando solo a quienes ya se sentían cómodos pedaleando.</p>
+                <ol class="choices">
+                  <li>필자의 핵심 입장은? A. 자전거는 항상 실패한다 B. 개인 의지만으로는 충분하지 않다 C. 보행자는 고려할 필요가 없다</li>
+                  <li>필자가 말하는 필요 조건이 아닌 것은? A. 안전한 자전거 도로 B. 대중교통 연결 C. 자동차 속도 증가</li>
+                </ol>
+                <p class="spanish">Complete con la opción adecuada: La plataforma promete flexibilidad laboral; ___, algunos trabajadores denuncian ingresos inestables. / La medida será útil ___ se acompañe de formación y seguimiento.</p>
+                <ol class="choices" start="3">
+                  <li>A. por lo tanto B. sin embargo C. además</li>
+                  <li>A. siempre que B. aunque C. a pesar de</li>
+                </ol>
+                <p class="spanish">El texto A defiende limitar los pisos turísticos porque reducen la oferta de vivienda. El texto B acepta ese problema, pero advierte que una prohibición total puede perjudicar a pequeños propietarios y comercios locales.</p>
+                <ol class="choices" start="5">
+                  <li>두 글의 관계는? A. 완전한 반대 B. 문제는 공유하지만 해결책이 다름 C. 같은 글의 반복</li>
+                  <li>Texto B의 태도는? A. 전면 금지 반대와 조건부 조정 B. 관광 확대만 주장 C. 문제 부정</li>
+                </ol>
+                <p class="spanish">Una encuesta municipal indica que el 58% de los jóvenes quiere más espacios culturales por la tarde, mientras que el 23% prioriza instalaciones deportivas y el 19% no responde. El dato no permite saber qué barrios tienen mayor necesidad.</p>
+                <ol class="choices" start="7">
+                  <li>자료에서 알 수 없는 것은? A. 오후 문화공간 선호 B. 동네별 필요도 C. 스포츠 시설 선호 비율</li>
+                  <li>해석으로 적절한 것은? A. 모든 청년이 같은 요구를 한다 B. 문화공간 수요가 가장 높지만 추가 조사가 필요하다 C. 무응답자가 다수다</li>
+                </ol>
+              </section>
+
+              <section class="paper-task">
+                <h4>Prueba 2. 듣기</h4>
+                <p class="spanish">1. “No diría que el plan sea inútil; de hecho, mejora la conexión entre barrios. Mi duda es si el presupuesto alcanzará para mantener el servicio durante todo el año.”</p>
+                <ol class="choices" start="9">
+                  <li>화자의 태도는? A. 전면 반대 B. 장점 인정과 재정 우려 C. 예산 충분 확신</li>
+                </ol>
+                <p class="spanish">2. “La empresa defiende que sus horarios son flexibles, pero varios empleados explican que en la práctica deben responder mensajes incluso durante sus días libres.”</p>
+                <ol class="choices" start="10">
+                  <li>문제는? A. 실제 휴식 보장 부족 B. 사무실 위치 C. 급여 인상</li>
+                </ol>
+                <p class="spanish">3. “La investigadora no niega que la inteligencia artificial acelere ciertos procesos; lo que cuestiona es que se introduzca sin explicar quién revisa los errores.”</p>
+                <ol class="choices" start="11">
+                  <li>연구자가 비판하는 점은? A. 속도 향상 자체 B. 오류 검토 책임의 불명확성 C. 기술 사용 전면 금지</li>
+                </ol>
+                <p class="spanish">4. “El festival seguirá siendo gratuito, aunque este año será necesario reservar entrada para controlar el aforo.”</p>
+                <ol class="choices" start="12">
+                  <li>올해 달라진 점은? A. 유료화 B. 예약 필요 C. 축제 취소</li>
+                </ol>
+                <p class="spanish">5. “La portavoz admite que las obras molestarán a los vecinos, pero insiste en que el nuevo mercado reducirá el tráfico de camiones en el centro.”</p>
+                <ol class="choices" start="13">
+                  <li>portavoz가 강조하는 장점은? A. 공사 소음 B. 화물차 교통 감소 C. 시장 폐쇄</li>
+                </ol>
+              </section>
+
+              <section class="paper-task">
+                <h4>Prueba 3. 쓰기</h4>
+                <ol class="task-list">
+                  <li>Tarea 1: 동네 도서관이 주말 운영을 줄인다고 공지했습니다. 150-180단어로 담당자에게 문제점과 대안을 제안하는 공식 이메일을 쓰세요.</li>
+                  <li>Tarea 2: “청소년의 휴대전화 사용을 학교에서 제한해야 하는가”에 대해 180-220단어로 의견문을 쓰세요. 찬성 또는 반대, 근거 2개, 반론 1개, 결론을 포함합니다.</li>
+                </ol>
+                <p class="weak-answer"><strong>부족한 답안 예</strong> Estoy de acuerdo porque los móviles son malos. Los estudiantes no estudian. Hay que prohibirlos. Algunas personas no están de acuerdo, pero no tienen razón. 이 답안은 근거가 단순하고 반론 처리가 없습니다.</p>
+                <p class="sample-answer"><strong>합격권 예시</strong> Considero razonable limitar el uso del móvil durante las clases, siempre que la norma no se convierta en una prohibición absoluta. Por un lado, reduce distracciones y ayuda a mantener la atención. Por otro, favorece una convivencia más tranquila. Es cierto que el teléfono puede ser útil para buscar información o comunicarse en una emergencia; por eso, la escuela debería permitirlo en actividades concretas y durante los descansos. Una regulación flexible resulta más eficaz que una prohibición rígida.</p>
+              </section>
+
+              <section class="paper-task">
+                <h4>Prueba 4. 말하기</h4>
+                <ol class="task-list">
+                  <li>제안 평가: 학교가 종이 교재를 줄이고 디지털 자료를 늘리려 합니다. 장점, 위험, 조건을 말합니다.</li>
+                  <li>사진 기반 상황: 공유 사무실에서 일하는 사람들을 보고 장점과 문제를 추측합니다.</li>
+                  <li>설문 해석: 시민 64%가 야간 대중교통 확대에 찬성, 22%는 비용 우려, 14%는 무응답입니다. 자료를 해석하고 의견을 말합니다.</li>
+                </ol>
+                <dl class="model-dialogue">
+                  <dt>시험관</dt>
+                  <dd>¿Qué riesgo ve en sustituir los libros por materiales digitales?</dd>
+                  <dt>응시자</dt>
+                  <dd>El riesgo principal es aumentar la desigualdad si no todos tienen dispositivos o conexión estable. Por eso, la digitalización debería ser gradual y acompañarse de apoyo técnico.</dd>
+                </dl>
+              </section>
+            </article>
+          </div>
+
+          <div class="answer-key-grid" aria-label="B1과 B2 실전 1회분 정답과 해설">
+            <article class="answer-key-card">
+              <span class="level">B1 정답</span>
+              <h3>정답과 해설</h3>
+              <ol class="task-list">
+                <li>1-B: gratis와 biblioteca가 무료 언어교환 단서입니다.</li>
+                <li>2-C: fotografía para principiantes와 domingo가 조건에 맞습니다.</li>
+                <li>3-A: martes y jueves 18:00-19:30이 퇴근 후 수업입니다.</li>
+                <li>4-B: perdió mi maleta와 revisen el caso가 분실물 해결 요청입니다.</li>
+                <li>5-A: me informen antes del viernes가 요구 사항입니다.</li>
+                <li>6-B: grupo de senderismo에 참여하면서 변화가 생깁니다.</li>
+                <li>7-A: 새 도시에서 친구를 만들고 적응하는 내용입니다.</li>
+                <li>8-A: 처음에는 어려웠지만 나중에 이해했다는 대조입니다.</li>
+                <li>9-B: 결석 이유를 말하므로 porque가 필요합니다.</li>
+                <li>10-A, 11-B, 12-B, 13-A, 14-A: 전사문에서 직접 근거를 표시한 뒤 채점합니다.</li>
+              </ol>
+              <p><strong>쓰기 감점 포인트</strong> 조건 누락, 너무 짧은 답안, 친구에게 쓰는 문체와 공식 문체 혼동, 과거 경험에서 시제 혼동이 가장 큽니다.</p>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">B2 정답</span>
+              <h3>정답과 해설</h3>
+              <ol class="task-list">
+                <li>1-B: voluntad individual no basta가 핵심입니다.</li>
+                <li>2-C: 자동차 속도 증가는 조건으로 제시되지 않았습니다.</li>
+                <li>3-B: 약속과 현실의 대조라 sin embargo가 맞습니다.</li>
+                <li>4-A: 조건을 나타내므로 siempre que가 맞습니다.</li>
+                <li>5-B: 문제 인식은 같지만 해결책 범위가 다릅니다.</li>
+                <li>6-A: prohibición total을 경계하는 조건부 조정입니다.</li>
+                <li>7-B: barrios별 필요도는 자료에 없습니다.</li>
+                <li>8-B: 문화공간 수요가 가장 높지만 무응답과 지역 정보 한계가 있습니다.</li>
+                <li>9-B, 10-A, 11-B, 12-B, 13-B: no diría, pero, cuestiona 같은 태도 신호를 근거로 삼습니다.</li>
+              </ol>
+              <p><strong>쓰기 감점 포인트</strong> 찬반만 반복하거나 반론을 무시하면 B2답지 않습니다. 양보 표현과 현실적 대안이 반드시 보여야 합니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="final-supplement">
+          <h2>최종 보충팩: 공식 자료와 실전 반복</h2>
+          <p class="section-lead">
+            이 페이지의 자체 문제는 훈련용입니다. 합격 가능성을 실제로 끌어올리려면 Cervantes 공식 모델 시험,
+            오디오, 전사문, 정답표, 가이드를 같은 루틴으로 반복해야 합니다.
+          </p>
+
+          <div class="full-paper-grid" aria-label="공식 자료 병행 루틴과 듣기 보강">
+            <article class="paper-card">
+              <span class="level">공식 자료 병행</span>
+              <h3>모델 시험 3회전 루틴</h3>
+              <section class="paper-task">
+                <h4>1회전: 실제 시간으로 풀기</h4>
+                <ol class="task-list">
+                  <li>PDF를 열고 공식 시간표대로 풉니다. 중간에 전사문이나 정답을 보지 않습니다.</li>
+                  <li>독해와 듣기는 답 근거를 표시하고, 쓰기와 말하기는 미완성이라도 끝까지 제출합니다.</li>
+                  <li>점수는 모의고사 모드에 입력하고, 그룹별 30점 또는 C2 시험별 20점 기준을 확인합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>2회전: 해설 만들기</h4>
+                <ol class="task-list">
+                  <li>정답표를 본 뒤 맞힌 문제도 다시 봅니다. 근거 없이 맞힌 문제는 불안정 정답으로 표시합니다.</li>
+                  <li>듣기는 전사문에서 안 들린 단어, 반전 표현, 숫자·시간·조건 표현을 따로 표시합니다.</li>
+                  <li>쓰기와 말하기는 조건 누락, 문체, 연결어, 정확성 중 어디서 점수가 빠질지 분류합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>3회전: 같은 시험 재응시</h4>
+                <ol class="task-list">
+                  <li>48시간 뒤 같은 모델 시험을 다시 풉니다. 목표는 정답 암기가 아니라 시간 초과와 조건 누락 감소입니다.</li>
+                  <li>같은 유형의 실수가 두 번 반복되면 새 시험으로 넘어가지 말고 해당 과제만 다시 훈련합니다.</li>
+                  <li>공식 모델 2회분에서 시간 초과가 없고 약한 그룹이 32점 이상이면 응시 준비도가 올라간 상태입니다.</li>
+                </ol>
+              </section>
+              <div class="mode-action-row">
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/preparar-prueba">공식 준비 자료</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/como">공식 채점 구조</a>
+              </div>
+            </article>
+
+            <article class="paper-card">
+              <span class="level">실제 음성 보강</span>
+              <h3>듣기·말하기 현실화 루틴</h3>
+              <section class="paper-task">
+                <h4>듣기</h4>
+                <ol class="task-list">
+                  <li>브라우저 음성 합성은 예열용으로만 씁니다. 실전 전에는 공식 오디오를 반드시 듣습니다.</li>
+                  <li>1회 듣기 전 선택지의 관점 차이를 표시합니다. B2 이상은 찬성, 반대, 조건부 동의를 미리 나눕니다.</li>
+                  <li>2회 듣기에서는 정답 단어보다 정답을 만드는 문장 전체를 찾습니다.</li>
+                  <li>전사문 확인 후에는 안 들린 문장을 3번 소리 내어 읽고, 다음 날 같은 음성을 한 번 더 듣습니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>말하기</h4>
+                <ol class="task-list">
+                  <li>답변을 통째로 외우지 말고 20초 블록으로 준비합니다: 주장, 이유, 예시, 한계, 결론.</li>
+                  <li>녹음 후 1분 안에 멈춤, 반복어, 한국어식 직역, 조건 누락을 표시합니다.</li>
+                  <li>시험관 추가 질문에는 “No del todo”, “Depende de...”, “Habría que distinguir...”로 구조를 회복합니다.</li>
+                </ol>
+              </section>
+              <p class="readiness-note">
+                듣기 점수는 “많이 들었다”보다 전사문 분석 후 같은 음성을 다시 들었을 때 정답 근거가 들리는지로 판단합니다.
+              </p>
+            </article>
+          </div>
+
+          <div class="full-paper-grid" aria-label="B2-C2 추가 반복 세트">
+            <article class="paper-card">
+              <span class="level">B2 추가 세트</span>
+              <h3>사회 주제 3회분 프롬프트</h3>
+              <section class="paper-task">
+                <h4>세트 A: 도심 교통</h4>
+                <ol class="task-list">
+                  <li>독해: 차량 제한 정책의 장점과 상인 반대 논리를 비교합니다.</li>
+                  <li>듣기: 전문가가 “정책은 필요하지만 대중교통 보강이 먼저”라고 말하는 인터뷰를 듣는다고 가정합니다.</li>
+                  <li>쓰기: 시청에 단계적 시행과 예외 조건을 제안하는 공식 이메일을 씁니다.</li>
+                  <li>말하기: 설문 수치 3개를 해석하고 자신의 조건부 입장을 말합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>세트 B: 학교와 디지털 기기</h4>
+                <ol class="task-list">
+                  <li>독해: 휴대전화 제한 찬반 글 두 개에서 공통 전제와 충돌 지점을 찾습니다.</li>
+                  <li>듣기: 교사가 “전면 금지보다 수업 목적별 규칙이 필요하다”고 말하는 태도를 파악합니다.</li>
+                  <li>쓰기: 180-220단어 의견문에 찬성 근거 2개와 반론 1개를 넣습니다.</li>
+                  <li>말하기: “학생의 자율성”이라는 반론을 인정하고 현실적 대안을 제시합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>세트 C: 관광과 주거</h4>
+                <ol class="task-list">
+                  <li>독해: 관광 수입과 임대료 상승 문제를 균형 있게 요약합니다.</li>
+                  <li>듣기: 주민, 상인, 시청 관계자의 입장 차이를 표로 나눕니다.</li>
+                  <li>쓰기: 제한 정책을 지지하되 보완책을 제안하는 글을 씁니다.</li>
+                  <li>말하기: “관광객을 줄이면 지역 경제가 나빠진다”는 질문에 답합니다.</li>
+                </ol>
+              </section>
+            </article>
+
+            <article class="paper-card">
+              <span class="level">C1-C2 추가 세트</span>
+              <h3>통합 과제 3회분 프롬프트</h3>
+              <section class="paper-task">
+                <h4>세트 A: 인공지능 규제</h4>
+                <ol class="task-list">
+                  <li>C1 쓰기: 기사와 인터뷰의 입장을 요약한 뒤 180단어 논평을 씁니다.</li>
+                  <li>C1 말하기: 규제의 필요성과 혁신 위축 우려를 4분 발표로 조정합니다.</li>
+                  <li>C2 쓰기: 개인정보 보호, 기업 혁신, 책임 소재를 통합한 정책 제안문을 씁니다.</li>
+                  <li>C2 말하기: “규제가 창의성을 제한한다”는 반문에 조건부로 답합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>세트 B: 주거와 정신 건강</h4>
+                <ol class="task-list">
+                  <li>C1 독해: 학술 문장을 일반 독자용 기사 문장으로 바꿉니다.</li>
+                  <li>C1 듣기: 강연자의 핵심 주장, 근거, 한계를 세 칸 표로 나눕니다.</li>
+                  <li>C2 쓰기: 개인 선택론과 구조 책임론의 숨은 전제를 비교합니다.</li>
+                  <li>C2 말하기: 자료의 표현을 그대로 반복하지 않고 개념 관계를 설명합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>세트 C: 자동화와 노동</h4>
+                <ol class="task-list">
+                  <li>C1 쓰기: 자동화의 장점과 전환 비용을 분리해 뉴스레터용 요약문을 씁니다.</li>
+                  <li>C1 말하기: “자동화는 일자리를 없앤다”는 주장에 부분 동의와 반박을 모두 제시합니다.</li>
+                  <li>C2 쓰기: 기술 변화, 교육 정책, 사회 안전망을 하나의 제안문으로 통합합니다.</li>
+                  <li>C2 말하기: 제목 2개가 전제하는 세계관 차이를 설명합니다.</li>
+                </ol>
+              </section>
+            </article>
+          </div>
+
+          <div class="answer-key-grid" aria-label="첨삭과 최종 응시 체크리스트">
+            <article class="answer-key-card">
+              <span class="level">첨삭 기준</span>
+              <h3>쓰기·말하기 자가 첨삭 5문항</h3>
+              <ol class="task-list">
+                <li>과제 조건: 요구된 독자, 목적, 정보, 분량을 빠짐없이 처리했는가?</li>
+                <li>구조: 서론, 핵심 근거, 반론 또는 한계, 결론이 보이는가?</li>
+                <li>문체: 친구, 기관, 발표, 토론 상황에 맞는 격식이 유지되는가?</li>
+                <li>정확성: 오류가 있어도 의미 전달을 방해하지 않는가?</li>
+                <li>회복력: 말하기에서 모르는 질문을 받았을 때 구조를 다시 잡았는가?</li>
+              </ol>
+              <p><strong>수정 원칙</strong> 문장을 고급스럽게 바꾸기 전에 조건 누락을 먼저 고칩니다. B2 이상은 반론 처리와 문체가 점수 차이를 만듭니다.</p>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">응시 전 기준</span>
+              <h3>마지막 2주 체크</h3>
+              <ol class="task-list">
+                <li>공식 모델 시험 2회분을 실제 시간으로 풀고 전사문 분석까지 끝냈다.</li>
+                <li>A1-C1은 두 그룹 모두 32점 이상이 한 번 이상 나왔다. C2는 세 시험이 모두 22점 이상 나왔다.</li>
+                <li>쓰기 답안 6개 이상을 같은 기준으로 첨삭했고, 같은 조건 누락이 반복되지 않는다.</li>
+                <li>말하기 녹음 6개 이상에서 10초 이상 멈춤이 줄고 후속 질문 대응 표현을 쓸 수 있다.</li>
+                <li>시험 전날에는 새 문법을 보지 않고 오답표, 연결어, 약한 유형만 확인한다.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="pass-gap-pack">
+          <h2>합격 갭 보강팩: 감점 막기</h2>
+          <p class="section-lead">
+            더 많은 내용을 읽는 것보다 위험한 감점 구간을 먼저 막아야 합니다. 이 보강팩은 공식 채점 구조,
+            답안지 적응, 산출물 템플릿, 오답 분류를 한 번에 확인하는 마지막 점검용입니다.
+          </p>
+
+          <div class="full-paper-grid" aria-label="합격 점수 리스크와 시험 당일 운영">
+            <article class="paper-card">
+              <span class="level">점수 리스크</span>
+              <h3>합격선 아래로 떨어지는 패턴</h3>
+              <section class="paper-task">
+                <h4>A1-C1: 두 그룹 중 하나가 약한 경우</h4>
+                <ol class="task-list">
+                  <li>독해와 쓰기 묶음, 듣기와 말하기 묶음 중 하나라도 30점 아래면 전체 점수가 높아도 위험합니다.</li>
+                  <li>약한 그룹이 35점 아래면 새 단원을 읽기보다 그 그룹의 공식 모델 시험을 다시 풉니다.</li>
+                  <li>쓰기나 말하기가 12점 이하로 예상되면 독해·듣기 점수만으로 보완하기 어렵다고 보고 산출 훈련을 늘립니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>C2: 세 시험 중 하나가 약한 경우</h4>
+                <ol class="task-list">
+                  <li>C2는 세 prueba 각각 20점 이상이 목표입니다. 한 시험만 무너지면 전체 준비가 흔들립니다.</li>
+                  <li>Prueba 2는 긴 쓰기보다 자료 통합, 문체, 조건 처리 누락을 먼저 봅니다.</li>
+                  <li>Prueba 3은 유창성보다 자료 비교, 입장 재조정, 추가 질문 대응이 끊기지 않는지 봅니다.</li>
+                </ol>
+              </section>
+              <div class="mode-action-row">
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/como">공식 채점 구조</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/preparar-prueba">공식 모델·답안지</a>
+              </div>
+            </article>
+
+            <article class="paper-card">
+              <span class="level">시험 운영</span>
+              <h3>답안지와 시간 관리</h3>
+              <section class="paper-task">
+                <h4>공식 답안지 적응</h4>
+                <ol class="task-list">
+                  <li>공식 답안지 모델을 한 번은 인쇄하거나 화면에 띄우고 마킹 위치, 이름, 수험번호 칸을 확인합니다.</li>
+                  <li>객관식은 문제지에만 표시하지 말고 마지막 5분 전에 답안지로 옮기는 연습을 합니다.</li>
+                  <li>쓰기 답안은 첫 줄부터 완성문으로 쓰고, 수정은 한두 단어 단위로 제한합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>시간이 부족할 때의 순서</h4>
+                <ol class="task-list">
+                  <li>독해는 근거가 안 보이는 문제를 90초 이상 붙잡지 않습니다. 표시하고 다음 지문으로 넘어갑니다.</li>
+                  <li>듣기는 놓친 문장을 되새기지 말고 다음 선택지의 차이를 다시 읽습니다.</li>
+                  <li>쓰기와 말하기는 조건을 하나도 빠뜨리지 않는 것이 고급 표현보다 먼저입니다.</li>
+                </ol>
+              </section>
+            </article>
+          </div>
+
+          <div class="full-paper-grid" aria-label="쓰기와 말하기 템플릿 보강">
+            <article class="paper-card">
+              <span class="level">쓰기 템플릿</span>
+              <h3>레벨별 안전 구조</h3>
+              <section class="paper-task">
+                <h4>A2-B1: 메시지와 이메일</h4>
+                <ol class="task-list">
+                  <li><strong>시작</strong> Te escribo porque... / Me pongo en contacto con usted para...</li>
+                  <li><strong>문제</strong> El problema es que... / No puedo asistir porque...</li>
+                  <li><strong>요청</strong> ¿Podrías...? / Le agradecería que me confirmara...</li>
+                  <li><strong>마무리</strong> Espero tu respuesta. / Quedo a la espera de su respuesta.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>B2-C2: 의견문과 통합 글쓰기</h4>
+                <ol class="task-list">
+                  <li><strong>입장</strong> A mi juicio, la cuestión no debería reducirse a...</li>
+                  <li><strong>자료</strong> El primer texto subraya..., mientras que el segundo matiza...</li>
+                  <li><strong>반론</strong> Es cierto que..., pero conviene tener en cuenta...</li>
+                  <li><strong>결론</strong> Por todo ello, sería razonable proponer...</li>
+                </ol>
+              </section>
+            </article>
+
+            <article class="paper-card">
+              <span class="level">말하기 템플릿</span>
+              <h3>막혔을 때 구조 회복</h3>
+              <section class="paper-task">
+                <h4>20초 답변 블록</h4>
+                <ol class="task-list">
+                  <li><strong>주장</strong> Desde mi punto de vista, lo más importante es...</li>
+                  <li><strong>이유</strong> Lo digo porque...</li>
+                  <li><strong>예시</strong> Un ejemplo claro sería...</li>
+                  <li><strong>한계</strong> Ahora bien, no se puede ignorar que...</li>
+                  <li><strong>정리</strong> En resumen, defendería una solución equilibrada.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>시험관 반문 대응</h4>
+                <ol class="task-list">
+                  <li>No necesariamente. Habría que distinguir entre...</li>
+                  <li>Entiendo esa objeción, pero el punto central es...</li>
+                  <li>No tengo todos los datos, pero sí se puede afirmar que...</li>
+                  <li>Permítame reformular la idea con más precisión.</li>
+                </ol>
+              </section>
+            </article>
+          </div>
+
+          <div class="answer-key-grid" aria-label="오답 분류와 재훈련 기준">
+            <article class="answer-key-card">
+              <span class="level">오답 분류</span>
+              <h3>틀린 문제를 네 줄로 기록</h3>
+              <ol class="task-list">
+                <li><strong>독해</strong> 근거 위치를 못 찾음, 연결어를 놓침, 선택지 표현을 잘못 바꿈.</li>
+                <li><strong>듣기</strong> 숫자·시간을 놓침, 반전 표현을 놓침, 전사문을 읽어도 단어를 모름.</li>
+                <li><strong>쓰기</strong> 조건 누락, 독자·문체 오류, 문단 없음, 같은 단어 반복.</li>
+                <li><strong>말하기</strong> 10초 이상 멈춤, 질문을 바꿔 답함, 예시 없음, 반문에 구조를 잃음.</li>
+              </ol>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">재훈련 기준</span>
+              <h3>언제 다음 회차로 넘어갈까</h3>
+              <ol class="task-list">
+                <li>같은 오류가 두 번 반복되면 새 문제를 풀지 말고 그 유형만 20분 재훈련합니다.</li>
+                <li>쓰기 답안은 다시 쓰기 전, 빠진 조건을 한국어로 먼저 체크합니다.</li>
+                <li>말하기 녹음은 전체를 다시 듣지 말고 멈춘 지점 30초 전후만 반복합니다.</li>
+                <li>공식 모델 시험 2회분에서 약한 그룹이 안정적으로 기준점보다 2점 이상 높으면 다음 단계로 넘어갑니다.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="official-use">
+          <h2>공식 자료 사용법</h2>
+          <p class="section-lead">
+            실제 DELE 모델 시험지, 오디오, 전사문, 정답표는 Instituto Cervantes의 공식 페이지에서 직접 열어 사용합니다.
+            이 페이지에는 공식 자료를 복제하지 않고 풀이 절차, 점수, 오답 원인, 재훈련 계획만 남깁니다.
+          </p>
+
+          <div class="full-paper-grid" aria-label="공식 자료 사용 원칙과 처리 순서">
+            <article class="paper-card">
+              <span class="level">저작권 안전 원칙</span>
+              <h3>공식 자료는 링크로만 연결</h3>
+              <section class="paper-task">
+                <h4>이 HTML에 옮기지 않는 것</h4>
+                <ol class="task-list">
+                  <li>공식 PDF의 지문, 문제, 선택지, 정답표 전체를 복사해 넣지 않습니다.</li>
+                  <li>공식 오디오 파일, 전사문 전문, 말하기 과제 카드를 직접 삽입하지 않습니다.</li>
+                  <li>공식 자료를 다른 파일로 재배포하거나 이 페이지 안에 임베드하지 않습니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>이 페이지에 남길 수 있는 것</h4>
+                <ol class="task-list">
+                  <li>공식 자료로 이동하는 링크와 개인 학습용 풀이 순서.</li>
+                  <li>풀어본 날짜, 레벨, 과제 번호, 걸린 시간, 점수, 오답 분류.</li>
+                  <li>자신이 쓴 답안, 녹음 후 자기 평가, 다음 재훈련 계획.</li>
+                </ol>
+              </section>
+              <div class="mode-action-row">
+                <a class="source-link" href="https://examenes.cervantes.es/es/acerca-de/aviso-legal">Cervantes 법적 고지</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/acerca-de/terminos-y-condiciones">시험 이용 조건</a>
+              </div>
+            </article>
+
+            <article class="paper-card">
+              <span class="level">실전 처리 순서</span>
+              <h3>공식 모델 시험 1회분을 푸는 법</h3>
+              <section class="paper-task">
+                <h4>풀이 중</h4>
+                <ol class="task-list">
+                  <li>공식 준비 자료 페이지에서 목표 레벨의 모델 시험, 답안지, 오디오를 엽니다.</li>
+                  <li>독해와 듣기는 실제 제한 시간으로 풀고, 전사문은 채점 전에는 열지 않습니다.</li>
+                  <li>쓰기와 말하기는 이 페이지의 루브릭으로 조건 누락, 구조, 문체를 먼저 표시합니다.</li>
+                </ol>
+              </section>
+              <section class="paper-task">
+                <h4>채점 후</h4>
+                <ol class="task-list">
+                  <li>정답표로 객관식 점수를 확인하고, A1-C1은 두 그룹, C2는 세 prueba 기준으로 기록합니다.</li>
+                  <li>틀린 듣기는 전사문에서 놓친 단어, 반전 표현, 숫자·시간 정보를 따로 표시합니다.</li>
+                  <li>같은 오류가 두 번 반복되면 새 회차를 풀기 전에 해당 유형만 20분 재훈련합니다.</li>
+                </ol>
+              </section>
+              <div class="mode-action-row">
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/preparar-prueba">공식 준비 자료</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/como">공식 채점 구조</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="answer-key-grid" aria-label="공식 자료 링크와 풀이 기록 양식">
+            <article class="answer-key-card">
+              <span class="level">레벨별 공식 페이지</span>
+              <h3>시험 구조 확인 링크</h3>
+              <div class="mode-action-row">
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/a1">A1</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/a2">A2</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/b1">B1</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/b2">B2</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/c1">C1</a>
+                <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/c2">C2</a>
+              </div>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">기록 양식</span>
+              <h3>복제 대신 남길 메모</h3>
+              <ol class="task-list">
+                <li><strong>자료</strong> 날짜, 레벨, 공식 모델명, 과제 번호.</li>
+                <li><strong>결과</strong> 영역별 점수, 제한 시간 초과 여부, 애매했던 문항 번호.</li>
+                <li><strong>오답</strong> 모르는 단어, 잘못 읽은 조건, 놓친 연결어, 듣기 전사문 근거.</li>
+                <li><strong>다음 행동</strong> 재훈련 유형, 다시 풀 날짜, 쓰기·말하기 수정 목표.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="bplus-track">
+          <h2>B1 이상 합격 트랙</h2>
+          <p class="section-lead">
+            B1부터는 단어와 문법을 아는 것만으로 부족합니다. 독해와 듣기에서는 근거를 찾고,
+            쓰기와 말하기에서는 조건에 맞는 산출물을 제한 시간 안에 완성해야 합격 가능성이 올라갑니다.
+          </p>
+
+          <div class="official-structure-grid" aria-label="B1 이상 공식 시험 구조 요약">
+            <article class="structure-card">
+              <span class="level">B1</span>
+              <h3>경험, 의견, 일상 문제 해결</h3>
+              <ul class="structure-list">
+                <li><strong>독해</strong><span>70분, 5과제, 30문항, 25점</span></li>
+                <li><strong>듣기</strong><span>40분, 5과제, 30문항, 25점</span></li>
+                <li><strong>쓰기</strong><span>60분, 2과제: 상호작용 글쓰기와 표현 글쓰기, 25점</span></li>
+                <li><strong>말하기</strong><span>준비 15분, 시험 15분, 4과제, 25점</span></li>
+              </ul>
+            </article>
+            <article class="structure-card">
+              <span class="level">B2</span>
+              <h3>논증, 자료 해석, 반론 처리</h3>
+              <ul class="structure-list">
+                <li><strong>독해</strong><span>70분, 4과제, 36문항, 25점</span></li>
+                <li><strong>듣기</strong><span>40분, 5과제, 30문항, 25점</span></li>
+                <li><strong>쓰기</strong><span>80분, 2과제: 상호작용 글쓰기와 표현 글쓰기, 25점</span></li>
+                <li><strong>말하기</strong><span>준비 20분, 시험 20분, 3과제, 25점</span></li>
+              </ul>
+            </article>
+            <article class="structure-card">
+              <span class="level">C1</span>
+              <h3>통합 이해, 매개, 문체 조절</h3>
+              <ul class="structure-list">
+                <li><strong>독해·언어 사용</strong><span>90분, 5과제, 40문항, 25점</span></li>
+                <li><strong>듣기·언어 사용</strong><span>50분, 4과제, 30문항, 25점</span></li>
+                <li><strong>쓰기·매개</strong><span>80분, 2과제, 25점</span></li>
+                <li><strong>말하기·매개</strong><span>준비 20분, 시험 20분, 3과제, 25점</span></li>
+              </ul>
+            </article>
+            <article class="structure-card">
+              <span class="level">C2</span>
+              <h3>고급 통합, 재구성, 즉흥 대응</h3>
+              <ul class="structure-list">
+                <li><strong>Prueba 1</strong><span>언어 사용·독해·듣기 105분, 52문항, 33.33점</span></li>
+                <li><strong>Prueba 2</strong><span>쓰기·매개·상호작용 150분, 3과제, 33.33점</span></li>
+                <li><strong>Prueba 3</strong><span>준비 30분, 말하기 20분, 3과제, 33.34점</span></li>
+                <li><strong>판정</strong><span>세 시험이 각각 20점 이상이어야 합격권입니다.</span></li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="bplus-track-grid" aria-label="B1 이상 영역별 합격 훈련">
+            <article class="track-card">
+              <strong>독해</strong>
+              <h3>근거 표시 훈련</h3>
+              <p>답을 고른 뒤 반드시 지문에서 근거 문장을 하나 표시합니다. B2 이상은 접속사, 문단 기능, 필자의 거리두기 표현까지 표시합니다.</p>
+            </article>
+            <article class="track-card">
+              <strong>듣기</strong>
+              <h3>선택지 예측 훈련</h3>
+              <p>듣기 전 선택지의 핵심어와 반대 표현을 적습니다. 첫 번째 듣기에서는 주제, 두 번째 듣기에서는 태도와 이유만 확인합니다.</p>
+            </article>
+            <article class="track-card">
+              <strong>쓰기</strong>
+              <h3>조건 충족 훈련</h3>
+              <p>분량보다 먼저 독자, 목적, 요구 조건을 체크합니다. B1은 문제-요청, B2는 주장-근거-반론, C1-C2는 자료 요약-자기 평가를 분리합니다.</p>
+            </article>
+            <article class="track-card">
+              <strong>말하기</strong>
+              <h3>상호작용 훈련</h3>
+              <p>외운 답을 길게 말하기보다 질문에 바로 반응합니다. 경험, 이유, 예시, 한계, 대안을 20초 단위 블록으로 준비합니다.</p>
+            </article>
+          </div>
+
+          <div class="drill-grid" aria-label="B1 이상 반복 루프">
+            <article class="drill-card">
+              <strong>1회차</strong>
+              <h3>시간 제한 없이 구조 잡기</h3>
+              <p>문제 요구, 자료 관계, 예상 답안 구조를 먼저 적습니다. 이 단계에서는 느려도 됩니다.</p>
+            </article>
+            <article class="drill-card">
+              <strong>2회차</strong>
+              <h3>공식 시간의 120%로 풀기</h3>
+              <p>시간 압박을 약하게 걸고 산출물을 끝까지 완성합니다. 빈칸으로 제출하는 습관을 막는 단계입니다.</p>
+            </article>
+            <article class="drill-card">
+              <strong>3회차</strong>
+              <h3>공식 시간으로 풀기</h3>
+              <p>독해와 듣기는 답 근거, 쓰기와 말하기는 조건 충족 여부만 표시하고 바로 채점합니다.</p>
+            </article>
+            <article class="drill-card">
+              <strong>4회차</strong>
+              <h3>오답 유형만 재훈련</h3>
+              <p>같은 실수가 반복되면 새 문제를 풀지 말고 해당 유형만 다시 풉니다. 반복 실수 2개가 줄어야 다음 세트로 넘어갑니다.</p>
+            </article>
+          </div>
+
+          <div class="tracker-layout" aria-label="B1 이상 오답과 산출물 기록">
+            <article class="tracker-panel">
+              <h3>오답·산출물 기록</h3>
+              <p class="prompt">문제 세트를 푼 뒤 가장 큰 오류 하나와 다음 수정 행동을 저장하세요. 최근 8개까지 브라우저에 남습니다.</p>
+              <form class="tracker-form" data-training-form>
+                <label class="tracker-field">
+                  <span>레벨</span>
+                  <select data-training-level>
+                    <option>B1</option>
+                    <option>B2</option>
+                    <option>C1</option>
+                    <option>C2</option>
+                  </select>
+                </label>
+                <label class="tracker-field">
+                  <span>영역</span>
+                  <select data-training-area>
+                    <option>독해</option>
+                    <option>듣기</option>
+                    <option>쓰기</option>
+                    <option>말하기</option>
+                    <option>통합 과제</option>
+                  </select>
+                </label>
+                <label class="tracker-field">
+                  <span>오류 유형</span>
+                  <input type="text" data-training-error placeholder="예: 조건 누락, 태도 오해, 연결어 반복">
+                </label>
+                <label class="tracker-field">
+                  <span>다음 수정 행동</span>
+                  <textarea data-training-action placeholder="예: B2 의견문에서 반론 처리 문장 3개를 다시 써보기"></textarea>
+                </label>
+                <div class="mode-action-row">
+                  <button class="mode-button" type="submit">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>
+                    기록 저장
+                  </button>
+                  <button class="mode-button" type="button" data-training-clear>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path></svg>
+                    기록 비우기
+                  </button>
+                </div>
+              </form>
+            </article>
+            <article class="tracker-panel">
+              <h3>최근 보강 기록</h3>
+              <ol class="tracker-log" data-training-log aria-live="polite">
+                <li>아직 저장된 보강 기록이 없습니다.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="listening-lab">
+          <h2>듣기 훈련팩</h2>
+          <p class="section-lead">
+            실제 시험 직전에는 반드시 공식 오디오를 써야 합니다. 아래 샘플은 브라우저 음성 합성으로
+            선택지 예측, 두 번 듣기, 전사문 확인 순서를 연습하는 용도입니다.
+          </p>
+          <div class="listening-grid">
+            <article class="listening-card">
+              <span class="level">A1-A2</span>
+              <h3>장소와 시간 찾기</h3>
+              <p class="prompt">질문: 사무실은 언제 문을 닫습니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.84" data-speak-text="Buenos días. La oficina abre a las nueve de la mañana y cierra a las dos. Por la tarde está cerrada.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 오전 9시</li>
+                <li>B. 오후 2시</li>
+                <li>C. 오후 5시</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>Buenos días. La oficina abre a las nueve de la mañana y cierra a las dos. Por la tarde está cerrada.</p>
+                <p>정답: B. cierra a las dos가 닫는 시간입니다.</p>
+              </details>
+            </article>
+            <article class="listening-card">
+              <span class="level">B1-B2</span>
+              <h3>화자의 태도 찾기</h3>
+              <p class="prompt">질문: 화자는 새 정책을 어떻게 봅니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.9" data-speak-text="El ayuntamiento ha anunciado restricciones al tráfico. Entiendo la preocupación de los comerciantes, pero la medida puede mejorar la salud de los vecinos si se aplica con transporte público suficiente.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 완전히 반대한다</li>
+                <li>B. 조건부로 긍정한다</li>
+                <li>C. 상인의 입장만 지지한다</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>El ayuntamiento ha anunciado restricciones al tráfico. Entiendo la preocupación de los comerciantes, pero la medida puede mejorar la salud de los vecinos si se aplica con transporte público suficiente.</p>
+                <p>정답: B. entiendo와 pero 이후의 조건부 긍정이 핵심입니다.</p>
+              </details>
+            </article>
+            <article class="listening-card">
+              <span class="level">C1-C2</span>
+              <h3>논지와 한계 찾기</h3>
+              <p class="prompt">질문: 보고서에 대한 화자의 평가는 무엇입니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.96" data-speak-text="Aunque el informe ofrece datos útiles sobre el consumo energético, su conclusión resulta limitada porque no distingue entre hogares urbanos y rurales ni analiza el coste social de las medidas propuestas.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 자료는 유용하지만 결론은 제한적이다</li>
+                <li>B. 자료와 결론 모두 완벽하다</li>
+                <li>C. 도시 가구만 연구해야 한다</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>Aunque el informe ofrece datos útiles sobre el consumo energético, su conclusión resulta limitada porque no distingue entre hogares urbanos y rurales ni analiza el coste social de las medidas propuestas.</p>
+                <p>정답: A. aunque로 장점을 인정하고 resulta limitada로 한계를 제시합니다.</p>
+              </details>
+            </article>
+            <article class="listening-card">
+              <span class="level">B1</span>
+              <h3>일정 변경과 이유</h3>
+              <p class="prompt">질문: 모임 시간이 바뀐 이유는 무엇입니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.88" data-speak-text="Hola, equipo. La reunión de mañana se retrasa hasta las cinco porque la sala grande está ocupada por la mañana. Si alguien no puede venir, que me escriba antes de las dos.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 참가자가 모두 늦기 때문에</li>
+                <li>B. 오전에 큰 회의실을 쓸 수 없기 때문에</li>
+                <li>C. 담당자가 오후 2시에 도착하기 때문에</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>Hola, equipo. La reunión de mañana se retrasa hasta las cinco porque la sala grande está ocupada por la mañana. Si alguien no puede venir, que me escriba antes de las dos.</p>
+                <p>정답: B. porque la sala grande está ocupada por la mañana가 이유입니다. antes de las dos는 연락 마감 시간입니다.</p>
+              </details>
+            </article>
+            <article class="listening-card">
+              <span class="level">B2</span>
+              <h3>인터뷰의 조건부 찬성</h3>
+              <p class="prompt">질문: 전문가는 재택근무 확대에 대해 어떤 입장입니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.92" data-speak-text="La especialista no se opone al teletrabajo; de hecho, reconoce que reduce desplazamientos. Sin embargo, insiste en que debe regularse para evitar jornadas más largas y aislamiento profesional.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 재택근무를 전면 반대한다</li>
+                <li>B. 장점은 인정하지만 규제가 필요하다고 본다</li>
+                <li>C. 근무시간 연장을 긍정적으로 본다</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>La especialista no se opone al teletrabajo; de hecho, reconoce que reduce desplazamientos. Sin embargo, insiste en que debe regularse para evitar jornadas más largas y aislamiento profesional.</p>
+                <p>정답: B. no se opone와 reconoce로 장점을 인정하지만 debe regularse가 핵심 판단입니다.</p>
+              </details>
+            </article>
+            <article class="listening-card">
+              <span class="level">C1</span>
+              <h3>강연 요지와 화자 의도</h3>
+              <p class="prompt">질문: 화자는 도시 관광 정책에서 무엇을 강조합니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.95" data-speak-text="No se trata de demonizar al visitante, sino de reconocer que una ciudad convertida únicamente en escaparate pierde servicios básicos para sus residentes. La política turística debe equilibrar ingresos y habitabilidad.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 관광객 비난이 정책의 목적이다</li>
+                <li>B. 수입과 거주 가능성의 균형이 필요하다</li>
+                <li>C. 관광 수입을 완전히 포기해야 한다</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>No se trata de demonizar al visitante, sino de reconocer que una ciudad convertida únicamente en escaparate pierde servicios básicos para sus residentes. La política turística debe equilibrar ingresos y habitabilidad.</p>
+                <p>정답: B. no se trata de와 sino de 구조가 화자의 진짜 의도를 알려줍니다.</p>
+              </details>
+            </article>
+            <article class="listening-card">
+              <span class="level">C2</span>
+              <h3>숨은 전제와 비판</h3>
+              <p class="prompt">질문: 화자는 보고서의 어떤 한계를 지적합니까?</p>
+              <div class="listen-controls">
+                <button class="listen-button" type="button" data-speak-rate="0.98" data-speak-text="El informe parte de una premisa discutible: supone que todos los hogares pueden modificar sus hábitos de consumo con la misma facilidad, pero ignora diferencias de renta, vivienda y acceso a servicios públicos.">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                  재생
+                </button>
+                <span class="listen-status" aria-live="polite"></span>
+              </div>
+              <div class="listen-progress" role="progressbar" aria-label="듣기 재생 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="listen-progress-bar"></span>
+              </div>
+              <ol class="choices">
+                <li>A. 모든 가구의 조건 차이를 고려하지 않는다</li>
+                <li>B. 공공서비스 접근성을 지나치게 자세히 분석한다</li>
+                <li>C. 소비 습관 변화가 불가능하다고 단정한다</li>
+              </ol>
+              <details class="answer">
+                <summary>전사문과 정답</summary>
+                <p>El informe parte de una premisa discutible: supone que todos los hogares pueden modificar sus hábitos de consumo con la misma facilidad, pero ignora diferencias de renta, vivienda y acceso a servicios públicos.</p>
+                <p>정답: A. premisa discutible와 ignora diferencias가 보고서의 한계를 직접 설명합니다.</p>
+              </details>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="a1-a2">
+          <h2>A1-A2 기출형 문제</h2>
+          <p class="section-lead">A1-A2는 생활 정보 확인과 짧은 상호작용이 중심입니다. 정답을 빨리 찾는 것보다 문제 요구를 놓치지 않는 훈련이 먼저입니다.</p>
+        </section>
+
+        <section class="exam-grid" aria-label="A1-A2 기출형 문제">
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>독해: 안내문</h3>
+            <p class="spanish">La clase de español empieza a las nueve. La profesora espera en el aula 3.</p>
+            <p class="prompt">질문: 수업은 어디에서 시작합니까?</p>
+            <ol class="choices">
+              <li>A. aula 3</li>
+              <li>B. estación</li>
+              <li>C. cafetería</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. aula 3가 장소 단서입니다. 시간 a las nueve는 함정이 아니라 다른 정보입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>듣기형: 짧은 메시지</h3>
+            <p class="spanish">Hola, Marta. Estoy en la farmacia. Llego al restaurante en diez minutos.</p>
+            <p class="prompt">질문: 말하는 사람은 지금 어디에 있습니까?</p>
+            <ol class="choices">
+              <li>A. 약국</li>
+              <li>B. 식당</li>
+              <li>C. 학교</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. Estoy en la farmacia가 현재 위치입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>쓰기: 양식 채우기</h3>
+            <p class="prompt">상황: 어학원 등록 양식을 작성합니다. 이름, 국적, 이메일, 수업 가능 시간을 스페인어로 적으세요.</p>
+            <ol class="task-list">
+              <li>Nombre y apellido</li>
+              <li>Nacionalidad</li>
+              <li>Correo electrónico</li>
+              <li>Horario preferido</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>철자, 대문자, 숫자와 시간 표기가 정확하면 됩니다. 긴 문장을 만들 필요는 없습니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>말하기: 사진 묘사</h3>
+            <p class="prompt">사진에 가족이 공원에 있습니다. 사람 수, 날씨, 행동, 자신의 의견을 1분 안에 말하세요.</p>
+            <ol class="task-list">
+              <li>Hay cuatro personas.</li>
+              <li>Hace buen tiempo.</li>
+              <li>Están caminando y hablando.</li>
+              <li>Me parece una escena tranquila.</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>hay, estar + gerundio, 형용사 성수 일치가 안정적이면 좋습니다. 어려운 표현보다 명확성이 중요합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>듣기형: 역 안내</h3>
+            <p class="spanish">Atención. El tren a Sevilla sale a las diez y media de la vía cinco.</p>
+            <p class="prompt">질문: 기차는 어디에서 출발합니까?</p>
+            <ol class="choices">
+              <li>A. vía cinco</li>
+              <li>B. vía diez</li>
+              <li>C. Sevilla</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. pregunta가 장소를 묻고 있으므로 시간 diez y media가 아니라 vía cinco를 골라야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>독해: 짧은 문자</h3>
+            <p class="spanish">Hola, Ana. Estoy en la biblioteca. Te espero aquí hasta las seis.</p>
+            <p class="prompt">질문: Ana는 어디로 가야 합니까?</p>
+            <ol class="choices">
+              <li>A. 도서관</li>
+              <li>B. 카페</li>
+              <li>C. 역</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. biblioteca가 장소 단서입니다. hasta las seis는 기다리는 시간입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>말하기: 자기소개</h3>
+            <p class="prompt">이름, 국적, 사는 곳, 직업 또는 공부, 좋아하는 것을 6문장으로 말하세요.</p>
+            <ol class="task-list">
+              <li>Me llamo...</li>
+              <li>Soy de Corea.</li>
+              <li>Vivo en...</li>
+              <li>Soy estudiante 또는 trabajo en...</li>
+              <li>Me gusta...</li>
+              <li>Gracias.</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>긴 문장보다 ser, vivir, gustar의 기본형과 발음 안정성이 중요합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>쓰기: 짧은 메모</h3>
+            <p class="prompt">친구에게 오늘 5시에 카페에서 만나자는 메모를 25-35단어로 쓰세요.</p>
+            <details class="answer">
+              <summary>예시 방향</summary>
+              <p>Hola. Hoy podemos quedar a las cinco en la cafetería. Estoy libre por la tarde. Hasta luego.처럼 시간과 장소가 분명해야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>독해: 광고</h3>
+            <p class="spanish">Curso de cocina española. Sábados por la mañana. Precio especial para estudiantes. Inscripción hasta el viernes.</p>
+            <p class="prompt">질문: 이 광고는 무엇을 알립니까?</p>
+            <ol class="choices">
+              <li>A. 요리 강좌</li>
+              <li>B. 식당 예약</li>
+              <li>C. 시장 위치</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. curso de cocina española가 핵심입니다. precio와 inscripción은 부가 정보입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>듣기형: 약속 변경</h3>
+            <p class="spanish">Perdona, no puedo ir al cine a las siete. ¿Quedamos a las ocho en la puerta?</p>
+            <p class="prompt">질문: 새 약속 시간은 언제입니까?</p>
+            <ol class="choices">
+              <li>A. 7시</li>
+              <li>B. 8시</li>
+              <li>C. 9시</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. no puedo 뒤의 시간은 취소된 시간이고, quedamos a las ocho가 새 시간입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>쓰기: 지난 주말</h3>
+            <p class="prompt">지난 주말에 한 일을 70-90단어로 쓰세요. 장소, 함께 간 사람, 한 일, 느낌을 포함하세요.</p>
+            <ol class="task-list">
+              <li>El sábado pasado fui a...</li>
+              <li>Fui con...</li>
+              <li>Comimos 또는 visitamos...</li>
+              <li>Me gustó porque...</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>pretérito indefinido의 기본형과 시간 순서 표현 primero, después, al final을 봅니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>말하기: 상황 대화</h3>
+            <p class="prompt">옷가게에서 셔츠를 사고 싶습니다. 색, 사이즈, 가격, 결제 방법을 묻는 대화를 만드세요.</p>
+            <ol class="task-list">
+              <li>Quiero una camisa azul.</li>
+              <li>¿Tiene una talla más grande?</li>
+              <li>¿Cuánto cuesta?</li>
+              <li>¿Puedo pagar con tarjeta?</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>질문 형태와 명사·형용사 일치가 자연스러우면 충분합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A1</span>
+            <h3>독해: 길 안내 메모</h3>
+            <p class="spanish">La oficina está al lado del banco. Abre de nueve a dos.</p>
+            <p class="prompt">질문: 사무실은 어디에 있습니까?</p>
+            <ol class="choices">
+              <li>A. 은행 옆</li>
+              <li>B. 학교 앞</li>
+              <li>C. 카페 안</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. al lado del banco가 위치 단서입니다. abre de nueve a dos는 운영 시간입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">A2</span>
+            <h3>쓰기: 예약 변경 메시지</h3>
+            <p class="prompt">호텔에 도착 시간이 늦어진다고 알리고, 예약을 유지해 달라는 메시지를 60-80단어로 쓰세요.</p>
+            <ol class="task-list">
+              <li>예약자 이름과 날짜를 밝힌다.</li>
+              <li>늦게 도착하는 이유를 간단히 설명한다.</li>
+              <li>예약 유지와 확인 답장을 요청한다.</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>llego tarde, mantener la reserva, ¿podrían confirmarlo?처럼 목적이 분명한 표현을 쓰면 됩니다.</p>
+            </details>
+          </article>
+        </section>
+
+        <section class="section" id="b1-b2">
+          <h2>B1-B2 기출형 문제</h2>
+          <p class="section-lead">B1-B2는 정보 확인을 넘어 논지, 태도, 이유를 묻습니다. 쓰기와 말하기에서는 주장 하나와 근거 두 개를 분명히 세워야 합니다.</p>
+        </section>
+
+        <section class="exam-grid" aria-label="B1-B2 기출형 문제">
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>독해: 이메일 목적</h3>
+            <p class="spanish">Te escribo porque no podré asistir a la reunión del viernes. ¿Podríamos cambiarla al lunes por la mañana?</p>
+            <p class="prompt">질문: 글쓴이는 무엇을 요청합니까?</p>
+            <ol class="choices">
+              <li>A. 회의 취소</li>
+              <li>B. 회의 일정 변경</li>
+              <li>C. 회의 자료 요청</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. cambiarla al lunes가 요청의 핵심입니다. no podré asistir는 이유입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>쓰기: 조언 메시지</h3>
+            <p class="prompt">친구가 스페인어 공부를 포기하려고 합니다. 110-130단어로 격려하고, 공부 방법 두 가지를 추천하세요.</p>
+            <ol class="task-list">
+              <li>친구의 감정을 이해한다는 문장</li>
+              <li>구체적인 방법 2개</li>
+              <li>다시 연락하자는 마무리</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>친근한 문체, 명령형 또는 권유 표현, 조건 3개 충족 여부를 봅니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>독해: 논지 파악</h3>
+            <p class="spanish">Aunque el turismo genera empleo, algunas ciudades limitan las visitas para proteger la vida cotidiana de los vecinos.</p>
+            <p class="prompt">질문: 글의 핵심 입장은 무엇입니까?</p>
+            <ol class="choices">
+              <li>A. 관광은 항상 금지해야 한다</li>
+              <li>B. 관광의 이익과 주민 생활을 함께 고려해야 한다</li>
+              <li>C. 일자리는 중요하지 않다</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. aunque 이후 대조 구조를 보고 균형 잡힌 입장을 골라야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>쓰기: 찬반 의견문</h3>
+            <p class="prompt">
+              주제: 재택근무를 법적으로 더 확대해야 하는가. 180-220단어로 쓰고, 찬성 근거 2개와 예상 반론 1개를 포함하세요.
+            </p>
+            <ol class="task-list">
+              <li>서론: 자신의 입장</li>
+              <li>본문 1: 생산성 또는 교통 문제</li>
+              <li>본문 2: 가족 생활 또는 지역 격차</li>
+              <li>반론 처리와 결론</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>aunque, sin embargo, por lo tanto 같은 연결어가 논리 관계에 맞게 쓰였는지 확인합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>듣기형: 라디오 공지</h3>
+            <p class="spanish">Por la lluvia, el concierto de esta noche se traslada al teatro municipal. Las entradas siguen siendo válidas.</p>
+            <p class="prompt">질문: 무엇이 바뀌었습니까?</p>
+            <ol class="choices">
+              <li>A. 장소</li>
+              <li>B. 가격</li>
+              <li>C. 날짜</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. se traslada al teatro municipal이 장소 변경을 뜻합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>독해: 후기</h3>
+            <p class="spanish">El hotel estaba limpio y bien situado, pero por la noche había mucho ruido en la calle.</p>
+            <p class="prompt">질문: 글쓴이의 평가는 무엇에 가깝습니까?</p>
+            <ol class="choices">
+              <li>A. 장점과 단점이 모두 있다</li>
+              <li>B. 모든 것이 완벽했다</li>
+              <li>C. 위치가 나빴다</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. limpio, bien situado는 장점이고 pero 이후 ruido는 단점입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>말하기: 경험 설명</h3>
+            <p class="prompt">최근 배운 새로운 기술이나 취미를 2분 동안 설명하세요. 시작한 이유, 어려웠던 점, 앞으로의 계획을 포함합니다.</p>
+            <ol class="task-list">
+              <li>Empecé a...</li>
+              <li>Al principio fue difícil porque...</li>
+              <li>Ahora puedo...</li>
+              <li>En el futuro quiero...</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>과거와 현재의 구분, 이유 표현, 계획 표현이 모두 들어가야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>쓰기: 불만 이메일</h3>
+            <p class="prompt">온라인으로 산 물건이 늦게 도착했고 일부가 고장났습니다. 120-140단어로 환불 또는 교환을 요청하세요.</p>
+            <ol class="task-list">
+              <li>주문 정보</li>
+              <li>문제 설명</li>
+              <li>원하는 해결책</li>
+              <li>공손한 마무리</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>queja의 목적이 분명하고, pasado와 요청 표현 me gustaría, solicito가 안정적으로 쓰여야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>듣기형: 인터뷰 태도</h3>
+            <p class="spanish">No rechazo la tecnología, pero me preocupa que se use sin explicar bien qué datos recoge.</p>
+            <p class="prompt">질문: 화자의 태도는 무엇입니까?</p>
+            <ol class="choices">
+              <li>A. 기술을 완전히 거부한다</li>
+              <li>B. 개인정보 사용 방식에 우려한다</li>
+              <li>C. 데이터 수집을 무조건 찬성한다</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. no rechazo는 완전 반대가 아니며, me preocupa 이후가 핵심 태도입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>독해: 문장 삽입</h3>
+            <p class="spanish">Muchos jóvenes quieren vivir solos. Sin embargo, los precios del alquiler hacen que esta decisión sea cada vez más difícil.</p>
+            <p class="prompt">질문: 두 문장의 논리 관계는 무엇입니까?</p>
+            <ol class="choices">
+              <li>A. 원인 없는 나열</li>
+              <li>B. 기대와 현실의 대조</li>
+              <li>C. 같은 주장 반복</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. sin embargo가 욕구와 현실 조건의 대조를 표시합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>말하기: 사회 주제 토론</h3>
+            <p class="prompt">도심 차량 제한 정책에 찬성 또는 반대 입장을 3분 동안 말하세요. 장점, 단점, 대안을 포함합니다.</p>
+            <ol class="task-list">
+              <li>입장: Estoy a favor 또는 Estoy en contra</li>
+              <li>근거 2개</li>
+              <li>반대 의견 인정</li>
+              <li>현실적인 대안</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>양보와 반박 표현을 써서 단순 찬반에서 끝나지 않게 구성합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>쓰기: 공식 건의문</h3>
+            <p class="prompt">동네 도서관 운영 시간이 너무 짧습니다. 시청에 운영 시간 확대를 요청하는 글을 180-220단어로 쓰세요.</p>
+            <ol class="task-list">
+              <li>문제 제기</li>
+              <li>주민에게 미치는 영향</li>
+              <li>구체적 제안</li>
+              <li>공손한 요청</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>격식 문체, 문제-영향-제안 구조, 조건 충족이 핵심입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>독해: 게시판 공지</h3>
+            <p class="spanish">El taller de fotografía cambia de aula esta semana. La primera sesión será en la biblioteca porque el aula habitual está en obras.</p>
+            <p class="prompt">질문: 이번 주에 무엇이 달라집니까?</p>
+            <ol class="choices">
+              <li>A. 수업 장소</li>
+              <li>B. 수업 주제</li>
+              <li>C. 참가비</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>A. cambia de aula와 será en la biblioteca가 장소 변경을 나타냅니다. porque 뒤는 이유입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>말하기: 사진 묘사와 대화</h3>
+            <p class="prompt">사진 속 두 사람이 여행 가방을 들고 역에서 기다립니다. 상황, 문제 가능성, 자신의 비슷한 경험을 말하세요.</p>
+            <dl class="model-dialogue">
+              <dt>응시자</dt>
+              <dd>En la foto veo a dos personas en una estación. Parecen un poco preocupadas porque miran sus billetes y muchas maletas están en el suelo.</dd>
+              <dt>시험관</dt>
+              <dd>¿Qué problema pueden tener?</dd>
+              <dt>응시자</dt>
+              <dd>Quizá su tren llega tarde o han perdido una conexión. A mí me pasó algo parecido el año pasado y tuve que cambiar el billete.</dd>
+            </dl>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>묘사, 추측, 개인 경험이 모두 들어가야 합니다. quizá, parecer, algo parecido 같은 표현이 유용합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>독해: 필자 의도</h3>
+            <p class="spanish">El autor no niega que las plataformas digitales hayan abierto nuevas oportunidades, pero cuestiona que ese avance se mida solo por el número de usuarios.</p>
+            <p class="prompt">질문: 필자는 무엇을 비판합니까?</p>
+            <ol class="choices">
+              <li>A. 플랫폼 사용 자체</li>
+              <li>B. 사용자 수만으로 발전을 평가하는 방식</li>
+              <li>C. 새로운 기회가 생겼다는 사실</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. no niega로 장점은 인정하고 cuestiona 이하에서 평가 방식의 한계를 비판합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>말하기: 설문 자료 해석</h3>
+            <p class="prompt">설문에서 시민의 62%는 야간 대중교통 확대에 찬성, 21%는 비용 때문에 반대, 17%는 모른다고 답했습니다. 3분 동안 자료를 해석하고 의견을 말하세요.</p>
+            <dl class="model-dialogue">
+              <dt>응시자</dt>
+              <dd>Los datos muestran una mayoría clara a favor de ampliar el transporte nocturno. Sin embargo, el porcentaje de personas preocupadas por el coste no es irrelevante.</dd>
+              <dt>시험관</dt>
+              <dd>¿Qué solución propondría?</dd>
+              <dt>응시자</dt>
+              <dd>Propondría empezar los fines de semana y evaluar la demanda real. Así se responde a la necesidad social sin aumentar demasiado el gasto público.</dd>
+            </dl>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>수치 나열에서 멈추지 말고 mayoría clara, sin embargo, propondría처럼 해석과 제안을 붙여야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>쓰기: 반론 포함 의견문</h3>
+            <p class="prompt">“대학 수업에 출석 의무가 있어야 하는가”에 대해 180-220단어로 쓰세요. 자신의 입장, 근거 2개, 예상 반론 1개, 결론을 포함합니다.</p>
+            <details class="answer">
+              <summary>합격권 구조</summary>
+              <p>1문단: 입장. 2문단: 학습 지속성 또는 토론 참여. 3문단: 자율성 반론 인정 후 예외 제안. 4문단: 조건부 결론. 반론을 삭제하지 말고 처리해야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1</span>
+            <h3>듣기형: 전화 메시지 목적</h3>
+            <p class="spanish">Buenas tardes. Le llamo porque dejé mi chaqueta en la sala después del curso. ¿Podrían guardarla hasta mañana?</p>
+            <p class="prompt">질문: 말하는 사람은 무엇을 요청합니까?</p>
+            <ol class="choices">
+              <li>A. 강좌 등록</li>
+              <li>B. 잃어버린 물건 보관</li>
+              <li>C. 내일 수업 취소</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. dejé mi chaqueta와 podrían guardarla가 핵심입니다. hasta mañana는 보관 기간입니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>독해: 조건부 찬성</h3>
+            <p class="spanish">La autora apoya limitar los coches en el centro, siempre que el transporte público sea más frecuente y asequible.</p>
+            <p class="prompt">질문: 필자의 입장으로 가장 알맞은 것은 무엇입니까?</p>
+            <ol class="choices">
+              <li>A. 조건 없이 차량 제한에 찬성한다</li>
+              <li>B. 대중교통 개선을 조건으로 찬성한다</li>
+              <li>C. 차량 제한과 대중교통을 모두 반대한다</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. siempre que가 조건을 표시합니다. B2에서는 찬반보다 조건과 한계를 읽어야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B2</span>
+            <h3>쓰기: 설문 결과 이메일</h3>
+            <p class="prompt">동아리 회원 설문에서 58%는 토요일 활동, 27%는 평일 저녁, 15%는 온라인 활동을 선호했습니다. 담당자에게 결과를 요약하고 다음 활동 방식을 제안하는 이메일을 180-220단어로 쓰세요.</p>
+            <ol class="task-list">
+              <li>수치 3개를 단순 나열하지 말고 경향을 요약한다.</li>
+              <li>가장 현실적인 제안을 하나 고른다.</li>
+              <li>소수 의견을 배려하는 보완책을 붙인다.</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>la mayoría, una parte significativa, sería conveniente 같은 표현으로 자료 해석과 제안을 연결해야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">B1-B2</span>
+            <h3>오답 분석: 같은 문제 다시 풀기</h3>
+            <p class="prompt">틀린 독해 또는 듣기 문제 하나를 골라, 왜 다른 선택지가 틀렸는지 스페인어로 한 문장씩 씁니다.</p>
+            <ol class="task-list">
+              <li>La opción A no es correcta porque...</li>
+              <li>La opción B parece posible, pero...</li>
+              <li>La respuesta correcta se apoya en...</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>정답만 외우는 대신 오답의 근거 부족을 설명할 수 있어야 다음 세트에서 같은 함정을 피합니다.</p>
+            </details>
+          </article>
+        </section>
+
+        <section class="section" id="c1-c2">
+          <h2>C1-C2 기출형 문제</h2>
+          <p class="section-lead">C1-C2는 자료를 그대로 옮기는 시험이 아닙니다. 요약, 비교, 비판, 문체 조절을 통해 자료를 자기 구조로 다시 만드는 능력을 봅니다.</p>
+        </section>
+
+        <section class="exam-grid" aria-label="C1-C2 기출형 문제">
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>통합 쓰기: 요약과 논평</h3>
+            <p class="prompt">
+              강연 요지를 90단어로 요약한 뒤, 그 주장에 대한 자신의 평가를 120단어로 쓰세요.
+              요약 문단과 평가 문단을 분리하고 원자료 표현을 그대로 베끼지 마세요.
+            </p>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>자료 충실도, 재구성 능력, 문체 일관성, 평가와 요약의 분리를 봅니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>말하기: 기사 기반 발표</h3>
+            <p class="prompt">
+              짧은 기사 하나를 읽고 문제의 원인, 영향을 받는 집단, 가능한 해결책을 4분 동안 발표하세요.
+              발표 뒤 시험관의 반론에 답해야 합니다.
+            </p>
+            <ol class="task-list">
+              <li>기사 핵심 주장 1문장</li>
+              <li>원인과 결과 구분</li>
+              <li>자신의 평가와 해결책</li>
+              <li>반론 대비 표현 2개</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>자료 이해, 발표 구조, 격식 있는 표현, 즉흥 대응의 일관성을 봅니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>통합 독해·듣기: 입장 비교</h3>
+            <p class="prompt">
+              기사 A는 인공지능 규제를 강화해야 한다고 주장하고, 인터뷰 B는 혁신 위축을 우려합니다.
+              두 자료의 공통 전제와 충돌 지점을 표로 정리하세요.
+            </p>
+            <ol class="task-list">
+              <li>공통 전제: 기술의 사회적 영향</li>
+              <li>충돌점: 규제의 속도와 범위</li>
+              <li>누락된 정보: 실제 피해 또는 비용 자료</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>요약보다 관계 분석이 중요합니다. 두 자료를 각각 따로 설명하는 데서 멈추면 점수가 낮아집니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>통합 말하기: 자료 비교</h3>
+            <p class="prompt">
+              기사와 인터뷰가 같은 문제를 어떻게 다르게 설명하는지 3분 동안 발표하세요.
+              공통점, 차이, 숨은 전제, 자신의 결론을 포함하세요.
+            </p>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>정보 통합, 추론, 고급 연결어, 즉흥 질문 대응력을 함께 확인합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>독해·언어 사용: 문체 선택</h3>
+            <p class="prompt">
+              같은 내용을 친구에게 보내는 메시지와 대학 행정실에 보내는 이메일로 각각 바꾸세요.
+              격식, 호칭, 요청 표현이 달라져야 합니다.
+            </p>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>내용보다 register 전환이 핵심입니다. 친구 메시지는 직접적이고, 행정 메일은 le agradecería, quedo a la espera 같은 표현이 필요합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>듣기·쓰기: 강연 요약</h3>
+            <p class="prompt">
+              도시의 관광 제한에 관한 강연을 들었다고 가정하고, 핵심 주장 3개와 화자의 결론을 120단어로 요약하세요.
+              자신의 의견은 마지막 문장에만 넣습니다.
+            </p>
+            <ol class="task-list">
+              <li>문제 상황</li>
+              <li>근거 2개</li>
+              <li>화자의 결론</li>
+              <li>자신의 짧은 평가</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>요약과 평가를 섞지 않는 것이 중요합니다. 강연 내용을 자기 문장으로 재구성해야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>독해: 필자의 태도</h3>
+            <p class="spanish">El autor reconoce los beneficios del teletrabajo, pero advierte que su aplicación desigual puede ampliar brechas sociales.</p>
+            <p class="prompt">질문: 필자의 태도는 무엇입니까?</p>
+            <ol class="choices">
+              <li>A. 전면 찬성</li>
+              <li>B. 균형 잡힌 경고</li>
+              <li>C. 무관심</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. reconoce와 pero advierte의 조합이 장점 인정과 위험 경고를 동시에 보여줍니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>말하기: 반론 대응</h3>
+            <p class="prompt">
+              “온라인 교육은 대면 교육보다 항상 효과가 낮다”는 시험관의 주장에 반박하세요.
+              일부 한계를 인정한 뒤 조건부 찬성 또는 반대를 구성합니다.
+            </p>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>permítame matizar, depende de, no necesariamente 같은 표현으로 즉흥 반론을 부드럽게 처리합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>통합 쓰기: 충돌 자료 조정</h3>
+            <p class="prompt">
+              자료 A는 대중교통 무료화를 지지하고, 자료 B는 재정 부담을 우려합니다.
+              두 입장을 조정하는 정책 제안문을 250단어로 쓰세요.
+            </p>
+            <ol class="task-list">
+              <li>두 자료의 핵심 입장</li>
+              <li>충돌 지점</li>
+              <li>절충안</li>
+              <li>예상 반론 처리</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>한쪽 의견만 반복하면 부족합니다. 자료 간 충돌을 해결하는 자기 구조가 있어야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>독해·듣기: 숨은 전제 찾기</h3>
+            <p class="prompt">
+              한 발표자는 “개인의 선택이 환경 문제 해결의 핵심”이라고 말하고,
+              다른 글은 “기업과 제도의 책임이 더 크다”고 주장합니다. 두 입장의 숨은 전제를 쓰세요.
+            </p>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>개인 책임론과 구조 책임론의 전제를 구분해야 합니다. 표면 주장만 요약하면 부족합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>말하기: 심층 토론</h3>
+            <p class="prompt">
+              인공지능 규제가 창의성을 제한한다는 주장에 대해 4분 동안 토론하세요.
+              창의성, 안전, 책임, 국제 경쟁력을 모두 언급합니다.
+            </p>
+            <ol class="task-list">
+              <li>핵심 쟁점 정리</li>
+              <li>찬성 또는 반대 입장</li>
+              <li>조건부 절충안</li>
+              <li>시험관 반문 대비</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>C2에서는 단순 의견보다 개념 간 균형과 즉흥 질문 대응이 중요합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>문체 분석: 아이러니</h3>
+            <p class="spanish">“Claro, la solución perfecta es trabajar más horas para tener más tiempo libre”, comenta la autora.</p>
+            <p class="prompt">질문: 이 문장의 효과는 무엇입니까?</p>
+            <ol class="choices">
+              <li>A. 문자 그대로의 찬성</li>
+              <li>B. 아이러니를 통한 비판</li>
+              <li>C. 중립적 정보 전달</li>
+            </ol>
+            <details class="answer">
+              <summary>정답과 해설</summary>
+              <p>B. trabajar más horas와 tener más tiempo libre의 모순이 아이러니를 만듭니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>통합 쓰기: 음성 자료 매개</h3>
+            <p class="prompt">
+              팟캐스트에서 전문가는 “도시 녹지 확대가 건강 격차를 줄일 수 있지만, 임대료 상승을 동반할 수 있다”고 말했습니다.
+              이 내용을 시청 뉴스레터용으로 160-180단어로 요약하고 균형 잡힌 제안을 덧붙이세요.
+            </p>
+            <ol class="task-list">
+              <li>건강 효과와 사회적 위험을 모두 요약한다.</li>
+              <li>자료의 표현을 그대로 옮기지 않는다.</li>
+              <li>정책 제안은 조건부로 쓴다.</li>
+            </ol>
+            <details class="answer">
+              <summary>합격권 구조</summary>
+              <p>Según la intervención, la ampliación de zonas verdes puede mejorar la salud pública; no obstante, conviene evitar que el beneficio derive en presión inmobiliaria.처럼 요약과 제안을 한 문단 안에서 구분합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>말하기: 협상과 조건 제시</h3>
+            <p class="prompt">동료가 모든 회의를 온라인으로 바꾸자고 제안합니다. 장점은 인정하되 일부 대면 회의가 필요한 조건을 제시하세요.</p>
+            <dl class="model-dialogue">
+              <dt>응시자</dt>
+              <dd>Entiendo que las reuniones en línea ahorran tiempo y facilitan la participación, sobre todo para quienes viven lejos.</dd>
+              <dt>시험관</dt>
+              <dd>Entonces, ¿está totalmente de acuerdo?</dd>
+              <dt>응시자</dt>
+              <dd>No del todo. En reuniones de negociación o de evaluación delicada, la comunicación no verbal puede ser decisiva. Propongo combinar ambos formatos según el objetivo.</dd>
+            </dl>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>동의, 제한, 대안이 이어져야 합니다. no del todo, según el objetivo 같은 표현이 협상형 답변에 적합합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>통합 쓰기: 자료 재구성</h3>
+            <p class="prompt">
+              자료 A는 “개인 정보 보호가 혁신의 조건”이라고 주장하고, 자료 B는 “과도한 규제가 중소기업의 실험을 막는다”고 우려합니다.
+              두 입장을 조정하는 정책 제안문을 280-320단어로 쓰세요.
+            </p>
+            <details class="answer">
+              <summary>합격권 구조</summary>
+              <p>도입에서 공통 목표를 찾고, 본문에서 충돌 지점을 나눈 뒤, 결론에서 단계적 규제와 예외 조건을 제안합니다. C2에서는 한쪽 자료를 압도하지 않고 관계를 재구성해야 합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>말하기: 제목 자료 토론</h3>
+            <p class="prompt">
+              제목 1: “자동화가 일자리를 없앤다”. 제목 2: “자동화가 인간의 역할을 바꾼다”.
+              두 제목의 관점 차이와 숨은 전제를 설명하고 자신의 결론을 말하세요.
+            </p>
+            <dl class="model-dialogue">
+              <dt>응시자</dt>
+              <dd>El primer titular presupone una relación de sustitución, mientras que el segundo plantea una transformación de funciones. La diferencia no es solo económica, sino conceptual.</dd>
+              <dt>시험관</dt>
+              <dd>¿Cuál le parece más convincente?</dd>
+              <dt>응시자</dt>
+              <dd>El segundo, siempre que no se use para minimizar costes sociales reales. La automatización puede crear tareas nuevas, pero exige políticas de transición y formación continua.</dd>
+            </dl>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>C2 말하기는 답 자체보다 개념 구분, 조건부 판단, 시험관 질문에 대한 재조정 능력이 중요합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1-C2</span>
+            <h3>문체 전환: 학술에서 대중으로</h3>
+            <p class="prompt">
+              “La evidencia empírica sugiere una correlación significativa entre precariedad habitacional y deterioro de la salud mental.”
+              이 문장을 일반 독자용 기사 문장과 공식 보고서 문장으로 각각 바꾸세요.
+            </p>
+            <details class="answer">
+              <summary>예시 답안</summary>
+              <p>기사: Los problemas de vivienda no solo afectan al bolsillo; también pueden dañar la salud mental. 보고서: Los datos disponibles indican una relación relevante entre inseguridad residencial y empeoramiento del bienestar psicológico.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1-C2</span>
+            <h3>즉흥 대응: 모르는 질문 버티기</h3>
+            <p class="prompt">시험관이 예상하지 못한 반문을 했을 때 20초 안에 구조를 회복하는 표현을 연습하세요.</p>
+            <ol class="task-list">
+              <li>Permítame matizar esa idea.</li>
+              <li>Habría que distinguir entre dos situaciones.</li>
+              <li>No tengo todos los datos, pero se puede afirmar que...</li>
+              <li>Desde esa perspectiva, mi conclusión sería...</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>즉흥 질문에서 완벽한 정보보다 구조 회복이 중요합니다. 멈춤을 줄이고 논점을 다시 잡는 표현을 자동화합니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C1</span>
+            <h3>언어 사용: 중립 문체로 바꾸기</h3>
+            <p class="prompt">
+              “La ciudad no hace nada y los alquileres están por las nubes.”
+              이 문장을 공식 보고서에 맞는 중립 문체로 바꾸세요.
+            </p>
+            <details class="answer">
+              <summary>예시 답안</summary>
+              <p>Las medidas municipales resultan insuficientes y el precio del alquiler ha aumentado de forma considerable.처럼 감정 표현을 줄이고 객관 동사와 명사를 씁니다.</p>
+            </details>
+          </article>
+
+          <article class="exam-card">
+            <span class="level">C2</span>
+            <h3>통합 말하기: 자료 신뢰도 평가</h3>
+            <p class="prompt">
+              자료 A는 기업 보고서이고 자료 B는 독립 연구기관의 조사입니다. 두 자료가 같은 결론을 내리지만 근거 방식이 다릅니다.
+              3분 동안 신뢰도, 이해관계, 누락된 정보를 비교하세요.
+            </p>
+            <ol class="task-list">
+              <li>두 자료의 결론이 같다는 점을 먼저 정리한다.</li>
+              <li>출처와 이해관계 차이를 설명한다.</li>
+              <li>추가로 필요한 자료를 제안한다.</li>
+            </ol>
+            <details class="answer">
+              <summary>채점 기준</summary>
+              <p>C2에서는 결론의 일치만 말하면 부족합니다. fuente, sesgo, alcance, datos complementarios 같은 표현으로 근거의 질을 평가해야 합니다.</p>
+            </details>
+          </article>
+        </section>
+
+        <section class="section" id="production-samples">
+          <h2>쓰기·말하기 합격권 예시</h2>
+          <p class="section-lead">
+            쓰기와 말하기는 정답표만으로 준비하기 어렵습니다. 아래 예시는 외우는 문장이 아니라
+            조건 충족, 구조, 연결 표현, 문체를 점검하는 기준선입니다.
+          </p>
+          <div class="sample-grid">
+            <article class="sample-card">
+              <p class="sample-meta">A2 쓰기 70-90단어</p>
+              <h3>지난 주말 경험</h3>
+              <p class="sample-answer">
+                <strong>합격권 예시</strong>
+                El sábado pasado fui al centro con mi amiga. Primero tomamos un café y después visitamos una exposición pequeña. Me gustó mucho porque el lugar era tranquilo y las fotos eran interesantes. Por la tarde compré un libro y volví a casa en metro. Fue un día sencillo, pero muy agradable.
+              </p>
+              <ol class="sample-list">
+                <li>장소, 동행, 행동, 감정이 모두 들어갔다.</li>
+                <li>pretérito indefinido와 imperfecto를 단순하지만 안정적으로 구분했다.</li>
+                <li>primero, después, por la tarde로 순서를 만들었다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">B1 쓰기 120-140단어</p>
+              <h3>불만 이메일 골격</h3>
+              <p class="sample-answer">
+                <strong>합격권 구조</strong>
+                Estimados señores: Les escribo porque el pedido número 248 llegó con tres días de retraso y una parte del producto estaba rota. Necesito usarlo esta semana, por eso les agradecería que me enviaran otro producto o me devolvieran el dinero. Adjunto una foto del problema. Quedo a la espera de su respuesta. Atentamente, ...
+              </p>
+              <ol class="sample-list">
+                <li>문제, 영향, 요구, 첨부, 마무리가 분리되어 있다.</li>
+                <li>감정적인 표현보다 해결 요청이 분명하다.</li>
+                <li>les agradecería, quedo a la espera로 격식을 지킨다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">B2 말하기 3분</p>
+              <h3>도심 차량 제한 토론</h3>
+              <p class="sample-answer">
+                <strong>합격권 진행</strong>
+                Estoy a favor de limitar los coches en el centro, siempre que la ciudad mejore el transporte público. Por un lado, la medida reduce la contaminación y hace las calles más seguras. Por otro lado, puede perjudicar a algunos comercios. Por eso, sería recomendable aplicar la norma de forma gradual y ofrecer alternativas reales.
+              </p>
+              <ol class="sample-list">
+                <li>입장, 조건, 근거, 반론, 대안이 보인다.</li>
+                <li>찬성만 반복하지 않고 양보와 조정을 포함한다.</li>
+                <li>시험관 반문에는 depende de, conviene distinguir로 시간을 번다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">C1-C2 통합 과제</p>
+              <h3>자료 요약과 평가 분리</h3>
+              <p class="sample-answer">
+                <strong>합격권 골격</strong>
+                El primer texto sostiene que la medida es necesaria por razones ambientales, mientras que la entrevista subraya sus costes económicos. Ambas fuentes coinciden en que el problema exige una respuesta pública, pero discrepan sobre el ritmo de aplicación. A mi juicio, la propuesta es viable solo si incorpora ayudas temporales y criterios de evaluación transparentes.
+              </p>
+              <ol class="sample-list">
+                <li>자료 A와 B의 입장을 분리한 뒤 관계를 설명한다.</li>
+                <li>요약 문장과 자신의 판단이 섞이지 않는다.</li>
+                <li>coinciden, discrepan, solo si로 고급 연결을 만든다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">B1 말하기 2분</p>
+              <h3>새로운 취미 설명</h3>
+              <p class="sample-answer">
+                <strong>합격권 예시</strong>
+                Hace seis meses empecé a aprender fotografía porque quería observar mejor los lugares que visito. Al principio fue difícil entender la luz y usar la cámara, pero practiqué cada fin de semana. Ahora puedo hacer fotos sencillas de viajes y de mi familia. En el futuro me gustaría hacer un curso más avanzado.
+              </p>
+              <ol class="sample-list">
+                <li>시작 시점, 이유, 어려움, 변화, 계획이 모두 들어갔다.</li>
+                <li>pretérito와 imperfecto가 기본 수준에서 구분된다.</li>
+                <li>시험관의 추가 질문에는 porque, por ejemplo, además로 확장한다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">B2 쓰기 180-220단어</p>
+              <h3>출석 의무 의견문 골격</h3>
+              <p class="sample-answer">
+                <strong>합격권 구조</strong>
+                Considero que la asistencia obligatoria puede ser útil en algunas asignaturas, siempre que se aplique con flexibilidad. En primer lugar, favorece la continuidad del aprendizaje y permite que los estudiantes participen en debates. Además, ayuda al profesor a detectar dificultades. Es cierto que los alumnos adultos necesitan autonomía; por eso, convendría combinar asistencia mínima con actividades alternativas justificadas.
+              </p>
+              <ol class="sample-list">
+                <li>입장과 조건이 첫 문단에서 보인다.</li>
+                <li>반론을 인정한 뒤 대안을 제시한다.</li>
+                <li>siempre que, es cierto que, por eso가 논리 관계를 만든다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">C1 쓰기·매개 160-180단어</p>
+              <h3>강연 요약과 제안</h3>
+              <p class="sample-answer">
+                <strong>합격권 구조</strong>
+                La intervención destaca que ampliar las zonas verdes puede reducir problemas de salud asociados al calor y a la contaminación. No obstante, advierte que estas mejoras pueden encarecer la vivienda si no se acompañan de medidas sociales. Por ello, el ayuntamiento debería vincular los nuevos parques a límites de alquiler, servicios públicos y evaluación periódica del impacto en los vecinos.
+              </p>
+              <ol class="sample-list">
+                <li>자료 요지를 자기 문장으로 다시 썼다.</li>
+                <li>장점과 위험을 균형 있게 연결했다.</li>
+                <li>제안은 정책 조건으로 정리했다.</li>
+              </ol>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">C2 말하기 4분</p>
+              <h3>자동화 주제 심층 답변</h3>
+              <p class="sample-answer">
+                <strong>합격권 진행</strong>
+                La automatización no elimina simplemente empleo; redefine qué tareas consideramos humanas, repetitivas o estratégicas. El riesgo aparece cuando la transición se deja solo al mercado. Por eso, una política responsable debería combinar innovación, protección temporal y formación continua. Así, la tecnología no se convierte en una amenaza inevitable, sino en una herramienta condicionada por decisiones públicas.
+              </p>
+              <ol class="sample-list">
+                <li>개념 정의에서 시작해 정책 결론으로 이동한다.</li>
+                <li>단순 찬반이 아니라 조건부 판단을 만든다.</li>
+                <li>시험관 반문에는 “depende de quién asuma el coste de la transición”으로 확장한다.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="explanation-loop">
+          <h2>오답 해설과 감점 분석 루프</h2>
+          <p class="section-lead">
+            공식 정답표는 결과를 알려 주지만, 합격 가능성을 올리는 것은 해설 기록입니다.
+            틀린 문항마다 정답 근거, 매력적인 오답, 감점 원인, 다음 재훈련 행동을 같은 양식으로 남깁니다.
+          </p>
+          <div class="answer-key-grid" aria-label="오답 해설 루프">
+            <article class="answer-key-card">
+              <span class="level">객관식</span>
+              <h3>독해·듣기 근거 회수</h3>
+              <ol class="task-list">
+                <li><strong>정답 근거</strong> 지문 줄, 문장, 음성 단서를 한 줄로 적습니다.</li>
+                <li><strong>오답 유혹</strong> 선택지의 단어가 원문과 비슷했는지, 반대로 바뀌었는지 표시합니다.</li>
+                <li><strong>다음 행동</strong> 같은 유형을 다시 풀 때 먼저 볼 단서 하나를 정합니다.</li>
+              </ol>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">듣기</span>
+              <h3>전사문 복기 순서</h3>
+              <ol class="task-list">
+                <li>처음부터 전사문을 읽지 말고, 틀린 문항의 앞뒤 20초만 먼저 확인합니다.</li>
+                <li>놓친 이유를 속도, 숫자, 연결어, 발음 축약, 선택지 오해 중 하나로 분류합니다.</li>
+                <li>같은 음성을 한 번 더 들을 때는 정답 문장만 받아쓰지 말고 반전 표현까지 표시합니다.</li>
+              </ol>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">쓰기</span>
+              <h3>감점 원인 4칸</h3>
+              <ol class="task-list">
+                <li><strong>조건</strong> 요구한 정보, 장르, 독자, 분량을 충족했는지 봅니다.</li>
+                <li><strong>구성</strong> 문단마다 기능이 있는지, 같은 말을 반복하지 않는지 봅니다.</li>
+                <li><strong>표현</strong> 주제어, 연결어, 격식 표현을 최소 세 개 이상 표시합니다.</li>
+                <li><strong>정확성</strong> 동사, 성수, 전치사, 철자를 마지막 5분에 따로 점검합니다.</li>
+              </ol>
+            </article>
+            <article class="answer-key-card">
+              <span class="level">말하기</span>
+              <h3>녹음 후 3회 점검</h3>
+              <ol class="task-list">
+                <li>1회는 과제 조건이 모두 들어갔는지 체크합니다.</li>
+                <li>2회는 멈춘 지점과 반복 표현을 표시합니다.</li>
+                <li>3회는 다음 답변에 다시 쓸 연결어와 회복 표현을 고릅니다.</li>
+              </ol>
+            </article>
+          </div>
+          <div class="sample-grid" aria-label="낮은 답안을 합격권 답안으로 고치는 예시">
+            <article class="sample-card">
+              <p class="sample-meta">A2 쓰기 수정</p>
+              <h3>조건 누락 보완</h3>
+              <p class="weak-answer"><strong>낮은 답안</strong> Fui a Madrid. Fue bonito. Comí mucho. Me gustó.</p>
+              <p class="sample-answer">
+                <strong>수정 방향</strong>
+                시간, 동행, 장소, 행동, 감정을 하나씩 넣습니다. El sábado pasado fui a Madrid con mi hermana. Visitamos un museo, comimos en un restaurante pequeño y volvimos por la tarde. Me gustó porque la ciudad era tranquila.
+              </p>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">B1-B2 객관식 해설</p>
+              <h3>비슷한 단어 함정</h3>
+              <p class="weak-answer"><strong>오답 원인</strong> 선택지에 나온 barato만 보고 가격이 낮아졌다고 판단했다.</p>
+              <p class="sample-answer">
+                <strong>해설 기록</strong>
+                지문은 no resulta tan barato como se esperaba라고 했으므로 싸다는 의미가 아니라 기대만큼 싸지 않다는 평가입니다. 다음에는 부정어와 비교 표현을 먼저 표시합니다.
+              </p>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">B2 쓰기 수정</p>
+              <h3>반론 처리 추가</h3>
+              <p class="weak-answer"><strong>낮은 답안</strong> Estoy de acuerdo porque es bueno para todos. La ciudad será mejor y la gente estará feliz.</p>
+              <p class="sample-answer">
+                <strong>수정 방향</strong>
+                찬성 근거 뒤에 한계를 인정합니다. Es cierto que algunos comercios pueden perder clientes al principio; por eso, la medida debería aplicarse de forma gradual y con ayudas temporales.
+              </p>
+            </article>
+            <article class="sample-card">
+              <p class="sample-meta">C1-C2 통합 수정</p>
+              <h3>요약과 평가 분리</h3>
+              <p class="weak-answer"><strong>낮은 답안</strong> Los dos textos hablan del mismo problema y creo que el segundo tiene razón.</p>
+              <p class="sample-answer">
+                <strong>수정 방향</strong>
+                먼저 자료 관계를 설명하고 그다음 판단합니다. El primer texto destaca los beneficios económicos, mientras que el segundo cuestiona su alcance social. A mi juicio, la medida es viable solo si incorpora criterios de evaluación y protección para los grupos afectados.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="rubric">
+          <h2>자가 채점 기준</h2>
+          <p class="section-lead">
+            기출형 문제는 점수보다 오류 분류가 목적입니다. 다만 실제 시험처럼 긴장감을 만들려면
+            쓰기와 말하기 산출물을 25점 만점으로 매번 같은 방식으로 채점해야 합니다.
+            아래 표는 공식 채점척도를 대체하지 않는 자가 훈련용 기준입니다.
+          </p>
+          <div class="score-table" aria-label="쓰기와 말하기 25점식 자가 채점표">
+            <article class="score-row">
+              <strong>과제 수행 10점</strong>
+              <span>조건, 분량, 장르, 독자, 질문에 모두 답했는지 확인합니다.</span>
+              <p>합격권: 조건 누락이 없고, 요구된 정보가 순서 있게 들어갑니다.</p>
+            </article>
+            <article class="score-row">
+              <strong>구성 5점</strong>
+              <span>문단, 연결어, 발표 순서, 말하기 상호작용을 봅니다.</span>
+              <p>합격권: 서론, 핵심 내용, 마무리가 보이고 같은 말을 반복하지 않습니다.</p>
+            </article>
+            <article class="score-row">
+              <strong>어휘 5점</strong>
+              <span>주제어, 고정 표현, 격식 표현, 반복 회피를 봅니다.</span>
+              <p>합격권: 쉬운 단어를 쓰더라도 주제에 맞고 의미가 정확합니다.</p>
+            </article>
+            <article class="score-row">
+              <strong>정확성 5점</strong>
+              <span>동사 시제, 성수 일치, 전치사, 발음 또는 철자를 봅니다.</span>
+              <p>합격권: 오류가 있어도 의미 전달과 과제 수행을 방해하지 않습니다.</p>
+            </article>
+          </div>
+          <div class="rubric-grid">
+            <article class="rubric-card">
+              <h3>독해</h3>
+              <p>답의 근거가 지문 안에 표시되어야 합니다. 배경지식으로 맞힌 답은 정답 처리하지 않습니다.</p>
+            </article>
+            <article class="rubric-card">
+              <h3>듣기</h3>
+              <p>전사문을 보기 전까지 두 번만 듣습니다. 이후 틀린 이유를 어휘, 속도, 연음, 문제 요구로 나눕니다.</p>
+            </article>
+            <article class="rubric-card">
+              <h3>쓰기</h3>
+              <p>조건 누락, 문단 구조, 동사 시제, 연결어, 철자를 각각 따로 확인합니다.</p>
+            </article>
+            <article class="rubric-card">
+              <h3>말하기</h3>
+              <p>멈춤 없이 말하는 것보다 과제 조건, 순서, 상호작용 대응을 먼저 봅니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="official">
+          <h2>공식 자료로 넘어가는 기준</h2>
+          <ol class="task-list">
+            <li>A1-A2는 기출형 문제에서 시간, 장소, 사람, 목적 단서를 80% 이상 찾을 수 있을 때 공식 모델 시험을 풉니다.</li>
+            <li>B1-B2는 쓰기 답안에서 주장, 근거, 반론 또는 예시가 분리될 때 공식 모델 시험을 풉니다.</li>
+            <li>C1-C2는 자료 요약과 자신의 평가를 문단으로 분리할 수 있을 때 공식 모델 시험을 풉니다.</li>
+            <li>공식 모델 시험을 푼 뒤에는 오답만 다시 보지 말고 전사문, 정답표, 시간 사용 기록을 함께 확인합니다.</li>
+          </ol>
+          <div class="mode-action-row" aria-label="DELE 공식 레벨별 자료">
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/b1">공식 B1 구조</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/b2">공식 B2 구조</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/c1">공식 C1 구조</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/examenes/c2">공식 C2 구조</a>
+            <a class="source-link" href="https://examenes.cervantes.es/es/dele/como">공식 채점 구조</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const toggle = document.querySelector("[data-theme-toggle]");
+      const storageKey = "spanish-guide-theme";
+      const speakButtons = Array.from(document.querySelectorAll("[data-speak-text]"));
+      const examLevelSelect = document.querySelector("[data-exam-level]");
+      const examMeta = document.querySelector("[data-exam-meta]");
+      const examTaskList = document.querySelector("[data-exam-task-list]");
+      const timerDisplay = document.querySelector("[data-timer-display]");
+      const timerLabel = document.querySelector("[data-timer-label]");
+      const timerStart = document.querySelector("[data-timer-start]");
+      const timerPause = document.querySelector("[data-timer-pause]");
+      const timerReset = document.querySelector("[data-timer-reset]");
+      const scoreGuide = document.querySelector("[data-score-guide]");
+      const scoreFields = document.querySelector("[data-score-fields]");
+      const scoreResult = document.querySelector("[data-score-result]");
+      const scoreSave = document.querySelector("[data-score-save]");
+      const scoreClear = document.querySelector("[data-score-clear]");
+      const scoreHistory = document.querySelector("[data-score-history]");
+      const scoreStorageKey = "spanish-guide-mock-results";
+      const readinessLevel = document.querySelector("[data-readiness-level]");
+      const readinessChecks = Array.from(document.querySelectorAll("[data-readiness-check]"));
+      const readinessResult = document.querySelector("[data-readiness-result]");
+      const readinessNext = document.querySelector("[data-readiness-next]");
+      const readinessSave = document.querySelector("[data-readiness-save]");
+      const readinessClear = document.querySelector("[data-readiness-clear]");
+      const readinessStorageKey = "spanish-guide-readiness-helper";
+      const trainingForm = document.querySelector("[data-training-form]");
+      const trainingLevel = document.querySelector("[data-training-level]");
+      const trainingArea = document.querySelector("[data-training-area]");
+      const trainingError = document.querySelector("[data-training-error]");
+      const trainingAction = document.querySelector("[data-training-action]");
+      const trainingClear = document.querySelector("[data-training-clear]");
+      const trainingLog = document.querySelector("[data-training-log]");
+      const trainingStorageKey = "spanish-guide-training-log";
+      let activeSpeechButton = null;
+      let speechProgressFrame = 0;
+      let timerRemainingSeconds = 0;
+      let timerInterval = 0;
+      let currentScoreSummary = null;
+
+      const examPlans = {
+        A1: {
+          minutes: 115,
+          meta: ["독해 45분", "듣기 25분", "쓰기 25분", "말하기 10분", "준비 10분"],
+          tasks: [
+            "독해와 쓰기 점수를 묶어 30점 이상을 목표로 합니다.",
+            "듣기와 말하기 점수를 묶어 30점 이상을 목표로 합니다.",
+            "시간, 장소, 사람, 물건 단서를 공식 모델처럼 답안지에 표시합니다.",
+            "말하기는 자기소개와 짧은 상호작용을 녹음해 다시 듣습니다."
+          ],
+          guide: "A1-C1은 그룹 1(독해+쓰기)과 그룹 2(듣기+말하기)이 각각 30점 이상이어야 합격권입니다.",
+          fields: [
+            { key: "reading", label: "독해 이해", max: 25, group: 1 },
+            { key: "writing", label: "쓰기 표현과 상호작용", max: 25, group: 1 },
+            { key: "listening", label: "듣기 이해", max: 25, group: 2 },
+            { key: "speaking", label: "말하기 표현과 상호작용", max: 25, group: 2 }
+          ],
+          mode: "groups"
+        },
+        A2: {
+          minutes: 169,
+          meta: ["독해 60분", "듣기 40분", "쓰기 45분", "말하기 12분", "준비 12분"],
+          tasks: [
+            "약속 변경, 여행, 병원, 쇼핑처럼 익숙한 생활 장면을 한 세트로 풉니다.",
+            "쓰기에는 장소, 시간, 이유, 감정을 모두 넣었는지 확인합니다.",
+            "말하기 준비 시간에는 문장 원고보다 키워드 네 개만 적습니다.",
+            "오답은 과거시제, 대명사, 문제 요구 오해 중 하나로 분류합니다."
+          ],
+          guide: "A2도 두 그룹 판정입니다. 총점이 높아도 한 그룹이 30점 미만이면 재훈련으로 봅니다.",
+          fields: [
+            { key: "reading", label: "독해 이해", max: 25, group: 1 },
+            { key: "writing", label: "쓰기 표현과 상호작용", max: 25, group: 1 },
+            { key: "listening", label: "듣기 이해", max: 25, group: 2 },
+            { key: "speaking", label: "말하기 표현과 상호작용", max: 25, group: 2 }
+          ],
+          mode: "groups"
+        },
+        B1: {
+          minutes: 200,
+          meta: ["독해 70분", "듣기 40분", "쓰기 60분", "말하기 15분", "준비 15분"],
+          tasks: [
+            "독해는 글의 목적, 듣기는 화자의 태도를 근거와 함께 표시합니다.",
+            "쓰기 답안은 배경, 문제, 해결, 마무리로 나눕니다.",
+            "말하기는 경험, 이유, 변화, 계획을 끊기지 않게 말합니다.",
+            "같은 실수가 두 번 나오면 공식 모델 시험 대신 해당 유형을 다시 풉니다."
+          ],
+          guide: "B1은 과제 완성이 중요합니다. 그룹별 30점 이상과 반복 실수 감소를 함께 봅니다.",
+          fields: [
+            { key: "reading", label: "독해 이해", max: 25, group: 1 },
+            { key: "writing", label: "쓰기 표현과 상호작용", max: 25, group: 1 },
+            { key: "listening", label: "듣기 이해", max: 25, group: 2 },
+            { key: "speaking", label: "말하기 표현과 상호작용", max: 25, group: 2 }
+          ],
+          mode: "groups"
+        },
+        B2: {
+          minutes: 230,
+          meta: ["독해 70분", "듣기 40분", "쓰기 80분", "말하기 20분", "준비 20분"],
+          tasks: [
+            "문단 기능, 대조, 반론, 결론 신호를 표시하며 풉니다.",
+            "쓰기에는 주장 1개, 근거 2개, 반론 처리 1개를 넣습니다.",
+            "말하기는 자료 묘사에서 해석과 의견으로 빠르게 넘어갑니다.",
+            "한 그룹이 30점에 가까워도 쓰기 또는 말하기가 12점 이하이면 보강합니다."
+          ],
+          guide: "B2는 총점보다 논증 품질이 흔들리는 영역을 찾는 것이 중요합니다.",
+          fields: [
+            { key: "reading", label: "독해 이해", max: 25, group: 1 },
+            { key: "writing", label: "쓰기 표현과 상호작용", max: 25, group: 1 },
+            { key: "listening", label: "듣기 이해", max: 25, group: 2 },
+            { key: "speaking", label: "말하기 표현과 상호작용", max: 25, group: 2 }
+          ],
+          mode: "groups"
+        },
+        C1: {
+          minutes: 260,
+          meta: ["독해 90분", "듣기 50분", "통합 쓰기 80분", "말하기 20분", "준비 20분"],
+          tasks: [
+            "자료 표현을 베끼지 말고 요지, 근거, 평가 기능으로 바꿉니다.",
+            "요약 문단과 자신의 평가 문단을 분리합니다.",
+            "화자별 입장과 자료 간 관계를 기호로 표시합니다.",
+            "발표 준비에는 원고보다 논점 지도와 예상 반문을 적습니다."
+          ],
+          guide: "C1은 통합형이지만 공식 판정은 두 그룹으로 봅니다. 각 그룹 30점 이상을 목표로 합니다.",
+          fields: [
+            { key: "reading", label: "독해와 언어 사용", max: 25, group: 1 },
+            { key: "writing", label: "듣기+쓰기 통합", max: 25, group: 1 },
+            { key: "listening", label: "듣기와 언어 사용", max: 25, group: 2 },
+            { key: "speaking", label: "독해+말하기 통합", max: 25, group: 2 }
+          ],
+          mode: "groups"
+        },
+        C2: {
+          minutes: 305,
+          meta: ["Prueba 1 105분", "Prueba 2 150분", "Prueba 3 20분", "말하기 준비 30분"],
+          tasks: [
+            "Prueba 1은 언어 사용, 독해, 듣기를 한 번에 처리합니다.",
+            "Prueba 2는 읽기와 듣기 자료를 통합해 긴 글로 재구성합니다.",
+            "Prueba 3은 발표, 인터뷰, 심층 상호작용을 수행합니다.",
+            "세 시험 중 하나라도 20점 미만이면 합격권으로 보지 않습니다."
+          ],
+          guide: "C2는 A1-C1과 달리 세 시험 각각 20점 이상을 목표로 판정합니다.",
+          fields: [
+            { key: "p1", label: "Prueba 1: 언어 사용·독해·듣기", max: 33.33, threshold: 20 },
+            { key: "p2", label: "Prueba 2: 쓰기 통합", max: 33.33, threshold: 20 },
+            { key: "p3", label: "Prueba 3: 말하기 통합", max: 33.34, threshold: 20 }
+          ],
+          mode: "c2"
+        }
+      };
+
+      function setTheme(theme) {
+        root.dataset.theme = theme;
+        localStorage.setItem(storageKey, theme);
+        if (toggle) {
+          const isDark = theme === "dark";
+          toggle.setAttribute("aria-pressed", String(isDark));
+          toggle.querySelector("span").textContent = isDark ? "라이트 모드" : "다크 모드";
+        }
+      }
+
+      setTheme(localStorage.getItem(storageKey) || "light");
+      toggle?.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
+
+      function formatSeconds(totalSeconds) {
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        return [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":");
+      }
+
+      function getCurrentExamPlan() {
+        return examPlans[examLevelSelect?.value || "A1"] || examPlans.A1;
+      }
+
+      function stopTimer() {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = 0;
+        }
+      }
+
+      function renderTimer() {
+        if (timerDisplay) {
+          timerDisplay.textContent = formatSeconds(timerRemainingSeconds);
+        }
+      }
+
+      function resetTimer(plan = getCurrentExamPlan()) {
+        stopTimer();
+        timerRemainingSeconds = plan.minutes * 60;
+        renderTimer();
+        if (timerLabel) {
+          timerLabel.textContent = `준비 시간을 포함한 ${plan.minutes}분 실전 타이머입니다.`;
+        }
+      }
+
+      function renderExamPlan() {
+        const plan = getCurrentExamPlan();
+        if (examMeta) {
+          examMeta.innerHTML = plan.meta.map((item) => `<li>${item}</li>`).join("");
+        }
+        if (examTaskList) {
+          examTaskList.innerHTML = plan.tasks.map((item) => `<li>${item}</li>`).join("");
+        }
+        if (scoreGuide) {
+          scoreGuide.textContent = plan.guide;
+        }
+        resetTimer(plan);
+      }
+
+      function getScoreInputValue(field) {
+        const input = scoreFields?.querySelector(`[data-score-key="${field.key}"]`);
+        const value = Number(input?.value || 0);
+        if (!Number.isFinite(value)) {
+          return 0;
+        }
+        return Math.max(0, Math.min(field.max, value));
+      }
+
+      function formatScore(value) {
+        return Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+      }
+
+      function evaluateScores() {
+        const level = examLevelSelect?.value || "A1";
+        const plan = getCurrentExamPlan();
+        const values = Object.fromEntries(plan.fields.map((field) => [field.key, getScoreInputValue(field)]));
+        const hasAnyScore = plan.fields.some((field) => values[field.key] > 0);
+
+        if (!hasAnyScore) {
+          currentScoreSummary = null;
+          return {
+            state: "risk",
+            title: "점수 입력 대기",
+            detail: "영역별 점수를 입력하면 합격권, 위험권, 재훈련 필요를 자동으로 판정합니다.",
+            next: plan.mode === "c2"
+              ? "C2는 세 시험 각각 20점 이상을 목표로 입력하세요."
+              : "A1-C1은 두 그룹이 각각 30점 이상인지 확인합니다.",
+            total: 0
+          };
+        }
+
+        if (plan.mode === "c2") {
+          const total = plan.fields.reduce((sum, field) => sum + values[field.key], 0);
+          const weakFields = plan.fields.filter((field) => values[field.key] < field.threshold);
+          const nearFields = plan.fields.filter((field) => values[field.key] >= field.threshold && values[field.key] < field.threshold + 2);
+          const state = weakFields.length === 0 ? "pass" : weakFields.length === 1 && total >= 60 ? "risk" : "fail";
+          const title = state === "pass" ? "C2 합격권" : state === "risk" ? "C2 위험권" : "C2 재훈련 필요";
+          const detail = weakFields.length === 0
+            ? `총 ${formatScore(total)}점입니다. 세 시험 모두 20점 이상이므로 공식 모델 시험 반복 단계로 넘어갈 수 있습니다.`
+            : `${weakFields.map((field) => field.label).join(", ")}가 20점 미만입니다. 해당 시험을 먼저 보강하세요.`;
+          const next = nearFields.length
+            ? `주의: ${nearFields.map((field) => field.label).join(", ")}는 22점 미만이라 실전 변동에 취약합니다.`
+            : "오답표에는 자료 통합, 문체, 즉흥 대응 중 어느 쪽에서 점수가 빠졌는지 기록하세요.";
+
+          currentScoreSummary = { level, total, state, title, detail };
+          return { state, title, detail, next, total };
+        }
+
+        const group1 = plan.fields.filter((field) => field.group === 1).reduce((sum, field) => sum + values[field.key], 0);
+        const group2 = plan.fields.filter((field) => field.group === 2).reduce((sum, field) => sum + values[field.key], 0);
+        const total = group1 + group2;
+        const weakGroup = group1 < 30 ? "그룹 1(독해+쓰기)" : group2 < 30 ? "그룹 2(듣기+말하기)" : "";
+        const state = group1 >= 30 && group2 >= 30 ? "pass" : total >= 60 || group1 >= 27 || group2 >= 27 ? "risk" : "fail";
+        const title = state === "pass" ? `${level} 합격권` : state === "risk" ? `${level} 위험권` : `${level} 재훈련 필요`;
+        const detail = state === "pass"
+          ? `그룹 1 ${formatScore(group1)}점, 그룹 2 ${formatScore(group2)}점, 총 ${formatScore(total)}점입니다. 두 그룹 모두 30점 이상입니다.`
+          : `${weakGroup || "두 그룹"}이 30점 기준에 부족합니다. 그룹 1 ${formatScore(group1)}점, 그룹 2 ${formatScore(group2)}점입니다.`;
+        const next = group1 < group2
+          ? "다음 훈련은 독해 근거 표시와 쓰기 조건 충족을 우선하세요."
+          : group2 < group1
+            ? "다음 훈련은 듣기 전 선택지 예측과 말하기 즉흥 대응을 우선하세요."
+            : "두 그룹이 비슷합니다. 공식 모델 시험 1회분을 실제 시간으로 다시 풀어 변동 폭을 확인하세요.";
+
+        currentScoreSummary = { level, total, state, title, detail };
+        return { state, title, detail, next, total };
+      }
+
+      function renderScoreResult() {
+        if (!scoreResult) {
+          return;
+        }
+        const result = evaluateScores();
+        scoreResult.dataset.state = result.state;
+        scoreResult.innerHTML = `
+          <strong>${result.title}</strong>
+          <p>${result.detail}</p>
+          <p>${result.next}</p>
+        `;
+      }
+
+      function renderScoreFields() {
+        const plan = getCurrentExamPlan();
+        if (!scoreFields) {
+          return;
+        }
+        scoreFields.innerHTML = plan.fields
+          .map(
+            (field) => `
+              <label class="score-field">
+                <span>${field.label}</span>
+                <input type="number" min="0" max="${field.max}" step="0.01" value="0" inputmode="decimal" data-score-key="${field.key}">
+                <small>0-${formatScore(field.max)}점 입력</small>
+              </label>
+            `
+          )
+          .join("");
+        scoreFields.querySelectorAll("input").forEach((input) => {
+          input.addEventListener("input", renderScoreResult);
+        });
+        renderScoreResult();
+      }
+
+      function readScoreHistory() {
+        try {
+          return JSON.parse(localStorage.getItem(scoreStorageKey) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      function writeScoreHistory(history) {
+        localStorage.setItem(scoreStorageKey, JSON.stringify(history.slice(0, 6)));
+      }
+
+      const readinessActions = {
+        "official-model": "공식 준비 자료에서 목표 레벨 모델 시험 1회분을 실제 제한 시간으로 풉니다.",
+        "answer-sheet": "공식 답안지 모델을 열고 마킹, 쓰기 답안 위치, 수험 정보 칸을 확인합니다.",
+        "official-review": "정답표와 듣기 전사문을 보고 틀린 이유를 한 줄씩 분류합니다.",
+        "production-samples": "쓰기 답안 3개와 말하기 녹음 3개를 남기고 조건 누락을 고칩니다.",
+        "weak-retrain": "두 번 이상 반복된 약점 유형을 새 문제 전에 20분만 따로 재훈련합니다.",
+        "exam-day": "신분증, 수험표, 이동 시간, 마지막 5분 답안 확인 순서를 정합니다."
+      };
+
+      function getReadinessItems() {
+        return readinessChecks.map((input) => {
+          const card = input.closest(".readiness-check");
+          return {
+            id: input.dataset.readinessCheck || "",
+            checked: input.checked,
+            critical: input.dataset.critical === "true",
+            title: card?.querySelector("strong")?.textContent.trim() || ""
+          };
+        });
+      }
+
+      function evaluateReadiness() {
+        const level = readinessLevel?.value || "A1";
+        const items = getReadinessItems();
+        const checked = items.filter((item) => item.checked);
+        const missing = items.filter((item) => !item.checked);
+        const criticalMissing = missing.filter((item) => item.critical);
+        const checkedCount = checked.length;
+        const totalCount = items.length;
+
+        if (!checkedCount) {
+          return {
+            state: "risk",
+            title: `${level} 응시 판단 대기`,
+            detail: "아직 체크된 항목이 없습니다. 먼저 공식 모델 시험을 실제 조건으로 풀었는지 확인하세요.",
+            next: ["공식 모델 시험 1회분을 시간 제한 안에서 풀고, 정답표와 전사문 분석까지 끝내세요."]
+          };
+        }
+
+        if (!criticalMissing.length && checkedCount >= 5) {
+          return {
+            state: "pass",
+            title: `${level} 응시 가능에 가까움`,
+            detail: `${checkedCount}/${totalCount}개 항목이 준비됐고, 핵심 항목이 모두 채워졌습니다. 이제 새 내용을 늘리기보다 공식 모델 시험 반복과 컨디션 관리를 우선하세요.`,
+            next: [
+              "공식 모델 시험 1회분을 한 번 더 실제 시간으로 풀어 변동 폭을 확인하세요.",
+              "시험 전날에는 새 문법보다 오답표, 연결어, 말하기 회복 표현만 봅니다."
+            ]
+          };
+        }
+
+        if (criticalMissing.length <= 1 && checkedCount >= 4) {
+          return {
+            state: "risk",
+            title: `${level} 보강 후 응시 판단`,
+            detail: `${checkedCount}/${totalCount}개 항목이 준비됐지만 핵심 항목이 아직 완전히 닫히지 않았습니다.`,
+            next: [
+              ...criticalMissing.map((item) => readinessActions[item.id] || `${item.title} 항목을 먼저 마무리하세요.`),
+              "보강 뒤에는 같은 체크리스트를 다시 열어 핵심 항목이 모두 닫혔는지 확인하세요."
+            ]
+          };
+        }
+
+        return {
+          state: "fail",
+          title: `${level} 응시 보류 권장`,
+          detail: `${checkedCount}/${totalCount}개 항목만 준비됐습니다. 아직은 시험 신청보다 공식 모델 시험과 약점 재훈련을 먼저 끝내는 편이 낫습니다.`,
+          next: missing.slice(0, 4).map((item) => readinessActions[item.id] || `${item.title} 항목을 먼저 마무리하세요.`)
+        };
+      }
+
+      function renderReadinessResult() {
+        if (!readinessResult) {
+          return;
+        }
+        const result = evaluateReadiness();
+        readinessResult.dataset.state = result.state;
+        readinessResult.innerHTML = `
+          <strong>${result.title}</strong>
+          <p>${result.detail}</p>
+        `;
+        if (readinessNext) {
+          readinessNext.innerHTML = result.next.map((item) => `<li>${item}</li>`).join("");
+        }
+      }
+
+      function readReadinessState() {
+        try {
+          return JSON.parse(localStorage.getItem(readinessStorageKey) || "{}");
+        } catch {
+          return {};
+        }
+      }
+
+      function writeReadinessState() {
+        const state = {
+          level: readinessLevel?.value || "A1",
+          checked: readinessChecks.filter((input) => input.checked).map((input) => input.dataset.readinessCheck || "")
+        };
+        localStorage.setItem(readinessStorageKey, JSON.stringify(state));
+      }
+
+      function restoreReadinessState() {
+        const state = readReadinessState();
+        if (readinessLevel && state.level) {
+          readinessLevel.value = state.level;
+        }
+        const checkedSet = new Set(Array.isArray(state.checked) ? state.checked : []);
+        readinessChecks.forEach((input) => {
+          input.checked = checkedSet.has(input.dataset.readinessCheck || "");
+        });
+        renderReadinessResult();
+      }
+
+      function renderScoreHistory() {
+        if (!scoreHistory) {
+          return;
+        }
+        const history = readScoreHistory();
+        if (!history.length) {
+          scoreHistory.innerHTML = "<li>아직 저장된 모의고사 결과가 없습니다.</li>";
+          return;
+        }
+        scoreHistory.innerHTML = history
+          .map((item) => `<li>${item.date} · ${item.level} · ${item.title} · ${formatScore(item.total)}점</li>`)
+          .join("");
+      }
+
+      function readTrainingLog() {
+        try {
+          return JSON.parse(localStorage.getItem(trainingStorageKey) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      function writeTrainingLog(items) {
+        localStorage.setItem(trainingStorageKey, JSON.stringify(items.slice(0, 8)));
+      }
+
+      function renderTrainingLog() {
+        if (!trainingLog) {
+          return;
+        }
+        const items = readTrainingLog();
+        if (!items.length) {
+          trainingLog.innerHTML = "<li>아직 저장된 보강 기록이 없습니다.</li>";
+          return;
+        }
+        trainingLog.innerHTML = items
+          .map((item) => `<li>${item.date} · ${item.level} ${item.area} · ${item.error} → ${item.action}</li>`)
+          .join("");
+      }
+
+      function saveTrainingLog(event) {
+        event.preventDefault();
+        const error = trainingError?.value.trim() || "";
+        const action = trainingAction?.value.trim() || "";
+        if (!error || !action) {
+          if (trainingLog) {
+            trainingLog.innerHTML = "<li>오류 유형과 다음 수정 행동을 모두 적어야 저장됩니다.</li>";
+          }
+          return;
+        }
+        const now = new Date();
+        const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+        const entry = {
+          date,
+          level: trainingLevel?.value || "B1",
+          area: trainingArea?.value || "독해",
+          error,
+          action
+        };
+        writeTrainingLog([entry, ...readTrainingLog()]);
+        trainingForm?.reset();
+        renderTrainingLog();
+      }
+
+      function saveCurrentScore() {
+        if (!currentScoreSummary) {
+          renderScoreResult();
+        }
+        if (!currentScoreSummary) {
+          if (scoreResult) {
+            scoreResult.dataset.state = "risk";
+            scoreResult.innerHTML = `
+              <strong>저장할 점수가 없습니다</strong>
+              <p>먼저 영역별 점수를 입력한 뒤 결과를 저장하세요.</p>
+            `;
+          }
+          return;
+        }
+        const now = new Date();
+        const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+        const history = readScoreHistory();
+        writeScoreHistory([{ ...currentScoreSummary, date: stamp }, ...history]);
+        renderScoreHistory();
+      }
+
+      function startTimer() {
+        if (!timerRemainingSeconds) {
+          resetTimer();
+        }
+        if (timerInterval) {
+          return;
+        }
+        if (timerLabel) {
+          timerLabel.textContent = "실전 모드 진행 중입니다. 공식 시험처럼 중간에 전사문을 보지 마세요.";
+        }
+        timerInterval = window.setInterval(() => {
+          timerRemainingSeconds = Math.max(0, timerRemainingSeconds - 1);
+          renderTimer();
+          if (timerRemainingSeconds === 0) {
+            stopTimer();
+            if (timerLabel) {
+              timerLabel.textContent = "시간 종료. 이제 채점하고 오답 이유를 분류하세요.";
+            }
+          }
+        }, 1000);
+      }
+
+      examLevelSelect?.addEventListener("change", () => {
+        renderExamPlan();
+        renderScoreFields();
+      });
+      timerStart?.addEventListener("click", startTimer);
+      timerPause?.addEventListener("click", () => {
+        stopTimer();
+        if (timerLabel) {
+          timerLabel.textContent = "일시정지됨. 다시 시작하면 남은 시간부터 이어집니다.";
+        }
+      });
+      timerReset?.addEventListener("click", () => resetTimer());
+      scoreSave?.addEventListener("click", saveCurrentScore);
+      scoreClear?.addEventListener("click", () => {
+        localStorage.removeItem(scoreStorageKey);
+        renderScoreHistory();
+      });
+      readinessLevel?.addEventListener("change", () => {
+        writeReadinessState();
+        renderReadinessResult();
+      });
+      readinessChecks.forEach((input) => {
+        input.addEventListener("change", () => {
+          writeReadinessState();
+          renderReadinessResult();
+        });
+      });
+      readinessSave?.addEventListener("click", () => {
+        writeReadinessState();
+        renderReadinessResult();
+      });
+      readinessClear?.addEventListener("click", () => {
+        localStorage.removeItem(readinessStorageKey);
+        if (readinessLevel) {
+          readinessLevel.value = "A1";
+        }
+        readinessChecks.forEach((input) => {
+          input.checked = false;
+        });
+        renderReadinessResult();
+      });
+      trainingForm?.addEventListener("submit", saveTrainingLog);
+      trainingClear?.addEventListener("click", () => {
+        localStorage.removeItem(trainingStorageKey);
+        renderTrainingLog();
+      });
+      renderExamPlan();
+      renderScoreFields();
+      renderScoreHistory();
+      restoreReadinessState();
+      renderTrainingLog();
+
+      function getSpeechStatus(button) {
+        return button.parentElement?.querySelector(".listen-status");
+      }
+
+      function getSpeechProgress(button) {
+        return button.closest(".listening-card")?.querySelector(".listen-progress");
+      }
+
+      function setSpeechProgress(button, value) {
+        const progress = getSpeechProgress(button);
+        if (!progress) {
+          return;
+        }
+
+        const safeValue = Math.max(0, Math.min(100, value));
+        progress.setAttribute("aria-valuenow", String(Math.round(safeValue)));
+        const bar = progress.querySelector(".listen-progress-bar");
+        if (bar) {
+          bar.style.width = `${safeValue}%`;
+        }
+      }
+
+      function stopSpeech() {
+        if (speechProgressFrame) {
+          cancelAnimationFrame(speechProgressFrame);
+          speechProgressFrame = 0;
+        }
+
+        window.speechSynthesis?.cancel();
+        speakButtons.forEach((button) => {
+          button.disabled = false;
+          setSpeechProgress(button, 0);
+          const status = getSpeechStatus(button);
+          if (status) {
+            status.textContent = "";
+          }
+        });
+        activeSpeechButton = null;
+      }
+
+      function animateSpeechProgress(button, durationMs) {
+        const start = performance.now();
+
+        function tick(now) {
+          const elapsed = now - start;
+          const value = Math.min(96, (elapsed / durationMs) * 100);
+          setSpeechProgress(button, value);
+          if (value < 96 && activeSpeechButton === button) {
+            speechProgressFrame = requestAnimationFrame(tick);
+          }
+        }
+
+        speechProgressFrame = requestAnimationFrame(tick);
+      }
+
+      speakButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+            const status = getSpeechStatus(button);
+            if (status) {
+              status.textContent = "이 브라우저는 음성 합성을 지원하지 않습니다.";
+            }
+            return;
+          }
+
+          if (activeSpeechButton === button) {
+            stopSpeech();
+            return;
+          }
+
+          stopSpeech();
+
+          const utterance = new SpeechSynthesisUtterance(button.dataset.speakText || "");
+          utterance.lang = "es-ES";
+          utterance.rate = Number(button.dataset.speakRate || "0.9");
+          activeSpeechButton = button;
+          button.disabled = true;
+          const status = getSpeechStatus(button);
+          if (status) {
+            status.textContent = "재생 중";
+          }
+          const estimatedDuration = Math.max(2800, utterance.text.length * 78);
+          animateSpeechProgress(button, estimatedDuration);
+
+          utterance.onend = () => {
+            setSpeechProgress(button, 100);
+            if (status) {
+              status.textContent = "완료";
+            }
+            window.setTimeout(() => {
+              if (activeSpeechButton === button) {
+                stopSpeech();
+              }
+            }, 700);
+          };
+
+          utterance.onerror = () => {
+            if (speechProgressFrame) {
+              cancelAnimationFrame(speechProgressFrame);
+              speechProgressFrame = 0;
+            }
+            setSpeechProgress(button, 0);
+            button.disabled = false;
+            activeSpeechButton = null;
+            if (status) {
+              status.textContent = "재생 실패. 전사문으로 확인하세요.";
+            }
+          };
+
+          window.speechSynthesis.speak(utterance);
+        });
+      });
+
+      window.addEventListener("pagehide", stopSpeech);
+    </script>
+  </body>
+</html>
