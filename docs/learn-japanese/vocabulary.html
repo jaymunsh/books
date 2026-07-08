@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="일본어 가이드북 단어장. 문자 입문부터 JLPT N1까지 핵심 어휘.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <title>일본어 가이드북 단어장</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("aab-theme");
+      document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
+    })();
+  </script>
+  <style>
+    :root,
+    :root[data-theme="light"] {
+      --bg: #F3F6F1;
+      --paper: #FFFFFF;
+      --sidebar: #F8FAF5;
+      --ink: #1B2029;
+      --ink-soft: #525A67;
+      --ink-faint: #5E6671;
+      --line: #E0E7DE;
+      --line-soft: #ECF2E9;
+      --seal: #2F6F4E;
+      --seal-soft: #E3F0E7;
+      --navy: #2C3A55;
+      --navy-soft: #E9ECF3;
+      --sel: #E8F0E6;
+      --shadow: 0 1px 2px rgba(20,24,32,.04), 0 8px 28px rgba(20,24,32,.05);
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #13161B;
+      --paper: #1B1F26;
+      --sidebar: #171A20;
+      --ink: #E9E8E2;
+      --ink-soft: #AEB4BE;
+      --ink-faint: #A5ABB4;
+      --line: #2A2F38;
+      --line-soft: #22262E;
+      --seal: #7FC59A;
+      --seal-soft: #1D3327;
+      --navy: #9FB0D4;
+      --navy-soft: #242B39;
+      --sel: #232833;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif;
+      line-height: 1.68;
+      letter-spacing: -.01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+
+    .mobile-skip-main {
+      display: none;
+      border-bottom: 1px solid var(--line);
+      background: var(--seal);
+      color: var(--paper);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .side {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background: var(--sidebar);
+      padding: 32px 20px;
+    }
+
+    .kicker {
+      color: var(--navy);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: 26px;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+
+    h1 b { color: var(--seal); }
+    .sub { margin: 0; color: var(--ink-soft); font-size: 13px; }
+    .author {
+      margin: 7px 0 0;
+      color: var(--ink-faint);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .link-stack {
+      display: grid;
+      gap: 8px;
+      margin: 26px 0 22px;
+    }
+
+    .book-link,
+    .level-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 8px;
+      padding: 9px 10px;
+    }
+
+    .book-link {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .book-link small {
+      display: block;
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .level-list {
+      display: grid;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .level-link {
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .level-link.active,
+    .level-link:hover {
+      background: var(--sel);
+      color: var(--ink);
+    }
+
+    .level-link span:first-child { color: var(--seal); font-weight: 800; }
+    .level-link small { white-space: nowrap; }
+    .main { padding: 46px 32px 80px; }
+    .inner { width: min(100%, 960px); margin: 0 auto; }
+
+    .head {
+      display: grid;
+      gap: 16px;
+      padding-bottom: 28px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .head h2 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .search,
+    .select,
+    .theme {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+    }
+
+    .search {
+      width: 100%;
+      padding: 0 12px;
+    }
+
+    .select { padding: 0 10px; }
+    .theme {
+      min-width: 40px;
+      cursor: pointer;
+    }
+
+    .summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: var(--seal-soft);
+      color: var(--seal);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .vocab-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: minmax(120px, 1.1fr) minmax(140px, 1fr) minmax(220px, 2fr);
+      gap: 16px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .jp {
+      display: grid;
+      gap: 2px;
+    }
+
+    .kana {
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .kanji {
+      color: var(--ink-faint);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .meaning {
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--navy-soft);
+      color: var(--navy);
+      padding: 3px 7px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .note {
+      margin: 0 0 8px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .example {
+      margin: 0;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .chapter {
+      display: inline-flex;
+      margin-top: 10px;
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .memory-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .memory-btn {
+      min-height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink-soft);
+      padding: 0 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .memory-btn.active {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 28px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-skip-main { display: block; }
+      .shell { display: block; }
+      .side {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 24px 20px;
+      }
+      .main { padding: 28px 20px 64px; }
+      .controls { grid-template-columns: 1fr auto; }
+      .select { grid-column: 1 / -1; }
+      .card { grid-template-columns: 1fr; gap: 10px; }
+      .kana { font-size: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="mobile-skip-main" href="#mainContent">단어장 바로가기</a>
+  <div class="shell">
+    <aside class="side">
+      <div class="kicker">Japanese Guidebook</div>
+      <h1><b>일본어</b> 단어장</h1>
+      <p class="sub">한국어 핵심 카드와 JLPT 확장 목록</p>
+      <p class="author">지은이 문성혁</p>
+      <div class="link-stack">
+        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="practice.html"><span>문제 은행 보기<small>정답과 해설</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="exam.html"><span>모의고사 보기<small>시간 제한 채점</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="review.html"><span>오답노트 보기<small>틀린 문제 다시 풀기</small></span><span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="kicker">Levels</div>
+      <nav class="level-list" id="levelNav" aria-label="단어장 레벨"></nav>
+    </aside>
+    <main class="main" id="mainContent">
+      <div class="inner">
+        <header class="head">
+          <h2 id="pageTitle">핵심 단어장</h2>
+          <p class="lead">이 페이지는 직접 정리한 한국어 핵심 카드와 공개 JLPT 확장 목록을 함께 검색한다. 목차의 800·1,500·3,000·6,000은 단계별 누적 목표량이며, 공개 목록의 실제 수록 수와 차이가 있을 수 있다.</p>
+        </header>
+        <div class="controls">
+          <input class="search" id="search" type="search" placeholder="단어 검색 (예: 食べる, 커피, 수수)" aria-label="단어 검색">
+          <select class="select" id="levelSelect" aria-label="레벨 선택"></select>
+          <select class="select" id="memorySelect" aria-label="암기 상태 선택">
+            <option value="all">전체 상태</option>
+            <option value="new">미분류</option>
+            <option value="known">아는 단어</option>
+            <option value="review">다시 보기</option>
+            <option value="unknown">모르는 단어</option>
+          </select>
+          <button class="theme" id="themeBtn" type="button" aria-label="테마 전환">◐</button>
+        </div>
+        <div class="summary" id="summary"></div>
+        <section class="vocab-grid" id="vocabGrid" aria-live="polite"></section>
+      </div>
+    </main>
+  </div>
+  <script src="data/vocabulary.js"></script>
+  <script src="data/jlpt-expanded-vocabulary.js"></script>
+  <script>
+    var levels = VOCABULARY.levels;
+    var entries = VOCABULARY.entries;
+    var memoryKey = "jgb-vocab-memory";
+    var state = { level: location.hash.replace("#", "") || "all", query: "", memory: "all" };
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, function (char) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char];
+      });
+    }
+
+    function levelLabel(id) {
+      var item = levels.find(function (level) { return level.id === id; });
+      return item ? item.label : "전체";
+    }
+
+    function formatCount(value) {
+      return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function entryKey(entry) {
+      return [entry.level, entry.kana, entry.kanji || "", entry.meaning].join("::");
+    }
+
+    function readMemory() {
+      try {
+        return JSON.parse(localStorage.getItem(memoryKey) || "{}") || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function writeMemory(memory) {
+      try {
+        localStorage.setItem(memoryKey, JSON.stringify(memory));
+      } catch (error) {
+        return false;
+      }
+      return true;
+    }
+
+    function memoryLabel(status) {
+      return { known: "아는 단어", review: "다시 보기", unknown: "모르는 단어" }[status] || "미분류";
+    }
+
+    function targetText(level) {
+      if (!level) return "";
+      if (level.targetCount) return level.label + "까지 목표 " + formatCount(level.targetCount);
+      if (level.id === "kana") return level.targetLabel || "";
+      return level.targetLabel ? level.label + " " + level.targetLabel : "";
+    }
+
+    function allTargetText() {
+      return levels.map(function (level) {
+        var target = targetText(level);
+        return target || "";
+      }).filter(Boolean).join(" · ");
+    }
+
+    function cumulativeCount(levelId) {
+      var order = ["n5", "n4", "n3", "n2", "n1"];
+      var levelIndex = order.indexOf(levelId);
+      if (levelIndex < 0) return 0;
+      var included = order.slice(0, levelIndex + 1);
+      return entries.filter(function (entry) { return included.indexOf(entry.level) > -1; }).length;
+    }
+
+    function levelEntries(levelId) {
+      return levelId === "all" ? entries : entries.filter(function (entry) { return entry.level === levelId; });
+    }
+
+    function sourceBreakdown(list) {
+      return list.reduce(function (acc, entry) {
+        if (entry.priority < 4) acc.core += 1;
+        else acc.expanded += 1;
+        return acc;
+      }, { core: 0, expanded: 0 });
+    }
+
+    function setTheme() {
+      var root = document.documentElement;
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("aab-theme", next);
+    }
+
+    function renderNav() {
+      var allCount = entries.length;
+      var nav = document.getElementById("levelNav");
+      nav.innerHTML = '<a class="level-link" href="#all" data-level="all"><span>전체</span><small>수록 ' + formatCount(allCount) + '</small></a>' +
+        levels.map(function (level) {
+          var count = entries.filter(function (entry) { return entry.level === level.id; }).length;
+          return '<a class="level-link" href="#' + level.id + '" data-level="' + level.id + '"><span>' +
+            escapeHTML(level.label) + '</span><small>수록 ' + formatCount(count) + '</small></a>';
+        }).join("");
+      var select = document.getElementById("levelSelect");
+      select.innerHTML = '<option value="all">전체 레벨</option>' + levels.map(function (level) {
+        return '<option value="' + level.id + '">' + escapeHTML(level.label + " - " + level.title) + '</option>';
+      }).join("");
+    }
+
+    function filteredEntries() {
+      var query = state.query.trim().toLowerCase();
+      var memory = readMemory();
+      return entries.filter(function (entry) {
+        var inLevel = state.level === "all" || entry.level === state.level;
+        var status = memory[entryKey(entry)] || "new";
+        var inMemory = state.memory === "all" || status === state.memory;
+        var haystack = [entry.level, entry.kana, entry.kanji, entry.meaning, entry.pos, entry.note, entry.example].concat(entry.tags || []).join(" ").toLowerCase();
+        return inLevel && inMemory && (!query || haystack.indexOf(query) > -1);
+      }).sort(function (a, b) {
+        return a.priority - b.priority || a.level.localeCompare(b.level) || a.kana.localeCompare(b.kana, "ja");
+      });
+    }
+
+    function memoryStats(list) {
+      var memory = readMemory();
+      return list.reduce(function (acc, entry) {
+        var status = memory[entryKey(entry)] || "new";
+        acc[status] = (acc[status] || 0) + 1;
+        return acc;
+      }, { new: 0, known: 0, review: 0, unknown: 0 });
+    }
+
+    function render() {
+      var list = filteredEntries();
+      var level = levels.find(function (item) { return item.id === state.level; });
+      var scopedEntries = levelEntries(state.level);
+      var currentCount = scopedEntries.length;
+      var source = sourceBreakdown(scopedEntries);
+      var memory = readMemory();
+      var stats = memoryStats(scopedEntries);
+      var cumulative = cumulativeCount(state.level);
+      var target = state.level === "all" ? allTargetText() : targetText(level);
+      var title = state.level === "all" ? "JLPT 통합 단어장" : levelLabel(state.level) + " 단어장";
+      var visibleList = list;
+      document.getElementById("pageTitle").textContent = title;
+      document.getElementById("levelSelect").value = state.level;
+      document.getElementById("memorySelect").value = state.memory;
+      document.querySelectorAll(".level-link").forEach(function (link) {
+        link.classList.toggle("active", link.dataset.level === state.level);
+      });
+      document.getElementById("summary").innerHTML =
+        '<span class="pill">표시 ' + formatCount(list.length) + '개</span>' +
+        '<span class="pill">현재 수록 ' + formatCount(currentCount) + '개</span>' +
+        '<span class="pill">핵심 ' + formatCount(source.core) + ' · 확장 ' + formatCount(source.expanded) + '</span>' +
+        '<span class="pill">아는 단어 ' + formatCount(stats.known) + '</span>' +
+        '<span class="pill">다시 보기 ' + formatCount(stats.review) + '</span>' +
+        '<span class="pill">모르는 단어 ' + formatCount(stats.unknown) + '</span>' +
+        (cumulative ? '<span class="pill">누적 수록 ' + formatCount(cumulative) + '개</span>' : '') +
+        (target ? '<span class="pill">목차 기준 ' + escapeHTML(target) + '</span>' : '') +
+        '<span class="pill">우선순위 1부터 학습</span>';
+      document.getElementById("vocabGrid").innerHTML = visibleList.length ? visibleList.map(function (entry) {
+        var key = entryKey(entry);
+        var status = memory[key] || "new";
+        return '<article class="card"><div class="jp"><div class="kana">' + escapeHTML(entry.kana) + '</div>' +
+          '<div class="kanji">' + escapeHTML(entry.kanji || "가타카나/표현") + '</div></div>' +
+          '<div><div class="meaning">' + escapeHTML(entry.meaning) + '</div><div class="meta"><span class="tag">' +
+          escapeHTML(entry.pos) + '</span><span class="tag">' + escapeHTML(levelLabel(entry.level)) + '</span>' +
+          '<span class="tag">' + escapeHTML(memoryLabel(status)) + '</span>' +
+          (entry.tags || []).map(function (tag) { return '<span class="tag">' + escapeHTML(tag) + '</span>'; }).join("") +
+          '</div><a class="chapter" href="index.html#' + escapeHTML(entry.chapter) + '">관련 장으로 이동</a></div>' +
+          '<div><p class="note">' + escapeHTML(entry.note) + '</p><p class="example">' + escapeHTML(entry.example) + '</p>' +
+          '<div class="memory-actions" data-key="' + escapeHTML(key) + '">' +
+            '<button class="memory-btn' + (status === "known" ? " active" : "") + '" type="button" data-status="known">아는 단어</button>' +
+            '<button class="memory-btn' + (status === "review" ? " active" : "") + '" type="button" data-status="review">다시 보기</button>' +
+            '<button class="memory-btn' + (status === "unknown" ? " active" : "") + '" type="button" data-status="unknown">모르는 단어</button>' +
+          '</div></div></article>';
+      }).join("") : '<div class="empty">검색 결과가 없다. 다른 단어, 뜻, 태그로 검색해 보라.</div>';
+    }
+
+    renderNav();
+    render();
+
+    window.addEventListener("hashchange", function () {
+      state.level = location.hash.replace("#", "") || "all";
+      render();
+    });
+
+    document.getElementById("search").addEventListener("input", function (event) {
+      state.query = event.target.value;
+      render();
+    });
+
+    document.getElementById("levelSelect").addEventListener("change", function (event) {
+      location.hash = event.target.value;
+    });
+
+    document.getElementById("memorySelect").addEventListener("change", function (event) {
+      state.memory = event.target.value;
+      render();
+    });
+
+    document.getElementById("vocabGrid").addEventListener("click", function (event) {
+      var button = event.target.closest(".memory-btn");
+      if (!button) return;
+      var box = button.closest(".memory-actions");
+      var memory = readMemory();
+      memory[box.dataset.key] = button.dataset.status;
+      writeMemory(memory);
+      render();
+    });
+
+    document.getElementById("themeBtn").addEventListener("click", setTheme);
+  </script>
+</body>
+</html>

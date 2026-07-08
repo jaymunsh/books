@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="일본어 가이드북 문제 은행. N5부터 N1까지 문자·어휘, 문법, 독해, 청해 문제와 정답 해설.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <title>일본어 가이드북 문제 은행</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("aab-theme");
+      document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
+    })();
+  </script>
+  <style>
+    :root,
+    :root[data-theme="light"] {
+      --bg: #F3F6F1;
+      --paper: #FFFFFF;
+      --sidebar: #F8FAF5;
+      --ink: #1B2029;
+      --ink-soft: #525A67;
+      --ink-faint: #5E6671;
+      --line: #E0E7DE;
+      --line-soft: #ECF2E9;
+      --seal: #2F6F4E;
+      --seal-soft: #E3F0E7;
+      --navy: #2C3A55;
+      --navy-soft: #E9ECF3;
+      --sel: #E8F0E6;
+      --shadow: 0 1px 2px rgba(20,24,32,.04), 0 8px 28px rgba(20,24,32,.05);
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #13161B;
+      --paper: #1B1F26;
+      --sidebar: #171A20;
+      --ink: #E9E8E2;
+      --ink-soft: #AEB4BE;
+      --ink-faint: #A5ABB4;
+      --line: #2A2F38;
+      --line-soft: #22262E;
+      --seal: #7FC59A;
+      --seal-soft: #1D3327;
+      --navy: #9FB0D4;
+      --navy-soft: #242B39;
+      --sel: #232833;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif;
+      line-height: 1.68;
+      letter-spacing: -.01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+
+    .mobile-skip-main {
+      display: none;
+      border-bottom: 1px solid var(--line);
+      background: var(--seal);
+      color: var(--paper);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .side {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background: var(--sidebar);
+      padding: 32px 20px;
+    }
+
+    .kicker {
+      color: var(--navy);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: 26px;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+
+    h1 b { color: var(--seal); }
+    .sub { margin: 0; color: var(--ink-soft); font-size: 13px; }
+    .author {
+      margin: 7px 0 0;
+      color: var(--ink-faint);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .link-stack {
+      display: grid;
+      gap: 8px;
+      margin: 26px 0 22px;
+    }
+
+    .book-link,
+    .level-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 8px;
+      padding: 9px 10px;
+    }
+
+    .book-link {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .book-link small {
+      display: block;
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .level-list {
+      display: grid;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .level-link {
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 700;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .level-link.active,
+    .level-link:hover {
+      background: var(--sel);
+      color: var(--ink);
+    }
+
+    .level-link span:first-child { color: var(--seal); font-weight: 900; }
+    .level-link small {
+      margin-left: auto;
+      color: var(--ink-faint);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .main { padding: 46px 32px 80px; }
+    .inner { width: min(100%, 980px); margin: 0 auto; }
+
+    .head {
+      display: grid;
+      gap: 16px;
+      padding-bottom: 28px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .head h2 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .search-wrap { position: relative; }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      color: var(--ink-faint);
+      line-height: 1;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search-icon::before { content: "⌕"; }
+
+    .search,
+    .select,
+    .theme {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+    }
+
+    .search {
+      width: 100%;
+      padding: 0 12px 0 34px;
+    }
+
+    .select { padding: 0 10px; }
+    .theme {
+      min-width: 40px;
+      cursor: pointer;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: var(--seal-soft);
+      color: var(--seal);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .practice-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .set-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .set-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .set-title {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.3;
+      letter-spacing: 0;
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+
+    .set-goal {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .set-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      min-width: 120px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--navy-soft);
+      color: var(--navy);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tag.level {
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
+    .passage,
+    .audio-card {
+      margin-top: 14px;
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      background: var(--sidebar);
+      padding: 14px;
+    }
+
+    .passage-title,
+    .audio-title {
+      margin: 0 0 8px;
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .passage p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.9;
+      letter-spacing: 0;
+    }
+
+    audio { width: 100%; }
+
+    .transcript {
+      margin-top: 10px;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 10px;
+    }
+
+    .transcript summary,
+    .answer summary {
+      color: var(--seal);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .script-lines {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .question {
+      border-top: 1px solid var(--line-soft);
+      padding-top: 14px;
+    }
+
+    .question:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .prompt {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: choice;
+    }
+
+    .choices li {
+      counter-increment: choice;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--sidebar);
+      padding: 8px 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .choices li::before {
+      content: counter(choice) ". ";
+      color: var(--seal);
+      font-weight: 900;
+    }
+
+    .answer {
+      margin-top: 9px;
+      border-radius: 8px;
+      background: var(--seal-soft);
+      padding: 8px 10px;
+    }
+
+    .answer p {
+      margin: 8px 0 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .correct {
+      color: var(--seal);
+      font-weight: 900;
+    }
+
+    .note-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--seal);
+      padding: 0 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 28px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-skip-main { display: block; }
+      .shell { display: block; }
+      .side {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 24px 20px;
+      }
+      .main { padding: 28px 20px 64px; }
+      .controls { grid-template-columns: 1fr auto; }
+      .select { grid-column: 1 / -1; }
+      .set-head { display: grid; }
+      .set-meta { justify-content: flex-start; }
+      .choices { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="mobile-skip-main" href="#mainContent">문제 은행 바로가기</a>
+  <div class="shell">
+    <aside class="side">
+      <div class="kicker">Japanese Guidebook</div>
+      <h1><b>일본어</b> 문제 은행</h1>
+      <p class="sub">N5부터 N1까지 실전 문제와 정답 해설</p>
+      <p class="author">지은이 문성혁</p>
+      <div class="link-stack">
+        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="vocabulary.html"><span>단어장 보기<small>검색과 반복 암기</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="exam.html"><span>모의고사 보기<small>시간 제한 채점</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="review.html"><span>오답노트 보기<small>틀린 문제 다시 풀기</small></span><span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="kicker">Levels</div>
+      <nav class="level-list" id="levelNav" aria-label="문제 은행 레벨"></nav>
+    </aside>
+    <main class="main" id="mainContent">
+      <div class="inner">
+        <header class="head">
+          <h2 id="pageTitle">실전 문제 은행</h2>
+          <p class="lead">문자·어휘, 문법, 독해, 청해를 급수별로 풀고 바로 정답과 해설을 확인한다. 데이터는 급수별 파일로 분리되어 선택한 범위만 로드된다.</p>
+        </header>
+        <div class="controls">
+          <div class="search-wrap">
+            <span class="search-icon" aria-hidden="true"></span>
+            <input class="search" id="search" type="search" placeholder="문제 검색 (예: 조건, 청해, 장음)" aria-label="문제 검색">
+          </div>
+          <select class="select" id="levelSelect" aria-label="레벨 선택"></select>
+          <select class="select" id="sectionSelect" aria-label="영역 선택"></select>
+          <button class="theme" id="themeBtn" type="button" aria-label="테마 전환">◐</button>
+        </div>
+        <div class="status-row" id="status"></div>
+        <section class="practice-grid" id="practiceGrid" aria-live="polite"></section>
+      </div>
+    </main>
+  </div>
+
+  <script src="data/practice/manifest.js"></script>
+  <script>
+    var meta = window.PRACTICE_META;
+    var bank = window.PRACTICE_BANK;
+    var loadedLevels = {};
+    var loadingLevels = {};
+    var loadedFiles = {};
+    var loadingFiles = {};
+    var wrongNoteKey = "jgb-wrong-notes";
+    var state = {
+      level: location.hash.replace("#", "") || "n5",
+      section: "all",
+      query: ""
+    };
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, function (char) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char];
+      });
+    }
+
+    function levelById(id) {
+      return meta.levels.find(function (level) { return level.id === id; });
+    }
+
+    function sectionById(id) {
+      return meta.sections.find(function (section) { return section.id === id; });
+    }
+
+    function labelLevel(id) {
+      var level = levelById(id);
+      return level ? level.label : "전체";
+    }
+
+    function labelSection(id) {
+      var section = sectionById(id);
+      return section ? section.label : "전체 영역";
+    }
+
+    function setThemeGlyph() {
+      document.getElementById("themeBtn").textContent = "◐";
+    }
+
+    function ensureFile(file) {
+      if (!file) return Promise.resolve();
+      if (loadedFiles[file]) return Promise.resolve();
+      if (loadingFiles[file]) return loadingFiles[file];
+      loadingFiles[file] = new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.src = file;
+        script.onload = function () {
+          loadedFiles[file] = true;
+          resolve();
+        };
+        script.onerror = function () {
+          delete loadingFiles[file];
+          reject(new Error(file + " 로드 실패"));
+        };
+        document.body.appendChild(script);
+      });
+      return loadingFiles[file];
+    }
+
+    function ensureLevel(levelId) {
+      if (loadedLevels[levelId]) return Promise.resolve();
+      if (loadingLevels[levelId]) return loadingLevels[levelId];
+      var files = meta.files[levelId];
+      files = Array.isArray(files) ? files : [files];
+      loadingLevels[levelId] = files.reduce(function (promise, file) {
+        return promise.then(function () { return ensureFile(file); });
+      }, Promise.resolve()).then(function () {
+        loadedLevels[levelId] = true;
+      });
+      return loadingLevels[levelId];
+    }
+
+    function ensureCurrentData() {
+      if (state.level === "all") {
+        return meta.levels.reduce(function (promise, level) {
+          return promise.then(function () { return ensureLevel(level.id); });
+        }, Promise.resolve());
+      }
+      return ensureLevel(state.level);
+    }
+
+    function textOfSet(set) {
+      return [
+        set.title,
+        set.goal,
+        set.passage,
+        set.transcript,
+        set.questions.map(function (question) {
+          return [
+            question.prompt,
+            question.explanation,
+            question.choices.join(" ")
+          ].join(" ");
+        }).join(" ")
+      ].join(" ").toLowerCase();
+    }
+
+    function filteredSets() {
+      var query = state.query.trim().toLowerCase();
+      return bank.sets.filter(function (set) {
+        if (state.level !== "all" && set.level !== state.level) return false;
+        if (state.section !== "all" && set.section !== state.section) return false;
+        if (query && textOfSet(set).indexOf(query) === -1) return false;
+        return true;
+      });
+    }
+
+    function formatTranscript(text) {
+      return String(text || "").split("\n").map(function (line) {
+        return '<div>' + escapeHTML(line) + '</div>';
+      }).join("");
+    }
+
+    function questionKey(set, question) {
+      return set.id + "__" + question.id;
+    }
+
+    function readWrongNotes() {
+      try {
+        return JSON.parse(localStorage.getItem(wrongNoteKey) || "{}") || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function writeWrongNotes(notes) {
+      try {
+        localStorage.setItem(wrongNoteKey, JSON.stringify(notes));
+      } catch (error) {
+        return false;
+      }
+      return true;
+    }
+
+    function saveWrongQuestion(setId, questionId) {
+      var set = bank.sets.find(function (item) { return item.id === setId; });
+      if (!set) return false;
+      var question = set.questions.find(function (item) { return item.id === questionId; });
+      if (!question) return false;
+      var key = questionKey(set, question);
+      var notes = readWrongNotes();
+      var previous = notes[key] || {};
+      notes[key] = {
+        key: key,
+        level: set.level,
+        section: set.section,
+        setId: set.id,
+        questionId: question.id,
+        picked: null,
+        answer: question.answer,
+        misses: Math.max(1, previous.misses || 0),
+        lastMissedAt: Date.now(),
+        title: set.title,
+        source: "practice"
+      };
+      return writeWrongNotes(notes);
+    }
+
+    function renderQuestion(set, question, index) {
+      var correctChoice = question.choices[question.answer];
+      return '<div class="question">' +
+        '<p class="prompt">문제 ' + (index + 1) + ". " + escapeHTML(question.prompt) + '</p>' +
+        '<ol class="choices">' +
+          question.choices.map(function (choice) { return '<li>' + escapeHTML(choice) + '</li>'; }).join("") +
+        '</ol>' +
+        '<details class="answer">' +
+          '<summary>정답 보기</summary>' +
+          '<p><span class="correct">정답 ' + (question.answer + 1) + '번</span> · ' + escapeHTML(correctChoice) + '</p>' +
+          '<p>' + escapeHTML(question.explanation) + '</p>' +
+          '<button class="note-action" type="button" data-set="' + escapeHTML(set.id) + '" data-question="' + escapeHTML(question.id) + '">오답노트에 추가</button>' +
+        '</details>' +
+      '</div>';
+    }
+
+    function renderSet(set) {
+      var passage = set.passage ? '<div class="passage"><p class="passage-title">문제 자료</p><p>' + escapeHTML(set.passage) + '</p></div>' : "";
+      var audio = set.audio ? '<div class="audio-card">' +
+        '<p class="audio-title">청해 음성</p>' +
+        '<audio controls preload="metadata" src="' + escapeHTML(set.audio) + '"></audio>' +
+        '<details class="transcript">' +
+          '<summary>대본 보기</summary>' +
+          '<div class="script-lines">' + formatTranscript(set.transcript) + '</div>' +
+        '</details>' +
+      '</div>' : "";
+      return '<article class="set-card" id="' + escapeHTML(set.id) + '">' +
+        '<div class="set-head">' +
+          '<div><h3 class="set-title">' + escapeHTML(set.title) + '</h3><p class="set-goal">' + escapeHTML(set.goal) + '</p></div>' +
+          '<div class="set-meta">' +
+            '<span class="tag level">' + escapeHTML(labelLevel(set.level)) + '</span>' +
+            '<span class="tag">' + escapeHTML(labelSection(set.section)) + '</span>' +
+            '<span class="tag">' + escapeHTML(set.time) + '</span>' +
+          '</div>' +
+        '</div>' +
+        passage +
+        audio +
+        '<div class="question-list">' + set.questions.map(function (question, index) { return renderQuestion(set, question, index); }).join("") + '</div>' +
+      '</article>';
+    }
+
+    function renderOptions() {
+      var levelSelect = document.getElementById("levelSelect");
+      levelSelect.innerHTML = '<option value="all">전체 레벨</option>' +
+        meta.levels.map(function (level) {
+          return '<option value="' + level.id + '">' + level.label + " · " + escapeHTML(level.title) + '</option>';
+        }).join("");
+      var sectionSelect = document.getElementById("sectionSelect");
+      sectionSelect.innerHTML = '<option value="all">전체 영역</option>' +
+        meta.sections.map(function (section) {
+          return '<option value="' + section.id + '">' + escapeHTML(section.label) + '</option>';
+        }).join("");
+    }
+
+    function renderLevelNav() {
+      document.getElementById("levelNav").innerHTML =
+        '<a class="level-link' + (state.level === "all" ? " active" : "") + '" href="#all"><span>전체</span><small>로드</small></a>' +
+        meta.levels.map(function (level) {
+          return '<a class="level-link' + (state.level === level.id ? " active" : "") + '" href="#' + level.id + '">' +
+            '<span>' + level.label + '</span><small>' + escapeHTML(level.target) + '</small></a>';
+        }).join("");
+    }
+
+    function renderStatus(sets) {
+      var questionCount = sets.reduce(function (sum, set) { return sum + set.questions.length; }, 0);
+      document.getElementById("status").innerHTML = [
+        '<span class="pill">' + escapeHTML(labelLevel(state.level)) + '</span>',
+        '<span class="pill">' + escapeHTML(labelSection(state.section)) + '</span>',
+        '<span class="pill">세트 ' + sets.length + '개</span>',
+        '<span class="pill">문항 ' + questionCount + '개</span>'
+      ].join("");
+    }
+
+    function renderPageTitle() {
+      var title = state.level === "all" ? "전체 문제 은행" : labelLevel(state.level) + " 문제 은행";
+      document.getElementById("pageTitle").textContent = title;
+      document.title = "일본어 가이드북 문제 은행 · " + title;
+    }
+
+    function render() {
+      renderLevelNav();
+      document.getElementById("levelSelect").value = state.level;
+      document.getElementById("sectionSelect").value = state.section;
+      renderPageTitle();
+      return ensureCurrentData().then(function () {
+        var sets = filteredSets();
+        renderStatus(sets);
+        document.getElementById("practiceGrid").innerHTML = sets.length
+          ? sets.map(renderSet).join("")
+          : '<div class="empty">조건에 맞는 문제가 없습니다.</div>';
+      }).catch(function () {
+        document.getElementById("practiceGrid").innerHTML = '<div class="empty">문제 데이터를 불러오지 못했습니다.</div>';
+      });
+    }
+
+    renderOptions();
+    setThemeGlyph();
+    document.getElementById("levelSelect").addEventListener("change", function (event) {
+      location.hash = event.target.value;
+    });
+    document.getElementById("sectionSelect").addEventListener("change", function (event) {
+      state.section = event.target.value;
+      render();
+    });
+    document.getElementById("search").addEventListener("input", function (event) {
+      state.query = event.target.value;
+      render();
+    });
+    document.getElementById("themeBtn").addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("aab-theme", next);
+      setThemeGlyph();
+    });
+    document.getElementById("practiceGrid").addEventListener("click", function (event) {
+      var button = event.target.closest(".note-action");
+      if (!button) return;
+      if (saveWrongQuestion(button.dataset.set, button.dataset.question)) {
+        button.textContent = "오답노트에 저장됨";
+      }
+    });
+    window.addEventListener("hashchange", function () {
+      var next = location.hash.replace("#", "") || "n5";
+      state.level = next === "all" || levelById(next) ? next : "n5";
+      render();
+    });
+
+    if (!levelById(state.level) && state.level !== "all") {
+      state.level = "n5";
+      location.hash = "n5";
+    }
+    render();
+  </script>
+</body>
+</html>

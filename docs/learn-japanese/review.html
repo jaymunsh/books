@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="일본어 가이드북 오답노트. 모의고사에서 틀린 문제를 저장하고 다시 푼다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <title>일본어 가이드북 오답노트</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("aab-theme");
+      document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
+    }());
+  </script>
+  <style>
+    :root,
+    :root[data-theme="light"] {
+      --bg: #F3F6F1;
+      --paper: #FFFFFF;
+      --sidebar: #F8FAF5;
+      --ink: #1B2029;
+      --ink-soft: #525A67;
+      --ink-faint: #5E6671;
+      --line: #E0E7DE;
+      --line-soft: #ECF2E9;
+      --seal: #2F6F4E;
+      --seal-soft: #E3F0E7;
+      --navy: #2C3A55;
+      --navy-soft: #E9ECF3;
+      --sel: #E8F0E6;
+      --shadow: 0 1px 2px rgba(20,24,32,.04), 0 8px 28px rgba(20,24,32,.05);
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #13161B;
+      --paper: #1B1F26;
+      --sidebar: #171A20;
+      --ink: #E9E8E2;
+      --ink-soft: #AEB4BE;
+      --ink-faint: #A5ABB4;
+      --line: #2A2F38;
+      --line-soft: #22262E;
+      --seal: #7FC59A;
+      --seal-soft: #1D3327;
+      --navy: #9FB0D4;
+      --navy-soft: #242B39;
+      --sel: #232833;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif;
+      line-height: 1.68;
+      letter-spacing: -.01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    button,
+    input,
+    select { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+
+    .mobile-skip-main {
+      display: none;
+      border-bottom: 1px solid var(--line);
+      background: var(--seal);
+      color: var(--paper);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .side {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background: var(--sidebar);
+      padding: 32px 20px;
+    }
+
+    .kicker {
+      color: var(--navy);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: 26px;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+
+    h1 b { color: var(--seal); }
+    .sub { margin: 0; color: var(--ink-soft); font-size: 13px; }
+    .author {
+      margin: 7px 0 0;
+      color: var(--ink-faint);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .link-stack {
+      display: grid;
+      gap: 8px;
+      margin: 26px 0 22px;
+    }
+
+    .book-link,
+    .level-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 8px;
+      padding: 9px 10px;
+    }
+
+    .book-link {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .book-link small {
+      display: block;
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .level-list {
+      display: grid;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .level-link {
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .level-link.active,
+    .level-link:hover {
+      background: var(--sel);
+      color: var(--ink);
+    }
+
+    .level-link span:first-child { color: var(--seal); font-weight: 900; }
+    .level-link small {
+      margin-left: auto;
+      color: var(--ink-faint);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .main { padding: 46px 32px 80px; }
+    .inner { width: min(100%, 980px); margin: 0 auto; }
+
+    .head {
+      display: grid;
+      gap: 16px;
+      padding-bottom: 28px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .head h2 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto auto;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .search,
+    .select,
+    .theme,
+    .action {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+    }
+
+    .search {
+      width: 100%;
+      padding: 0 12px;
+    }
+
+    .select { padding: 0 10px; }
+
+    .theme {
+      min-width: 40px;
+      cursor: pointer;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      color: var(--paper);
+      background: var(--seal);
+      border-color: var(--seal);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .action.secondary {
+      color: var(--seal);
+      background: var(--seal-soft);
+      border-color: var(--line);
+    }
+
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: var(--seal-soft);
+      color: var(--seal);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .pill.navy {
+      background: var(--navy-soft);
+      color: var(--navy);
+    }
+
+    .review-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .set-card,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .panel h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.32;
+      letter-spacing: -.025em;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .set-card {
+      padding: 18px;
+    }
+
+    .set-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .set-title {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.3;
+      letter-spacing: -.025em;
+    }
+
+    .set-goal {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .set-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      min-width: 128px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--navy-soft);
+      color: var(--navy);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tag.level {
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
+    .passage,
+    .audio-card {
+      margin-top: 14px;
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      background: var(--sidebar);
+      padding: 14px;
+    }
+
+    .passage-title,
+    .audio-title {
+      margin: 0 0 8px;
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .passage p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.9;
+      letter-spacing: 0;
+    }
+
+    audio { width: 100%; }
+
+    .transcript {
+      margin-top: 10px;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 10px;
+    }
+
+    .transcript summary,
+    .answer summary {
+      color: var(--seal);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .script-lines {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .question {
+      margin-top: 14px;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 14px;
+    }
+
+    .prompt {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: choice;
+    }
+
+    .option {
+      counter-increment: choice;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--sidebar);
+      padding: 8px 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .option::before {
+      content: counter(choice) ".";
+      color: var(--seal);
+      font-weight: 900;
+    }
+
+    .option input {
+      margin: 4px 0 0;
+      accent-color: var(--seal);
+    }
+
+    .option.correct {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--ink);
+    }
+
+    .option.wrong {
+      border-color: var(--navy);
+      background: var(--navy-soft);
+      color: var(--ink);
+    }
+
+    .answer {
+      margin-top: 9px;
+      border-radius: 8px;
+      background: var(--seal-soft);
+      padding: 8px 10px;
+    }
+
+    .answer p {
+      margin: 8px 0 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .correct-text {
+      color: var(--seal);
+      font-weight: 900;
+    }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 28px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-skip-main { display: block; }
+      .shell { display: block; }
+      .side {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 24px 20px;
+      }
+      .main { padding: 28px 20px 64px; }
+      .controls { grid-template-columns: 1fr auto; }
+      .select,
+      .action { grid-column: 1 / -1; width: 100%; }
+      .set-head { display: grid; }
+      .set-meta { justify-content: flex-start; }
+      .choices { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="mobile-skip-main" href="#mainContent">오답노트 바로가기</a>
+  <div class="shell">
+    <aside class="side">
+      <div class="kicker">Japanese Guidebook</div>
+      <h1><b>일본어</b> 오답노트</h1>
+      <p class="sub">틀린 문제 저장과 다시 풀기</p>
+      <p class="author">지은이 문성혁</p>
+      <div class="link-stack">
+        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="vocabulary.html"><span>단어장 보기<small>암기 상태 저장</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="practice.html"><span>문제 은행 보기<small>문제와 정답 해설</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="exam.html"><span>모의고사 보기<small>시간 제한 채점</small></span><span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="kicker">Levels</div>
+      <nav class="level-list" id="levelNav" aria-label="오답노트 레벨"></nav>
+    </aside>
+    <main class="main" id="mainContent">
+      <div class="inner">
+        <header class="head">
+          <h2 id="pageTitle">오답노트</h2>
+          <p class="lead">모의고사에서 틀리거나 비워 둔 문제만 저장한다. 다시 풀어서 맞힌 문제는 오답노트에서 자동으로 정리된다.</p>
+        </header>
+        <div class="controls">
+          <input class="search" id="search" type="search" placeholder="오답 검색 (예: 조건, 청해, 정책)" aria-label="오답 검색">
+          <select class="select" id="levelSelect" aria-label="레벨 선택"></select>
+          <select class="select" id="sectionSelect" aria-label="영역 선택"></select>
+          <button class="theme" id="themeBtn" type="button" aria-label="테마 전환">◐</button>
+        </div>
+        <div class="summary-row" id="summary"></div>
+        <div class="summary-row">
+          <button class="action" id="gradeBtn" type="button">보이는 오답 채점</button>
+          <button class="action secondary" id="clearBtn" type="button">오답노트 비우기</button>
+        </div>
+        <section class="review-grid" id="reviewGrid" aria-live="polite"></section>
+      </div>
+    </main>
+  </div>
+
+  <script src="data/practice/manifest.js"></script>
+  <script>
+    var meta = window.PRACTICE_META;
+    var bank = window.PRACTICE_BANK;
+    var wrongNoteKey = "jgb-wrong-notes";
+    var loadedFiles = {};
+    var currentItems = [];
+    var state = {
+      level: location.hash.replace("#", "") || "all",
+      section: "all",
+      query: "",
+      checked: false,
+      answers: {},
+      lastResult: null
+    };
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, function (char) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char];
+      });
+    }
+
+    function readWrongNotes() {
+      try {
+        return JSON.parse(localStorage.getItem(wrongNoteKey) || "{}") || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function writeWrongNotes(notes) {
+      try {
+        localStorage.setItem(wrongNoteKey, JSON.stringify(notes));
+      } catch (error) {
+        return false;
+      }
+      return true;
+    }
+
+    function questionKey(set, question) {
+      return set.id + "__" + question.id;
+    }
+
+    function levelById(id) {
+      return meta.levels.find(function (level) { return level.id === id; });
+    }
+
+    function sectionById(id) {
+      return meta.sections.find(function (section) { return section.id === id; });
+    }
+
+    function labelLevel(id) {
+      var level = levelById(id);
+      return level ? level.label : "전체";
+    }
+
+    function labelSection(id) {
+      var section = sectionById(id);
+      return section ? section.label : "전체 영역";
+    }
+
+    function formatDate(value) {
+      if (!value) return "기록 없음";
+      var date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "기록 없음";
+      return date.getFullYear() + "." + String(date.getMonth() + 1).padStart(2, "0") + "." + String(date.getDate()).padStart(2, "0");
+    }
+
+    function ensureFile(file) {
+      if (loadedFiles[file]) return Promise.resolve();
+      loadedFiles[file] = new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.src = file;
+        script.onload = resolve;
+        script.onerror = function () { reject(new Error(file + " 로드 실패")); };
+        document.body.appendChild(script);
+      });
+      return loadedFiles[file];
+    }
+
+    function ensureAllData() {
+      return Object.values(meta.files).flat().reduce(function (promise, file) {
+        return promise.then(function () { return ensureFile(file); });
+      }, Promise.resolve());
+    }
+
+    function renderNav() {
+      document.getElementById("levelNav").innerHTML =
+        '<a class="level-link' + (state.level === "all" ? " active" : "") + '" href="#all"><span>전체</span><small>오답</small></a>' +
+        meta.levels.map(function (level) {
+          return '<a class="level-link' + (state.level === level.id ? " active" : "") + '" href="#' + level.id + '">' +
+            '<span>' + escapeHTML(level.label) + '</span><small>' + escapeHTML(level.target) + '</small></a>';
+        }).join("");
+      document.getElementById("levelSelect").innerHTML = '<option value="all">전체 레벨</option>' +
+        meta.levels.map(function (level) {
+          return '<option value="' + level.id + '">' + escapeHTML(level.label + " · " + level.title) + '</option>';
+        }).join("");
+      document.getElementById("sectionSelect").innerHTML = '<option value="all">전체 영역</option>' +
+        meta.sections.map(function (section) {
+          return '<option value="' + section.id + '">' + escapeHTML(section.label) + '</option>';
+        }).join("");
+    }
+
+    function allItems() {
+      var notes = readWrongNotes();
+      var items = [];
+      bank.sets.forEach(function (set) {
+        set.questions.forEach(function (question) {
+          var key = questionKey(set, question);
+          var note = notes[key];
+          if (!note) return;
+          items.push({
+            key: key,
+            set: set,
+            question: question,
+            note: note
+          });
+        });
+      });
+      return items;
+    }
+
+    function textOfItem(item) {
+      return [
+        item.set.title,
+        item.set.goal,
+        item.set.passage,
+        item.set.transcript,
+        item.question.prompt,
+        item.question.explanation,
+        item.question.choices.join(" ")
+      ].join(" ").toLowerCase();
+    }
+
+    function filteredItems() {
+      var query = state.query.trim().toLowerCase();
+      return allItems().filter(function (item) {
+        if (state.level !== "all" && item.set.level !== state.level) return false;
+        if (state.section !== "all" && item.set.section !== state.section) return false;
+        if (query && textOfItem(item).indexOf(query) === -1) return false;
+        return true;
+      }).sort(function (a, b) {
+        return (b.note.lastMissedAt || 0) - (a.note.lastMissedAt || 0);
+      });
+    }
+
+    function formatTranscript(text) {
+      return String(text || "").split("\n").map(function (line) {
+        return '<div>' + escapeHTML(line) + '</div>';
+      }).join("");
+    }
+
+    function renderItem(item, index) {
+      var set = item.set;
+      var question = item.question;
+      var picked = Object.prototype.hasOwnProperty.call(state.answers, item.key) ? Number(state.answers[item.key]) : null;
+      var lastPicked = item.note.picked === null || typeof item.note.picked === "undefined" ? "미응답" : "지난 선택 " + (Number(item.note.picked) + 1) + "번";
+      var passage = set.passage ? '<div class="passage"><p class="passage-title">문제 자료</p><p>' + escapeHTML(set.passage) + '</p></div>' : "";
+      var audio = set.audio ? '<div class="audio-card"><p class="audio-title">청해 음성</p><audio controls preload="metadata" src="' + escapeHTML(set.audio) + '"></audio>' +
+        '<details class="transcript"><summary>대본 보기</summary><div class="script-lines">' + formatTranscript(set.transcript) + '</div></details></div>' : "";
+      var choices = question.choices.map(function (choice, choiceIndex) {
+        var checked = picked === choiceIndex;
+        var classes = "option";
+        if (state.checked && choiceIndex === question.answer) classes += " correct";
+        if (state.checked && checked && choiceIndex !== question.answer) classes += " wrong";
+        return '<label class="' + classes + '">' +
+          '<input class="option-input" type="radio" name="' + escapeHTML(item.key) + '" value="' + choiceIndex + '" data-key="' + escapeHTML(item.key) + '"' + (checked ? " checked" : "") + '>' +
+          '<span>' + escapeHTML(choice) + '</span></label>';
+      }).join("");
+      var answer = state.checked ? '<details class="answer" open><summary>해설</summary>' +
+        '<p><span class="correct-text">정답 ' + (question.answer + 1) + '번</span> · ' + escapeHTML(question.choices[question.answer]) + '</p>' +
+        '<p>' + escapeHTML(question.explanation) + '</p></details>' : "";
+      return '<article class="set-card">' +
+        '<div class="set-head">' +
+          '<div><h3 class="set-title">' + escapeHTML(set.title) + '</h3><p class="set-goal">' + escapeHTML(set.goal) + '</p></div>' +
+          '<div class="set-meta">' +
+            '<span class="tag level">' + escapeHTML(labelLevel(set.level)) + '</span>' +
+            '<span class="tag">' + escapeHTML(labelSection(set.section)) + '</span>' +
+            '<span class="tag">오답 ' + escapeHTML(item.note.misses || 1) + '회</span>' +
+            '<span class="tag">' + escapeHTML(lastPicked) + '</span>' +
+          '</div>' +
+        '</div>' +
+        passage + audio +
+        '<div class="question"><p class="prompt">오답 ' + (index + 1) + ". " + escapeHTML(question.prompt) + '</p>' +
+          '<div class="choices">' + choices + '</div>' + answer +
+        '</div>' +
+        '<div class="summary-row"><button class="action secondary remove-note" type="button" data-key="' + escapeHTML(item.key) + '">이 오답 정리</button>' +
+        '<span class="pill navy">마지막 오답 ' + escapeHTML(formatDate(item.note.lastMissedAt)) + '</span></div>' +
+      '</article>';
+    }
+
+    function render() {
+      currentItems = filteredItems();
+      var all = allItems();
+      var bySection = currentItems.reduce(function (acc, item) {
+        acc[item.set.section] = (acc[item.set.section] || 0) + 1;
+        return acc;
+      }, {});
+      document.getElementById("pageTitle").textContent = state.level === "all" ? "전체 오답노트" : labelLevel(state.level) + " 오답노트";
+      document.title = "일본어 가이드북 오답노트 · " + labelLevel(state.level);
+      document.getElementById("levelSelect").value = state.level;
+      document.getElementById("sectionSelect").value = state.section;
+      document.querySelectorAll(".level-link").forEach(function (link) {
+        link.classList.toggle("active", link.getAttribute("href") === "#" + state.level);
+      });
+      document.getElementById("summary").innerHTML =
+        '<span class="pill">전체 오답 ' + all.length + '개</span>' +
+        '<span class="pill">표시 ' + currentItems.length + '개</span>' +
+        '<span class="pill navy">어휘 ' + (bySection.vocab || 0) + '</span>' +
+        '<span class="pill navy">문법 ' + (bySection.grammar || 0) + '</span>' +
+        '<span class="pill navy">독해 ' + (bySection.reading || 0) + '</span>' +
+        '<span class="pill navy">청해 ' + (bySection.listening || 0) + '</span>' +
+        (state.lastResult ? '<span class="pill">방금 정리 ' + state.lastResult.cleared + '개</span>' : '');
+      document.getElementById("reviewGrid").innerHTML = currentItems.length
+        ? currentItems.map(renderItem).join("")
+        : '<div class="empty">저장된 오답이 없다. 모의고사를 제출하면 틀린 문제가 여기에 쌓인다.</div>';
+    }
+
+    function gradeVisible() {
+      var notes = readWrongNotes();
+      var cleared = 0;
+      currentItems.forEach(function (item) {
+        if (!Object.prototype.hasOwnProperty.call(state.answers, item.key)) return;
+        var picked = Number(state.answers[item.key]);
+        if (picked === item.question.answer) {
+          delete notes[item.key];
+          cleared += 1;
+        } else if (notes[item.key]) {
+          notes[item.key].picked = picked;
+          notes[item.key].misses = (notes[item.key].misses || 0) + 1;
+          notes[item.key].lastMissedAt = Date.now();
+        }
+      });
+      writeWrongNotes(notes);
+      state.checked = true;
+      state.lastResult = { cleared: cleared };
+      render();
+    }
+
+    function removeNote(key) {
+      var notes = readWrongNotes();
+      delete notes[key];
+      writeWrongNotes(notes);
+      delete state.answers[key];
+      state.checked = false;
+      render();
+    }
+
+    function setThemeGlyph() {
+      document.getElementById("themeBtn").textContent = "◐";
+    }
+
+    renderNav();
+    setThemeGlyph();
+    ensureAllData().then(render).catch(function () {
+      document.getElementById("reviewGrid").innerHTML = '<div class="empty">문제 데이터를 불러오지 못했다.</div>';
+    });
+
+    window.addEventListener("hashchange", function () {
+      var next = location.hash.replace("#", "") || "all";
+      state.level = next === "all" || levelById(next) ? next : "all";
+      state.checked = false;
+      render();
+    });
+
+    document.getElementById("search").addEventListener("input", function (event) {
+      state.query = event.target.value;
+      state.checked = false;
+      render();
+    });
+
+    document.getElementById("levelSelect").addEventListener("change", function (event) {
+      location.hash = event.target.value;
+    });
+
+    document.getElementById("sectionSelect").addEventListener("change", function (event) {
+      state.section = event.target.value;
+      state.checked = false;
+      render();
+    });
+
+    document.getElementById("gradeBtn").addEventListener("click", gradeVisible);
+    document.getElementById("clearBtn").addEventListener("click", function () {
+      writeWrongNotes({});
+      state.answers = {};
+      state.checked = false;
+      state.lastResult = null;
+      render();
+    });
+
+    document.getElementById("reviewGrid").addEventListener("change", function (event) {
+      if (!event.target.classList.contains("option-input")) return;
+      state.answers[event.target.dataset.key] = Number(event.target.value);
+    });
+
+    document.getElementById("reviewGrid").addEventListener("click", function (event) {
+      var button = event.target.closest(".remove-note");
+      if (!button) return;
+      removeNote(button.dataset.key);
+    });
+
+    document.getElementById("themeBtn").addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("aab-theme", next);
+      setThemeGlyph();
+    });
+  </script>
+</body>
+</html>

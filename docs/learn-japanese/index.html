@@ -1,0 +1,2525 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="일본어 가이드북. 제로에서 JLPT N1까지 이어지는 학습 로드맵.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <title>일본어 가이드북</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("aab-theme");
+      document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
+    })();
+  </script>
+  <style>
+    :root,
+    :root[data-theme="light"] {
+      --bg: #F3F6F1;
+      --paper: #FFFFFF;
+      --sidebar: #F8FAF5;
+      --ink: #1B2029;
+      --ink-soft: #525A67;
+      --ink-faint: #5E6671;
+      --line: #E0E7DE;
+      --line-soft: #ECF2E9;
+      --seal: #2F6F4E;
+      --seal-soft: #E3F0E7;
+      --navy: #2C3A55;
+      --navy-soft: #E9ECF3;
+      --sel: #E8F0E6;
+      --shadow: 0 1px 2px rgba(20,24,32,.04), 0 8px 28px rgba(20,24,32,.05);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #13161B;
+      --paper: #1B1F26;
+      --sidebar: #171A20;
+      --ink: #E9E8E2;
+      --ink-soft: #AEB4BE;
+      --ink-faint: #A5ABB4;
+      --line: #2A2F38;
+      --line-soft: #22262E;
+      --seal: #7FC59A;
+      --seal-soft: #1D3327;
+      --navy: #9FB0D4;
+      --navy-soft: #242B39;
+      --sel: #232833;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg: #13161B;
+        --paper: #1B1F26;
+        --sidebar: #171A20;
+        --ink: #E9E8E2;
+        --ink-soft: #AEB4BE;
+        --ink-faint: #A5ABB4;
+        --line: #2A2F38;
+        --line-soft: #22262E;
+        --seal: #7FC59A;
+        --seal-soft: #1D3327;
+        --navy: #9FB0D4;
+        --navy-soft: #242B39;
+        --sel: #232833;
+        --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.28);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif;
+      font-size: 16px;
+      line-height: 1.72;
+      letter-spacing: -.01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.nav-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--seal);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 80;
+      top: var(--space-3);
+      left: var(--space-3);
+      transform: translateY(-72px);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform .15s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    ::selection {
+      background: var(--seal-soft);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 100dvh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      overflow-y: auto;
+      background: var(--sidebar);
+      border-right: 1px solid var(--line);
+      padding: var(--space-8) var(--space-5);
+    }
+
+    .brand {
+      padding: 0 var(--space-2) var(--space-6);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: var(--space-5);
+    }
+
+    .brand .kicker {
+      color: var(--navy);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      margin: var(--space-2) 0 var(--space-3);
+      font-size: 22px;
+      line-height: 1.24;
+      letter-spacing: -.035em;
+    }
+
+    .brand h1 b {
+      color: var(--seal);
+    }
+
+    .brand .sub {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 12.5px;
+      line-height: 1.58;
+    }
+
+    .brand .author {
+      margin: 7px 0 0;
+      color: var(--ink-faint);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2);
+      margin: 0 0 var(--space-5);
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .resource-stack {
+      display: grid;
+      gap: var(--space-2);
+      margin: calc(var(--space-5) * -1 + var(--space-2)) 0 var(--space-5);
+    }
+
+    .resource-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 10px 11px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .resource-link small {
+      display: block;
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .resource-link:hover {
+      background: var(--sel);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      color: var(--ink-faint);
+      font-size: 15px;
+      line-height: 1;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search-icon::before {
+      content: "⌕";
+    }
+
+    #search {
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 0 34px 0 32px;
+    }
+
+    #search::placeholder {
+      color: var(--ink-faint);
+    }
+
+    #search::-webkit-search-cancel-button,
+    #search::-webkit-search-decoration {
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    #search:focus {
+      border-color: var(--seal);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      width: 22px;
+      height: 22px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--sel);
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: grid;
+      padding: 0;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-50%);
+      transition: opacity .15s ease, color .15s ease;
+    }
+
+    .search-wrap.has-query .search-clear {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .search-clear:hover {
+      color: var(--ink);
+    }
+
+    .search-clear::before {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      content: "✕";
+    }
+
+    .theme-toggle,
+    .menu-toggle,
+    .close-search {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: 9px;
+      min-width: 40px;
+      height: 40px;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+    }
+
+    .theme-toggle:hover,
+    .menu-toggle:hover,
+    .close-search:hover {
+      background: var(--sel);
+      border-color: color-mix(in srgb, var(--navy) 24%, var(--line));
+    }
+
+    .theme-toggle:active,
+    .menu-toggle:active,
+    .close-search:active {
+      transform: translateY(1px);
+    }
+
+    .theme-glyph {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .theme-glyph::before {
+      content: "◐";
+    }
+
+    .menu-lines,
+    .menu-lines::before,
+    .menu-lines::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--navy);
+      content: "";
+    }
+
+    .menu-lines {
+      position: relative;
+    }
+
+    .menu-lines::before,
+    .menu-lines::after {
+      position: absolute;
+      left: 0;
+    }
+
+    .menu-lines::before {
+      top: -6px;
+    }
+
+    .menu-lines::after {
+      top: 6px;
+    }
+
+    .sresults {
+      display: none;
+      margin-bottom: var(--space-5);
+      padding: var(--space-3);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .sresults.open {
+      display: block;
+    }
+
+    .sresult {
+      display: block;
+      padding: 10px;
+      border-radius: 8px;
+      color: var(--ink-soft);
+      font-size: 12.5px;
+      line-height: 1.52;
+    }
+
+    .sresult:hover {
+      background: var(--sel);
+    }
+
+    .sresult b {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 3px;
+    }
+
+    mark {
+      color: var(--seal);
+      background: var(--seal-soft);
+      border-radius: 4px;
+      padding: 0 2px;
+    }
+
+    .part {
+      margin: var(--space-6) 0 var(--space-3);
+    }
+
+    .part:first-of-type {
+      margin-top: 0;
+    }
+
+    .part-label {
+      display: grid;
+      gap: 2px;
+      padding: 0 var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+
+    .part-label .pnum {
+      color: var(--seal);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .part-label .pt {
+      color: var(--ink-soft);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .navlink {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+      min-height: 34px;
+      padding: 8px;
+      border-radius: 8px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.42;
+      transition: background-color .15s ease, color .15s ease;
+    }
+
+    .navlink:hover {
+      background: var(--sel);
+      color: var(--ink);
+    }
+
+    .navlink.active {
+      background: var(--sel);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .navlink .cnum {
+      min-width: 2.6em;
+      color: var(--ink-faint);
+      flex: 0 0 auto;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .navlink.active .cnum {
+      color: var(--seal);
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .main-inner {
+      width: min(100%, 824px);
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-8) 88px;
+    }
+
+    .topbar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 56px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: saturate(1.4) blur(8px);
+    }
+
+    .topbar-title {
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .backdrop {
+      display: none;
+    }
+
+    .doc-head {
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: var(--space-8);
+    }
+
+    .chno {
+      color: var(--seal);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin-bottom: var(--space-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .doc-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(24px, 4.5vw, 32px);
+      font-weight: 800;
+      letter-spacing: -.035em;
+      line-height: 1.28;
+      text-wrap: balance;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .badge.case {
+      color: var(--seal);
+      background: var(--seal-soft);
+    }
+
+    .badge.scen {
+      color: var(--navy);
+      background: var(--navy-soft);
+    }
+
+    .badge.status {
+      color: var(--ink-soft);
+      border: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .prose {
+      max-width: 760px;
+    }
+
+    .prose:focus {
+      outline: none;
+    }
+
+    .prose p {
+      margin: 0 0 18px;
+    }
+
+    .lead {
+      color: var(--ink-soft);
+      font-size: 16.5px;
+    }
+
+    .prose h3 {
+      margin: 38px 0 14px;
+      font-size: 20px;
+      line-height: 1.42;
+      letter-spacing: -.025em;
+    }
+
+    .prose h4 {
+      margin: 26px 0 10px;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -.02em;
+    }
+
+    .prose strong,
+    .prose b {
+      font-weight: 800;
+    }
+
+    .prose em {
+      color: var(--seal);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .prose a.ref {
+      color: var(--navy);
+      text-decoration-line: underline;
+      text-decoration-color: color-mix(in srgb, var(--navy) 40%, transparent);
+      text-underline-offset: 3px;
+    }
+
+    .callout {
+      margin: var(--space-6) 0;
+      border-left: 3px solid var(--seal);
+      border-radius: 0 12px 12px 0;
+      background: var(--seal-soft);
+      color: var(--ink);
+      padding: var(--space-4) var(--space-5);
+      font-weight: 700;
+    }
+
+    .box {
+      margin: var(--space-6) 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: var(--space-5);
+      font-size: 15px;
+      line-height: 1.66;
+    }
+
+    .box p:last-child,
+    .box ul:last-child,
+    .keytake ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .box.case {
+      border-color: color-mix(in srgb, var(--seal) 30%, var(--line));
+    }
+
+    .box.scen,
+    .box.tip {
+      border-color: color-mix(in srgb, var(--navy) 30%, var(--line));
+    }
+
+    .box.warn {
+      border-left: 3px solid var(--seal);
+    }
+
+    .box.law {
+      background: var(--line-soft);
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .box-label {
+      margin-bottom: var(--space-2);
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .box.case .box-label,
+    .box.warn .box-label {
+      color: var(--seal);
+    }
+
+    .box.scen .box-label,
+    .box.tip .box-label {
+      color: var(--navy);
+    }
+
+    .audio-card {
+      margin: var(--space-6) 0;
+      border: 1px solid color-mix(in srgb, var(--navy) 30%, var(--line));
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .audio-card-head {
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--line);
+      background: var(--navy-soft);
+    }
+
+    .audio-card .box-label {
+      color: var(--navy);
+    }
+
+    .audio-title {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .audio-meta {
+      margin: 4px 0 0;
+      color: var(--ink-soft);
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .audio-card audio {
+      display: block;
+      width: calc(100% - 40px);
+      margin: var(--space-4) var(--space-5);
+    }
+
+    .audio-script {
+      border-top: 1px solid var(--line);
+      padding: var(--space-3) var(--space-5) var(--space-4);
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .audio-script summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      min-height: 34px;
+      margin: 0 calc(var(--space-2) * -1);
+      border-radius: 8px;
+      padding: 6px var(--space-2);
+      cursor: pointer;
+      color: var(--navy);
+      font-weight: 800;
+      list-style: none;
+      transition: background .15s ease;
+    }
+
+    .audio-script summary:hover {
+      background: color-mix(in srgb, var(--navy-soft) 58%, transparent);
+    }
+
+    .audio-script summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .audio-script-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .audio-script-toggle::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(-45deg);
+      transition: transform .15s ease;
+    }
+
+    .audio-script[open] .audio-script-toggle::before {
+      transform: rotate(45deg);
+    }
+
+    .audio-script-state {
+      flex: 0 0 auto;
+      border: 1px solid color-mix(in srgb, var(--navy) 24%, var(--line));
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink-soft);
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .audio-script-state::before {
+      content: "열기";
+    }
+
+    .audio-script[open] .audio-script-state::before {
+      content: "접기";
+    }
+
+    .audio-transcript {
+      margin: var(--space-3) 0 0;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--line-soft);
+      color: var(--ink);
+      padding: var(--space-4);
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans CJK JP", "Noto Sans KR", sans-serif;
+      line-height: 1.85;
+    }
+
+    .audio-transcript-line {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .audio-transcript-line + .audio-transcript-line {
+      margin-top: 4px;
+    }
+
+    .audio-speaker {
+      color: var(--navy);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .audio-utterance {
+      color: var(--ink);
+      line-break: strict;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .vocab-box {
+      margin: var(--space-8) 0;
+      border: 1px solid color-mix(in srgb, var(--seal) 28%, var(--line));
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .vocab-box-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--line);
+      background: var(--seal-soft);
+    }
+
+    .vocab-box-title {
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .vocab-box-link {
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .vocab-mini {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 0;
+      font-size: 14px;
+    }
+
+    .vocab-mini td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .vocab-mini tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .vocab-mini b {
+      display: block;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .vocab-mini small {
+      color: var(--ink-faint);
+      font-weight: 700;
+    }
+
+    .check,
+    .sources ul,
+    .keytake ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .check li {
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 10px;
+    }
+
+    .check li::before {
+      position: absolute;
+      left: 0;
+      color: var(--seal);
+      content: "□";
+      font-weight: 800;
+    }
+
+    .steps {
+      padding-left: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      position: relative;
+      min-height: 34px;
+      padding-left: 42px;
+      margin-bottom: 13px;
+      counter-increment: steps;
+    }
+
+    .steps li::before {
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      content: counter(steps);
+      font-size: 12px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    :root[data-theme="dark"] .steps li::before {
+      color: #12151a;
+    }
+
+    .table-wrap {
+      margin: var(--space-6) 0;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    th {
+      background: var(--line-soft);
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    table.glossary td:first-child {
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    table.kana-chart {
+      min-width: 680px;
+    }
+
+    table.kana-chart th,
+    table.kana-chart td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    table.kana-chart td {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    table.kana-chart td small {
+      display: block;
+      margin-top: 2px;
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    table.kana-chart .empty {
+      color: var(--ink-faint);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    caption {
+      caption-side: bottom;
+      padding: 10px 14px;
+      background: var(--line-soft);
+      color: var(--ink-faint);
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .keytake {
+      margin: var(--space-8) 0;
+      border: 1px dashed var(--seal);
+      border-radius: 12px;
+      background: var(--seal-soft);
+      padding: var(--space-5);
+    }
+
+    .kt-label {
+      margin-bottom: var(--space-2);
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .sources {
+      margin-top: var(--space-8);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--line);
+      color: var(--ink-faint);
+      font-size: 12.5px;
+    }
+
+    .sources h4 {
+      margin-top: 0;
+      color: var(--ink-soft);
+    }
+
+    .outline-title {
+      color: var(--ink-soft);
+      font-weight: 800;
+      margin-bottom: var(--space-4);
+    }
+
+    .outline {
+      padding: 0;
+      list-style: none;
+      counter-reset: outline;
+    }
+
+    .outline li {
+      position: relative;
+      margin: 0 0 var(--space-3);
+      padding: var(--space-4) var(--space-4) var(--space-4) 58px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      counter-increment: outline;
+      font-weight: 800;
+    }
+
+    .outline li::before {
+      position: absolute;
+      left: var(--space-4);
+      top: var(--space-4);
+      min-width: 28px;
+      border-radius: 999px;
+      background: var(--seal-soft);
+      color: var(--seal);
+      content: counter(outline, decimal-leading-zero);
+      display: inline-grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .outline .ex {
+      display: block;
+      margin-top: 3px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .pager {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-top: var(--space-10);
+    }
+
+    .pager a {
+      min-height: 86px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: var(--space-4);
+      transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+    }
+
+    .pager a:hover {
+      background: var(--sel);
+      border-color: color-mix(in srgb, var(--navy) 24%, var(--line));
+    }
+
+    .pager a:active {
+      transform: translateY(1px);
+    }
+
+    .pager .next {
+      text-align: right;
+    }
+
+    .pager .disabled {
+      background: var(--line-soft);
+      color: var(--ink-soft);
+      pointer-events: none;
+    }
+
+    .dir {
+      margin-bottom: 6px;
+      color: var(--ink-faint);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .t {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.42;
+    }
+
+    .kana-board {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin: var(--space-6) 0;
+    }
+
+    .kana {
+      display: grid;
+      gap: 2px;
+      place-items: center;
+      min-height: 62px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .kana small {
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        display: block;
+      }
+
+      .topbar {
+        display: flex;
+      }
+
+      .sidebar {
+        position: fixed;
+        z-index: 40;
+        left: 0;
+        top: 0;
+        width: 290px;
+        max-width: 84vw;
+        transform: translateX(-100%);
+        transition: transform .26s cubic-bezier(.4, 0, .2, 1);
+      }
+
+      body.nav-open .sidebar {
+        transform: translateX(0);
+      }
+
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: rgba(10,12,16,.44);
+      }
+
+      body.nav-open .backdrop {
+        display: block;
+      }
+
+      .main-inner {
+        width: min(100%, 800px);
+        padding: 26px var(--space-5) 72px;
+      }
+
+      .doc-head {
+        padding-bottom: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
+
+      table:not(.kana-chart) {
+        min-width: 100%;
+      }
+
+      th,
+      td {
+        padding: 10px 12px;
+      }
+
+      .pager {
+        grid-template-columns: 1fr;
+      }
+
+      .pager .next {
+        text-align: left;
+      }
+
+      .kana-board {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .main-inner {
+        padding-left: var(--space-4);
+        padding-right: var(--space-4);
+      }
+
+      .outline li {
+        padding-right: var(--space-3);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#doc">본문으로 건너뛰기</a>
+  <div class="topbar">
+    <button class="menu-toggle" type="button" aria-label="목차 열기" aria-expanded="false">
+      <span class="menu-lines" aria-hidden="true"></span>
+    </button>
+    <div class="topbar-title" id="topbarTitle">일본어 가이드북</div>
+    <div class="topbar-actions">
+      <button class="theme-toggle" type="button" aria-label="테마 전환">
+        <span class="theme-glyph" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="app">
+    <aside class="sidebar" aria-label="책 목차" id="sidebar">
+      <div class="brand">
+        <div class="kicker">Japanese Guidebook</div>
+        <h1><b>일본어</b> 가이드북</h1>
+        <p class="sub">제로에서 JLPT N1까지</p>
+        <p class="author">지은이 문성혁</p>
+      </div>
+      <div class="tools">
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true"></span>
+          <input id="search" type="search" autocomplete="off" placeholder="본문 검색 (예: 장음)" aria-label="본문 검색">
+          <button class="search-clear" type="button" aria-label="검색어 지우기"></button>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="테마 전환">
+          <span class="theme-glyph" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="resource-stack">
+        <a class="resource-link" href="vocabulary.html">
+          <span>핵심 단어장<small>문자부터 N1까지</small></span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a class="resource-link" href="practice.html">
+          <span>실전 문제 은행<small>문제와 정답 해설</small></span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a class="resource-link" href="exam.html">
+          <span>실전 모의고사<small>시간 제한 자동 채점</small></span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a class="resource-link" href="review.html">
+          <span>오답노트<small>틀린 문제 다시 풀기</small></span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="sresults" id="sresults" aria-live="polite"></div>
+      <nav id="bookNav" aria-label="장 목록"></nav>
+    </aside>
+    <main class="main">
+      <div class="main-inner">
+        <article id="doc" class="prose" tabindex="-1"></article>
+        <nav id="pager" class="pager" aria-label="이전 다음 장"></nav>
+      </div>
+    </main>
+  </div>
+
+  <script src="data/vocabulary.js"></script>
+  <script src="data/lesson-guides.js"></script>
+  <script>
+    window.CONTENT = {};
+
+    CONTENT.ch00 = `
+      <p class="lead">한국어 화자에게 일본어는 낯설면서도 이상하게 익숙한 언어다. 어순과 조사, 한자어는 큰 지렛대가 되지만 발음, 한자 읽기, 경어는 끝까지 발목을 잡기 쉽다.</p>
+      <p>이 책은 그 차이를 처음부터 드러내 놓고 학습 순서를 잡는다. 빠르게 외울 수 있는 것은 빠르게 넘기고, 한국인이 오래 틀리는 부분은 반복 훈련으로 다룬다.</p>
+      <div class="callout">목표는 단순한 문법 암기가 아니라 <b>24-30개월 안에 JLPT N1 지문과 청해를 버틸 수 있는 학습 체력</b>을 만드는 것이다.</div>
+
+      <h3>0.1 한국어와 일본어, 무엇이 같고 무엇이 다른가</h3>
+      <p>두 언어는 기본 어순이 비슷하다. "나는 밥을 먹는다"를 일본어로 옮기면 <em>私は ご飯を 食べます</em>처럼 주어, 목적어, 동사의 큰 순서가 유지된다. 이 덕분에 영어식 어순을 새로 익히는 부담이 적다.</p>
+      <p>하지만 비슷함은 함정도 만든다. は와 が를 한국어의 은/는, 이/가로만 이해하면 초반에는 편하지만 중급부터는 주제와 초점의 차이를 놓치게 된다. 한자어도 마찬가지다. 의미가 비슷한 단어가 많지만 읽기와 뉘앙스는 별도로 익혀야 한다.</p>
+      <div class="table-wrap"><table class="glossary">
+        <thead><tr><th>영역</th><th>한국어 화자의 이점</th><th>주의할 차이</th></tr></thead>
+        <tbody>
+          <tr><td>어순</td><td>문장 뼈대가 비슷해 직관적으로 배열할 수 있다.</td><td>수식절과 문장 끝 표현이 길어질수록 호흡이 달라진다.</td></tr>
+          <tr><td>조사</td><td>은/는, 이/가, 을/를과 대응시켜 출발할 수 있다.</td><td>は와 が, に와 で는 한국어 대응만으로 해결되지 않는다.</td></tr>
+          <tr><td>한자어</td><td>学校, 家族, 文化처럼 의미 추측이 쉽다.</td><td>음독, 훈독, 신자체, 뜻이 다른 한자어를 따로 관리해야 한다.</td></tr>
+          <tr><td>발음</td><td>모음 수가 적어 처음 진입은 빠르다.</td><td>장음, 촉음, ん, つ 같은 박자와 조음 차이가 누적된다.</td></tr>
+        </tbody>
+        <caption>한국어 화자가 일본어를 배울 때 활용할 수 있는 지렛대와 초반 함정.</caption>
+      </table></div>
+
+      <h3>0.2 JLPT 시험 구조 한눈에 보기</h3>
+      <p>JLPT는 N5에서 N1까지 올라간다. 이 책은 N1을 최종 목표로 하되, N2를 실전 독해와 청해의 중간 관문으로 둔다. 초급에서 문장 뼈대가 흔들리면 N3 이후 독해와 청해가 급격히 무거워지고, N2에서 논리 읽기가 약하면 N1의 추상 지문을 버티기 어렵다.</p>
+      <ol class="steps">
+        <li><b>N5</b>: 문자, 발음, 기본 조사, ます형과 て형을 고정한다.</li>
+        <li><b>N4</b>: 보통체, 인용, 수수 표현, 가능과 조건을 익힌다.</li>
+        <li><b>N3</b>: 자타 동사, 수동과 사역, 추측 표현으로 중급 문장을 읽는다.</li>
+        <li><b>N2</b>: 기능어 문형, 문어체, 긴 독해와 실제 속도의 청해를 훈련한다.</li>
+        <li><b>N1</b>: 추상어, 논설문, 함축 청해, 고급 문어체를 실제 자료로 버틴다.</li>
+      </ol>
+
+      <h3>0.3 전체 로드맵</h3>
+      <p>권장 흐름은 N5 3개월, N4 3개월, N3 4개월, N2 6개월, N1 8-12개월이다. 하루 30분이면 30개월에 가깝고, 하루 1-2시간을 꾸준히 확보하면 24개월 안팎도 가능하다.</p>
+      <div class="box tip">
+        <div class="box-label">학습 팁</div>
+        <p>기간보다 중요한 것은 끊기지 않는 루틴이다. 문자와 발음은 몰아서 끝내고, 문법과 어휘는 매일 조금씩 누적한다. 청해는 늦게 시작하지 말고 N5 단계부터 짧게라도 귀를 열어 둔다.</p>
+      </div>
+
+      <h3>0.4 학습 도구 세팅</h3>
+      <ul class="check">
+        <li>일본어 입력기를 설치하고 히라가나 입력을 직접 해 본다.</li>
+        <li>사전 앱 하나를 정한다. 예문과 악센트 정보를 함께 볼 수 있으면 좋다.</li>
+        <li>Anki 같은 간격 반복 단어장을 준비하되, 처음부터 덱을 너무 많이 넣지 않는다.</li>
+        <li>매일 들을 5-10분짜리 쉬운 음성 자료를 하나 고른다.</li>
+      </ul>
+
+      <h3>0.5 이 책의 사용법</h3>
+      <p>각 장은 도입 설명, 핵심 비교, 실전 함정, 확인 질문 순서로 읽도록 설계한다. 처음 읽을 때는 이해를 우선하고, 두 번째 읽을 때 예문을 소리 내어 따라 읽는다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>하루 시간</th><th>권장 루틴</th><th>끝낼 기준</th></tr></thead>
+        <tbody>
+          <tr><td>30분</td><td>본문 10분, 예문 소리 내기 10분, 단어장 5분, 전날 오답 5분</td><td>예문 3개를 보지 않고 다시 말한다.</td></tr>
+          <tr><td>60분</td><td>본문 20분, 연습문제 15분, 청해 10분, 단어장 10분, 오답 5분</td><td>틀린 항목을 문법, 어휘, 발음, 청해 중 하나로 분류한다.</td></tr>
+          <tr><td>120분</td><td>새 단원 40분, 복습 25분, 청해/쉐도잉 20분, 단어장 20분, 출력 15분</td><td>오늘 배운 표현으로 새 문장 5개를 만든다.</td></tr>
+        </tbody>
+        <caption>시간이 부족한 날에는 새 단원보다 오답 1개와 예문 3개를 지키는 쪽이 낫다.</caption>
+      </table></div>
+      <div class="box law">
+        <div class="box-label">복습 규칙</div>
+        <p>각 장은 당일 1회, 다음 날 1회, 일주일 뒤 1회 다시 본다. 다시 볼 때는 본문 전체를 읽지 말고 연습문제, 정답, 이 장의 핵심만 빠르게 회수한다.</p>
+      </div>
+      <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
+        <li>한국어와 일본어의 유사점은 출발 속도를 높이는 지렛대다.</li>
+        <li>발음, 한자 읽기, 경어는 한국어식 감각만으로 해결되지 않는다.</li>
+        <li>N1까지 가려면 초급 문법과 청해 루틴을 초반부터 안정시키고, N2 이후에는 실제 자료를 꾸준히 읽어야 한다.</li>
+      </ul></div>
+    `;
+
+    CONTENT.ch01 = `
+      <p class="lead">히라가나는 일본어 학습의 첫 관문이다. 목표는 글자 46개를 대충 알아보는 것이 아니라, 글자를 보자마자 <em>소리와 박자</em>가 떠오르게 만드는 것이다.</p>
+      <p>한국어 화자는 일본어를 한글식 음절로 뭉개서 읽기 쉽다. 그래서 이 장에서는 히라가나 전체표를 먼저 보고, 탁음·반탁음·요음·촉음·장음을 박자 단위로 정리한다.</p>
+      <div class="box warn">
+        <div class="box-label">발음 보조 사용법</div>
+        <p>책의 한국식 발음 표기는 입문자가 첫 소리를 내기 위한 임시 발판이다. 문자표를 한 번 읽은 뒤에는 반드시 히라가나 자체를 보고 읽고, 장음은 길게, 촉음은 한 박자 막고, ん은 뒤 소리에 맞춰 조정한다.</p>
+      </div>
+
+      <h3>1.1 히라가나 청음 전체표</h3>
+      <p>청음은 히라가나의 기본 글자다. 표의 가로축은 모음 a, i, u, e, o이고 세로축은 자음 계열이다. 빈칸은 현대 일본어에서 일반적으로 쓰지 않는 자리다.</p>
+      <div class="table-wrap"><table class="kana-chart" aria-label="히라가나 청음 전체표">
+        <thead><tr><th>행</th><th>a</th><th>i</th><th>u</th><th>e</th><th>o</th></tr></thead>
+        <tbody>
+          <tr><th>あ행</th><td>あ<small>a / 아</small></td><td>い<small>i / 이</small></td><td>う<small>u / 우</small></td><td>え<small>e / 에</small></td><td>お<small>o / 오</small></td></tr>
+          <tr><th>か행</th><td>か<small>ka / 카</small></td><td>き<small>ki / 키</small></td><td>く<small>ku / 쿠</small></td><td>け<small>ke / 케</small></td><td>こ<small>ko / 코</small></td></tr>
+          <tr><th>さ행</th><td>さ<small>sa / 사</small></td><td>し<small>shi / 시</small></td><td>す<small>su / 스</small></td><td>せ<small>se / 세</small></td><td>そ<small>so / 소</small></td></tr>
+          <tr><th>た행</th><td>た<small>ta / 타</small></td><td>ち<small>chi / 치</small></td><td>つ<small>tsu / 쓰</small></td><td>て<small>te / 테</small></td><td>と<small>to / 토</small></td></tr>
+          <tr><th>な행</th><td>な<small>na / 나</small></td><td>に<small>ni / 니</small></td><td>ぬ<small>nu / 누</small></td><td>ね<small>ne / 네</small></td><td>の<small>no / 노</small></td></tr>
+          <tr><th>は행</th><td>は<small>ha / 하</small></td><td>ひ<small>hi / 히</small></td><td>ふ<small>fu / 후</small></td><td>へ<small>he / 헤</small></td><td>ほ<small>ho / 호</small></td></tr>
+          <tr><th>ま행</th><td>ま<small>ma / 마</small></td><td>み<small>mi / 미</small></td><td>む<small>mu / 무</small></td><td>め<small>me / 메</small></td><td>も<small>mo / 모</small></td></tr>
+          <tr><th>や행</th><td>や<small>ya / 야</small></td><td class="empty">-</td><td>ゆ<small>yu / 유</small></td><td class="empty">-</td><td>よ<small>yo / 요</small></td></tr>
+          <tr><th>ら행</th><td>ら<small>ra / 라</small></td><td>り<small>ri / 리</small></td><td>る<small>ru / 루</small></td><td>れ<small>re / 레</small></td><td>ろ<small>ro / 로</small></td></tr>
+          <tr><th>わ행</th><td>わ<small>wa / 와</small></td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td>を<small>o / 오</small></td></tr>
+          <tr><th>ん</th><td colspan="5">ん<small>n / 받침 ㄴ, ㅁ, ㅇ에 가깝게 변함</small></td></tr>
+        </tbody>
+        <caption>히라가나 청음 46자. を는 현대어에서 주로 조사로 쓰이며 발음은 보통 お와 같다.</caption>
+      </table></div>
+
+      <div class="box tip">
+        <div class="box-label">외우는 순서</div>
+        <p>처음에는 あいうえお를 세로로 외우지 말고, かきくけこ처럼 한 행씩 입으로 읽는다. 그 다음 かさたなはまやらわ처럼 a단을 가로로 훑으면 표의 좌표가 머리에 잡힌다.</p>
+      </div>
+
+      <h3>1.2 탁음과 반탁음 전체표</h3>
+      <p>탁음은 오른쪽 위의 점 두 개, 반탁음은 작은 동그라미로 만든다. 글자는 적어 보이지만 실제 단어에서 매우 자주 나오므로 청음과 같은 단계에서 익혀야 한다.</p>
+      <div class="table-wrap"><table class="kana-chart" aria-label="히라가나 탁음과 반탁음 표">
+        <thead><tr><th>행</th><th>a</th><th>i</th><th>u</th><th>e</th><th>o</th></tr></thead>
+        <tbody>
+          <tr><th>が행</th><td>が<small>ga / 가</small></td><td>ぎ<small>gi / 기</small></td><td>ぐ<small>gu / 구</small></td><td>げ<small>ge / 게</small></td><td>ご<small>go / 고</small></td></tr>
+          <tr><th>ざ행</th><td>ざ<small>za / 자</small></td><td>じ<small>ji / 지</small></td><td>ず<small>zu / 즈</small></td><td>ぜ<small>ze / 제</small></td><td>ぞ<small>zo / 조</small></td></tr>
+          <tr><th>だ행</th><td>だ<small>da / 다</small></td><td>ぢ<small>ji / 지</small></td><td>づ<small>zu / 즈</small></td><td>で<small>de / 데</small></td><td>ど<small>do / 도</small></td></tr>
+          <tr><th>ば행</th><td>ば<small>ba / 바</small></td><td>び<small>bi / 비</small></td><td>ぶ<small>bu / 부</small></td><td>べ<small>be / 베</small></td><td>ぼ<small>bo / 보</small></td></tr>
+          <tr><th>ぱ행</th><td>ぱ<small>pa / 파</small></td><td>ぴ<small>pi / 피</small></td><td>ぷ<small>pu / 푸</small></td><td>ぺ<small>pe / 페</small></td><td>ぽ<small>po / 포</small></td></tr>
+        </tbody>
+        <caption>ぢ와 づ는 현대어에서 제한적으로 쓰인다. 처음에는 じ, ず를 기본으로 익히되 표 안의 위치는 알아 둔다.</caption>
+      </table></div>
+
+      <h3>1.3 요음, 촉음, 발음, 장음</h3>
+      <p>요음은 きゃ, しゅ, ちょ처럼 い단 글자 뒤에 작은 や, ゆ, よ가 붙은 소리다. 두 글자처럼 보여도 한 박자로 읽는다. 큰 や, ゆ, よ가 붙은 きや, しゆ와는 박자가 다르다.</p>
+      <div class="table-wrap"><table class="kana-chart" aria-label="히라가나 요음 표">
+        <thead><tr><th>행</th><th>ゃ</th><th>ゅ</th><th>ょ</th></tr></thead>
+        <tbody>
+          <tr><th>き</th><td>きゃ<small>kya / 캬</small></td><td>きゅ<small>kyu / 큐</small></td><td>きょ<small>kyo / 쿄</small></td></tr>
+          <tr><th>し</th><td>しゃ<small>sha / 샤</small></td><td>しゅ<small>shu / 슈</small></td><td>しょ<small>sho / 쇼</small></td></tr>
+          <tr><th>ち</th><td>ちゃ<small>cha / 차</small></td><td>ちゅ<small>chu / 추</small></td><td>ちょ<small>cho / 초</small></td></tr>
+          <tr><th>に</th><td>にゃ<small>nya / 냐</small></td><td>にゅ<small>nyu / 뉴</small></td><td>にょ<small>nyo / 뇨</small></td></tr>
+          <tr><th>ひ</th><td>ひゃ<small>hya / 햐</small></td><td>ひゅ<small>hyu / 휴</small></td><td>ひょ<small>hyo / 효</small></td></tr>
+          <tr><th>み</th><td>みゃ<small>mya / 먀</small></td><td>みゅ<small>myu / 뮤</small></td><td>みょ<small>myo / 묘</small></td></tr>
+          <tr><th>り</th><td>りゃ<small>rya / 랴</small></td><td>りゅ<small>ryu / 류</small></td><td>りょ<small>ryo / 료</small></td></tr>
+          <tr><th>ぎ</th><td>ぎゃ<small>gya / 갸</small></td><td>ぎゅ<small>gyu / 규</small></td><td>ぎょ<small>gyo / 교</small></td></tr>
+          <tr><th>じ</th><td>じゃ<small>ja / 자</small></td><td>じゅ<small>ju / 주</small></td><td>じょ<small>jo / 조</small></td></tr>
+          <tr><th>び</th><td>びゃ<small>bya / 뱌</small></td><td>びゅ<small>byu / 뷰</small></td><td>びょ<small>byo / 뵤</small></td></tr>
+          <tr><th>ぴ</th><td>ぴゃ<small>pya / 퍄</small></td><td>ぴゅ<small>pyu / 퓨</small></td><td>ぴょ<small>pyo / 표</small></td></tr>
+        </tbody>
+        <caption>요음은 작은 글자까지 포함해 한 박자다. きゃ를 기야로 읽지 않는다.</caption>
+      </table></div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>기호</th><th>예</th><th>박자 감각</th><th>뜻 차이</th></tr></thead>
+        <tbody>
+          <tr><td>촉음 っ</td><td>きって</td><td>다음 자음을 막고 한 박자 쉰다.</td><td>切手, 우표</td></tr>
+          <tr><td>발음 ん</td><td>ほん</td><td>뒤 소리에 따라 ㄴ, ㅁ, ㅇ처럼 들린다.</td><td>本, 책</td></tr>
+          <tr><td>장음</td><td>おばあさん</td><td>모음을 한 박자 더 길게 유지한다.</td><td>할머니</td></tr>
+        </tbody>
+        <caption>작은 っ, ん, 장음은 모두 의미를 바꿀 수 있는 박자 요소다.</caption>
+      </table></div>
+
+      <h3>1.4 한국인이 반드시 틀리는 발음 5가지</h3>
+      <ol class="steps">
+        <li><b>つ와 ちゅ</b>: つ는 입술을 둥글게 모으지 말고 짧게 낸다.</li>
+        <li><b>ず와 じゅ</b>: 한국어 즈와 쥬로만 처리하면 구별이 흐려진다.</li>
+        <li><b>장음</b>: 길게 읽는 글자는 의미 구별 장치다. 느낌표가 아니라 박자다.</li>
+        <li><b>ん</b>: 뒤 소리에 따라 m, n, ng에 가까운 소리로 바뀐다.</li>
+        <li><b>촉음</b>: 작은 っ은 쉬는 표시가 아니라 막고 기다리는 한 박자다.</li>
+      </ol>
+      <div class="box case">
+        <div class="box-label">해독 미션</div>
+        <p>さくら, なると, せんぱい, きょうこ, しゅん, がっこう, おばあさん을 표 없이 읽어 본다. 작은 글자와 장음이 있는 단어는 박자를 손가락으로 세며 읽는다.</p>
+      </div>
+
+      <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
+        <li>히라가나는 청음 46자, 탁음·반탁음, 요음까지 한 번에 체계를 잡아야 한다.</li>
+        <li>작은 や, ゆ, よ는 한 박자 요음이고, 작은 っ은 한 박자 촉음이다.</li>
+        <li>처음부터 장음과 ん을 소리 내어 구별해야 나중에 청해가 무너지지 않는다.</li>
+      </ul></div>
+    `;
+
+    CONTENT.ch02 = `
+      <p class="lead">가타카나는 히라가나와 소리는 같지만 쓰임이 다르다. 외래어, 외국 이름, 의성어·의태어, 강조 표현, 상품명에서 자주 나오므로 일본어를 실제로 읽으려면 반드시 익혀야 한다.</p>
+      <p>입문자는 가타카나를 히라가나보다 늦게 외우려 하지만, 실제 일본어 간판과 메뉴판에는 가타카나가 매우 많다. 이 장에서는 전체 문자표를 먼저 보고, 외래어를 일본식 박자로 바꾸는 법까지 함께 다룬다.</p>
+
+      <h3>2.1 가타카나 청음 전체표</h3>
+      <p>가타카나도 오십음도 구조는 히라가나와 같다. 같은 위치의 글자는 같은 소리를 낸다. 예를 들어 あ와 ア는 모두 a이고, か와 カ는 모두 ka다.</p>
+      <div class="table-wrap"><table class="kana-chart" aria-label="가타카나 청음 전체표">
+        <thead><tr><th>행</th><th>a</th><th>i</th><th>u</th><th>e</th><th>o</th></tr></thead>
+        <tbody>
+          <tr><th>ア행</th><td>ア<small>a / 아</small></td><td>イ<small>i / 이</small></td><td>ウ<small>u / 우</small></td><td>エ<small>e / 에</small></td><td>オ<small>o / 오</small></td></tr>
+          <tr><th>カ행</th><td>カ<small>ka / 카</small></td><td>キ<small>ki / 키</small></td><td>ク<small>ku / 쿠</small></td><td>ケ<small>ke / 케</small></td><td>コ<small>ko / 코</small></td></tr>
+          <tr><th>サ행</th><td>サ<small>sa / 사</small></td><td>シ<small>shi / 시</small></td><td>ス<small>su / 스</small></td><td>セ<small>se / 세</small></td><td>ソ<small>so / 소</small></td></tr>
+          <tr><th>タ행</th><td>タ<small>ta / 타</small></td><td>チ<small>chi / 치</small></td><td>ツ<small>tsu / 쓰</small></td><td>テ<small>te / 테</small></td><td>ト<small>to / 토</small></td></tr>
+          <tr><th>ナ행</th><td>ナ<small>na / 나</small></td><td>ニ<small>ni / 니</small></td><td>ヌ<small>nu / 누</small></td><td>ネ<small>ne / 네</small></td><td>ノ<small>no / 노</small></td></tr>
+          <tr><th>ハ행</th><td>ハ<small>ha / 하</small></td><td>ヒ<small>hi / 히</small></td><td>フ<small>fu / 후</small></td><td>ヘ<small>he / 헤</small></td><td>ホ<small>ho / 호</small></td></tr>
+          <tr><th>マ행</th><td>マ<small>ma / 마</small></td><td>ミ<small>mi / 미</small></td><td>ム<small>mu / 무</small></td><td>メ<small>me / 메</small></td><td>モ<small>mo / 모</small></td></tr>
+          <tr><th>ヤ행</th><td>ヤ<small>ya / 야</small></td><td class="empty">-</td><td>ユ<small>yu / 유</small></td><td class="empty">-</td><td>ヨ<small>yo / 요</small></td></tr>
+          <tr><th>ラ행</th><td>ラ<small>ra / 라</small></td><td>リ<small>ri / 리</small></td><td>ル<small>ru / 루</small></td><td>レ<small>re / 레</small></td><td>ロ<small>ro / 로</small></td></tr>
+          <tr><th>ワ행</th><td>ワ<small>wa / 와</small></td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td>ヲ<small>o / 오</small></td></tr>
+          <tr><th>ン</th><td colspan="5">ン<small>n / 받침 ㄴ, ㅁ, ㅇ에 가깝게 변함</small></td></tr>
+        </tbody>
+        <caption>가타카나 청음 46자. ヲ는 현대어에서 드물며, 주로 표를 완성하기 위해 함께 배운다.</caption>
+      </table></div>
+
+      <h3>2.2 탁음, 반탁음, 요음</h3>
+      <p>가타카나도 점 두 개와 작은 동그라미로 탁음과 반탁음을 만든다. 요음 역시 작은 ャ, ュ, ョ를 붙여 한 박자로 읽는다.</p>
+      <div class="table-wrap"><table class="kana-chart" aria-label="가타카나 탁음과 반탁음 표">
+        <thead><tr><th>행</th><th>a</th><th>i</th><th>u</th><th>e</th><th>o</th></tr></thead>
+        <tbody>
+          <tr><th>ガ행</th><td>ガ<small>ga / 가</small></td><td>ギ<small>gi / 기</small></td><td>グ<small>gu / 구</small></td><td>ゲ<small>ge / 게</small></td><td>ゴ<small>go / 고</small></td></tr>
+          <tr><th>ザ행</th><td>ザ<small>za / 자</small></td><td>ジ<small>ji / 지</small></td><td>ズ<small>zu / 즈</small></td><td>ゼ<small>ze / 제</small></td><td>ゾ<small>zo / 조</small></td></tr>
+          <tr><th>ダ행</th><td>ダ<small>da / 다</small></td><td>ヂ<small>ji / 지</small></td><td>ヅ<small>zu / 즈</small></td><td>デ<small>de / 데</small></td><td>ド<small>do / 도</small></td></tr>
+          <tr><th>バ행</th><td>バ<small>ba / 바</small></td><td>ビ<small>bi / 비</small></td><td>ブ<small>bu / 부</small></td><td>ベ<small>be / 베</small></td><td>ボ<small>bo / 보</small></td></tr>
+          <tr><th>パ행</th><td>パ<small>pa / 파</small></td><td>ピ<small>pi / 피</small></td><td>プ<small>pu / 푸</small></td><td>ペ<small>pe / 페</small></td><td>ポ<small>po / 포</small></td></tr>
+        </tbody>
+        <caption>가타카나의 탁음·반탁음은 히라가나와 원리가 같다. 글자 모양만 바뀐다.</caption>
+      </table></div>
+
+      <div class="table-wrap"><table class="kana-chart" aria-label="가타카나 요음 표">
+        <thead><tr><th>행</th><th>ャ</th><th>ュ</th><th>ョ</th></tr></thead>
+        <tbody>
+          <tr><th>キ</th><td>キャ<small>kya / 캬</small></td><td>キュ<small>kyu / 큐</small></td><td>キョ<small>kyo / 쿄</small></td></tr>
+          <tr><th>シ</th><td>シャ<small>sha / 샤</small></td><td>シュ<small>shu / 슈</small></td><td>ショ<small>sho / 쇼</small></td></tr>
+          <tr><th>チ</th><td>チャ<small>cha / 차</small></td><td>チュ<small>chu / 추</small></td><td>チョ<small>cho / 초</small></td></tr>
+          <tr><th>ニ</th><td>ニャ<small>nya / 냐</small></td><td>ニュ<small>nyu / 뉴</small></td><td>ニョ<small>nyo / 뇨</small></td></tr>
+          <tr><th>ヒ</th><td>ヒャ<small>hya / 햐</small></td><td>ヒュ<small>hyu / 휴</small></td><td>ヒョ<small>hyo / 효</small></td></tr>
+          <tr><th>ミ</th><td>ミャ<small>mya / 먀</small></td><td>ミュ<small>myu / 뮤</small></td><td>ミョ<small>myo / 묘</small></td></tr>
+          <tr><th>リ</th><td>リャ<small>rya / 랴</small></td><td>リュ<small>ryu / 류</small></td><td>リョ<small>ryo / 료</small></td></tr>
+          <tr><th>ギ</th><td>ギャ<small>gya / 갸</small></td><td>ギュ<small>gyu / 규</small></td><td>ギョ<small>gyo / 교</small></td></tr>
+          <tr><th>ジ</th><td>ジャ<small>ja / 자</small></td><td>ジュ<small>ju / 주</small></td><td>ジョ<small>jo / 조</small></td></tr>
+          <tr><th>ビ</th><td>ビャ<small>bya / 뱌</small></td><td>ビュ<small>byu / 뷰</small></td><td>ビョ<small>byo / 뵤</small></td></tr>
+          <tr><th>ピ</th><td>ピャ<small>pya / 퍄</small></td><td>ピュ<small>pyu / 퓨</small></td><td>ピョ<small>pyo / 표</small></td></tr>
+        </tbody>
+        <caption>キャ, シュ, チョ처럼 작은 ャ, ュ, ョ가 붙은 조합은 한 박자로 읽는다.</caption>
+      </table></div>
+
+      <h3>2.3 헷갈리는 가타카나 묶음</h3>
+      <p>가타카나는 직선이 많아서 비슷한 글자가 많다. 특히 シ/ツ, ン/ソ는 입문자가 가장 자주 틀린다. 획의 방향과 기울기를 같이 봐야 한다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>묶음</th><th>구별 포인트</th><th>연습 단어</th></tr></thead>
+        <tbody>
+          <tr><td>シ / ツ</td><td>シ는 점들이 더 가로로 누워 있고 마지막 획이 아래에서 위로 올라간다. ツ는 점들이 세로로 서 있고 마지막 획이 위에서 아래로 내려온다.</td><td>システム, ツアー</td></tr>
+          <tr><td>ン / ソ</td><td>ン은 아래에서 위로 올라가는 느낌, ソ는 위에서 아래로 내려오는 느낌이다.</td><td>パン, ソース</td></tr>
+          <tr><td>ク / ケ</td><td>ク는 꺾인 한 덩어리, ケ는 위 가로획과 아래 사선이 더 분리되어 보인다.</td><td>クラス, ケーキ</td></tr>
+          <tr><td>ワ / ウ / フ</td><td>ワ는 안쪽 빈 공간, ウ는 위 점, フ는 단순한 꺾임을 기준으로 본다.</td><td>ワイン, ウイルス, フォーク</td></tr>
+        </tbody>
+        <caption>비슷한 가타카나는 단독 암기보다 단어 속에서 묶어 보는 편이 빠르다.</caption>
+      </table></div>
+
+      <h3>2.4 외래어 표기 규칙</h3>
+      <p>가타카나 외래어는 영어 발음을 그대로 옮긴 것이 아니라 일본어의 박자 체계에 맞게 바꾼 말이다. 받침이 거의 없기 때문에 자음 뒤에 모음이 붙고, 긴 모음은 장음 부호 ー로 표시된다.</p>
+      <div class="table-wrap"><table class="glossary">
+        <thead><tr><th>가타카나</th><th>원어 감각</th><th>한국어 뜻</th><th>포인트</th></tr></thead>
+        <tbody>
+          <tr><td>コーヒー</td><td>coffee</td><td>커피</td><td>長音 ー가 두 번 들어간다.</td></tr>
+          <tr><td>バス</td><td>bus</td><td>버스</td><td>끝 자음이 ス로 열린다.</td></tr>
+          <tr><td>ホテル</td><td>hotel</td><td>호텔</td><td>ho-te-ru 세 박자로 읽는다.</td></tr>
+          <tr><td>コンピューター</td><td>computer</td><td>컴퓨터</td><td>ピュー와 ター의 장음을 확인한다.</td></tr>
+          <tr><td>チョコレート</td><td>chocolate</td><td>초콜릿</td><td>チョ는 한 박자, レー는 장음이다.</td></tr>
+          <tr><td>アイスクリーム</td><td>ice cream</td><td>아이스크림</td><td>단어가 길어져도 박자로 나눠 읽는다.</td></tr>
+        </tbody>
+        <caption>외래어는 원어 철자보다 일본어 박자와 장음 위치가 중요하다.</caption>
+      </table></div>
+
+      <div class="box warn">
+        <div class="box-label">주의</div>
+        <p>영어를 잘 알아도 가타카나를 자동으로 읽을 수 있는 것은 아니다. マクドナルド, ミルクティー, スマートフォン처럼 일본어 안에서 새 단어가 된 형태를 그대로 익혀야 한다.</p>
+      </div>
+
+      <h3>2.5 편의점 진열대 해독 루틴</h3>
+      <ol class="steps">
+        <li><b>큰 글자부터 읽기</b>: 상품명에서 가장 큰 가타카나를 먼저 읽는다.</li>
+        <li><b>장음 표시 확인</b>: ー가 있으면 앞 모음을 한 박자 더 늘린다.</li>
+        <li><b>작은 글자 확인</b>: ャ, ュ, ョ, ッ가 있으면 박자를 따로 센다.</li>
+        <li><b>원어 추측은 마지막</b>: 먼저 일본어로 읽고, 그 다음 영어·한국어 뜻을 추측한다.</li>
+      </ol>
+      <div class="box case">
+        <div class="box-label">해독 미션</div>
+        <p>ポテトチップス, チョコレート, ミルクティー, カップラーメン, アイスクリーム을 소리 내어 읽고, 장음과 작은 글자가 있는 위치를 표시한다.</p>
+      </div>
+
+      <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
+        <li>가타카나는 히라가나와 같은 소리 체계지만 외래어와 실제 상품명에서 특히 많이 쓰인다.</li>
+        <li>シ/ツ, ン/ソ는 획의 방향까지 보고 단어 속에서 반복해야 한다.</li>
+        <li>외래어는 영어 원어보다 일본어 박자, 장음, 작은 글자 위치를 먼저 읽어야 한다.</li>
+      </ul></div>
+    `;
+
+    CONTENT.ch04 = `
+      <p class="lead">일본어 문장은 처음부터 길게 만들 필요가 없다. N5 단계의 목표는 <em>명사 + 조사 + 서술어</em>라는 뼈대를 안정적으로 세우는 것이다.</p>
+      <p>한국어와 일본어는 어순이 비슷해서 출발이 빠르다. 하지만 조사를 한국어와 1:1로만 맞추면 は와 が, に와 で에서 바로 막힌다. 이 장은 문장을 직접 만드는 최소 규칙을 먼저 잡는다.</p>
+
+      <h3>4.1 명사문: です / じゃありません</h3>
+      <p>명사문은 A가 B임을 말하는 문장이다. 가장 기본형은 <em>AはBです</em>다. 부정은 <em>Bじゃありません</em>으로 만든다. 더 격식 있는 부정형으로 <em>ではありません</em>도 쓴다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>형태</th><th>일본어</th><th>뜻</th><th>구조</th></tr></thead>
+        <tbody>
+          <tr><td>긍정</td><td>私は学生です。</td><td>저는 학생입니다.</td><td>私 + は + 学生 + です</td></tr>
+          <tr><td>부정</td><td>私は学生じゃありません。</td><td>저는 학생이 아닙니다.</td><td>学生 + じゃありません</td></tr>
+          <tr><td>질문</td><td>田中さんは先生ですか。</td><td>다나카 씨는 선생님입니까?</td><td>문장 끝에 か</td></tr>
+          <tr><td>대답</td><td>はい、先生です。</td><td>네, 선생님입니다.</td><td>반복되는 주제 생략 가능</td></tr>
+        </tbody>
+        <caption>명사문은 N5 회화와 독해의 첫 문장 틀이다.</caption>
+      </table></div>
+      <div class="box warn">
+        <div class="box-label">주의</div>
+        <p>です는 한국어의 "입니다"에 가깝지만, 항상 존댓말 느낌만 뜻하지는 않는다. 초급에서는 정중한 기본 문장 끝이라고 이해하면 충분하다.</p>
+      </div>
+
+      <h3>4.2 조사 기초: は・が・を・に・で・へ・と・も</h3>
+      <p>조사는 단어 뒤에 붙어 문장 안의 역할을 표시한다. 한국어 조사와 비슷한 부분이 많지만, 일본어 조사는 문장의 초점과 정보 흐름까지 표시한다.</p>
+      <div class="table-wrap"><table class="glossary">
+        <thead><tr><th>조사</th><th>기본 역할</th><th>예문</th><th>한국어 감각</th></tr></thead>
+        <tbody>
+          <tr><td>は</td><td>주제</td><td>私は学生です。</td><td>은/는</td></tr>
+          <tr><td>が</td><td>주어, 초점</td><td>犬がいます。</td><td>이/가</td></tr>
+          <tr><td>を</td><td>목적어</td><td>水を飲みます。</td><td>을/를</td></tr>
+          <tr><td>に</td><td>도착점, 시간, 존재 위치</td><td>学校に行きます。</td><td>에</td></tr>
+          <tr><td>で</td><td>동작 장소, 수단</td><td>駅で会います。</td><td>에서, 로</td></tr>
+          <tr><td>へ</td><td>방향</td><td>日本へ行きます。</td><td>에, 로</td></tr>
+          <tr><td>と</td><td>함께, 인용</td><td>友だちと行きます。</td><td>와/과</td></tr>
+          <tr><td>も</td><td>도</td><td>私も行きます。</td><td>도</td></tr>
+        </tbody>
+        <caption>초급에서는 한 조사에 뜻 하나를 붙이되, 예문 속 역할로 다시 확인한다.</caption>
+      </table></div>
+
+      <h3>4.3 は와 が: 은/는 vs 이/가로 출발하되 거기서 멈추지 않기</h3>
+      <p>は는 이미 말하려는 주제를 세운다. が는 새로 등장한 정보나 초점을 세운다. 한국어 은/는, 이/가와 비슷해서 출발점으로 좋지만, 일본어에서는 대조와 초점의 차이가 더 중요하다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>문장</th><th>느낌</th><th>언제 쓰나</th></tr></thead>
+        <tbody>
+          <tr><td>私は学生です。</td><td>나에 대해 말하자면 학생이다.</td><td>자기소개, 주제 제시</td></tr>
+          <tr><td>私が学生です。</td><td>학생인 사람은 바로 나다.</td><td>누가 학생인지 묻는 상황</td></tr>
+          <tr><td>日本語は難しいです。</td><td>일본어라는 주제는 어렵다.</td><td>일반적인 의견</td></tr>
+          <tr><td>日本語が難しいです。</td><td>어려운 것은 일본어다.</td><td>여러 과목 중 초점</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box tip">
+        <div class="box-label">판단법</div>
+        <p>"무엇에 대해 말하는가?"라면 は, "무엇이 바로 답인가?"라면 が를 먼저 의심한다. 완벽한 규칙은 아니지만 초급 판단에는 충분히 강력하다.</p>
+      </div>
+
+      <h3>4.4 지시어 こ・そ・あ・ど</h3>
+      <p>지시어는 사물과 위치를 가리키는 말이다. こ는 말하는 사람 가까이, そ는 듣는 사람 가까이 또는 방금 나온 내용, あ는 둘 모두에게서 먼 것, ど는 질문이다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>계열</th><th>사물</th><th>장소</th><th>방향/쪽</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td>こ</td><td>これ</td><td>ここ</td><td>こちら</td><td>이것, 여기, 이쪽</td></tr>
+          <tr><td>そ</td><td>それ</td><td>そこ</td><td>そちら</td><td>그것, 거기, 그쪽</td></tr>
+          <tr><td>あ</td><td>あれ</td><td>あそこ</td><td>あちら</td><td>저것, 저기, 저쪽</td></tr>
+          <tr><td>ど</td><td>どれ</td><td>どこ</td><td>どちら</td><td>어느 것, 어디, 어느 쪽</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>4.5 의문문과 조수사</h3>
+      <p>정중체 의문문은 문장 끝에 か를 붙이면 된다. 억양만 올리는 한국어와 달리, 초급 문장에서는 か가 질문 표시 역할을 한다. 숫자를 셀 때는 대상에 따라 조수사가 붙는다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>질문</th><th>뜻</th><th>대답 예</th></tr></thead>
+        <tbody>
+          <tr><td>これは何ですか。</td><td>이것은 무엇입니까?</td><td>本です。</td></tr>
+          <tr><td>トイレはどこですか。</td><td>화장실은 어디입니까?</td><td>あそこです。</td></tr>
+          <tr><td>今、何時ですか。</td><td>지금 몇 시입니까?</td><td>三時です。</td></tr>
+          <tr><td>りんごはいくつありますか。</td><td>사과는 몇 개 있습니까?</td><td>二つあります。</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>연습문제</h3>
+      <ol class="steps">
+        <li><b>저는 학생입니다.</b>를 일본어로 써 보라.</li>
+        <li><b>이것은 책이 아닙니다.</b>를 일본어로 써 보라.</li>
+        <li><b>물을 마십니다.</b>에서 목적어 조사를 넣어 써 보라.</li>
+        <li><b>역에서 친구와 만납니다.</b>에서 장소와 함께의 조사를 넣어 써 보라.</li>
+        <li><b>화장실은 어디입니까?</b>를 일본어로 써 보라.</li>
+      </ol>
+      <div class="box case">
+        <div class="box-label">정답</div>
+        <p>1. 私は学生です。 2. これは本じゃありません。 3. 水を飲みます。 4. 駅で友だちと会います。 5. トイレはどこですか。</p>
+      </div>
+
+      <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
+        <li>명사문은 AはBです, 부정은 Bじゃありません으로 시작한다.</li>
+        <li>조사는 단어의 역할을 표시하며, は와 が는 주제와 초점의 차이를 만든다.</li>
+        <li>こ・そ・あ・ど와 か 의문문만 익혀도 자기소개와 길 묻기의 뼈대가 생긴다.</li>
+      </ul></div>
+    `;
+
+    CONTENT.ch05 = `
+      <p class="lead">일본어에서 문장의 움직임은 동사가 만든다. N5에서 가장 중요한 일은 동사를 3그룹으로 나누고, ます형·て형·ない형·た형·사전형을 눈으로 보고 바로 바꾸는 것이다.</p>
+      <p>활용은 처음에는 복잡해 보이지만 규칙의 수가 많지 않다. 이 장에서는 자주 쓰는 동사를 표로 고정하고, 부탁·허가·금지를 만드는 て형 문장까지 연결한다.</p>
+
+      <h3>5.1 동사 3그룹 분류법</h3>
+      <p>일본어 동사는 활용 방식에 따라 1류, 2류, 3류로 나눈다. 3류는 する와 来る뿐이다. 2류는 대체로 る로 끝나고 앞 소리가 い단 또는 え단인 동사다. 나머지 대부분은 1류다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>그룹</th><th>대표 동사</th><th>특징</th><th>ます형</th></tr></thead>
+        <tbody>
+          <tr><td>1류</td><td>飲む, 行く, 書く, 話す</td><td>끝 소리가 う단에서 い단으로 바뀐다.</td><td>飲みます, 行きます</td></tr>
+          <tr><td>2류</td><td>食べる, 見る, 起きる</td><td>る를 빼고 바로 붙인다.</td><td>食べます, 見ます</td></tr>
+          <tr><td>3류</td><td>する, 来る</td><td>불규칙이라 통째로 외운다.</td><td>します, 来ます</td></tr>
+        </tbody>
+        <caption>초급에서는 예외를 완벽히 외우기보다 자주 쓰는 동사를 그룹별로 묶어 반복한다.</caption>
+      </table></div>
+      <div class="box warn">
+        <div class="box-label">주의</div>
+        <p>帰る, 入る, 走る처럼 る로 끝나도 1류인 동사가 있다. 그래서 단어장에는 동사 그룹을 반드시 함께 적어야 한다.</p>
+      </div>
+
+      <h3>5.2 ます형</h3>
+      <p>ます형은 정중체의 기본이다. 회화 초반에는 ます형만 안정적으로 써도 문장을 많이 만들 수 있다. 부정은 ません, 과거는 ました, 과거 부정은 ませんでした다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>뜻</th><th>현재/미래</th><th>부정</th><th>과거</th><th>과거 부정</th></tr></thead>
+        <tbody>
+          <tr><td>먹다</td><td>食べます</td><td>食べません</td><td>食べました</td><td>食べませんでした</td></tr>
+          <tr><td>마시다</td><td>飲みます</td><td>飲みません</td><td>飲みました</td><td>飲みませんでした</td></tr>
+          <tr><td>가다</td><td>行きます</td><td>行きません</td><td>行きました</td><td>行きませんでした</td></tr>
+          <tr><td>하다</td><td>します</td><td>しません</td><td>しました</td><td>しませんでした</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>5.3 て형 완전 정복</h3>
+      <p>て형은 초급 문법의 연결 부품이다. 부탁, 허가, 금지, 진행, 이유 설명까지 모두 て형을 기반으로 확장된다. 1류 동사는 끝 글자에 따라 て형이 달라진다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>끝</th><th>변화</th><th>예</th><th>て형</th></tr></thead>
+        <tbody>
+          <tr><td>う・つ・る</td><td>って</td><td>買う, 待つ, 帰る</td><td>買って, 待って, 帰って</td></tr>
+          <tr><td>む・ぶ・ぬ</td><td>んで</td><td>飲む, 遊ぶ, 死ぬ</td><td>飲んで, 遊んで, 死んで</td></tr>
+          <tr><td>く</td><td>いて</td><td>書く</td><td>書いて</td></tr>
+          <tr><td>ぐ</td><td>いで</td><td>泳ぐ</td><td>泳いで</td></tr>
+          <tr><td>す</td><td>して</td><td>話す</td><td>話して</td></tr>
+          <tr><td>例外</td><td>行って</td><td>行く</td><td>行って</td></tr>
+        </tbody>
+        <caption>て형은 노래처럼 입으로 외우는 편이 가장 빠르다: うつるって, むぶぬんで, くいて, ぐいで, すして.</caption>
+      </table></div>
+
+      <h3>5.4 ない형, た형, 사전형</h3>
+      <p>사전형은 사전에 실리는 기본형이고, ない형은 부정, た형은 과거와 경험 표현의 재료다. た형은 て형과 거의 같은 규칙을 쓴다. て가 た로, で가 だ로 바뀐다고 보면 된다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>동사</th><th>사전형</th><th>ない형</th><th>て형</th><th>た형</th></tr></thead>
+        <tbody>
+          <tr><td>먹다</td><td>食べる</td><td>食べない</td><td>食べて</td><td>食べた</td></tr>
+          <tr><td>마시다</td><td>飲む</td><td>飲まない</td><td>飲んで</td><td>飲んだ</td></tr>
+          <tr><td>가다</td><td>行く</td><td>行かない</td><td>行って</td><td>行った</td></tr>
+          <tr><td>보다</td><td>見る</td><td>見ない</td><td>見て</td><td>見た</td></tr>
+          <tr><td>하다</td><td>する</td><td>しない</td><td>して</td><td>した</td></tr>
+          <tr><td>오다</td><td>来る</td><td>来ない</td><td>来て</td><td>来た</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>5.5 い형용사 / な형용사</h3>
+      <p>일본어 형용사는 두 종류다. い형용사는 끝의 い가 활용하고, な형용사는 명사를 꾸밀 때 な가 붙는다. 한국어 형용사처럼 하나로 보면 부정과 과거에서 틀리기 쉽다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>종류</th><th>현재</th><th>부정</th><th>과거</th><th>명사 수식</th></tr></thead>
+        <tbody>
+          <tr><td>い형용사</td><td>高いです</td><td>高くないです</td><td>高かったです</td><td>高い店</td></tr>
+          <tr><td>な형용사</td><td>静かです</td><td>静かじゃありません</td><td>静かでした</td><td>静かな店</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>5.6 て형으로 문장 잇기</h3>
+      <p>て형 뒤에 표현을 붙이면 실제 회화 문장이 된다. 초급에서는 아래 세 표현을 가장 먼저 익힌다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>표현</th><th>뜻</th><th>예문</th></tr></thead>
+        <tbody>
+          <tr><td>〜てください</td><td>해 주세요</td><td>水を飲んでください。</td></tr>
+          <tr><td>〜てもいいです</td><td>해도 됩니다</td><td>ここで写真を撮ってもいいです。</td></tr>
+          <tr><td>〜てはいけません</td><td>하면 안 됩니다</td><td>ここで食べてはいけません。</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>연습문제</h3>
+      <ol class="steps">
+        <li>飲む의 ます형, て형, た형을 써 보라.</li>
+        <li>食べる의 부정 정중체를 써 보라.</li>
+        <li>行く의 て형을 써 보라.</li>
+        <li>高い의 부정형을 써 보라.</li>
+        <li>"사진을 찍어도 됩니다"를 일본어로 만들어 보라. 写真を撮る를 사용한다.</li>
+      </ol>
+      <div class="box case">
+        <div class="box-label">정답</div>
+        <p>1. 飲みます, 飲んで, 飲んだ. 2. 食べません. 3. 行って. 4. 高くないです. 5. 写真を撮ってもいいです。</p>
+      </div>
+
+      <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
+        <li>동사는 1류, 2류, 3류로 나누어 활용한다.</li>
+        <li>て형은 부탁, 허가, 금지, 연결의 중심이므로 반드시 자동화해야 한다.</li>
+        <li>い형용사와 な형용사는 부정, 과거, 명사 수식 방식이 다르다.</li>
+      </ul></div>
+    `;
+
+    CONTENT.ch06 = `
+      <p class="lead">N5의 마지막 목표는 아는 문형을 실제 상황에 꺼내 쓰는 것이다. 이 장에서는 존재, 희망, 비교 표현을 배우고 자기소개·쇼핑·식당·길 묻기에서 바로 쓰는 문장으로 연결한다.</p>
+      <p>어휘는 별도 단어장에서 반복하되, 본문에서는 문장 안에서 꼭 필요한 핵심 단어만 다룬다. 단어를 외웠는지는 뜻을 아는지가 아니라, 조사와 함께 문장에 넣을 수 있는지로 확인한다.</p>
+
+      <h3>6.1 존재 표현: あります / います</h3>
+      <p>일본어의 "있다"는 대상에 따라 둘로 나뉜다. 사물, 식물, 사건, 시간처럼 스스로 움직이지 않는 것은 あります를 쓰고, 사람과 동물처럼 살아 움직이는 대상은 います를 쓴다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>표현</th><th>대상</th><th>예문</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td>あります</td><td>사물, 식물, 추상명사</td><td>机があります。</td><td>책상이 있습니다.</td></tr>
+          <tr><td>あります</td><td>일정, 약속</td><td>明日、試験があります。</td><td>내일 시험이 있습니다.</td></tr>
+          <tr><td>います</td><td>사람</td><td>先生がいます。</td><td>선생님이 계십니다.</td></tr>
+          <tr><td>います</td><td>동물</td><td>猫がいます。</td><td>고양이가 있습니다.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box tip">
+        <div class="box-label">문장 틀</div>
+        <p>장소에 무엇이 있는지 말할 때는 <b>場所に + 대상が + あります/います</b>를 쓴다. 예: 部屋に机があります。 교실에 선생님이 있다는 문장은 教室に先生がいます。</p>
+      </div>
+
+      <h3>6.2 희망과 의향: 〜たい, 〜ましょう</h3>
+      <p>〜たい는 말하는 사람의 희망을 나타낸다. 동사의 ます형에서 ます를 빼고 たい를 붙인다. 〜ましょう는 "합시다" 또는 제안의 느낌이다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>기본 동사</th><th>たい형</th><th>뜻</th><th>예문</th></tr></thead>
+        <tbody>
+          <tr><td>行きます</td><td>行きたいです</td><td>가고 싶습니다</td><td>日本へ行きたいです。</td></tr>
+          <tr><td>食べます</td><td>食べたいです</td><td>먹고 싶습니다</td><td>ラーメンを食べたいです。</td></tr>
+          <tr><td>見ます</td><td>見たいです</td><td>보고 싶습니다</td><td>映画を見たいです。</td></tr>
+          <tr><td>します</td><td>したいです</td><td>하고 싶습니다</td><td>勉強したいです。</td></tr>
+        </tbody>
+      </table></div>
+      <p>〜ましょう는 함께 행동하자는 제안이다. 예를 들어 行きましょう는 "갑시다", 休みましょう는 "쉽시다"다. 더 부드럽게 권유할 때는 〜ませんか도 자주 쓴다.</p>
+
+      <h3>6.3 비교와 선택: 〜より, 〜のほうが</h3>
+      <p>비교는 두 대상을 놓고 어느 쪽이 더 그런지 말하는 표현이다. AよりBのほうが...는 "A보다 B 쪽이 더 ..."라는 구조다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>문장</th><th>뜻</th><th>구조</th></tr></thead>
+        <tbody>
+          <tr><td>バスより電車のほうが速いです。</td><td>버스보다 전철이 더 빠릅니다.</td><td>Aより Bのほうが 형용사</td></tr>
+          <tr><td>コーヒーよりお茶のほうが好きです。</td><td>커피보다 차를 더 좋아합니다.</td><td>Aより Bのほうが 好き</td></tr>
+          <tr><td>日本語と英語と、どちらが難しいですか。</td><td>일본어와 영어 중 어느 쪽이 어렵습니까?</td><td>AとBと、どちらが...</td></tr>
+          <tr><td>日本語のほうが難しいです。</td><td>일본어 쪽이 어렵습니다.</td><td>Bのほうが...</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>6.4 N5 핵심 어휘를 외우는 순서</h3>
+      <p>N5 어휘는 처음부터 목록 전체를 외우려 하면 금방 지친다. 우선순위는 문장 재료가 되는 단어부터다. 대명사, 장소, 시간, 기본 동사, 기본 형용사, 숫자와 조수사를 먼저 고정한다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>분야</th><th>먼저 외울 예</th><th>문장 활용</th></tr></thead>
+        <tbody>
+          <tr><td>사람</td><td>私, 友だち, 先生, 学生</td><td>私は学生です。</td></tr>
+          <tr><td>장소</td><td>家, 学校, 駅, 店</td><td>駅で会います。</td></tr>
+          <tr><td>시간</td><td>今日, 明日, 今, 何時</td><td>明日、行きます。</td></tr>
+          <tr><td>동사</td><td>行く, 来る, 食べる, 飲む, 見る</td><td>映画を見ます。</td></tr>
+          <tr><td>형용사</td><td>高い, 安い, 大きい, 小さい</td><td>この店は安いです。</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box case">
+        <div class="box-label">단어장 사용법</div>
+        <p>전체 단어는 단어장 페이지에서 반복하고, 본문에서는 문형 안에 넣어 쓴다. 예를 들어 食べる를 외웠다면 食べます, 食べたいです, 食べてもいいです까지 한 번에 말해야 한다.</p>
+      </div>
+
+      <h3>6.5 실전 회화: 자기소개, 쇼핑, 식당, 길 묻기</h3>
+      <p>N5 회화는 긴 말을 하는 것이 아니라 정해진 틀에 단어를 바꿔 넣는 방식으로 시작한다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>상황</th><th>기본 문장</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td>자기소개</td><td>はじめまして。私はミンジュです。よろしくお願いします。</td><td>처음 뵙겠습니다. 저는 민주입니다. 잘 부탁드립니다.</td></tr>
+          <tr><td>쇼핑</td><td>これはいくらですか。</td><td>이것은 얼마입니까?</td></tr>
+          <tr><td>식당</td><td>ラーメンをください。</td><td>라멘을 주세요.</td></tr>
+          <tr><td>길 묻기</td><td>駅はどこですか。</td><td>역은 어디입니까?</td></tr>
+          <tr><td>허가</td><td>ここで写真を撮ってもいいですか。</td><td>여기서 사진을 찍어도 됩니까?</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>해독 미션: 일본 식당 메뉴판</h3>
+      <p>메뉴판에서 カレー, ラーメン, コーヒー, 水, 大盛り 같은 단어를 찾는다. 가격 숫자와 함께 읽고, 실제로 주문한다고 생각하며 <em>〜をください</em> 문장으로 바꾼다.</p>
+      <ol class="steps">
+        <li>가타카나 메뉴 3개를 소리 내어 읽는다.</li>
+        <li>가격을 숫자로 읽는다.</li>
+        <li>가장 먹고 싶은 메뉴 하나를 골라 주문 문장으로 만든다.</li>
+      </ol>
+
+      <h3>연습문제</h3>
+      <ol class="steps">
+        <li>"방에 책상이 있습니다"를 일본어로 써 보라.</li>
+        <li>"일본에 가고 싶습니다"를 일본어로 써 보라.</li>
+        <li>"버스보다 전철이 빠릅니다"를 일본어로 써 보라.</li>
+        <li>"이것은 얼마입니까?"를 일본어로 써 보라.</li>
+        <li>"라멘을 주세요"를 일본어로 써 보라.</li>
+      </ol>
+      <div class="box case">
+        <div class="box-label">정답</div>
+        <p>1. 部屋に机があります。 2. 日本へ行きたいです。 3. バスより電車のほうが速いです。 4. これはいくらですか。 5. ラーメンをください。</p>
+      </div>
+
+      <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
+        <li>あります와 います는 대상이 사물인지 생물인지에 따라 나뉜다.</li>
+        <li>たい는 희망, ましょう는 제안, より와 のほうが는 비교의 기본이다.</li>
+        <li>N5 어휘는 단어장 암기와 별개로 문장 틀 안에서 바로 써야 한다.</li>
+      </ul></div>
+    `;
+
+    var BOOK = [
+      { type: "part", id: "part0", num: "제0부", title: "시작하기 전에 - 오리엔테이션", chapters: [
+        { id: "ch00", num: "0장", title: "한국인은 일본어를 얼마나 빨리 배울 수 있는가", tags: ["로드맵"], subs: [
+          "한국어와 일본어, 무엇이 같고 무엇이 다른가",
+          "JLPT 시험 구조 한눈에 보기",
+          "전체 로드맵: 단계별 목표와 예상 소요 기간",
+          "학습 도구 세팅",
+          "이 책의 사용법",
+          "해독 미션 #0: 타임캡슐"
+        ] }
+      ] },
+      { type: "part", id: "part1", num: "제1부", title: "문자와 발음 - 첫 2주의 승부 (입문)", chapters: [
+        { id: "ch01", num: "1장", title: "히라가나 완전 정복", tags: ["입문", "발음"], subs: [
+          "오십음도의 구조 - 한글 자모와 비교하며 외우기",
+          "청음 / 탁음 / 반탁음",
+          "요음과 촉음, 발음, 장음",
+          "한국인이 반드시 틀리는 발음 5가지",
+          "해독 미션 #1: 캐릭터 이름 10개 읽기",
+          "문화 한 컷: 사라진 글자들"
+        ] },
+        { id: "ch02", num: "2장", title: "가타카나와 외래어", tags: ["입문"], subs: [
+          "가타카나 46자 - 히라가나와 헷갈리는 글자 비교",
+          "외래어 표기 규칙 - 영어를 일본식으로 읽는 법",
+          "한국어 외래어 표기와 다른 점",
+          "해독 미션 #2: 편의점 상품명 해독"
+        ] },
+        { id: "ch03", num: "3장", title: "한자, 두려워하지 않아도 되는 이유", tags: ["한자"], subs: [
+          "한국 한자음과 일본 음독 대응 규칙",
+          "음독과 훈독의 개념",
+          "한국식 한자와 일본 신자체",
+          "한자 학습 전략: 쓰기보다 읽기 우선",
+          "해독 미션 #3: 처음 보는 한자어 발음 맞히기"
+        ] },
+        challenge("challenge-a", "A", "일본 과자 봉지 완독", ["책 안의 과자 패키지 자료를 읽는다", "상품명, 숫자, 원재료, 의성어를 해독한다", "정답으로 바로 채점한다"])
+      ] },
+      { type: "part", id: "part2", num: "제2부", title: "기초 문법과 일상 표현 (N5 수준, 1-3개월)", chapters: [
+        chapter("ch04", "4장", "문장의 뼈대", ["명사문: です / じゃありません", "조사 기초: は・が・を・に・で・へ・と・も", "은/는 vs 이/가로 이해하는 は vs が", "지시어 こ・そ・あ・ど", "의문문과 조수사", "해독 미션 #4: 자기소개 명장면 대사 읽기", "문화 한 컷: 숫자와 스몰토크 매너"]),
+        chapter("ch05", "5장", "동사와 형용사의 활용", ["동사 3그룹 분류법", "ます형", "て형 완전 정복", "ない형, た형, 사전형", "い형용사 / な형용사", "て형으로 문장 잇기", "해독 미션 #5: 가사 속 동사의 원형 찾기"]),
+        chapter("ch06", "6장", "N5 필수 표현과 어휘", ["존재 표현: あります / います", "희망과 의향: たい / ましょう", "비교와 선택: より / のほうが", "N5 핵심 어휘 800", "자기소개, 쇼핑, 식당, 길 묻기 회화", "해독 미션 #6: 식당 메뉴판 해독", "문화 한 컷: 이자카야와 오토시"]),
+        checkpoint("cp-n5", "N5", "N5 체크포인트: 모의고사 + 자가진단표"),
+        challenge("challenge-b", "B", "애니 오프닝풍 지문 해독", ["책 안의 창작 오프닝 지문을 읽는다", "N5 문형과 조사 역할을 표시한다", "정답으로 바로 채점한다"])
+      ] },
+      { type: "part", id: "part3", num: "제3부", title: "문법 확장과 문장 연결 (N4 수준, 4-6개월)", chapters: [
+        chapter("ch07", "7장", "보통체와 문체 전환", ["반말(보통체)의 활용", "보통체 + と思います / と言いました", "명사 수식절", "해독 미션 #7: 반말 대사와 정중체 대사 구별", "문화 한 컷: 캐릭터 말투의 세계"]),
+        chapter("ch08", "8장", "수수(주고받기) 표현 - 한국어에 없는 개념 1", ["あげる / くれる / もらう", "てあげる / てくれる / てもらう", "한국인이 헷갈리는 이유와 극복법", "해독 미션 #8: くれる/もらう 대사 해석"]),
+        chapter("ch09", "9장", "가능, 의무, 조건", ["가능형과 ことができる", "의무와 금지", "조건 4형제 1: と・ば・たら・なら 입문", "경험과 열거", "해독 미션 #9: J-POP 후렴구 문법 찾기"]),
+        chapter("ch10", "10장", "경어의 첫걸음", ["존경어 / 겸양어 / 정중어", "특수 경어 동사", "한국과 다른 경어 문화", "해독 미션 #10: 안내방송 듣고 뜻 파악하기", "문화 한 컷: 편의점 존댓말"]),
+        chapter("ch11", "11장", "N4 어휘와 한자", ["N4 어휘 1,500", "N4 한자 300", "전화, 약속, 부탁, 병원 회화"]),
+        checkpoint("cp-n4", "N4", "N4 체크포인트: 모의고사 + 자가진단표"),
+        challenge("challenge-c", "C", "일본 전래동화 지문 완독", ["책 안의 전래동화풍 지문을 읽는다", "보통체와 수식절을 찾아낸다", "정답으로 바로 채점한다"])
+      ] },
+      { type: "part", id: "part4", num: "제4부", title: "중급 도약 (N3 수준, 7-10개월)", chapters: [
+        chapter("ch12", "12장", "자동사와 타동사 - 한국어에 없는 개념 2", ["자타 동사 쌍", "ている vs てある", "상 표현", "해독 미션 #11: 게임 화면 속 일본어 읽기", "문화 한 컷: 피해 수동과 迷惑의 감각"]),
+        chapter("ch13", "13장", "수동, 사역, 사역수동", ["수동형", "사역형과 사역수동형", "한국어 직역이 통하지 않는 문장들", "해독 미션 #12: 발라드 가사 속 수동형 찾기"]),
+        chapter("ch14", "14장", "추측, 전문, 양태", ["そうだ・ようだ・らしい・みたい", "はず / わけ / つもり", "かもしれない / に違いない", "해독 미션 #13: 일기예보 추측 표현 듣기"]),
+        chapter("ch15", "15장", "N3 문법 종합", ["N3 핵심 문형 120", "조건 4형제 2: と・ば・たら・なら 완전 구별", "형식명사 활용"]),
+        chapter("ch16", "16장", "읽기와 듣기 훈련 시작", ["단문 독해 요령", "쉐도잉과 딕테이션", "추천 콘텐츠를 공부로 바꾸는 법", "해독 미션 #14: NHK NEWS WEB EASY 기사 읽기"]),
+        chapter("ch17", "17장", "N3 어휘와 한자", ["N3 어휘 3,000", "N3 한자 650", "뜻이 다른 한자어 주의보 1", "문화 한 컷: 일본어 말장난과 오야지개그"]),
+        checkpoint("cp-n3", "N3", "N3 체크포인트: 모의고사 + 자가진단표"),
+        challenge("challenge-d", "D", "만화·애니 장면 해독", ["책 안의 창작 대화 장면을 읽는다", "수동, 사역, 자타동사, 축약형을 찾는다", "정답으로 바로 채점한다"])
+      ] },
+      { type: "part", id: "part5", num: "제5부", title: "N2 완성 (11-18개월)", chapters: [
+        chapter("ch18", "18장", "N2 문법 1 - 기능어 문형", ["시간과 범위", "원인과 이유", "역접과 양보", "기준과 관점", "해독 미션 #15: 애니 명대사로 보는 N2 문법"]),
+        chapter("ch19", "19장", "N2 문법 2 - 문어체와 뉘앙스", ["부정 계열 문형", "미묘한 뉘앙스 구별", "유사 문형 비교 총정리", "문어체와 회화체의 전환", "문화 한 컷: 간사이벤 입문"]),
+        chapter("ch20", "20장", "N2 어휘 전략", ["N2 어휘 6,000", "부사 집중 공략", "관용구와 신체 관용 표현", "가타카나 어휘와 의성어, 의태어", "뜻이 다른 한자어 주의보 2", "해독 미션 #16: 만화 효과음 페이지 해독"]),
+        chapter("ch21", "21장", "N2 한자와 어형성", ["N2 한자 1,000", "복합동사", "접두어와 접미어"]),
+        chapter("ch22", "22장", "독해 실전", ["문제 유형별 접근법", "필자의 주장 찾기", "시간 배분과 스킵 전략", "사설, 칼럼, 에세이 지문 연습", "해독 미션 #17: NHK EASY와 일반 기사 비교"]),
+        chapter("ch23", "23장", "청해 실전", ["문제 유형별 공략", "축약형과 구어체 듣기", "남성어와 여성어, 세대별 말투", "받아쓰기 및 배속 청취", "문화 한 컷: 일본 예능 자막"]),
+        checkpoint("cp-n2", "N2", "N2 체크포인트: N1 진입 전 자가진단"),
+        challenge("challenge-e", "E", "단편소설·드라마 지문 해독", ["책 안의 쇼트쇼트와 드라마 대화를 읽는다", "N2 문형과 결론을 파악한다", "정답으로 바로 채점한다"])
+      ] },
+      { type: "part", id: "part6", num: "제6부", title: "N1 완성 (19-30개월)", chapters: [
+        chapter("ch24", "24장", "N1 문법 1 - 고급 기능어와 논리", ["첨가와 누적", "제한과 예외", "강조와 평가", "논리 연결 문형", "해독 미션 #18: 사설 문장 구조 표시"]),
+        chapter("ch25", "25장", "N1 문법 2 - 문어체, 관용, 압축 표현", ["문어체 종결과 접속", "관용 문형", "고급 부정과 반어", "품격 있는 회화체와 서면체 전환", "문화 한 컷: 신문 문체와 일상 말투"]),
+        chapter("ch26", "26장", "N1 어휘와 한자 - 추상어와 시사어", ["N1 어휘 우선순위", "추상 명사와 평가어", "시사·사회 어휘", "고난도 한자어와 동형이의어", "해독 미션 #19: 사설 키워드 지도 만들기"]),
+        chapter("ch27", "27장", "N1 독해 - 논설문과 비평문", ["논지 구조 읽기", "반론과 재반론", "비유와 함축", "장문 시간 배분", "해독 미션 #20: 칼럼 1편 논지 요약"]),
+        chapter("ch28", "28장", "N1 청해 - 빠른 담화와 함축", ["통합이해 심화", "완곡한 거절과 암시", "강연·토론 듣기", "속도와 집중력 관리", "문화 한 컷: 일본식 돌려 말하기"]),
+        chapter("ch29", "29장", "상급 운용 - 읽고 말하고 쓰기", ["사설 요약", "의견 말하기", "비즈니스 문서와 발표", "원어민 피드백 루틴", "해독 미션 #21: 한 주제 3매체 비교"]),
+        checkpoint("cp-n1", "N1", "N1 체크포인트: 실전 합격권 점검"),
+        challenge("challenge-f", "F", "사설 3편 + 장편 담화 해독", ["책 안의 사설 3편과 담화 지문을 읽는다", "주장, 근거, 함축을 일본어로 요약한다", "정답으로 바로 채점한다"])
+      ] },
+      { type: "part", id: "part7", num: "제7부", title: "시험 준비와 그 이후", chapters: [
+        chapter("ch30", "30장", "JLPT N1 실전 대비 6주 플랜", ["시험 접수부터 당일까지", "주차별 파이널 플랜", "과목별 시간 배분과 마킹 전략", "전 범위 모의고사 3회분과 해설"]),
+        chapter("ch31", "31장", "N1 이후의 일본어", ["시험 일본어에서 전문 일본어로", "비즈니스 일본어와 JPT·BJT", "일본 취업·유학·연구에서 N1 활용하기", "장기 독서와 말하기 루틴", "마지막 해독 미션: 타임캡슐 개봉"])
+      ] },
+      { type: "part", id: "appendix", num: "부록", title: "표와 색인", chapters: [
+        appendix("apx-a", "A", "동사 활용표 총정리"),
+        appendix("apx-b", "B", "조사 용법 비교표"),
+        appendix("apx-c", "C", "한국 한자음과 일본 음독 대응 규칙표"),
+        appendix("apx-d", "D", "한일 유사 한자어 / 뜻이 다른 한자어 리스트"),
+        appendix("apx-e", "E", "N5-N1 급수별 문형 색인"),
+        appendix("apx-f", "F", "경어 변환 조견표"),
+        appendix("apx-g", "G", "자주 틀리는 표현 100"),
+        appendix("apx-h", "H", "학습 리소스 목록"),
+        appendix("apx-i", "I", "해독 미션 소재집")
+      ] }
+    ];
+
+    function chapter(id, num, title, subs) {
+      return { id: id, num: num, title: title, tags: ["학습"], subs: subs };
+    }
+
+    function checkpoint(id, level, title) {
+      return { id: id, num: level, title: title, tags: ["자가진단"], subs: ["모의고사", "오답 분석", "다음 급수로 넘어가기 전 확인 항목"] };
+    }
+
+    function challenge(id, num, title, subs) {
+      return { id: id, num: "챌린지 " + num, title: title, tags: ["완독 챌린지"], subs: subs };
+    }
+
+    function appendix(id, num, title) {
+      return { id: id, num: "부록 " + num, title: title, tags: ["부록"], subs: ["표와 색인 형태로 정리할 항목", "원고 작성 시 검색 가능한 참조 자료로 구성"] };
+    }
+
+    var chapters = BOOK.reduce(function (acc, part) {
+      return acc.concat(part.chapters);
+    }, []);
+
+    function escapeHTML(value) {
+      return value.replace(/[&<>"']/g, function (char) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char];
+      });
+    }
+
+    function stripHTML(value) {
+      var div = document.createElement("div");
+      div.innerHTML = value || "";
+      return div.textContent || div.innerText || "";
+    }
+
+    function getChapter(id) {
+      return chapters.find(function (item) { return item.id === id; }) || chapters[0];
+    }
+
+    function chapterLabel(ch) {
+      var prefix = ch.num + " ";
+      return ch.title.indexOf(prefix) === 0 ? ch.title : prefix + ch.title;
+    }
+
+    function renderNav() {
+      var nav = document.getElementById("bookNav");
+      nav.innerHTML = BOOK.map(function (part) {
+        return '<section class="part"><div class="part-label"><span class="pnum">' +
+          escapeHTML(part.num) + '</span><span class="pt">' + escapeHTML(part.title) +
+          '</span></div>' + part.chapters.map(function (ch) {
+            return '<a class="navlink" href="#' + ch.id + '" data-id="' + ch.id +
+              '"><span class="cnum">' + escapeHTML(ch.num) + '</span><span>' +
+              escapeHTML(ch.title) + '</span></a>';
+          }).join("") + '</section>';
+      }).join("");
+    }
+
+    var EXAMPLE_BANK = {
+      ch02: [["コーヒー", "커피", "長音 ー를 빼면 일본어답지 않게 들린다."], ["コンビニ", "편의점", "영어 convenience store가 일본식으로 줄어든 말이다."], ["チョコレート", "초콜릿", "チョ・コ・レー・ト처럼 박자를 나눠 읽는다."]],
+      ch03: [["学校", "학교", "한국 한자어 의미를 먼저 지렛대로 쓴다."], ["先生", "선생님", "せんせい처럼 장음에 가까운 えい 소리를 확인한다."], ["大丈夫", "괜찮다", "한자 뜻만으로 직역하면 의미를 놓친다."]],
+      ch04: [["私は学生です。", "저는 학생입니다.", "は는 새 정보보다 주제를 세운다."], ["水を飲みます。", "물을 마십니다.", "を는 목적어를 표시한다."], ["駅で会います。", "역에서 만납니다.", "で는 동작이 일어나는 장소다."]],
+      ch05: [["食べます", "먹습니다", "2류 동사의 ます형은 る를 빼고 붙인다."], ["飲んでください", "마셔 주세요", "て형은 부탁과 연결의 기본 재료다."], ["高くないです", "비싸지 않습니다", "い형용사는 い가 활용의 중심이다."]],
+      ch06: [["机があります。", "책상이 있습니다.", "무생물 존재에는 あります를 쓴다."], ["犬がいます。", "개가 있습니다.", "생물 존재에는 います를 쓴다."], ["日本へ行きたいです。", "일본에 가고 싶습니다.", "たい는 말하는 사람의 희망을 나타낸다."]],
+      ch07: [["行きます", "갑니다", "정중체"], ["行く", "간다", "보통체"], ["昨日見た映画", "어제 본 영화", "명사 앞에서 절이 바로 수식한다."]],
+      ch08: [["友だちに本をあげました。", "친구에게 책을 주었습니다.", "주는 사람 쪽 시점이다."], ["友だちが手伝ってくれました。", "친구가 도와주었습니다.", "나에게 고마운 방향으로 온 행동이다."], ["先生に見てもらいました。", "선생님께 봐 주심을 받았습니다.", "상대에게 부탁해 받은 행동이다."]],
+      ch09: [["読めます", "읽을 수 있습니다", "가능형은 능력과 가능 상황을 나타낸다."], ["行かなければなりません", "가야 합니다", "의무 표현은 길어도 통째로 익힌다."], ["雨なら、行きません。", "비라면 가지 않습니다.", "なら는 주어진 조건을 받아 말한다."]],
+      ch10: [["いらっしゃいます", "계십니다/오십니다/가십니다", "대표적인 특수 존경어다."], ["伺います", "여쭙다/찾아뵙다", "겸양어는 내 쪽을 낮춘다."], ["少々お待ちください。", "잠시 기다려 주십시오.", "정중한 안내문에서 자주 들린다."]],
+      ch11: [["約束", "약속", "N4 회화에서 자주 쓰는 한자어다."], ["病院", "병원", "생활 분야 어휘는 상황별로 묶는다."], ["電話します", "전화합니다", "명사 + する 동사는 덩어리로 외운다."]],
+      ch12: [["ドアが開きます。", "문이 열립니다.", "자동사는 상태 변화에 초점을 둔다."], ["ドアを開けます。", "문을 엽니다.", "타동사는 행위자와 목적어가 중요하다."], ["準備しておきます。", "준비해 둡니다.", "ておく은 미리 해 두는 뉘앙스다."]],
+      ch13: [["雨に降られました。", "비를 맞았습니다.", "피해 수동은 한국어 직역이 어렵다."], ["子どもに勉強させます。", "아이에게 공부하게 합니다.", "사역은 시키거나 허락하는 구조다."], ["残業させられました。", "야근하게 되었습니다.", "사역수동은 당한 느낌이 강하다."]],
+      ch14: [["雨が降りそうです。", "비가 올 것 같습니다.", "눈앞의 징후를 보고 판단한다."], ["雨が降るそうです。", "비가 온다고 합니다.", "들은 정보를 전달한다."], ["彼は学生らしいです。", "그는 학생인 듯합니다.", "근거 있는 추정이나 전형성을 나타낸다."]],
+      ch15: [["〜わけではない", "반드시 그런 것은 아니다", "부분 부정 문형이다."], ["〜ことにする", "하기로 하다", "의지로 결정한 일을 나타낸다."], ["〜ところだ", "막 하는 참이다", "시점과 진행 단계를 잡는다."]],
+      ch16: [["しかし", "그러나", "앞뒤 논리 전환을 표시한다."], ["つまり", "즉", "앞 내용을 압축해 다시 말한다."], ["この", "이", "앞 문장의 무엇을 받는지 추적해야 한다."]],
+      ch17: [["面倒", "귀찮음/번거로움", "한국어 한자 감각만으로는 뉘앙스가 약하다."], ["適当", "대충/적당", "문맥에 따라 긍정과 부정이 갈린다."], ["大丈夫", "괜찮음", "초급부터 중급까지 계속 쓰이는 핵심어다."]],
+      ch18: [["〜うちに", "하는 동안에", "상태가 바뀌기 전의 시간 폭을 잡는다."], ["〜にもかかわらず", "그럼에도 불구하고", "N2 독해에서 역접 논리를 만든다."], ["〜にとって", "에게 있어서", "관점과 기준을 명시한다."]],
+      ch19: [["〜ざるを得ない", "하지 않을 수 없다", "문어체 느낌이 강한 필수 문형이다."], ["〜がち", "하기 쉽다", "좋지 않은 경향에 자주 붙는다."], ["〜っぽい", "같은 느낌이 있다", "회화체에서 뉘앙스를 부드럽게 만든다."]],
+      ch20: [["せっかく", "모처럼", "기대와 아쉬움의 감정이 함께 온다."], ["気が重い", "마음이 무겁다", "気 관용구는 신체 표현처럼 묶어 익힌다."], ["こっそり", "몰래", "의태어는 장면을 직접 그린다."]],
+      ch21: [["読み出す", "읽기 시작하다", "出す는 동작의 시작을 나타낼 수 있다."], ["書き込む", "써 넣다", "込む은 안쪽으로 들어가는 느낌이다."], ["文化的", "문화적", "的은 한국어 '-적'과 대응하기 쉽다."]],
+      ch22: [["筆者が言いたいこと", "필자가 말하고 싶은 것", "결론 문장을 직접 찾기보다 흐름으로 좁힌다."], ["一方で", "한편으로", "대조 구조를 표시한다."], ["つまり", "즉", "답 근처에서 재정리 신호가 된다."]],
+      ch23: [["〜ちゃう", "해 버리다", "てしまう의 회화 축약이다."], ["じゃん", "잖아", "친한 사이의 확인 표현이다."], ["ええと", "음", "머뭇거림도 청해 단서가 된다."]],
+      ch24: [["〜に至るまで", "에 이르기까지", "범위의 끝점을 강하게 보인다."], ["〜を余儀なくされる", "어쩔 수 없이 하게 되다", "사회 기사와 논설문에서 자주 보인다."], ["〜にたる", "할 만한", "평가 기준을 압축한다."]],
+      ch25: [["〜べく", "하기 위해", "문어체 목적 표현이다."], ["〜まじき", "해서는 안 될", "격식 있는 강한 비난을 만든다."], ["〜ともなく", "딱히 하지도 않고", "무의식적 행위를 나타낸다."]],
+      ch26: [["懸念", "우려", "사회 기사에서 문제 제기 신호가 된다."], ["是正", "시정", "제도 개선 문맥에서 자주 나온다."], ["著しい", "두드러지다", "변화 폭을 평가한다."]],
+      ch27: [["一見", "언뜻 보기에", "겉보기와 실제 주장의 차이를 만든다."], ["むしろ", "오히려", "필자의 재평가 신호다."], ["裏を返せば", "뒤집어 말하면", "논지 전환과 재해석에 쓰인다."]],
+      ch28: [["差し支えなければ", "괜찮으시다면", "완곡한 요청의 청해 단서다."], ["見送る", "보류하다", "직접 거절보다 부드러운 결정 표현이다."], ["要するに", "요컨대", "긴 담화의 결론 신호다."]],
+      ch29: [["要約", "요약", "상급 출력의 기본 단위다."], ["根拠", "근거", "의견을 시험 답안처럼 정리하게 한다."], ["反論", "반론", "토론과 비평문 읽기에 필요하다."]],
+      ch30: [["1-2주차", "약점 진단", "N1은 지식보다 시간 손실을 먼저 찾아야 한다."], ["3-4주차", "실전 회수", "모의고사 오답을 기능별로 접는다."], ["5-6주차", "리허설", "청해 집중력과 마킹까지 시험처럼 맞춘다."]],
+      ch31: [["전문 일본어", "분야별 운용", "N1 이후에는 목적 분야의 언어로 좁혀야 한다."], ["BJT", "비즈니스 일본어 시험", "업무 맥락의 이해력을 본다."], ["장기 독서", "상급 유지", "시험 이후 실력을 떨어뜨리지 않는 핵심 루틴이다."]]
+    };
+
+    function cleanTopic(topic) {
+      return topic.replace(/^[0-9]+(?:\.[0-9]+)?\s*/, "");
+    }
+
+    function containsAny(value, words) {
+      return words.some(function (word) { return value.indexOf(word) > -1; });
+    }
+
+    function explainTopic(topic, ch) {
+      var text = topic + " " + ch.title;
+      if (containsAny(text, ["해독 미션"])) return "여기서는 지금 배운 내용만으로 실제 일본어 한 조각을 읽는다. 모르는 단어를 모두 외우려 하지 말고, 글자와 문형 단서로 어디까지 추측할 수 있는지 표시한다. 정답보다 중요한 것은 읽히기 시작하는 감각이다.";
+      if (containsAny(text, ["문화 한 컷"])) return "언어는 문법만으로 움직이지 않는다. 이 코너에서는 표현 뒤의 문화적 습관을 짧게 확인한다. 암기 항목이 아니라, 왜 그런 표현이 자연스럽게 들리는지 이해하는 쉬어가기다.";
+      if (containsAny(text, ["가타카나", "외래어"])) return "가타카나는 외래어, 의성어, 강조 표기에 자주 쓰인다. 영어 원어를 떠올리면 도움이 되지만, 일본어 안에서는 장음과 박자가 더 중요하다. シ/ツ, ン/ソ처럼 모양이 비슷한 글자는 한 쌍으로 비교해 눈에 익힌다.";
+      if (containsAny(text, ["한자", "음독", "훈독", "신자체"])) return "한국어 화자는 한자 의미를 빠르게 추측할 수 있다. 다만 일본어에서는 같은 글자가 음독과 훈독으로 갈라지고, 단어 안에서 읽는 법이 달라진다. 처음에는 쓰기보다 읽기, 의미보다 실제 단어 속 발음을 우선한다.";
+      if (containsAny(text, ["조사", "は", "が", "を", "に", "で"])) return "조사는 문장 안에서 단어의 역할을 표시한다. 한국어 조사와 대응되는 지점이 많지만 완전히 같지는 않다. は는 주제를 세우고, が는 초점을 세우며, に와 で는 장소를 말할 때도 서로 다른 기능을 가진다.";
+      if (containsAny(text, ["동사", "ます", "て형", "ない형", "た형", "사전형"])) return "동사는 일본어 문장의 엔진이다. ます형으로 정중한 문장을 만들고, て형으로 부탁과 연결을 만들며, 사전형과 ない형으로 보통체 문장을 넓힌다. 활용표를 외우기보다 자주 쓰는 동사를 반복해 입에 붙인다.";
+      if (containsAny(text, ["형용사", "い형용사", "な형용사"])) return "い형용사와 な형용사는 문장 끝과 명사 수식에서 모양이 다르다. い형용사는 い 자체가 활용하고, な형용사는 명사 앞에서 な가 필요하다. 한국어 형용사처럼 한 덩어리로만 보면 연결 규칙을 놓치기 쉽다.";
+      if (containsAny(text, ["존재", "あります", "います"])) return "일본어의 존재 표현은 대상의 성격에 따라 갈린다. 사물과 식물처럼 움직이지 않는 대상은 あります, 사람과 동물처럼 살아 움직이는 대상은 います를 쓴다. 장소 표현과 함께 묶어 연습하면 회화에서 바로 쓸 수 있다.";
+      if (containsAny(text, ["보통체", "반말", "문체", "인용", "수식절"])) return "보통체는 친구와의 대화뿐 아니라 인용과 명사 수식의 기반이다. 정중체를 보통체로 바꿀 수 있어야 긴 문장을 만들 수 있다. 일본어는 수식절이 명사 앞에 길게 붙으므로 끝까지 읽고 중심 명사를 확인한다.";
+      if (containsAny(text, ["수수", "あげる", "くれる", "もらう"])) return "수수 표현은 누가 누구에게 이익을 주는지, 말하는 사람이 어느 쪽에 서 있는지를 드러낸다. 한국어의 '주다' 하나로 처리하면 くれる와 もらう의 고마움 방향을 놓친다. 화살표를 그려 시점을 확인하라.";
+      if (containsAny(text, ["가능", "의무", "조건", "と・ば・たら・なら", "경험", "열거"])) return "가능과 의무, 조건 표현은 문장을 실제 상황으로 옮기는 장치다. 특히 조건 4형제는 모두 '하면'처럼 보이지만, 자동 결과, 일반 조건, 실제 계기, 화제 제시가 다르다. 예문을 상황과 함께 외워야 한다.";
+      if (containsAny(text, ["경어", "존경어", "겸양어", "정중어"])) return "경어는 높임말 목록이 아니라 관계를 조절하는 문법이다. 존경어는 상대나 제삼자의 행동을 높이고, 겸양어는 내 쪽 행동을 낮춘다. 한국어 높임법과 비슷한 부분이 있지만 회사 안팎을 나누는 방식은 다르다.";
+      if (containsAny(text, ["자동사", "타동사", "ている", "てある", "ておく", "てしまう"])) return "자동사와 타동사는 사건을 보는 카메라 위치가 다르다. 문이 열렸는지, 누가 문을 열었는지에 따라 동사가 달라진다. ている, てある, ておく 같은 상 표현은 동작 이후의 상태와 준비성을 보여 준다.";
+      if (containsAny(text, ["수동", "사역", "사역수동"])) return "일본어 수동은 단순히 당함을 말하는 데서 끝나지 않고, 말하는 사람이 피해를 입었다는 감각까지 담는다. 사역은 시키거나 허락하는 표현이고, 사역수동은 하기 싫은 일을 하게 된 느낌을 만든다.";
+      if (containsAny(text, ["추측", "전문", "양태", "そうだ", "ようだ", "らしい", "みたい", "はず", "わけ"])) return "추측 표현은 정보의 출처와 확신 정도를 나눈다. 눈앞의 징후인지, 들은 말인지, 나다운 판단인지에 따라 문형이 달라진다. 독해에서는 이 차이가 필자의 태도를 읽는 단서가 된다.";
+      if (containsAny(text, ["시간·범위", "시간과 범위"])) return "시간과 범위 문형은 사건이 언제 시작되고 어디까지 이어지는지를 표시한다. 〜うちに는 기회가 사라지기 전의 시간 폭을, 〜にわたって는 넓게 이어지는 범위를 만든다. 독해에서는 기간 표현과 함께 묶어 읽는다.";
+      if (containsAny(text, ["원인·이유", "원인과 이유"])) return "원인과 이유 문형은 단순한 because가 아니라 평가까지 함께 담는다. 〜おかげで는 좋은 결과, 〜せいで는 나쁜 결과와 어울린다. 같은 이유라도 말하는 사람의 태도가 달라지는 점을 확인한다.";
+      if (containsAny(text, ["역접", "양보"])) return "역접과 양보는 앞 내용과 반대되는 결론을 만든다. N2 독해에서는 이 지점 뒤에 필자의 진짜 판단이 나오는 경우가 많다. 〜ものの, 〜にもかかわらず 같은 표현을 보면 앞뒤 주장을 화살표로 표시한다.";
+      if (containsAny(text, ["기준", "관점"])) return "기준과 관점 문형은 누구에게, 무엇에 대해, 어떤 범위를 두고 말하는지 정한다. 〜にとって는 판단 주체를 세우고, 〜に対して는 대상과 방향을 만든다. 긴 문장에서 논점이 흔들릴 때 기준 표현을 먼저 찾는다.";
+      if (containsAny(text, ["부정 계열", "ざるを得ない", "ずにはいられない"])) return "부정 계열 문형은 겉으로는 부정이지만 실제 뜻은 강한 필연이나 감정으로 바뀐다. 〜ざるを得ない는 선택지가 없어 할 수밖에 없다는 뜻이고, 〜ずにはいられない는 감정상 참을 수 없다는 뜻이다.";
+      if (containsAny(text, ["유사 문형", "함정 페어"])) return "유사 문형은 뜻만 보면 비슷하지만 쓰이는 문맥이 다르다. 시험에서는 바로 이 차이를 묻는다. 앞말의 품사, 뒤에 오는 평가, 문어체인지 회화체인지까지 함께 비교해야 한다.";
+      if (containsAny(text, ["문어체", "회화체", "書き言葉", "話し言葉"])) return "문어체는 기사, 설명문, 시험 지문에서 자주 보이고 회화체는 실제 대화와 드라마에서 강하게 나타난다. 같은 뜻이라도 문체가 다르면 자연스러움이 달라진다. 읽을 때는 격식의 높낮이까지 표시한다.";
+      if (containsAny(text, ["N3", "N2", "문형", "기능어", "문어체", "뉘앙스"])) return "중급 이후에는 문형을 뜻 하나로 외우면 부족하다. 어떤 문체에서 자연스러운지, 앞뒤에 어떤 논리 관계를 만드는지, 비슷한 문형과 무엇이 다른지를 함께 익혀야 한다. 예문을 한 줄씩 분석하며 기능을 붙인다.";
+      if (containsAny(text, ["문제 유형별 접근법", "단문", "중문", "장문", "통합", "정보검색"])) return "독해 문제 유형마다 읽는 순서가 다르다. 단문은 핵심 문장 하나를 정확히 읽고, 장문은 접속사와 결론 위치를 추적한다. 정보검색은 모든 문장을 정독하지 말고 조건에 맞는 숫자와 키워드를 먼저 찾는다.";
+      if (containsAny(text, ["필자의 주장"])) return "필자의 주장은 보통 가장 강한 표현보다 조심스럽게 정리된 문장에 숨어 있다. 그러나, 즉, 따라서 같은 연결어 뒤를 확인하고, 예시는 주장 자체가 아니라 주장을 받치는 근거로 분리한다.";
+      if (containsAny(text, ["시간 배분", "스킵 전략"])) return "시간 배분은 실력의 일부다. 모르는 단어 하나에 오래 머무르면 뒤의 쉬운 문제를 잃는다. 먼저 풀 문제와 넘길 문제의 기준을 정하고, 표시만 해 둔 뒤 마지막에 돌아오는 습관을 만든다.";
+      if (containsAny(text, ["독해", "접속사", "지시어", "필자", "장문", "정보검색"])) return "독해는 단어를 많이 아는 것만으로 해결되지 않는다. 접속사로 논리 방향을 잡고, 지시어가 받는 내용을 되짚고, 마지막에 필자의 주장이 어디서 정리되는지 확인한다. 모르는 단어보다 문장 관계를 먼저 본다.";
+      if (containsAny(text, ["과제이해", "포인트이해", "개요이해", "즉시응답", "통합이해", "문제 유형별 공략"])) return "청해 문제 유형을 먼저 보면 들어야 할 정보가 좁아진다. 과제이해는 행동을, 포인트이해는 특정 정보를, 개요이해는 전체 의도를 잡는다. 즉시응답은 문법보다 반응 속도와 관용 표현이 중요하다.";
+      if (containsAny(text, ["축약형", "구어체", "ちゃう", "とく", "じゃん"])) return "축약형은 실제 속도의 일본어를 어렵게 만드는 핵심이다. 〜てしまう가 〜ちゃう로, 〜ておく이 〜とく으로 줄면 글자로 아는 표현도 귀에서 놓치기 쉽다. 스크립트를 보며 원래 형태로 되돌리는 연습을 한다.";
+      if (containsAny(text, ["남성어", "여성어", "세대별 말투"])) return "말투는 뜻보다 관계와 분위기를 먼저 알려 준다. 남성어와 여성어는 고정된 규칙이라기보다 캐릭터, 세대, 상황에 따라 달라지는 선택지다. 애니 말투를 그대로 따라 하기보다 어떤 효과를 내는지 관찰한다.";
+      if (containsAny(text, ["받아쓰기", "배속", "딕테이션", "쉐도잉"])) return "받아쓰기는 들리지 않는 부분을 정확히 드러내고, 쉐도잉은 문장의 호흡을 몸에 붙인다. 처음부터 빠르게 듣지 말고 정상 속도에서 구조를 잡은 뒤, 익숙한 자료만 배속으로 올린다.";
+      if (containsAny(text, ["청해", "쉐도잉", "딕테이션", "축약형", "구어체", "말투"])) return "청해는 귀가 좋아지는 일이 아니라 예측 능력이 쌓이는 일이다. 먼저 문제 유형을 보고 들어야 할 정보를 정하고, 들은 뒤에는 스크립트로 놓친 축약과 말투를 확인한다. 짧은 자료를 여러 번 반복하는 편이 효과적이다.";
+      if (containsAny(text, ["어휘", "부사", "관용구", "의성어", "의태어"])) return "어휘는 급수별 목록을 처음부터 끝까지 외우기보다 분야와 기능으로 묶는다. 한자어는 한국어 지식을 활용하고, 고유어와 부사, 의성어는 장면과 함께 외운다. 예문 없이 외운 단어는 독해에서 다시 낯설어진다.";
+      if (containsAny(text, ["시험", "모의고사", "시간 배분", "마킹", "접수"])) return "시험 준비는 지식 추가보다 손실을 줄이는 단계다. 시간 배분, 마킹, 스킵 기준을 미리 정하고, 모의고사마다 틀린 이유를 문법·어휘·속도·집중력으로 분류한다. 마지막 4주는 새 교재보다 오답 회수가 중요하다.";
+      return "이 절은 해당 장의 핵심 개념을 한국어 화자의 관점에서 정리한다. 먼저 한국어와 비슷한 부분을 확인하고, 곧바로 직역이 통하지 않는 차이를 분리한다. 마지막에는 짧은 일본어 예문을 소리 내어 읽으며 실제 운용 감각을 붙인다.";
+    }
+
+    function exampleTableFor(ch) {
+      var rows = EXAMPLE_BANK[ch.id] || [
+        [cleanTopic(ch.subs[0] || ch.title), ch.title, "핵심 개념을 실제 문장 안에서 확인한다."],
+        [cleanTopic(ch.subs[1] || ch.title), "한국어 화자의 장점", "비슷함은 지렛대지만 직역은 항상 점검한다."],
+        [cleanTopic(ch.subs[2] || ch.title), "반복 훈련", "소리 내어 읽고 짧은 문장으로 다시 만든다."]
+      ];
+      return '<div class="table-wrap"><table><thead><tr><th>일본어/항목</th><th>뜻 또는 역할</th><th>학습 포인트</th></tr></thead><tbody>' +
+        rows.map(function (row) {
+          return '<tr><td>' + escapeHTML(row[0]) + '</td><td>' + escapeHTML(row[1]) + '</td><td>' + escapeHTML(row[2]) + '</td></tr>';
+        }).join("") + '</tbody><caption>' + escapeHTML(ch.num + " " + ch.title) + '에서 바로 확인할 예시.</caption></table></div>';
+    }
+
+    function renderTopicSection(topic, ch, index) {
+      var safe = escapeHTML(cleanTopic(topic));
+      if (topic.indexOf("해독 미션") > -1) {
+        return '<div class="box case"><div class="box-label">해독 미션</div><p>' + escapeHTML(explainTopic(topic, ch)) + '</p><ul><li>먼저 아는 글자와 문형에 밑줄을 긋는다.</li><li>모르는 단어는 문맥으로 한 번 추측한 뒤 사전을 확인한다.</li><li>마지막에 전체 뜻을 한국어 한 문장으로 요약한다.</li></ul></div>';
+      }
+      if (topic.indexOf("문화 한 컷") > -1) {
+        return '<div class="box tip"><div class="box-label">문화 한 컷</div><p>' + escapeHTML(explainTopic(topic, ch)) + '</p></div>';
+      }
+      return '<h3>' + safe + '</h3><p>' + escapeHTML(explainTopic(topic, ch)) + '</p><div class="box law"><div class="box-label">읽는 순서</div><p>' +
+        escapeHTML((index + 1) + "단계에서는 개념을 먼저 말로 설명하고, 예문을 읽은 뒤, 한국어식 직역이 어디서 막히는지 확인한다.") +
+        '</p></div>';
+    }
+
+    function practiceListFor(ch) {
+      var topics = (ch.subs || []).filter(function (sub) {
+        return sub.indexOf("해독 미션") === -1 && sub.indexOf("문화 한 컷") === -1;
+      }).slice(0, 4);
+      if (!topics.length) topics = ["핵심 개념 확인", "예문 소리 내어 읽기", "오답 기록"];
+      return '<ol class="steps">' + topics.map(function (topic) {
+        return '<li><b>' + escapeHTML(cleanTopic(topic)) + '</b>: 오늘 읽은 내용을 한 줄 예문으로 다시 만들고, 헷갈린 표현을 단어장에 남긴다.</li>';
+      }).join("") + '</ol>';
+    }
+
+    function keytakeFor(ch) {
+      var topics = (ch.subs || []).slice(0, 3);
+      return '<div class="keytake"><div class="kt-label">이 항목의 핵심</div><ul>' +
+        topics.map(function (topic) {
+          return '<li>' + escapeHTML(cleanTopic(topic)) + '는 ' + escapeHTML(ch.title) + '을 실제로 운용하기 위한 핵심 축이다.</li>';
+        }).join("") +
+        '<li>읽기, 말하기, 듣기 중 하나에만 머무르지 말고 짧은 예문으로 세 방향을 모두 확인한다.</li></ul></div>';
+    }
+
+    function draftIntroFor(ch) {
+      if ((ch.tags || []).indexOf("완독 챌린지") > -1) return '<p class="lead">이 챌린지는 지금까지 배운 내용을 실제 콘텐츠 하나에 적용하는 종합 미션이다. 완벽한 번역보다 끝까지 읽어 내는 경험이 목표다.</p>';
+      if ((ch.tags || []).indexOf("자가진단") > -1) return '<p class="lead">체크포인트는 다음 급수로 넘어가기 전 빈틈을 찾는 구간이다. 점수보다 중요한 것은 어떤 유형에서 시간이 새고, 어떤 문형이 반복해서 틀리는지 확인하는 일이다.</p>';
+      if ((ch.tags || []).indexOf("부록") > -1) return '<p class="lead">이 부록은 본문에서 배운 내용을 빠르게 다시 찾기 위한 참조 페이지다. 처음부터 외우는 목록이 아니라, 장을 읽은 뒤 회수하고 비교할 때 사용한다.</p>';
+      return '<p class="lead">' + escapeHTML(ch.title) + '은(는) ' + escapeHTML(ch.num) + '에서 다루는 핵심 학습 항목이다. 한국어 화자가 빠르게 이해할 수 있는 지점을 먼저 잡고, 시험과 실제 콘텐츠에서 헷갈리는 차이를 따로 훈련한다.</p><p>아래 초안은 목차의 세부 항목을 따라 읽기, 예문 확인, 자기 점검 순서로 구성했다. 처음 읽을 때는 전체 흐름을 잡고, 두 번째 읽을 때는 예문을 소리 내어 반복한다.</p>';
+    }
+
+    function draftFor(ch) {
+      var tags = ch.tags || [];
+      if (tags.indexOf("완독 챌린지") > -1) {
+        return draftIntroFor(ch) + '<h3>진행 방법</h3>' + practiceListFor(ch) +
+          '<div class="box warn"><div class="box-label">통과 기준</div><p>모르는 표현이 있어도 멈추지 않고 끝까지 읽는다. 다 읽은 뒤 줄거리, 새로 건진 표현, 다음 장에서 보강할 약점을 각각 세 줄로 기록하면 통과다.</p></div>' + keytakeFor(ch);
+      }
+      if (tags.indexOf("자가진단") > -1) {
+        return draftIntroFor(ch) + '<h3>모의고사 운영</h3><p>실전 시간에 맞춰 풀고, 채점 직후에는 점수보다 오답 유형을 먼저 분류한다. 문법 지식 부족, 어휘 부족, 시간 부족, 문제 지시 오독을 따로 표시해야 다음 학습이 선명해진다.</p>' +
+          '<div class="table-wrap"><table><thead><tr><th>점검 항목</th><th>통과 기준</th><th>보강법</th></tr></thead><tbody><tr><td>문법</td><td>핵심 문형을 예문 없이 설명할 수 있다.</td><td>틀린 문형을 한 문장씩 새로 만든다.</td></tr><tr><td>어휘</td><td>지문 속 핵심어를 문맥으로 추측한다.</td><td>분야별로 묶어 3일 뒤 재확인한다.</td></tr><tr><td>청해</td><td>문제 유형별로 들어야 할 정보를 미리 정한다.</td><td>스크립트 확인 후 같은 음성을 다시 듣는다.</td></tr></tbody></table></div>' + keytakeFor(ch);
+      }
+      if (tags.indexOf("부록") > -1) {
+        return draftIntroFor(ch) + '<h3>사용법</h3><p>부록은 본문 학습을 대신하지 않는다. 장을 읽은 뒤 헷갈리는 항목을 빠르게 비교하고, 시험 전에는 체크리스트처럼 훑는다.</p>' +
+          '<ul class="check"><li>표는 소리 내어 읽으며 예문 하나를 붙인다.</li><li>비슷한 항목은 차이점 한 줄을 직접 적는다.</li><li>시험 직전에는 새 항목 추가보다 이미 표시한 약점을 회수한다.</li></ul>' + exampleTableFor(ch) + keytakeFor(ch);
+      }
+      return draftIntroFor(ch) +
+        (ch.subs || []).map(function (topic, index) { return renderTopicSection(topic, ch, index); }).join("") +
+        '<h3>실전 예시</h3>' + exampleTableFor(ch) +
+        '<h3>연습 루틴</h3>' + practiceListFor(ch) +
+        keytakeFor(ch);
+    }
+
+    function chapterVocab(ch) {
+      if (!window.VOCABULARY || !Array.isArray(VOCABULARY.entries)) return [];
+      return VOCABULARY.entries.filter(function (entry) {
+        return entry.chapter === ch.id;
+      }).sort(function (a, b) {
+        return a.priority - b.priority || a.kana.localeCompare(b.kana, "ja");
+      });
+    }
+
+    function vocabBoxFor(ch) {
+      var words = chapterVocab(ch).slice(0, 8);
+      if (!words.length) return "";
+      var level = words[0].level || "all";
+      return '<section class="vocab-box" aria-label="이 장의 핵심 단어"><div class="vocab-box-head">' +
+        '<div class="vocab-box-title">이 장의 핵심 단어</div>' +
+        '<a class="vocab-box-link" href="vocabulary.html#' + escapeHTML(level) + '">전체 단어장 보기</a></div>' +
+        '<table class="vocab-mini"><tbody>' + words.map(function (word) {
+          return '<tr><td><b>' + escapeHTML(word.kana) + '</b><small>' + escapeHTML(word.kanji || word.pos) +
+            '</small></td><td>' + escapeHTML(word.meaning) + '</td><td>' + escapeHTML(word.note) + '</td></tr>';
+        }).join("") + '</tbody></table></section>';
+    }
+
+    function guideDataFor(ch) {
+      if (!window.LESSON_GUIDES) return null;
+      return LESSON_GUIDES[ch.id] || null;
+    }
+
+    function renderGuideList(items, ordered, className) {
+      if (!items || !items.length) return "";
+      var tag = ordered ? "ol" : "ul";
+      var klass = className ? ' class="' + className + '"' : "";
+      return "<" + tag + klass + ">" + items.map(function (item) {
+        return "<li>" + escapeHTML(String(item)) + "</li>";
+      }).join("") + "</" + tag + ">";
+    }
+
+    function renderGuideTable(table) {
+      if (!table) return "";
+      return '<div class="table-wrap"><table><thead><tr>' +
+        table.head.map(function (cell) {
+          return "<th>" + escapeHTML(String(cell)) + "</th>";
+        }).join("") +
+        "</tr></thead><tbody>" +
+        table.rows.map(function (row) {
+          return "<tr>" + row.map(function (cell) {
+            return "<td>" + escapeHTML(String(cell)) + "</td>";
+          }).join("") + "</tr>";
+        }).join("") +
+        "</tbody>" + (table.caption ? "<caption>" + escapeHTML(table.caption) + "</caption>" : "") +
+        "</table></div>";
+    }
+
+    function renderGuideAudio(audio) {
+      if (!audio) return "";
+      return '<div class="audio-card"><div class="audio-card-head">' +
+        '<div class="box-label">청해 오디오</div><div class="audio-title">' + escapeHTML(audio.title) +
+        '</div>' + (audio.meta ? '<p class="audio-meta">' + escapeHTML(audio.meta) + "</p>" : "") +
+        '</div><audio controls preload="metadata" src="' + escapeHTML(audio.src) + '">' +
+        "이 브라우저에서는 오디오를 재생할 수 없다.</audio>" +
+        renderGuideTranscript(audio.transcript) +
+        "</div>";
+    }
+
+    function transcriptParts(text) {
+      return text.replace(/([。、])/g, "$1\n").split("\n").map(function (part) {
+        return part.trim();
+      }).filter(Boolean);
+    }
+
+    function transcriptRows(transcript) {
+      return transcript.split("\n").reduce(function (rows, rawLine) {
+        var line = rawLine.trim();
+        var match;
+        if (!line) return rows;
+        match = line.match(/^([^:：]{1,12})[:：]\s*(.*)$/);
+        if (match) {
+          transcriptParts(match[2]).forEach(function (part, index) {
+            rows.push({ speaker: index === 0 ? match[1] : "", text: part });
+          });
+          return rows;
+        }
+        transcriptParts(line).forEach(function (part) {
+          rows.push({ speaker: "", text: part });
+        });
+        return rows;
+      }, []);
+    }
+
+    function renderGuideTranscript(transcript) {
+      if (!transcript) return "";
+      return '<details class="audio-script"><summary><span class="audio-script-toggle">대본 보기</span><span class="audio-script-state" aria-hidden="true"></span></summary><div class="audio-transcript">' +
+        transcriptRows(transcript).map(function (row) {
+          return '<div class="audio-transcript-line"><span class="audio-speaker">' + escapeHTML(row.speaker) +
+            '</span><span class="audio-utterance">' + escapeHTML(row.text) + "</span></div>";
+        }).join("") + "</div></details>";
+    }
+
+    function renderGuideSection(section) {
+      return "<h3>" + escapeHTML(section.title) + "</h3>" +
+        (section.body ? "<p>" + escapeHTML(section.body) + "</p>" : "") +
+        renderGuideAudio(section.audio) +
+        renderGuideTable(section.table) +
+        (section.note ? '<div class="box law"><div class="box-label">포인트</div><p>' + escapeHTML(section.note) + "</p></div>" : "") +
+        renderGuideList(section.list, false, "check");
+    }
+
+    function guideKeytakeFor(ch, guide) {
+      if (!guide.takeaways || !guide.takeaways.length) return keytakeFor(ch);
+      return '<div class="keytake"><div class="kt-label">이 항목의 핵심</div><ul>' +
+        guide.takeaways.map(function (item) {
+          return "<li>" + escapeHTML(item) + "</li>";
+        }).join("") + "</ul></div>";
+    }
+
+    function guideFor(ch) {
+      var guide = guideDataFor(ch);
+      if (!guide) return "";
+      return '<p class="lead">' + escapeHTML(guide.lead) + "</p>" +
+        (guide.goal ? '<div class="callout">' + escapeHTML(guide.goal) + "</div>" : "") +
+        (guide.sections || []).map(renderGuideSection).join("") +
+        (guide.exercises && guide.exercises.length ? "<h3>연습문제</h3>" + renderGuideList(guide.exercises, true, "steps") : "") +
+        (guide.answers && guide.answers.length ? '<div class="box case"><div class="box-label">정답</div><p>' + escapeHTML(guide.answers.join(" ")) + "</p></div>" : "") +
+        guideKeytakeFor(ch, guide);
+    }
+
+    function hasWrittenContent(ch) {
+      return Boolean(CONTENT[ch.id] || guideDataFor(ch));
+    }
+
+    function contentFor(ch) {
+      return (CONTENT[ch.id] || guideFor(ch) || draftFor(ch)) + vocabBoxFor(ch);
+    }
+
+    function statusFor(ch) {
+      return hasWrittenContent(ch) ? "원고 작성됨" : "초안 작성됨";
+    }
+
+    function renderDoc(id) {
+      var ch = getChapter(id);
+      var doc = document.getElementById("doc");
+      var topbarTitle = document.getElementById("topbarTitle");
+      var tags = (ch.tags || []).map(function (tag, index) {
+        var klass = index === 0 ? "case" : "scen";
+        return '<span class="badge ' + klass + '">' + escapeHTML(tag) + '</span>';
+      }).join("");
+      doc.innerHTML = '<div class="doc-head"><div class="chno">' + escapeHTML(ch.num) +
+        '</div><h2>' + escapeHTML(ch.title) + '</h2><div class="meta">' + tags +
+        '<span class="badge status">' + statusFor(ch) + '</span></div></div>' +
+        contentFor(ch);
+      topbarTitle.textContent = chapterLabel(ch);
+      document.querySelectorAll(".navlink").forEach(function (link) {
+        link.classList.toggle("active", link.dataset.id === ch.id);
+      });
+      renderPager(ch.id);
+      setDrawer(false);
+    }
+
+    function renderPager(id) {
+      var pager = document.getElementById("pager");
+      var index = chapters.findIndex(function (item) { return item.id === id; });
+      var prev = chapters[index - 1];
+      var next = chapters[index + 1];
+      pager.innerHTML =
+        '<a class="prev ' + (prev ? "" : "disabled") + '" href="' + (prev ? "#" + prev.id : "#") + '">' +
+        '<div class="dir">이전</div><div class="t">' + (prev ? escapeHTML(chapterLabel(prev)) : "처음 장") + '</div></a>' +
+        '<a class="next ' + (next ? "" : "disabled") + '" href="' + (next ? "#" + next.id : "#") + '">' +
+        '<div class="dir">다음</div><div class="t">' + (next ? escapeHTML(chapterLabel(next)) : "마지막 장") + '</div></a>';
+    }
+
+    function searchableText(ch) {
+      return [ch.num, ch.title].concat(ch.subs || [], [stripHTML(contentFor(ch))]).join(" ");
+    }
+
+    function highlight(text, query) {
+      var safe = escapeHTML(text);
+      if (!query) return safe;
+      var escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return safe.replace(new RegExp(escapedQuery, "gi"), function (match) {
+        return "<mark>" + match + "</mark>";
+      });
+    }
+
+    function search(query) {
+      var box = document.getElementById("sresults");
+      var value = query.trim();
+      if (!value) {
+        box.classList.remove("open");
+        box.innerHTML = "";
+        return;
+      }
+      var results = chapters.filter(function (ch) {
+        return searchableText(ch).toLowerCase().indexOf(value.toLowerCase()) > -1;
+      }).slice(0, 8);
+      box.classList.add("open");
+      box.innerHTML = results.length ? results.map(function (ch) {
+        var text = searchableText(ch);
+        var at = text.toLowerCase().indexOf(value.toLowerCase());
+        var start = Math.max(0, at - 24);
+        var snippet = text.slice(start, start + 76);
+        return '<a class="sresult" href="#' + ch.id + '"><b>' + escapeHTML(chapterLabel(ch)) +
+          '</b>' + highlight(snippet, value) + '</a>';
+      }).join("") : '<div class="sresult"><b>검색 결과 없음</b>다른 단어로 검색해 보라.</div>';
+    }
+
+    function toggleTheme() {
+      var root = document.documentElement;
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("aab-theme", next);
+    }
+
+    function syncRoute() {
+      var id = location.hash.replace("#", "") || "ch00";
+      renderDoc(getChapter(id).id);
+    }
+
+    function setDrawer(open) {
+      var sidebar = document.getElementById("sidebar");
+      var mobile = window.matchMedia("(max-width: 900px)").matches;
+      document.body.classList.toggle("nav-open", open && mobile);
+      document.querySelectorAll(".menu-toggle").forEach(function (button) {
+        button.setAttribute("aria-expanded", String(open && mobile));
+      });
+      if (mobile && !open) {
+        sidebar.setAttribute("inert", "");
+        sidebar.setAttribute("aria-hidden", "true");
+      } else {
+        sidebar.removeAttribute("inert");
+        sidebar.removeAttribute("aria-hidden");
+      }
+    }
+
+    renderNav();
+    setDrawer(false);
+    syncRoute();
+
+    window.addEventListener("hashchange", syncRoute);
+    window.addEventListener("resize", function () {
+      setDrawer(document.body.classList.contains("nav-open"));
+    });
+    var searchInput = document.getElementById("search");
+    var searchWrap = document.querySelector(".search-wrap");
+    var searchClear = document.querySelector(".search-clear");
+    searchInput.addEventListener("input", function (event) {
+      searchWrap.classList.toggle("has-query", event.target.value.trim().length > 0);
+      search(event.target.value);
+    });
+    searchClear.addEventListener("click", function () {
+      searchInput.value = "";
+      searchWrap.classList.remove("has-query");
+      search("");
+      searchInput.focus();
+    });
+    document.querySelectorAll(".theme-toggle").forEach(function (button) {
+      button.addEventListener("click", toggleTheme);
+    });
+    document.querySelectorAll(".menu-toggle").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var open = !document.body.classList.contains("nav-open");
+        setDrawer(open);
+      });
+    });
+    document.querySelector(".backdrop").addEventListener("click", function () {
+      setDrawer(false);
+    });
+  </script>
+</body>
+</html>

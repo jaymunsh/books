@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="일본어 가이드북 실전 모의고사. N5부터 N1까지 시간 제한 풀이와 자동 채점.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <title>일본어 가이드북 실전 모의고사</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("aab-theme");
+      document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
+    }());
+  </script>
+  <style>
+    :root,
+    :root[data-theme="light"] {
+      --bg: #F3F6F1;
+      --paper: #FFFFFF;
+      --sidebar: #F8FAF5;
+      --ink: #1B2029;
+      --ink-soft: #525A67;
+      --ink-faint: #5E6671;
+      --line: #E0E7DE;
+      --line-soft: #ECF2E9;
+      --seal: #2F6F4E;
+      --seal-soft: #E3F0E7;
+      --navy: #2C3A55;
+      --navy-soft: #E9ECF3;
+      --sel: #E8F0E6;
+      --shadow: 0 1px 2px rgba(20,24,32,.04), 0 8px 28px rgba(20,24,32,.05);
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #13161B;
+      --paper: #1B1F26;
+      --sidebar: #171A20;
+      --ink: #E9E8E2;
+      --ink-soft: #AEB4BE;
+      --ink-faint: #A5ABB4;
+      --line: #2A2F38;
+      --line-soft: #22262E;
+      --seal: #7FC59A;
+      --seal-soft: #1D3327;
+      --navy: #9FB0D4;
+      --navy-soft: #242B39;
+      --sel: #232833;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif;
+      line-height: 1.68;
+      letter-spacing: -.01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    button,
+    select,
+    input { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .side {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background: var(--sidebar);
+      padding: 32px 20px;
+    }
+
+    .kicker {
+      color: var(--navy);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: 26px;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+
+    h1 b { color: var(--seal); }
+    .sub { margin: 0; color: var(--ink-soft); font-size: 13px; }
+    .author {
+      margin: 7px 0 0;
+      color: var(--ink-faint);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .link-stack {
+      display: grid;
+      gap: 8px;
+      margin: 26px 0 22px;
+    }
+
+    .book-link,
+    .level-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 8px;
+      padding: 9px 10px;
+    }
+
+    .book-link {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .book-link small {
+      display: block;
+      color: var(--ink-faint);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .level-list {
+      display: grid;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .level-link {
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .level-link.active,
+    .level-link:hover {
+      background: var(--sel);
+      color: var(--ink);
+    }
+
+    .level-link span:first-child { color: var(--seal); font-weight: 900; }
+    .level-link small {
+      margin-left: auto;
+      color: var(--ink-faint);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .main { padding: 46px 32px 80px; }
+    .inner { width: min(100%, 980px); margin: 0 auto; }
+
+    .head {
+      display: grid;
+      gap: 16px;
+      padding-bottom: 28px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .head h2 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(0, 180px) minmax(0, 180px) auto auto;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .select,
+    .action,
+    .theme {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+    }
+
+    .select { padding: 0 10px; }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      color: var(--paper);
+      background: var(--seal);
+      border-color: var(--seal);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .action:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .action.secondary {
+      color: var(--seal);
+      background: var(--seal-soft);
+      border-color: var(--line);
+    }
+
+    .theme {
+      min-width: 40px;
+      cursor: pointer;
+    }
+
+    .mobile-skip-main {
+      display: none;
+      border-bottom: 1px solid var(--line);
+      background: var(--seal);
+      color: var(--paper);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .exam-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      padding: 14px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .timer {
+      display: grid;
+      gap: 3px;
+      min-width: 132px;
+      text-align: right;
+    }
+
+    .timer strong {
+      color: var(--seal);
+      font-size: 26px;
+      line-height: 1.1;
+      letter-spacing: -.025em;
+    }
+
+    .timer span,
+    .exam-note {
+      color: var(--ink-faint);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: var(--seal-soft);
+      color: var(--seal);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .pill.navy {
+      background: var(--navy-soft);
+      color: var(--navy);
+    }
+
+    .panel,
+    .set-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .panel h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.32;
+      letter-spacing: -.025em;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .score-card {
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      background: var(--sidebar);
+      padding: 12px;
+    }
+
+    .score-card b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--seal);
+      font-size: 12px;
+    }
+
+    .score-card strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -.025em;
+    }
+
+    .exam-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .set-card {
+      padding: 18px;
+    }
+
+    .set-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .set-title {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.3;
+      letter-spacing: -.025em;
+    }
+
+    .set-goal {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .set-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      min-width: 128px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--navy-soft);
+      color: var(--navy);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tag.level {
+      background: var(--seal-soft);
+      color: var(--seal);
+    }
+
+    .passage,
+    .audio-card {
+      margin-top: 14px;
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      background: var(--sidebar);
+      padding: 14px;
+    }
+
+    .passage-title,
+    .audio-title {
+      margin: 0 0 8px;
+      color: var(--seal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .passage p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.9;
+      letter-spacing: 0;
+    }
+
+    audio { width: 100%; }
+
+    .lock-note {
+      margin: 9px 0 0;
+      color: var(--ink-faint);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .transcript {
+      margin-top: 10px;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 10px;
+    }
+
+    .transcript summary,
+    .answer summary {
+      color: var(--seal);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .script-lines {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .question {
+      border-top: 1px solid var(--line-soft);
+      padding-top: 14px;
+    }
+
+    .question:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .prompt {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: choice;
+    }
+
+    .option {
+      counter-increment: choice;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: var(--sidebar);
+      padding: 8px 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .option::before {
+      content: counter(choice) ".";
+      color: var(--seal);
+      font-weight: 900;
+    }
+
+    .option input {
+      margin: 4px 0 0;
+      accent-color: var(--seal);
+    }
+
+    .option.correct {
+      border-color: var(--seal);
+      background: var(--seal-soft);
+      color: var(--ink);
+    }
+
+    .option.wrong {
+      border-color: var(--navy);
+      background: var(--navy-soft);
+      color: var(--ink);
+    }
+
+    .answer {
+      margin-top: 9px;
+      border-radius: 8px;
+      background: var(--seal-soft);
+      padding: 8px 10px;
+    }
+
+    .answer p {
+      margin: 8px 0 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .correct-text {
+      color: var(--seal);
+      font-weight: 900;
+    }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 28px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .shell { display: block; }
+      .mobile-skip-main { display: block; }
+      .side {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 24px 20px;
+      }
+      .main { padding: 28px 20px 64px; }
+      .controls { grid-template-columns: 1fr 1fr; }
+      .action,
+      .theme { width: 100%; }
+      .exam-bar,
+      .set-head { display: grid; }
+      .timer { text-align: left; }
+      .set-meta { justify-content: flex-start; }
+      .choices,
+      .result-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="mobile-skip-main" href="#mainContent">모의고사 바로가기</a>
+  <div class="shell">
+    <aside class="side">
+      <div class="kicker">Japanese Guidebook</div>
+      <h1><b>일본어</b> 모의고사</h1>
+      <p class="sub">시간 제한 풀이와 자동 채점</p>
+      <p class="author">지은이 문성혁</p>
+      <div class="link-stack">
+        <a class="book-link" href="index.html"><span>책으로 돌아가기<small>본문 학습</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="vocabulary.html"><span>단어장 보기<small>검색과 반복 암기</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="practice.html"><span>문제 은행 보기<small>문제와 정답 해설</small></span><span aria-hidden="true">↗</span></a>
+        <a class="book-link" href="review.html"><span>오답노트 보기<small>틀린 문제 다시 풀기</small></span><span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="kicker">Levels</div>
+      <nav class="level-list" id="levelNav" aria-label="모의고사 레벨"></nav>
+    </aside>
+    <main class="main" id="mainContent">
+      <div class="inner">
+        <header class="head">
+          <h2 id="pageTitle">실전 모의고사</h2>
+          <p class="lead">선택한 급수의 문제 은행을 시간 제한 시험지로 묶어 푼다. 제출 전에는 정답과 청해 대본을 숨기고, 제출 후 영역별 점수와 해설을 한 번에 확인한다.</p>
+        </header>
+        <div class="controls">
+          <select class="select" id="levelSelect" aria-label="레벨 선택"></select>
+          <select class="select" id="modeSelect" aria-label="모의고사 모드">
+            <option value="full">전체 실전</option>
+            <option value="quick">약식 40문항</option>
+          </select>
+          <button class="action" id="startBtn" type="button" disabled>시험 시작</button>
+          <button class="theme" id="themeBtn" type="button" aria-label="테마 전환">◐</button>
+        </div>
+        <section id="examRoot" aria-live="polite"></section>
+      </div>
+    </main>
+  </div>
+
+  <script src="data/practice/manifest.js"></script>
+  <script>
+    var meta = window.PRACTICE_META;
+    var bank = window.PRACTICE_BANK;
+    var loadedLevels = {};
+    var loadingLevels = {};
+    var loadedFiles = {};
+    var loadingFiles = {};
+    var examTimes = { n5: 50, n4: 65, n3: 95, n2: 115, n1: 125 };
+    var wrongNoteKey = "jgb-wrong-notes";
+    var state = {
+      level: location.hash.replace("#", "") || "n2",
+      mode: "full",
+      started: false,
+      submitted: false,
+      timeExpired: false,
+      remaining: 0,
+      endsAt: 0,
+      timer: null,
+      examSets: [],
+      answers: {}
+    };
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, function (char) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char];
+      });
+    }
+
+    function levelById(id) {
+      return meta.levels.find(function (level) { return level.id === id; });
+    }
+
+    function sectionById(id) {
+      return meta.sections.find(function (section) { return section.id === id; });
+    }
+
+    function labelLevel(id) {
+      var level = levelById(id);
+      return level ? level.label : "N2";
+    }
+
+    function labelSection(id) {
+      var section = sectionById(id);
+      return section ? section.label : "영역";
+    }
+
+    function formatTime(seconds) {
+      var value = Math.max(0, seconds);
+      var min = Math.floor(value / 60);
+      var sec = value % 60;
+      return String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
+    }
+
+    function countQuestions(sets) {
+      return sets.reduce(function (sum, set) { return sum + set.questions.length; }, 0);
+    }
+
+    function questionKey(set, question) {
+      return set.id + "__" + question.id;
+    }
+
+    function readWrongNotes() {
+      try {
+        return JSON.parse(localStorage.getItem(wrongNoteKey) || "{}") || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function writeWrongNotes(notes) {
+      try {
+        localStorage.setItem(wrongNoteKey, JSON.stringify(notes));
+      } catch (error) {
+        return false;
+      }
+      return true;
+    }
+
+    function syncWrongNotes() {
+      var notes = readWrongNotes();
+      var changed = false;
+      state.examSets.forEach(function (set) {
+        set.questions.forEach(function (question) {
+          var key = questionKey(set, question);
+          var picked = Object.prototype.hasOwnProperty.call(state.answers, key) ? Number(state.answers[key]) : null;
+          var hit = picked === question.answer;
+          if (hit) {
+            if (notes[key]) {
+              delete notes[key];
+              changed = true;
+            }
+            return;
+          }
+          var previous = notes[key] || {};
+          notes[key] = {
+            key: key,
+            level: set.level,
+            section: set.section,
+            setId: set.id,
+            questionId: question.id,
+            picked: picked,
+            answer: question.answer,
+            misses: (previous.misses || 0) + 1,
+            lastMissedAt: Date.now(),
+            title: set.title,
+            source: "exam"
+          };
+          changed = true;
+        });
+      });
+      if (changed) writeWrongNotes(notes);
+      return notes;
+    }
+
+    function ensureFile(file) {
+      if (!file) return Promise.resolve();
+      if (loadedFiles[file]) return Promise.resolve();
+      if (loadingFiles[file]) return loadingFiles[file];
+      loadingFiles[file] = new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.src = file;
+        script.onload = function () {
+          loadedFiles[file] = true;
+          resolve();
+        };
+        script.onerror = function () {
+          delete loadingFiles[file];
+          reject(new Error(file + " 로드 실패"));
+        };
+        document.body.appendChild(script);
+      });
+      return loadingFiles[file];
+    }
+
+    function ensureLevel(levelId) {
+      if (loadedLevels[levelId]) return Promise.resolve();
+      if (loadingLevels[levelId]) return loadingLevels[levelId];
+      var files = meta.files[levelId];
+      files = Array.isArray(files) ? files : [files];
+      loadingLevels[levelId] = files.reduce(function (promise, file) {
+        return promise.then(function () { return ensureFile(file); });
+      }, Promise.resolve()).then(function () {
+        loadedLevels[levelId] = true;
+      });
+      return loadingLevels[levelId];
+    }
+
+    function buildExamSets() {
+      var source = bank.sets.filter(function (set) { return set.level === state.level; });
+      if (state.mode === "full") {
+        return source.map(function (set) {
+          return Object.assign({}, set, { questions: set.questions.slice() });
+        });
+      }
+      var limits = { vocab: 10, grammar: 10, reading: 10, listening: 10 };
+      var used = { vocab: 0, grammar: 0, reading: 0, listening: 0 };
+      return source.map(function (set) {
+        var questions = set.questions.filter(function () {
+          if (used[set.section] >= limits[set.section]) return false;
+          used[set.section] += 1;
+          return true;
+        });
+        return Object.assign({}, set, { questions: questions });
+      }).filter(function (set) {
+        return set.questions.length > 0;
+      });
+    }
+
+    function renderNav() {
+      document.getElementById("levelNav").innerHTML = meta.levels.map(function (level) {
+        return '<a class="level-link' + (state.level === level.id ? " active" : "") + '" href="#' + level.id + '">' +
+          '<span>' + escapeHTML(level.label) + '</span><small>' + escapeHTML(level.target) + '</small></a>';
+      }).join("");
+      document.getElementById("levelSelect").innerHTML = meta.levels.map(function (level) {
+        return '<option value="' + level.id + '">' + escapeHTML(level.label + " · " + level.title) + '</option>';
+      }).join("");
+      document.getElementById("levelSelect").value = state.level;
+      document.getElementById("modeSelect").value = state.mode;
+      document.getElementById("pageTitle").textContent = labelLevel(state.level) + " 실전 모의고사";
+      document.title = "일본어 가이드북 실전 모의고사 · " + labelLevel(state.level);
+    }
+
+    function renderIntro() {
+      document.getElementById("startBtn").textContent = "시험 시작";
+      var minutes = state.mode === "full" ? examTimes[state.level] : 45;
+      document.getElementById("examRoot").innerHTML =
+        '<section class="panel">' +
+          '<h3>' + escapeHTML(labelLevel(state.level)) + " " + (state.mode === "full" ? "전체 실전" : "약식 40문항") + '</h3>' +
+          '<p>시험을 시작하면 선택한 급수 데이터가 로드되고 타이머가 흐른다. 청해 음성은 들을 수 있지만 대본은 제출 후에만 열린다.</p>' +
+          '<div class="summary-row">' +
+            '<span class="pill">' + escapeHTML(labelLevel(state.level)) + '</span>' +
+            '<span class="pill navy">' + minutes + '분 제한</span>' +
+            '<span class="pill">제출 후 자동 채점</span>' +
+            '<span class="pill">오답 해설 포함</span>' +
+          '</div>' +
+        '</section>';
+    }
+
+    function renderProgress() {
+      var total = countQuestions(state.examSets);
+      var answered = Object.keys(state.answers).length;
+      var node = document.getElementById("progressText");
+      if (node) node.textContent = "응답 " + answered + " / " + total + " · 미응답 " + Math.max(0, total - answered);
+    }
+
+    function renderClock() {
+      if (!state.submitted && state.started) {
+        state.remaining = Math.max(0, Math.ceil((state.endsAt - Date.now()) / 1000));
+      }
+      var node = document.getElementById("timerValue");
+      if (node) node.textContent = formatTime(state.remaining);
+      renderProgress();
+      if (state.started && !state.submitted && state.remaining <= 0) {
+        submitExam(true);
+      }
+    }
+
+    function scoreExam() {
+      var sectionStats = {};
+      var total = 0;
+      var correct = 0;
+      state.examSets.forEach(function (set) {
+        if (!sectionStats[set.section]) sectionStats[set.section] = { total: 0, correct: 0 };
+        set.questions.forEach(function (question) {
+          var key = questionKey(set, question);
+          var hit = Number(state.answers[key]) === question.answer;
+          total += 1;
+          sectionStats[set.section].total += 1;
+          if (hit) {
+            correct += 1;
+            sectionStats[set.section].correct += 1;
+          }
+        });
+      });
+      return { total: total, correct: correct, sectionStats: sectionStats };
+    }
+
+    function resultHTML() {
+      if (!state.submitted) return "";
+      var score = scoreExam();
+      var rate = score.total ? Math.round(score.correct / score.total * 100) : 0;
+      var sectionCards = meta.sections.map(function (section) {
+        var stat = score.sectionStats[section.id] || { total: 0, correct: 0 };
+        var sectionRate = stat.total ? Math.round(stat.correct / stat.total * 100) : 0;
+        return '<div class="score-card"><b>' + escapeHTML(section.label) + '</b><strong>' +
+          stat.correct + ' / ' + stat.total + '</strong><span class="exam-note">' + sectionRate + '%</span></div>';
+      }).join("");
+      var verdict = rate >= 75 ? "합격권 유지" : rate >= 65 ? "합격권 근접" : "재복습 필요";
+      return '<section class="panel" id="resultPanel">' +
+        '<h3>' + (state.timeExpired ? "시간 종료 채점" : "모의고사 결과") + '</h3>' +
+        '<div class="summary-row">' +
+          '<span class="pill">정답 ' + score.correct + ' / ' + score.total + '</span>' +
+          '<span class="pill navy">정답률 ' + rate + '%</span>' +
+          '<span class="pill">' + verdict + '</span>' +
+        '</div>' +
+        '<div class="result-grid">' + sectionCards + '</div>' +
+        '<p>이 기준은 연습용 합격권 판단이다. 틀리거나 비워 둔 문제는 오답노트에 저장된다.</p>' +
+        '<div class="summary-row"><a class="action secondary" href="review.html#' + escapeHTML(state.level) + '">오답노트에서 다시 풀기</a></div>' +
+      '</section>';
+    }
+
+    function formatTranscript(text) {
+      return String(text || "").split("\n").map(function (line) {
+        return '<div>' + escapeHTML(line) + '</div>';
+      }).join("");
+    }
+
+    function renderAudio(set) {
+      if (!set.audio) return "";
+      var transcript = state.submitted
+        ? '<details class="transcript"><summary>대본 보기</summary><div class="script-lines">' + formatTranscript(set.transcript) + '</div></details>'
+        : '<p class="lock-note">대본은 제출 후 표시된다.</p>';
+      return '<div class="audio-card">' +
+        '<p class="audio-title">청해 음성</p>' +
+        '<audio controls preload="metadata" src="' + escapeHTML(set.audio) + '"></audio>' +
+        transcript +
+      '</div>';
+    }
+
+    function renderQuestion(set, question, index) {
+      var key = questionKey(set, question);
+      var picked = state.answers[key];
+      var correctChoice = question.choices[question.answer];
+      var choices = question.choices.map(function (choice, choiceIndex) {
+        var checked = Number(picked) === choiceIndex;
+        var classes = "option";
+        if (state.submitted && choiceIndex === question.answer) classes += " correct";
+        if (state.submitted && checked && choiceIndex !== question.answer) classes += " wrong";
+        return '<label class="' + classes + '">' +
+          '<input class="option-input" type="radio" name="' + escapeHTML(key) + '" value="' + choiceIndex + '" data-key="' + escapeHTML(key) + '"' +
+          (checked ? " checked" : "") + (state.submitted ? " disabled" : "") + '>' +
+          '<span>' + escapeHTML(choice) + '</span></label>';
+      }).join("");
+      var answer = state.submitted ? '<details class="answer" open>' +
+        '<summary>해설</summary>' +
+        '<p><span class="correct-text">정답 ' + (question.answer + 1) + '번</span> · ' + escapeHTML(correctChoice) + '</p>' +
+        '<p>' + escapeHTML(question.explanation) + '</p>' +
+      '</details>' : "";
+      return '<div class="question">' +
+        '<p class="prompt">문제 ' + (index + 1) + ". " + escapeHTML(question.prompt) + '</p>' +
+        '<div class="choices">' + choices + '</div>' + answer +
+      '</div>';
+    }
+
+    function renderSet(set) {
+      var passage = set.passage ? '<div class="passage"><p class="passage-title">문제 자료</p><p>' + escapeHTML(set.passage) + '</p></div>' : "";
+      return '<article class="set-card">' +
+        '<div class="set-head">' +
+          '<div><h3 class="set-title">' + escapeHTML(set.title) + '</h3><p class="set-goal">' + escapeHTML(set.goal) + '</p></div>' +
+          '<div class="set-meta">' +
+            '<span class="tag level">' + escapeHTML(labelLevel(set.level)) + '</span>' +
+            '<span class="tag">' + escapeHTML(labelSection(set.section)) + '</span>' +
+            '<span class="tag">' + escapeHTML(set.time) + '</span>' +
+          '</div>' +
+        '</div>' +
+        passage +
+        renderAudio(set) +
+        '<div class="question-list">' + set.questions.map(function (question, index) { return renderQuestion(set, question, index); }).join("") + '</div>' +
+      '</article>';
+    }
+
+    function bindInputs() {
+      document.querySelectorAll(".option-input").forEach(function (input) {
+        input.addEventListener("change", function (event) {
+          state.answers[event.target.dataset.key] = Number(event.target.value);
+          renderProgress();
+        });
+      });
+    }
+
+    function renderExam() {
+      var total = countQuestions(state.examSets);
+      document.getElementById("examRoot").innerHTML =
+        resultHTML() +
+        '<div class="exam-bar">' +
+          '<div><div class="summary-row">' +
+            '<span class="pill">' + escapeHTML(labelLevel(state.level)) + '</span>' +
+            '<span class="pill navy">' + (state.mode === "full" ? "전체 실전" : "약식") + '</span>' +
+            '<span class="pill">세트 ' + state.examSets.length + '개</span>' +
+            '<span class="pill">문항 ' + total + '개</span>' +
+          '</div><div class="exam-note" id="progressText"></div></div>' +
+          '<div class="timer"><strong id="timerValue">' + formatTime(state.remaining) + '</strong><span>남은 시간</span></div>' +
+        '</div>' +
+        '<div class="summary-row">' +
+          (state.submitted ? '<button class="action secondary" id="retryBtn" type="button">다시 풀기</button>' : '<button class="action" id="submitBtn" type="button">제출하고 채점</button>') +
+        '</div>' +
+        '<section class="exam-grid">' + state.examSets.map(renderSet).join("") + '</section>';
+      renderProgress();
+      renderClock();
+      bindInputs();
+      var submitBtn = document.getElementById("submitBtn");
+      if (submitBtn) submitBtn.addEventListener("click", function () { submitExam(false); });
+      var retryBtn = document.getElementById("retryBtn");
+      if (retryBtn) retryBtn.addEventListener("click", resetExam);
+    }
+
+    function startExam() {
+      stopTimer();
+      state.started = true;
+      state.submitted = false;
+      state.timeExpired = false;
+      state.answers = {};
+      state.remaining = (state.mode === "full" ? examTimes[state.level] : 45) * 60;
+      state.endsAt = Date.now() + state.remaining * 1000;
+      document.getElementById("startBtn").textContent = "다시 시작";
+      document.getElementById("examRoot").innerHTML = '<div class="empty">시험지를 불러오는 중이다.</div>';
+      ensureLevel(state.level).then(function () {
+        state.examSets = buildExamSets();
+        renderExam();
+        state.timer = setInterval(renderClock, 1000);
+      }).catch(function () {
+        document.getElementById("examRoot").innerHTML = '<div class="empty">모의고사 데이터를 불러오지 못했다.</div>';
+      });
+    }
+
+    function stopTimer() {
+      if (state.timer) clearInterval(state.timer);
+      state.timer = null;
+    }
+
+    function submitExam(timeExpired) {
+      if (!state.started || state.submitted) return;
+      state.timeExpired = !!timeExpired;
+      state.submitted = true;
+      stopTimer();
+      syncWrongNotes();
+      renderExam();
+      var result = document.getElementById("resultPanel");
+      if (result) result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetExam() {
+      stopTimer();
+      state.started = false;
+      state.submitted = false;
+      state.timeExpired = false;
+      state.answers = {};
+      state.examSets = [];
+      renderIntro();
+    }
+
+    function setThemeGlyph() {
+      document.getElementById("themeBtn").textContent = "◐";
+    }
+
+    function init() {
+      if (!levelById(state.level)) state.level = "n2";
+      renderNav();
+      setThemeGlyph();
+      renderIntro();
+      document.getElementById("startBtn").disabled = false;
+    }
+
+    document.getElementById("startBtn").addEventListener("click", startExam);
+    document.getElementById("levelSelect").addEventListener("change", function (event) {
+      location.hash = event.target.value;
+    });
+    document.getElementById("modeSelect").addEventListener("change", function (event) {
+      state.mode = event.target.value;
+      resetExam();
+      renderNav();
+    });
+    document.getElementById("themeBtn").addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("aab-theme", next);
+      setThemeGlyph();
+    });
+    window.addEventListener("hashchange", function () {
+      var next = location.hash.replace("#", "") || "n2";
+      state.level = levelById(next) ? next : "n2";
+      resetExam();
+      renderNav();
+    });
+
+    init();
+  </script>
+</body>
+</html>
