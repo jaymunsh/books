@@ -257,6 +257,53 @@
   .prose .sources ul { padding-left:18px; margin:0; }
   .prose .sources li { margin:4px 0; }
 
+  /* 등기부등본 재현 문서 + 집중분석 */
+  .prose .deed { margin:26px 0; border:1px solid var(--line); border-radius:12px; background:var(--paper); box-shadow:var(--shadow); overflow:hidden; }
+  .prose .deed-head { text-align:center; padding:20px 18px 16px; }
+  .prose .deed-head .dtitle { font-size:16px; font-weight:800; letter-spacing:.12em; }
+  .prose .deed-head .dsub { font-size:12px; color:var(--ink-soft); margin-top:8px; line-height:1.6; }
+  .prose .deed-sec {
+    text-align:center; font-size:12.5px; font-weight:700; letter-spacing:.08em;
+    padding:8px 12px; background:var(--line-soft);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .prose .deed .table-wrap { border:0; border-radius:0; margin:0; }
+  .prose .deed table { min-width:640px; font-size:12.5px; }
+  .prose .deed thead th { background:transparent; font-size:11px; font-weight:700; color:var(--ink-faint); text-align:center; white-space:nowrap; }
+  .prose .deed th, .prose .deed td { padding:8px 10px; border-bottom:1px solid var(--line-soft); border-right:1px solid var(--line-soft); line-height:1.55; }
+  .prose .deed th:last-child, .prose .deed td:last-child { border-right:0; }
+  .prose .deed tbody tr:last-child td { border-bottom:0; }
+  .prose .deed tr.erased td {
+    color:var(--ink-faint);
+    text-decoration:line-through;
+    text-decoration-color:color-mix(in srgb, var(--seal) 55%, transparent);
+  }
+  .prose .deed-foot {
+    display:flex; justify-content:space-between; gap:8px 16px; flex-wrap:wrap;
+    padding:10px 16px; font-size:11px; color:var(--ink-faint); border-top:1px solid var(--line-soft);
+  }
+  .prose .dmark {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; margin-left:5px; border-radius:50%;
+    background:var(--seal); color:var(--paper); font-size:11px; font-weight:700;
+    font-variant-numeric:tabular-nums; vertical-align:-2px;
+  }
+  .prose ol.dnotes {
+    list-style:none; counter-reset:d; margin:14px 0 24px; padding:0;
+    border:1px solid var(--line); border-radius:12px; background:var(--paper); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .prose ol.dnotes > li {
+    counter-increment:d; position:relative; padding:13px 16px 13px 46px;
+    font-size:14px; line-height:1.62; margin:0; border-bottom:1px solid var(--line-soft);
+  }
+  .prose ol.dnotes > li:last-child { border-bottom:0; }
+  .prose ol.dnotes > li::before {
+    content:counter(d); position:absolute; left:14px; top:14px;
+    width:18px; height:18px; border-radius:50%;
+    background:var(--seal); color:var(--paper); font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums;
+  }
+
   /* 이전/다음 */
   .pager { display:flex; gap:12px; margin-top:44px; padding-top:26px; border-top:1px solid var(--line); }
   .pager a {
@@ -891,16 +938,68 @@ CONTENT['ch05'] = `
 </ol>
 <div class="box tip"><span class="box-label">실전 팁</span><p>경매 물건은 낙찰 직전까지도 권리 변동이 생긴다(새 임차권등기, 추가 압류 등). 검토 초기에 한 번, <b>입찰 전날 다시 한 번</b> 최신 등기부를 떼서 대조하라. 700원으로 막을 수 있는 사고가 많다.</p></div>
 
-<h3>예시 등기부, 한 줄씩 판독해 보기</h3>
-<p>아래는 재구성한 서울의 어느 84㎡ 아파트 등기부(요약)다. 실제 판독 순서 그대로 읽어 보자.</p>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th class="num">순위</th><th>등기목적</th><th>접수(일자·번호)</th><th>주요 내용</th></tr></thead><tbody>
-<tr><td>갑구</td><td class="num">2</td><td>소유권이전</td><td>2015.04.10 / 12045</td><td>매매, 소유자 김OO</td></tr>
-<tr><td>을구</td><td class="num">1</td><td>근저당권설정</td><td>2018.03.15 / 8821</td><td>채권최고액 3억 6,000만 원, OO은행</td></tr>
-<tr><td>을구</td><td class="num">2</td><td>근저당권설정</td><td>2020.06.01 / 21770</td><td>채권최고액 6,000만 원, OO캐피탈</td></tr>
-<tr><td>갑구</td><td class="num">3</td><td>가압류</td><td>2021.07.05 / 30112</td><td>청구금액 2,000만 원, OO카드</td></tr>
-<tr><td>갑구</td><td class="num">4</td><td>임의경매개시결정</td><td>2023.09.01 / 41590</td><td>OO은행 신청</td></tr>
-</tbody></table><caption>재구성한 예시 등기부(요약). 실제 문서는 이보다 항목이 많다.</caption></div>
-<p>이제 접수일자로 한 줄을 세운다. <b>2018.03.15 근저당 → 2020.06.01 근저당 → 2021.07.05 가압류 → 2023.09.01 경매개시</b>. 맨 앞에 있으면서 말소기준이 될 수 있는 권리는 <em>2018년 OO은행 근저당</em>이다. 따라서 여기가 말소기준이고, 이후의 근저당·가압류·경매개시는 모두 소멸한다. 소유권을 인수 없이 깨끗하게 가져올 수 있는 구조다. 왜 그런지, 예외는 없는지는 바로 다음 장에서 원리로 굳힌다.</p>
+<h3>집중분석 — 예시 등기부 한 부를 통째로 읽는다</h3>
+<p>이제 실전이다. 아래는 실제 양식을 본떠 재구성한 서울 마포구 어느 84㎡ 아파트의 등기사항전부증명서(말소사항 포함)다. 항목 옆의 <span class="dmark">1</span> 붉은 번호가 판독 포인트이고, 문서 아래에서 같은 번호 순서대로 하나씩 뜯어본다. 취소선이 그어진 항목은 이미 말소된 등기다.</p>
+
+<div class="deed">
+  <div class="deed-head">
+    <div class="dtitle">등기사항전부증명서(말소사항 포함) — 집합건물</div>
+    <div class="dsub">[집합건물] 서울특별시 마포구 성산동 200 한강타워아파트 제103동 제7층 제702호<br>고유번호 1101-2005-002345</div>
+  </div>
+
+  <div class="deed-sec">【 표 제 부 】 (전유부분의 건물의 표시)</div>
+  <div class="table-wrap"><table>
+  <thead><tr><th>표시번호</th><th>접수</th><th>건물번호</th><th>건물내역</th><th>등기원인 및 기타사항</th></tr></thead>
+  <tbody>
+  <tr><td class="num">1</td><td>2005년11월28일</td><td>제7층 제702호</td><td>철근콘크리트조 84.97㎡</td><td>도면편철장 제2책 제41장</td></tr>
+  </tbody></table></div>
+
+  <div class="deed-sec">( 대지권의 표시 )</div>
+  <div class="table-wrap"><table>
+  <thead><tr><th>표시번호</th><th>대지권종류</th><th>대지권비율</th><th>등기원인 및 기타사항</th></tr></thead>
+  <tbody>
+  <tr><td class="num">1</td><td>소유권대지권<span class="dmark">1</span></td><td>43201.5분의 39.87</td><td>2005년11월15일 대지권</td></tr>
+  </tbody></table></div>
+
+  <div class="deed-sec">【 갑 구 】 (소유권에 관한 사항)</div>
+  <div class="table-wrap"><table>
+  <thead><tr><th>순위번호</th><th>등기목적</th><th>접수</th><th>등기원인</th><th>권리자 및 기타사항</th></tr></thead>
+  <tbody>
+  <tr><td class="num">1</td><td>소유권보존</td><td>2005년11월28일<br>제98230호</td><td>—</td><td>소유자 주식회사 한강건설</td></tr>
+  <tr><td class="num">2</td><td>소유권이전<span class="dmark">2</span></td><td>2015년4월10일<br>제12045호</td><td>2015년2월21일<br>매매</td><td>소유자 김○○<br>거래가액 금520,000,000원</td></tr>
+  <tr><td class="num">3</td><td>가압류<span class="dmark">3</span></td><td>2021년7월5일<br>제30112호</td><td>2021년7월2일<br>서울서부지방법원 가압류결정(2021카단○○○○)</td><td>청구금액 금20,000,000원<br>채권자 ○○카드 주식회사</td></tr>
+  <tr><td class="num">4</td><td>임의경매개시결정<span class="dmark">4</span></td><td>2023년9월1일<br>제41590호</td><td>2023년9월1일<br>서울서부지방법원 임의경매개시결정(2023타경12345)</td><td>채권자 주식회사 ○○은행</td></tr>
+  </tbody></table></div>
+
+  <div class="deed-sec">【 을 구 】 (소유권 이외의 권리에 관한 사항)</div>
+  <div class="table-wrap"><table>
+  <thead><tr><th>순위번호</th><th>등기목적</th><th>접수</th><th>등기원인</th><th>권리자 및 기타사항</th></tr></thead>
+  <tbody>
+  <tr class="erased"><td class="num">1</td><td>근저당권설정</td><td>2015년4월10일<br>제12046호</td><td>2015년4월10일<br>설정계약</td><td>채권최고액 금288,000,000원<br>채무자 김○○ · 근저당권자 주식회사 ○○은행</td></tr>
+  <tr><td class="num">2</td><td>1번 근저당권설정등기 말소<span class="dmark">5</span></td><td>2018년3월15일<br>제8820호</td><td>2018년3월15일<br>해지</td><td>—</td></tr>
+  <tr><td class="num">3</td><td>근저당권설정<span class="dmark">6</span></td><td>2018년3월15일<br>제8821호</td><td>2018년3월15일<br>설정계약</td><td>채권최고액 금360,000,000원<br>채무자 김○○ · 근저당권자 주식회사 ○○은행</td></tr>
+  <tr><td class="num">4</td><td>근저당권설정<span class="dmark">7</span></td><td>2020년6월1일<br>제21770호</td><td>2020년6월1일<br>설정계약</td><td>채권최고액 금60,000,000원<br>채무자 김○○ · 근저당권자 ○○캐피탈 주식회사</td></tr>
+  </tbody></table></div>
+
+  <div class="deed-foot">
+    <span>관할: 서울서부지방법원 마포등기소 · 열람일시 2023년 10월 6일 14:22</span>
+    <span>실제 양식을 본떠 재구성한 가상 문서 — 지번·사건번호 등은 실존하지 않음</span>
+  </div>
+</div>
+
+<h4>판독 포인트 8가지</h4>
+<ol class="dnotes">
+<li><b>대지권의 표시가 살아 있다.</b> 종류 '소유권대지권'과 비율(43201.5분의 39.87)이 등기돼 있으므로 대지권미등기 물건이 아니다. 이 칸이 비어 있으면 매각공고의 특별매각조건부터 확인해야 한다.</li>
+<li><b>2015년 매매로 취득, 대출과 같은 날.</b> 소유권이전이 제12045호, 같은 날 을구의 옛 근저당이 제12046호 — 접수번호가 연속이다. 잔금일에 주택담보대출을 끼고 산 전형적인 흐름이고, 거래가액 5억 2,000만 원은 당시 가격의 기준점이 된다.</li>
+<li><b>연체의 신호가 갑구에 찍혔다.</b> 카드사의 2,000만 원 가압류 — 담보대출을 넘어 신용채무까지 밀리기 시작했다는 뜻이다. 말소기준보다 뒤이므로 낙찰과 함께 소멸한다.</li>
+<li><b>경매를 신청한 것은 1순위 은행이다.</b> 근저당권 실행이므로 판결 없이 개시된 임의경매다. 괄호 속 사건번호(2023타경12345)가 매각공고·매각물건명세서의 사건번호와 일치하는지 반드시 대조하라.</li>
+<li><b>취소선 권리도 정보다.</b> 2015년의 채권최고액 2억 8,800만 원 근저당이 2018년 해지되고, 같은 날 새 근저당(순위 3번)이 설정됐다 — 대환대출이다. '말소사항 포함'으로 열람해야 이런 자금 흐름의 역사가 보인다.</li>
+<li><b>이 문서의 주인공, 말소기준권리.</b> 살아 있는 권리 중 접수(2018년 3월 15일 제8821호)가 가장 빠르다. 채권최고액이 3억 6,000만 원이므로 실제 채권은 약 3억 원 안팎(통상 최고액은 원금의 110~130%)으로 추정한다.</li>
+<li><b>2금융권 후순위 담보 — 자금 압박의 표지.</b> 은행 추가 대출이 막혀 캐피탈에서 6,000만 원을 더 빌린 모양새다. 이후 가압류·경매개시로 이어지는 부실의 전조가 여기서 시작됐다.</li>
+<li><b>이 등기부에 '없는 것'이 마지막 포인트다.</b> 전세권도 임차권등기도 없다. 그러나 임차인의 대항력(전입+점유)은 등기부에 찍히지 않는다. 전입세대확인서·현황조사서로 반드시 교차확인해야 한다 <span class="xref">(→ 7장)</span>.</li>
+</ol>
+
+<div class="box scen"><span class="box-label">판독 결론</span><p>살아 있는 권리를 접수일자순 한 줄로 세우면 — <b>2018.03.15 근저당(말소기준) → 2020.06.01 근저당 → 2021.07.05 가압류 → 2023.09.01 경매개시</b>. 말소기준보다 앞선 등기상 권리가 하나도 없으므로, 등기부상 모든 권리는 낙찰과 함께 소멸한다. 인수 부담 없는 구조다. 남은 변수는 등기부 <em>밖</em>(점유자·임차인)에 있고, 그것을 확인하는 방법이 다음 두 장의 주제다.</p></div>
 
 <div class="keytake"><div class="kt-label">이 장의 핵심</div><ul>
 <li>등기부는 표제부(무엇)·갑구(소유권)·을구(소유권 외) 세 칸. 우열은 칸이 아니라 <b>접수 시간</b>이 정한다.</li>
