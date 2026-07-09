@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="눈 떠보니 9급 군수직 군무원 프롤로그와 1부. 2026년 기준 9급 군수직 이해부터 문제풀이 로드맵까지 정리한 합격 매뉴얼.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" href="data:,">
   <title>눈 떠보니 9급 군수직 군무원 | 프롤로그 + 1부</title>
   <style>
@@ -48,7 +45,7 @@
       --radius-md: 8px;
       --content-max: 1160px;
       --reading-max: 760px;
-      --font-primary: "Noto Sans KR", Pretendard, "Apple SD Gothic Neo", "Segoe UI", system-ui, sans-serif;
+      --font-primary: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", system-ui, sans-serif;
       --font-mono: SFMono-Regular, Consolas, "Liberation Mono", monospace;
     }
 
@@ -618,9 +615,9 @@
     }
 
     .check-list li {
-      display: grid;
-      grid-template-columns: 18px minmax(0, 1fr);
-      gap: var(--space-3);
+      position: relative;
+      min-height: 24px;
+      padding-left: 30px;
       color: var(--text-secondary);
       font-size: 14px;
       line-height: 1.6;
@@ -628,9 +625,11 @@
 
     .check-list li::before {
       content: "";
+      position: absolute;
+      left: 0;
+      top: 5px;
       width: 14px;
       height: 14px;
-      margin-top: 5px;
       border: 1px solid var(--status-success);
       border-radius: 3px;
       background: color-mix(in srgb, var(--status-success) 12%, transparent);
