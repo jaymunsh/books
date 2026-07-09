@@ -10,6 +10,57 @@ const tocTargets = tocLinks
     return id ? { link, target: document.getElementById(id) } : null;
   })
   .filter((item) => item?.target);
+const portugueseCandidateSelectors = [
+  ".inline-code",
+  ".example-line",
+  ".audio-script p",
+  ".phrase-bank p",
+  ".answer-sample p",
+  ".prompt-sheet p",
+  "td[data-label='예시']",
+  "td[data-label='예문']",
+  "td[data-label='문장 예시']",
+  "td[data-label='기본 표현']",
+  "td[data-label='조금 더 자연스럽게']",
+  "td[data-label='단수']",
+  "td[data-label='복수']",
+  "td[data-label='명사']",
+  "td[data-label='형용사']",
+  "td[data-label='완성 문장']",
+  "td[data-label='현재']",
+  "td[data-label='과거']",
+  "td[data-label='과거 perfeito']",
+  "td[data-label='포르투갈어 도구']",
+  "td[data-label='단어']",
+  "td[data-label='표현']",
+  "td[data-label='공식 답안 표현']",
+  "td[data-label='자연스러운 결합']",
+  "td[data-label='답안 예문']",
+  "td[data-label='포르투갈어 재료']",
+];
+
+function looksPortuguese(text) {
+  const normalizedText = text.trim();
+
+  if (!normalizedText || /[가-힣]/.test(normalizedText)) {
+    return false;
+  }
+
+  return /[áàâãçéêíóôõúü]/i.test(normalizedText)
+    || /\b(eu|você|vocês|ele|ela|eles|elas|nós|não|que|de|do|da|dos|das|para|por|com|como|uma|um|os|as|é|são|ser|estar|ter|gostaria|solicito|governo|prefeitura|escola|moradores|acesso|saúde|educação|trabalho|Brasil|português)\b/i.test(normalizedText);
+}
+
+function annotatePortugueseText() {
+  document.querySelectorAll(portugueseCandidateSelectors.join(",")).forEach((element) => {
+    if (element.closest('[lang="pt-BR"]')) {
+      return;
+    }
+
+    if (looksPortuguese(element.textContent || "")) {
+      element.setAttribute("lang", "pt-BR");
+    }
+  });
+}
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
@@ -25,6 +76,7 @@ function applyTheme(theme) {
 
 const initialTheme = localStorage.getItem("lp-theme") === "dark" ? "dark" : "light";
 applyTheme(initialTheme);
+annotatePortugueseText();
 
 toggle?.addEventListener("click", () => {
   const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
@@ -72,6 +124,11 @@ function setActiveTocLink(nextLink) {
   if (nextLink.offsetParent !== null) {
     nextLink.scrollIntoView({ block: "nearest", inline: "nearest" });
   }
+}
+
+function setActiveTocLinkById(targetId) {
+  const targetLink = tocLinks.find((link) => link.getAttribute("href") === `#${targetId}`);
+  setActiveTocLink(targetLink);
 }
 
 function updateActiveToc() {
@@ -122,6 +179,7 @@ function scrollHashTargetIntoView() {
   root.style.scrollBehavior = "auto";
   window.scrollTo({ top: Math.max(targetTop, 0), left: 0 });
   root.style.scrollBehavior = previousScrollBehavior;
+  setActiveTocLinkById(targetId);
 }
 
 if (window.location.hash) {
@@ -130,6 +188,8 @@ if (window.location.hash) {
     window.setTimeout(scrollHashTargetIntoView, 700);
   });
 }
+
+window.addEventListener("hashchange", scrollHashTargetIntoView);
 
 tocLinks.forEach((link) => {
   link.addEventListener("click", () => {

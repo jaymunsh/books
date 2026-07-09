@@ -4,13 +4,13 @@
 
 Before committing, pushing, or deploying this static books repository:
 
-1. If a new book HTML file or book folder is added under `docs/`, update `docs/index.html` so the document list links to it.
-   - Single-page books should link to `book-name.html`.
-   - Folder-based books should link to `folder-name/`.
+1. If a new book is added under `docs/`, update `docs/index.html` so the document list links to it.
+   - Store each book as `book-name/index.html`.
+   - Link each book as `book-name/`.
    - Keep the card title and description in Korean and consistent with the existing list style.
 
 2. Every uploaded book HTML page must load and use `Noto Sans KR`.
-   - Standalone HTML files should include:
+   - Standalone book `index.html` files should include:
 
      ```html
      <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,0 +1,1576 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="2025년 9급 군무원 국어 기출 25문항을 HTML 텍스트 기반 클릭형 문제풀이와 최종 해설지 형태로 재구성한 학습 페이지.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/subject.css">
+  <title>2025 국어 기출 25문항 풀이 | 눈 떠보니 9급 군수직 군무원</title>
+  <style>
+    .exam-shell {
+      width: min(100% - 32px, 1240px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 820px) 320px;
+      gap: var(--space-8);
+      padding: var(--space-6) 0 var(--space-12);
+    }
+
+    .exam-main,
+    .exam-side {
+      min-width: 0;
+    }
+
+    .exam-side {
+      position: sticky;
+      top: 88px;
+      align-self: start;
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .exam-panel,
+    .exam-player {
+      border: 1px solid var(--border-default);
+      background: var(--surface-primary);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .exam-hero,
+    .exam-panel,
+    .exam-card,
+    .exam-actions,
+    .exam-review {
+      padding: var(--space-6);
+    }
+
+    .exam-hero {
+      border: 1px solid var(--border-default);
+      border-bottom: 3px solid var(--surface-ink);
+      background: var(--surface-primary);
+    }
+
+    .exam-hero h1 {
+      max-width: 720px;
+      margin-bottom: var(--space-4);
+      font-size: 38px;
+      line-height: 1.18;
+    }
+
+    .exam-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-5);
+    }
+
+    .exam-meta span,
+    .exam-status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 var(--space-3);
+      border: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .exam-player {
+      margin-top: var(--space-8);
+    }
+
+    .answer-sheet {
+      margin-top: var(--space-8);
+      border: 1px solid var(--border-default);
+      background: var(--surface-primary);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .answer-sheet[hidden] {
+      display: none;
+    }
+
+    .answer-sheet-header,
+    .answer-sheet-body {
+      padding: var(--space-6);
+    }
+
+    .answer-sheet-header {
+      border-bottom: 3px solid var(--surface-ink);
+    }
+
+    .answer-sheet-header h2 {
+      margin-bottom: var(--space-4);
+      font-size: 30px;
+      line-height: 1.25;
+    }
+
+    .answer-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+
+    .answer-summary-item {
+      min-width: 0;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+    }
+
+    .answer-summary-item span {
+      display: block;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .answer-summary-item strong {
+      display: block;
+      margin-top: var(--space-1);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 18px;
+    }
+
+    .answer-sheet-list {
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .answer-item {
+      padding-top: var(--space-6);
+      border-top: 2px solid var(--surface-ink);
+    }
+
+    .answer-item:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .answer-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .answer-item h3 {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-default);
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    .sheet-passage {
+      margin: var(--space-4) 0;
+      padding: var(--space-4);
+      border-left: 4px solid var(--accent-primary);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.75;
+      white-space: pre-line;
+    }
+
+    .sheet-choice-list {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0 0 var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+
+    .sheet-choice {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .sheet-choice.is-answer {
+      border-color: color-mix(in srgb, var(--status-success, #2f6f4e) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-success, #2f6f4e) 10%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .sheet-choice.is-user-wrong {
+      border-color: color-mix(in srgb, var(--status-warning, #8a5a12) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-warning, #8a5a12) 10%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .sheet-choice-marker {
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .sheet-explanation {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .sheet-box {
+      min-width: 0;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+    }
+
+    .sheet-box strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-size: 13px;
+    }
+
+    .sheet-box p,
+    .sheet-box li {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .sheet-box ul {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .exam-card {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .question-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .question-title {
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--surface-ink);
+      color: var(--text-primary);
+      font-size: 24px;
+      line-height: 1.45;
+    }
+
+    .passage {
+      margin: var(--space-5) 0;
+      padding: var(--space-5);
+      border-left: 4px solid var(--accent-primary);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: var(--space-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .choice-button {
+      width: 100%;
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-primary);
+      color: var(--text-secondary);
+      font: inherit;
+      line-height: 1.65;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out;
+    }
+
+    .choice-button:hover {
+      border-color: var(--accent-primary);
+      color: var(--text-primary);
+    }
+
+    .choice-button:active {
+      transform: scale(0.99);
+    }
+
+    .choice-button[aria-pressed="true"] {
+      border-color: var(--accent-primary);
+      background: var(--accent-soft);
+      color: var(--text-primary);
+    }
+
+    .choice-button.is-correct {
+      border-color: color-mix(in srgb, var(--status-success, #2f6f4e) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-success, #2f6f4e) 12%, var(--surface-primary));
+    }
+
+    .choice-button.is-wrong {
+      border-color: color-mix(in srgb, var(--status-warning, #8a5a12) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-warning, #8a5a12) 12%, var(--surface-primary));
+    }
+
+    .choice-number {
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .exam-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .exam-button {
+      min-height: 44px;
+      padding: 0 var(--space-4);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .exam-button.primary {
+      border-color: var(--surface-ink);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+    }
+
+    .exam-button:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .exam-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .exam-review {
+      display: none;
+      background: var(--surface-secondary);
+    }
+
+    .exam-review[data-open="true"] {
+      display: block;
+    }
+
+    .exam-review h2 {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--surface-ink);
+      font-size: 22px;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+
+    .review-box {
+      min-width: 0;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      background: var(--surface-primary);
+    }
+
+    .review-box strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-size: 13px;
+    }
+
+    .review-box p,
+    .review-box li {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .review-box ul {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .number-button {
+      min-height: 42px;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-primary);
+      color: var(--text-secondary);
+      font: inherit;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .number-button[aria-current="true"] {
+      border-color: var(--accent-primary);
+      background: var(--accent-primary);
+      color: var(--surface-primary);
+    }
+
+    .number-button.is-selected {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .number-button.is-correct {
+      border-color: color-mix(in srgb, var(--status-success, #2f6f4e) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-success, #2f6f4e) 12%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .number-button.is-wrong {
+      border-color: color-mix(in srgb, var(--status-warning, #8a5a12) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-warning, #8a5a12) 12%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .stat-list {
+      display: grid;
+      gap: var(--space-3);
+      margin: var(--space-4) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .stat-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .stat-list strong {
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    .source-links {
+      display: grid;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .source-links a {
+      color: var(--accent-primary);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .source-note-small {
+      margin: var(--space-4) 0 0;
+      color: var(--text-tertiary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .exam-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .exam-main {
+        order: 1;
+      }
+
+      .exam-side {
+        position: static;
+        order: 2;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .exam-hero,
+      .exam-panel,
+      .exam-card,
+      .exam-actions,
+      .exam-review,
+      .answer-sheet-header,
+      .answer-sheet-body {
+        padding: var(--space-5);
+      }
+
+      .exam-hero h1 {
+        font-size: 30px;
+      }
+
+      .question-title {
+        font-size: 21px;
+      }
+
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .answer-summary-grid,
+      .sheet-explanation {
+        grid-template-columns: 1fr;
+      }
+
+      .top-nav {
+        max-width: min(62vw, 300px);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .top-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .top-nav a {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="subject-header">
+    <div class="subject-header-inner">
+      <a class="brand" href="../index.html"><span>눈 떠보니 9급 군수직 군무원</span></a>
+      <nav class="top-nav" aria-label="기출 풀이 이동">
+        <a href="past-exams.html">기출 전체</a>
+        <a href="korean.html">국어</a>
+        <a href="learn.html">통합</a>
+        <button class="theme-toggle" type="button" aria-label="다크 모드 켜기" aria-pressed="false">
+          <svg class="theme-symbol theme-symbol-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.7A7.2 7.2 0 0 1 9.3 4 8.2 8.2 0 1 0 20 14.7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
+          <svg class="theme-symbol theme-symbol-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="exam-shell">
+    <main class="exam-main" id="main">
+      <section class="exam-hero" aria-labelledby="exam-title">
+        <p class="kicker">PAST EXAM · 국어 9급</p>
+        <h1 id="exam-title">2025 국어 기출 25문항을 클릭형 풀이로 끝까지 푼다</h1>
+        <p class="lead">
+          PDF 이미지를 보는 방식이 아니라 문제 원문, 보기, 정답 데이터를 HTML로 풀어냈다.
+          선택지를 누르고 정답을 확인한 뒤 최종 해설지에서 25문항 전체를 다시 훑는다.
+        </p>
+        <div class="exam-meta" aria-label="회차 정보">
+          <span>2025년 군무원 채용시험</span>
+          <span>국어 9급</span>
+          <span>25문항 전체</span>
+          <span>HTML 텍스트 기반</span>
+        </div>
+      </section>
+
+      <section class="exam-player" aria-live="polite">
+        <article class="exam-card" id="question-card">
+          <div class="question-topline">
+            <span id="question-index">문제 01</span>
+            <span id="question-tag">기출</span>
+          </div>
+          <h2 class="question-title" id="question-title"></h2>
+          <div class="passage" id="question-passage" hidden></div>
+          <ol class="choice-list" id="choice-list"></ol>
+        </article>
+
+        <div class="exam-actions">
+          <button class="exam-button" type="button" id="prev-button">이전</button>
+          <button class="exam-button primary" type="button" id="reveal-button">정답 보기</button>
+          <button class="exam-button" type="button" id="next-button">다음</button>
+          <button class="exam-button" type="button" id="sheet-button" aria-controls="answer-sheet" aria-expanded="false">최종 해설지</button>
+          <button class="exam-button" type="button" id="reset-button">기록 초기화</button>
+          <span class="exam-status-pill" id="status-pill">선택 대기</span>
+        </div>
+
+        <section class="exam-review" id="review-panel" data-open="false" aria-labelledby="review-title">
+          <h2 id="review-title">정답 및 해설</h2>
+          <p id="answer-line"></p>
+          <div class="review-grid">
+            <div class="review-box"><strong>해설</strong><p id="explanation-text"></p></div>
+            <div class="review-box"><strong>오답 포인트</strong><ul id="trap-list"></ul></div>
+            <div class="review-box"><strong>연결 개념</strong><p id="concept-link"></p></div>
+            <div class="review-box"><strong>다음 회독 메모</strong><p id="review-note"></p></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="answer-sheet" id="answer-sheet" aria-labelledby="answer-sheet-title" hidden>
+        <header class="answer-sheet-header">
+          <p class="kicker">ANSWER SHEET</p>
+          <h2 id="answer-sheet-title">최종 정답과 해설지를 한 번에 본다</h2>
+          <p class="lead">최종 해설지는 모든 문항을 다 본 뒤 펼치는 복습 화면이다. 문제, 정답, 내 선택, 핵심 해설, 오답 포인트를 한 페이지에서 다시 훑는다.</p>
+          <div class="answer-summary-grid" id="answer-summary" aria-label="최종 풀이 요약"></div>
+        </header>
+        <div class="answer-sheet-body">
+          <div class="answer-sheet-list" id="answer-sheet-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="exam-side" aria-label="풀이 현황">
+      <section class="exam-panel">
+        <p class="kicker">PROGRESS</p>
+        <h2>풀이 현황</h2>
+        <div class="number-grid" id="number-grid" aria-label="문제 번호 이동"></div>
+        <ul class="stat-list">
+          <li><span>선택한 문항</span><strong id="selected-count">0</strong></li>
+          <li><span>확인한 문항</span><strong id="revealed-count">0</strong></li>
+          <li><span>맞힌 문항</span><strong id="correct-count">0</strong></li>
+        </ul>
+      </section>
+
+      <section class="exam-panel">
+        <p class="kicker">SOURCE</p>
+        <h2>원문 자료</h2>
+        <p class="source-note-small">이 페이지는 로컬 PDF 원문을 학습용 HTML 텍스트로 재구성했다. 정답은 공식 정답표 기준이다.</p>
+        <div class="source-links">
+          <a href="../기출문제/2025_국어.pdf">2025 국어 PDF 열기</a>
+          <a href="../기출문제/2025_정답.pdf">2025 정답표 PDF 열기</a>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const themeToggle = document.querySelector(".theme-toggle");
+    const storageKey = "mw-past-korean-2025-full";
+    const marker = ["①", "②", "③", "④"];
+    const questions = [
+      {
+            "number": 1,
+            "tag": "국어 · 문법/어문규정",
+            "title": "<보기>에서 밑줄 친 서술어의 자릿수에 대한 설명으로 가장 적절하지 않은 것은?",
+            "passage": "<보기>\n서술어는 그 의미적 특성에 따라 각기 다른 수의\n성분을 요구하는데, 자릿수에 따라 ‘한 자리 서술어,\n두 자리 서술어, 세 자리 서술어’ 등으로 나뉜다.\n서술어의 자릿수가 모두 채워지지 않으면 문장은\n불완전한 것이 된다.\n㉠ 눈이 한없이 내린다.\n㉡ 경미가 입김을 분다.\n㉢ 눈이 비로 변한다.\n㉣ 영수가 어른이 되었다.",
+            "choices": [
+                  "㉠: ‘내린다’는 자동사로서 한 자리 서술어",
+                  "㉡: ‘분다’는 타동사로서 한 자리 서술어",
+                  "㉢: ‘변한다’는 부사어가 필요한 두 자리 서술어",
+                  "㉣: ‘되었다’는 보어가 필요한 두 자리 서술어"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 1번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 2,
+            "tag": "국어 · 문법/어문규정",
+            "title": "밑줄 친 부분의 띄어쓰기가 옳은 것은?",
+            "passage": "",
+            "choices": [
+                  "여기가 우리 고향인 데 인심 좋고 경치 좋은 곳이지.",
+                  "저분이 그럴 분이 아니신 데 큰 실수를 하셨다.",
+                  "그 책을 다 읽는 데 삼 일이 걸렸다.",
+                  "많이 먹기는 먹는 데 살이 찌지는 않는다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 2번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 3,
+            "tag": "국어 · 어휘",
+            "title": "어려운 표현을 쉬운 말로 고쳐 쓴 것으로 가장 적절하지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "소관(→담당) 부서에서는 구체적인 실천 계획을 수립해 주시기 바랍니다.",
+                  "감염 확산 방지를 위한 적의( →예방) 조치를 취한 후 이를 통보해 주시기 바랍니다.",
+                  "기( →이미) 통보한 신종플루 대응 복무지침을 철저히 숙지하기 바랍니다.",
+                  "감염 확산 방지에 철저를 기하여 주시기 바라며(→ 감염 확산 방지를 철저히 해주시기 바라며) ) : 014)"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 3번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 4,
+            "tag": "국어 · 문법/어문규정",
+            "title": "밑줄 친 부분의 높임 표현으로 가장 적절하지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "다른 모자를 보여 드리지요.",
+                  "가서 어머니를 모시고 오너라.",
+                  "궁금하시면 제게 여쭈어보세요.",
+                  "오랜만에 뵙게 되어 반갑습니다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 4번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 5,
+            "tag": "국어 · 문법/어문규정",
+            "title": "다음에서 설명하는 사동에 해당하는 예시로 가장 적절하지 않은 것은?",
+            "passage": "사동이란 남으로 하여금 어떤 동작을 하게\n하는 것으로서 동사나 형용사에 사동의 접미사\n‘-이, -히, -리, -기, -우, -구, -추’ 등이 붙어서\n이뤄진 타동사이다.",
+            "choices": [
+                  "앞 마당에 눈들이 잔뜩 쌓여 갔다.",
+                  "그 고기는 충분히 익혀 먹어야 한다.",
+                  "결국에 그 아이를 울리고 말았다.",
+                  "더 이상 나사를 돌리지 말아라."
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 5번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 6,
+            "tag": "국어 · 문법/어문규정",
+            "title": "겹받침의 발음이 옳은 것은?",
+            "passage": "",
+            "choices": [
+                  "맑다 [막따]",
+                  "읊고 [을꼬]",
+                  "핥다 [핟따]",
+                  "밟지 [발 ː 찌]"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 6번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 7,
+            "tag": "국어 · 문학",
+            "title": "다음 시조의 주제와 가장 유사한 사자성어는? 산슈간 바회 아래 뛰집을 짓노라 ​ 니 그 몰론 ​​ 들은 웃​​ 다 ​ 다마​​ 어리고 햐암의 뜻의​ 내분인가 ​ 노라 보리밥 풋​  을 ​​ 알마초 머근 후(後)에 바횟긋 믉​ 의 슬​ 지 노니노라 그나믄 녀나믄 일이야 부​​ 줄이 이시랴 - 윤선도,「만흥(漫興)」-",
+            "passage": "",
+            "choices": [
+                  "안분지족(安分知足)",
+                  "박학다식(博學多識)",
+                  "욕속부달(欲速不達)",
+                  "강풍명월(江風明月) 6 - 1"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 7번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 8,
+            "tag": "국어 · 문법/어문규정",
+            "title": "다음에서 설명하는 ‘품사의 통용’에 해당하는 예시로 가장 적절한 것은?",
+            "passage": "명사, 대명사, 수사, 조사, 동사, 형용사, 관형사,\n부사, 감탄사 등 9품사는 각 부류에 해당하는\n단어들의 문법적 성질이 일정하다고 생각하고\n분류한 것이다. 그런데 이들 단어 가운데는 하나\n이상의 문법적 성질을 가지고 있는 것이 있는데,\n이를 품사의 통용이라 한다.",
+            "choices": [
+                  "푸른 하늘에 하얀 구름이 떠간다. / 하늘은 푸르고 구름은 하​​ 다.",
+                  "그 애는 열을 배우면 백을 안다. / 열 사람이 백 말을 한다.",
+                  "뛰는 친구와 걷는 친구 모두 제자리에 멈췄다. / 저 친구들은 뛰었고, 이 친구들은 걸었다.",
+                  "철수가 얻은 만큼이 얼마이고 영수가 잃은 만큼이 얼마인지 알아보자. / 오늘 우리는 그 팀들이 할 만큼만 하고, 내일은 저 팀들이 할 만큼만 하면 된다."
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 8번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 9,
+            "tag": "국어 · 문학",
+            "title": "다음 시에 대한 이해로 가장 적절하지 않은 것은?",
+            "passage": "늦은 저녁때 오는 눈발은 말집 호롱불 밑에 붐비다\n늦은 저녁때 오는 눈발은 조랑말 발굽 밑에 붐비다\n늦은 저녁때 오는 눈발은 여물 써는 소리에 붐비다\n늦은 저녁때 오는 눈발은 변두리 빈터만 다니며 붐비다\n- 박용래,「저녁 눈」-",
+            "choices": [
+                  "중의적 표현으로 의미를 확장하고 있다.",
+                  "토속적 소재를 활용하여 향토색을 드러내고 있다.",
+                  "유사 어구의 강조와 영탄적 어조를 통해 정서를 표출하고 있다.",
+                  "동일한 통사 구조의 반복을 통해 운율을 형성 하고 있다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 9번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 10,
+            "tag": "국어 · 문학",
+            "title": "밑줄 친 부분 중 사이시옷 표기가 옳은 것은?",
+            "passage": "",
+            "choices": [
+                  "햇님이 방긋 웃습니다.",
+                  "윗문장에서 잘못 쓰인 어휘를 고르시오.",
+                  "아랫입술을 깨물었다.",
+                  "반대하는 사람은 가윗표를 해주세요."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 10번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 11,
+            "tag": "국어 · 문학",
+            "title": "다음 공문서의 밑줄 친 부분을 수정한 것으로 가장 적절하지 않은 것은?",
+            "passage": "1. 시정 발전에 협조해 주시는 귀사의 무궁한\n발전을 기원합니다.\n2. ○○시는 해마다 취업 박람회 개최를 통해\n구인·구직자간 만남의 장을 마련하고 취업\n알선, 구직자의 채용 기회, 일자리 기업의\n홍보 기회를 제공하고 있습니다.\n3. 지역의 우수한 청년 인재들의 외부 유출을\n막고, 고용 거버넌스 구축을 위해 취업 박람회\n개최 시 지역 기업 홍보관을 운영하고자 합\n니다.",
+            "choices": [
+                  "귀사 → 귀 사",
+                  "구인·구직자간 → 구인·구직자 간",
+                  "구직자의 채용 기회 → 구직자의 취업 기회",
+                  "거버넌스 → 협치"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 11번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 12,
+            "tag": "국어 · 독해",
+            "title": "<보기>에서 밑줄 친 부분을 바르게 쓴 것을 모두 고른 것은?",
+            "passage": "<보기>\n㉠ 누군가 했더니 철수예요.\n㉡ 빨간색 글자의 뜻이 뭐에요?\n㉢ 그것은 제가 한 일이 아니에요.\n㉣ 할 이야기가 없다는 거에요.",
+            "choices": [
+                  "㉠, ㉢",
+                  "㉡, ㉣",
+                  "㉠, ㉡",
+                  "㉢, ㉣"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 12번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 13,
+            "tag": "국어 · 독해",
+            "title": "다음 글에 대한 설명으로 가장 적절한 것은?",
+            "passage": "다음 날은 좀 늦게 개울가로 나왔다. 이날은\n소녀가 징검다리 한가운데 앉아 세수를 하고\n있었다. 분홍 스웨터 소매를 걷어 올린 팔과 목\n덜미가 마냥 희었다. 한참 세수를 하고 나더니,\n이번에는 물 속을 빤히 들여다 본다. 얼굴이라도\n비추어 보는 것이리라. 갑자기 물을 움켜 낸다.\n고기 새끼라도 지나가는 듯, 소녀는 소년이 개울\n둑에 앉아 있는 걸 아는지 모르는지 그냥 날쌔게\n물만 움켜 낸다. 그러나 번번이 허탕이다. 그래도\n재미있는 양 자꾸 물을 움킨다. 어제처럼 개울을\n건너는 사람이 있어야 자리를 비킬 모양이다.",
+            "choices": [
+                  "서술의 초점이 소년에 맞춰져 있다.",
+                  "장황한 문체에 의한 장면 묘사가 두드러진다.",
+                  "서술의 시점이 소녀의 입장에 고정되어 있다.",
+                  "작가의 관찰자 시점으로 서술되어 있다. 6 - 2"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 13번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 14,
+            "tag": "국어 · 문학",
+            "title": "다음 설명을 참고할 때 ㉠ ~ ㉣ 중 표현 방식이 다른 한 가지로 가장 적절한 것은?",
+            "passage": "- 화자의 의도가 직접적으로 표현된 것을 ‘직접\n화행’이라고 한다.\n예) “창문을 열어주렴.”\n- 화자의 의도가 간접적으로 표현된 것을 ‘간접\n화행’이라고 한다.\n예) “너무 덥지 않니?”(창문이 닫혀 있어서\n더울 때)",
+            "choices": [
+                  "아내: ㉠형광등을 새로 사왔어. 남편: 응, 내가 갈아줄게.",
+                  "아들: ㉡밤 늦게까지 공부를 했더니 배가 많이 고프네요. 어머니: 밥 차려놨으니 얼른 먹어라.",
+                  "친구 A: ㉢여기서 너희 집은 어떻게 가지? 친구 B: 300번 버스를 타고 두 정거장만 더 가면 돼.",
+                  "학생 A: ㉣촉이 다 부러져 쓸 연필이 없네. 학생 B: 자, 내 연필을 빌려 줄게."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 14번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 15,
+            "tag": "국어 · 문법/어문규정",
+            "title": "다음 로마자 표기법의 설명에 해당하는 예시로 가장 적절하지 않은 것은?",
+            "passage": "‘로마자’란 ‘라틴문자’라고도 하며 세계에서 가장\n널리 쓰이는 문자로서 영어를 포함한 대부분의\n유럽 언어를 기록하는 표준 문자이며 유럽인이\n정착한 곳과 그 밖의 나라에서도 쓰인다. 국어를\n로마자로 표기할 때는,\n(1) ‘ ㄱ , ㄷ , ㅂ ’은 모음 앞에서는 ‘g, d, b’로, 자음\n앞이나 어말에서는 ‘k, t, p’로 적는다.\n(2) ‘ ㄹ ’은 모음 앞에서는 ‘r’로, 자음 앞이나 어말\n에서는 ‘l’로 적는다. 단, ‘ ㄹㄹ ’은 ‘ll’로 적는다.\n(3) 음운변화가 일어날 때는 변화의 결과에 따라\n적는다.",
+            "choices": [
+                  "갑천 → Gapcheon",
+                  "살풀이 → salpuri",
+                  "고비 → gobi",
+                  "강릉 → Gangreung"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 15번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 16,
+            "tag": "국어 · 독해",
+            "title": "우리말 어법에 맞는 것은?",
+            "passage": "",
+            "choices": [
+                  "가을 들어서는 주문이 밀려 생산 라인이 24시간 가동되어졌다.",
+                  "작은형, 아버지가 주차장으로 빨리 오시래.",
+                  "선생님께서는 연구실에 책이 많이 계신다.",
+                  "생각해 보니, 지금 대구도 정말 덥겠다."
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 16번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 17,
+            "tag": "국어 · 독해",
+            "title": "다음 글의 주제로 가장 적절한 것은?",
+            "passage": "내가 집이 가난하여 말이 없으므로 가끔 빌려서\n타는데, 여위고 둔하여 걸음이 느린 말이면 비록\n급한 일이 있어도 감히 채찍질을 하지 못하고\n조심조심하여 곧 넘어질 것같이 여기다가, 개울이나\n구렁을 만나면 내려서 걸어가므로 후회하였다.\n그런데 발이 높고 귀가 날카로운 잘 달리는 말에\n의기양양하게 마음대로 채찍질하여\n올라타면\n고삐를 놓으면 언덕과 골짜기가 평지처럼 보이니\n심히 장쾌하였다. 그러나 어떤 때에는 위태로워서\n떨어지는 근심을 면치 못하였다. 아! 사람의 마음이\n옮아 가고 바뀌는 것이 이와 같을까? 남의 물건을\n빌려서 하루아침에 대비하는 것도 이와 같거든,\n하물며 참으로 자기가 가지고 있는 것이랴.\n그러나 사람이 가지고 있는 것이 어느 것이나\n아니한 것이 없다. 임금은 백성으로부터\n빌리지\n힘을 빌려서 높고 부귀한 자리를 가졌고, 신하는\n임금으로부터 권세를 빌려 은총과 귀함을 누리며,\n아들은 아비로부터, 지어미는 지아비로부터, 종은\n상전으로부터 힘과 권세를 빌려서 가지고 있다.\n그 빌린 바가 또한 깊고 많아서 대개는 자기\n소유로 하고 끝내 반성할 줄 모르고 있으니, 어찌\n미혹한 일이 아니겠는가? 그러다가도 혹 잠깐\n사이에 그 빌린 것이 도로 돌아가게 되면, 만방의\n임금도 외톨이가 되고, 많은 재산을 가진 집도\n외로운 신하가 되니, 하물며 그보다 더 미약한\n자야 말할 것이 있겠는가?\n맹자가 일컫기를 “남의 것을 오랫동안 빌려\n쓰고 있으면서 돌려주지 아니하면, 어찌 그것이\n자기의 소유가 아닌 줄 알겠는가?” 하였다. 내가\n여기에 느낀 바가 있어서 차마설을 지어 그 뜻을\n넓히노라.",
+            "choices": [
+                  "힘과 권세의 허무함",
+                  "소유의 진정한 의미",
+                  "겸손과 지혜의 소중함",
+                  "근심을 이겨내는 방법 6 - 3"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 17번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 18,
+            "tag": "국어 · 문학",
+            "title": "(가) ~ (다)의 전개 순서로 가장 자연스러운 것은?",
+            "passage": "고대 동아시아 사회에서 문자는 통치 수단이\n었다. 문자를 만드는 행위는 새로운 국가 질서의\n창조를 뜻한다. 문자는 황제의 명령을 담은 매개체\n이며, 문자를 통해 황제의 명령이 변방까지 전\n해진다. 말하자면 문서행정 시스템이, 시황제의\n천하통일 이후로 국가 통치의 기본이었다. 문자\n기반 행정 체계가 동아시아의 여러 국가로 퍼져서,\n동아시아 문자문화사의 전통으로 자리잡았다.\n(가) 한자의 상형은 뜻의 세계에 관한 것이다.\n‘山’의 뜻이 산의 형상인 것이다. 그러나 한글은\n이러한 뜻의 세계와 관련이 없다. ‘ ㄱ ’은 그 소리의\n실체가 혀의 고부라진 모습으로 시각화되었다.\n그러니 한글의 ‘상형’이란 한자의 상형과 달라서,\n굳이 한글을 상형자라고 할 이유는 없었을 것\n이다.\n(나) 문자에는 권위가 필요하다. 세종도 이에\n따라 한자의 기본 원리인 상형(象形)이나 고전\n(古篆)의 모방이라는 논리를 부각하였을 것이다.\n한자의 상형과 한글의 상형은 자형이 사물의\n형상을 본떴다는 점에서는 공통점이 있지만 세부적\n으로 차이가 적지 않다.\n(다) 그럼에도 불구하고 한글의 발명자가 굳이\n상형이라는 단어를 사용한 것은, 다름 아닌 동\n아시아 오랜 문자 전통에서 기인한 것이 아닌\n가 한다. 한글이 한자와 제작 원리가 동일하다\n는 점을 강조하여 한글도 옛 성현들이 만들어\n낸 문자와 근본적으로 다르지 않음을 보이고자\n했던 세종의 논리를 통하여 우리는 한글에 담긴\n동아시아의 문자 이데올로기를 읽어낼 수 있다.",
+            "choices": [
+                  "(다) - (나) - (가)",
+                  "(나) - (다) - (가)",
+                  "(다) - (가) - (나)",
+                  "(나) - (가) - (다)"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 18번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 19,
+            "tag": "국어 · 문학",
+            "title": "다음 글에 사용된 설명 방법으로 가장 적절한 것은?",
+            "passage": "설날의 대표적인 세시 풍속으로 차례를 들\n수 있다. 각 가정에서는 아침 일찍 제사상에 설\n음식을 두루 갖추어 놓고 차례를 지낸다.",
+            "choices": [
+                  "정의",
+                  "예시",
+                  "분류",
+                  "비교"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 19번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 20,
+            "tag": "국어 · 문학",
+            "title": "다음 글을 이해한 내용으로 가장 적절하지 않은 것은?",
+            "passage": "각하라는 단어는 ‘폐하’, ‘전하’, ‘저하’, ‘합하’\n등과 함께 조선시대에 사용되었던 경칭 중 하나\n였다. 먼저 ‘황제’에게는 ‘폐하’라는 경칭이 사용\n되었다. ‘폐하’란 ‘돌계단 아래’라는 뜻이다. 황제를\n만나는 사람은 폐하라는 호칭을 통해 자신이 돌\n계단 아래 있다는 것을 황제에게 알린다. 즉, ‘폐하’\n를 통해 “저는 돌계단 아래 있습니다.”라고 황제\n에게 아뢰는 것이다. 이렇게 폐하라는 경칭은\n화자가 청자를 직접 높여 부르는 것이 아니라,\n스스로 자신을 부름으로써 결국은 상대를 부르게\n되는 간접적 방법으로 작동하는 경칭이다. ‘하’\n자가 들어가는 경칭은 모두 이렇게 자신을 불러\n결국은 상대를 부르게 되는 간접적인 방법으로\n작동하는 경칭들이다.\n‘전하’라는 경칭은 왕이나 왕후 등에게 사용되\n었다. 이들이 ‘전하’라고 불린 이유는 궁궐 내에\n‘전’으로 끝나는 이름을 가진 전각들이 바로 이들의\n공간이었기 때문이다. 즉 왕이나 왕후는 ‘전 위’에\n있고 이 경칭을 사용하는 사람들은 ‘전 아래’에\n있기 때문에 ‘전하’라는 경칭이 사용된 것이다.\n‘전하’ 다음은 ‘저하’였다. 저하의 ‘저’는 궁궐 내\n전각의 명칭은 아니고 단지 세자가 사는 큰 집을\n의미한다. 저하는 조선에서만 사용된 표현으로\n세자의 신분을 가진 사람에 대한 경칭으로 사용\n되었다.\n다음 위계의 경칭은 ‘합하’였다. 합하는 왕족\n중 서열이 높은 사람이 기거하거나 정승이 집무\n를 보는 건물인 ‘합’의 아래라는 뜻이다. 귀족의\n경칭 중에서 가장 낮은 위계를 가진 것은 ‘각하’\n였다. 각하의 ‘각’ 또한 궁궐의 건물 중 하나로\n왕세손이 기거하거나 정2품 이상의 고위 관료가\n업무를 볼 때 사용했던 건물이다. 왕족이 아닌\n사람에게 쓰는 가장 높은 경칭은 합하였고, 각하는\n그 다음 위계를 가진 사람에게 쓰는 경칭이었다.",
+            "choices": [
+                  "‘폐하’는 ‘황제’를 간접적으로 높여 부르는 호칭이다.",
+                  "‘저하’는 ‘폐하, 전하’ 등과 같이 궁궐의 전각 명칭에서 비롯된 호칭이다.",
+                  "‘합하’는 왕족이 아닌 사람에게 쓰는 호칭 중 가장 높은 경칭이다.",
+                  "‘각하’는 ‘폐하, 전하, 저하, 합하’ 중 가장 위계가 낮은 호칭이다. 6 - 4"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 20번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 21,
+            "tag": "국어 · 문법/어문규정",
+            "title": "다음 글의 중심 내용으로 가장 적절한 것은?",
+            "passage": "외국인 학습자에게 발견할 수 있는 한국어\n발음의 오류는 크게 두 부류로 나누어 볼 수\n있다. 그중 하나는 의사소통의 실패로 이어지는\n발음 오류들이다. ‘오’와 ‘어’의 구별이 어려워서\n‘이촌’과 ‘이천’을 잘못 발음하거나 ‘ ㄱ ’과 ‘ ㅋ ’의\n구별이 어려워서 ‘그림’과 ‘크림’을 반대로 발음\n하게 되면 의사소통에 문제가 생기게 된다.\n그런데 우리가 오류 혹은 정확하지 않은 발음\n이라고 생각하는 것 중에는 무슨 말인지 알아\n들을 수는 있지만, 외국인 특유의 발음이 느껴\n지는 것도 있다. 영어의 ‘C’ 발음과 한국어의\n‘씨’ 발음이 그러한 예가 된다. 외국인이 ‘철수\n씨’를 ‘철수 C’라고 발음한다면 듣기에 어색하기는\n하지만 그렇다고 우리가 ‘C’를 ‘씨’가 아닌 다른\n발음으로 들을 가능성은 전혀 없으므로 의사\n소통에 문제가 생기지는 않는다.\n이렇게 두 가지 오류를 구별하는 것은 발음\n교육의 목표 설정에 큰 영향을 미친다. 만약 발음\n교육의 목표를 한국 사람처럼 발음하는 것으로\n정하게 되면, 앞서 언급한 외국인 말투도 교육의\n대상이 된다. 그런데 외국인 말투는 특별히 의사\n소통에 문제가 생기는 것은 아니므로 의사소통에\n문제가 되는 요소들에 집중하여 발음을 교육해야\n한다고 하면 우리는 한국 사람이 듣고 이해하는\n데 문제가 되지 않는 수준의 발음, 의사소통에\n문제가 되지 않는 수준의 발음을 발음 교육의\n목표로 삼게 된다. 성인이 되어 외국어를 배울\n때 그 언어의 모어 화자처럼 발음하는 능력을\n기르는 것은 거의 불가능하다고 알려져 있다.\n이런 점을 고려한다면 발음 교육의 목표 또한\n재고할 필요가 있다.",
+            "choices": [
+                  "의사소통의 실패로 이어지는 발음 오류를 우선으로 하여 발음 교육이 이루어져야 한다.",
+                  "성인이 된 후에는 외국어 학습에서 모어 화자와 같은 발음 능력을 가지기 어렵다.",
+                  "외국인 특유의 발음도 발음 교육의 목표에 포함시킬 필요가 있다.",
+                  "한국어 발음 교육의 목표는 관점에 따라 계속 바뀌어 왔다. ※ [22 ~ 23] 다음 글을 읽고 물음에 답하시오. 우리가 ( ㉠ )라는 개념에 대해 형이상학적인 관점에서 무엇을 주장하든 간에, 의지가 외부로 나타난 현상이 인간 행위이며, 그것은 여타의 자연적 사실들과 마찬가지로 일반적인 자연의 법칙에 따라 규정된다. 역사는 이러한 현상을 설명하는 것이며, 그러한 현상들의 원인이 아무리 깊숙이 감추어져 있다 하더라도 우리가 역사에 서 인간 의지의 자유가 발휘되는 긴 안목으로 고찰해 본다면 우리는 그 속에 어떤 규칙적인 진행이 있음을 발견할 수 있으리라고 기대할 수 있다. ( 가 ) 각 개인에게는 얽혀져 있고 불규칙 한 것처럼 보이는 것도 인류 전체라는 관점에서 보면, 비록 느리기는 하지만 지속되고 있는 근원 적인 소질의 발전이라는 점을 인식할 수 있으리 라는 것도 기대할 수 있다. 이러한 예로서 결혼 이라든가 또 여기에서 비롯되는 생명의 탄생과 죽음 등을 들어보자. 이들은 인간의 자유로운 의지에 의해 크게 좌우되는 것들이므로 그러한 사건들의 수량을 미리 계산할 수 있는 어떠한 규칙에도 종속되어 있지 않는 것처럼 보인다. ( 나 ) 큰 국가들의 연간 통계 자료에 의하면 그러한 인간사들은 변덕스러운 날씨가 불변의 법칙에 따라 전개되듯이 불변의 법칙에 따라 일어난다."
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 21번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 22,
+            "tag": "국어 · 독해",
+            "title": "문맥상 ㉠에 들어갈 말로 가장 적절한 것은?",
+            "passage": "",
+            "choices": [
+                  "인간 행위",
+                  "개인의 계획",
+                  "의지의 자유",
+                  "자연의 법칙"
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 22번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 23,
+            "tag": "국어 · 독해",
+            "title": "(가), (나)에 해당하는 말로 가장 적절한 것은?",
+            "passage": "",
+            "choices": [
+                  "그런데, 그래서 그런데, 그렇지만",
+                  "",
+                  "그리고, 그래서",
+                  "그리고, 그렇지만 6 - 5"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 23번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 24,
+            "tag": "국어 · 문학",
+            "title": "다음 글에서 추론한 내용으로 가장 적절하지 않은 것은?",
+            "passage": "확산이란 물질이 농도가 높은 곳에서 낮은\n곳으로 이동하는 현상을 말합니다. 멸치 육수를\n예로 든다면, 멸치 안에 모여있던 물질들이 바깥\n으로 빠져나오면서, 농도가 옅어지고 희석되는\n것입니다. 이처럼 물질들이 한곳에 모여있지\n않고 넓게 퍼지려는 경향을 과학자들은 ‘엔트\n로피 증대의 법칙’이라 말하기도 합니다. 여기서\n엔트로피란 무질서한 정도를 나타내는 과학 용어\n인데요, 모여있지 않고 흩어질수록 무질서도는\n증대됩니다.\n이러한 확산은 크게 3가지 요인에 의해 영향을\n받습니다. 첫째는 열입니다. 물질이 이동하려면\n에너지가 필요한데, 조리할 때 가해지는 열이\n이러한 에너지의 공급원이 됩니다. 두 번째 요인은\n확산되는 물질의 크기인데, 아무래도 그 크기가\n작으면 작을수록 확산이 수월하게 일어납니다.\n마지막 세 번째 요인은 확산되어 들어가는 매질의\n상태입니다. 육수의 경우는 보통 그 매질이 물이기\n때문에, 물질이 확산되는 데 큰 지장은 없습니다.\n하지만 갈비찜처럼 유용한 맛성분들을 농도가\n높은 육수에서 고기 안쪽으로 확산시켜야 할\n경우라면 별도의 조치가 필요합니다.",
+            "choices": [
+                  "액체일 때보다는 기체일 때 엔트로피가 증대 되겠군.",
+                  "멸치 육수 내는 것보다 사골 육수 내는 데 시간이 오래 걸리는 이유는 매질의 상태가 다르기 때문이군.",
+                  "미지근한 물보다는 팔팔 끓는 물에서 우려 내야 원하는 성분을 제대로 얻을 수 있겠군.",
+                  "저분자인 이노신산이 고분자인 지방보다 빨리 확산 되겠군."
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 24번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 25,
+            "tag": "국어 · 문학",
+            "title": "다음 글의 내용에 대한 설명으로 가장 적절하지 않은 것은?",
+            "passage": "금융 회사가 영업 정지나 파산 등으로 고객의\n예금을 지급하지 못하면 해당 예금자의 가계\n생활이 불안정해지고 국가 금융 제도 안전성도\n큰 타격을 입는다. 이러한 사태를 방지하기 위해\n우리나라에서는 ‘예금자 보험 제도’를 실행한다.\n이는 예금 보험 공사가 평소에 금융 기관으로\n부터 보험료를 받아 기금을 적립한 후, 금융\n기관이 예금을 지급할 수 없게 되면 일정 금액\n의 한도 내에서 예금 보험금을 지급하는 제도\n이다.\n1997년 외환 위기로 여러 은행이 문을 닫으\n면서 금융 시장의 불안감이 커졌다. 정부는 금융\n시장의 혼란을 막기 위해 예금자 1인당 2천만\n원이던 종전의 보장 한도를 높여 2000년 말까지\n한시적으로 예금의 원금 전액을 보장해주기로\n하였다. 원래 예금자 보호 제도가 다수의 소액\n예금자를 보호하되 부실 금융 기관을 선택한\n예금자에게도 책임을 묻는다는 차원에서 예금\n전액이 아니라 일정 금액만을 보장하는 것이\n원칙인데 이를 깬 것이다. 외환 위기에서 벗어난\n2001년부터는 1인당 5천만 원으로 보장 한도를\n올렸는데 이후 저축 은행 부실 사태가 발생하\n면서 저축 은행의 보장 한도를 낮추어야 한다는\n주장이 제기되기도 하였다. 보장 한도가 높으면\n금융 기관이 예금자 보호 제도에만 의존해 무분별\n하게 예금을 늘려 부실하게 운용할 수도 있다는\n지적 때문이다.",
+            "choices": [
+                  "예금자 보험 제도란 금융회사가 여러 이유로 고객의 예금을 지급하지 못하면 일정 금액 한도 내에서 예금 보험금을 지급하는 제도이다.",
+                  "예금자 보험 제도의 보장 한도가 높으면 금융기관이 이에 너무 의존해서 부실하게 예금을 운용할 수도 있다.",
+                  "예금자 보험 제도는 외환 위기 이후 금융 시장의 불안감이 커지면서 한시적으로 예금 전액을 보장해 준 적이 있다.",
+                  "예금자 보험 제도에 의해 지급되는 예금 보험금은 예금자가 예금한 금융회사가 지급 한다. 6 - 6"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "국어 2025년 기출 25번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      }
+];
+    const examTitle = "2025 국어 9급";
+
+    let currentIndex = 0;
+    let answerSheetOpen = false;
+    let progress = JSON.parse(localStorage.getItem(storageKey) || "{}");
+
+    function applyTheme(theme) {
+      root.dataset.theme = theme;
+      localStorage.setItem("mw-theme", theme);
+      const isDark = theme === "dark";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.setAttribute("aria-label", isDark ? "라이트 모드 켜기" : "다크 모드 켜기");
+      themeToggle.title = isDark ? "라이트 모드" : "다크 모드";
+    }
+
+    function saveProgress() {
+      localStorage.setItem(storageKey, JSON.stringify(progress));
+    }
+
+    function getState(question) {
+      return progress[question.number] || { selected: null, revealed: false };
+    }
+
+    function setState(question, patch) {
+      progress[question.number] = { ...getState(question), ...patch };
+      saveProgress();
+    }
+
+    function getAnswerNumbers(question) {
+      if (question.allCorrect) return [1, 2, 3, 4];
+      if (typeof question.answer === "string" && question.answer.includes(",")) {
+        return question.answer.split(",").map((item) => Number(item));
+      }
+      return [Number(question.answer)];
+    }
+
+    function isCorrectChoice(question, choiceNumber) {
+      return getAnswerNumbers(question).includes(choiceNumber);
+    }
+
+    function getAnswerLabel(question) {
+      if (question.answerLabel) return question.answerLabel;
+      return getAnswerNumbers(question).map((number) => marker[number - 1]).join(", ");
+    }
+
+    function renderQuestion() {
+      const question = questions[currentIndex];
+      const state = getState(question);
+      document.getElementById("question-index").textContent = `문제 ${String(question.number).padStart(2, "0")}`;
+      document.getElementById("question-tag").textContent = question.tag;
+      document.getElementById("question-title").textContent = question.title;
+
+      const passage = document.getElementById("question-passage");
+      passage.hidden = !question.passage;
+      passage.textContent = question.passage || "";
+
+      const choiceList = document.getElementById("choice-list");
+      choiceList.replaceChildren(...question.choices.map((choice, index) => {
+        const choiceNumber = index + 1;
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice-button";
+        button.setAttribute("aria-pressed", String(state.selected === choiceNumber));
+        button.dataset.choice = String(choiceNumber);
+        if (state.revealed && isCorrectChoice(question, choiceNumber)) button.classList.add("is-correct");
+        if (state.revealed && state.selected === choiceNumber && !isCorrectChoice(question, choiceNumber)) button.classList.add("is-wrong");
+        button.innerHTML = `<span class="choice-number">${marker[index]}</span><span>${choice}</span>`;
+        button.addEventListener("click", () => {
+          setState(question, { selected: choiceNumber });
+          renderQuestion();
+        });
+        item.append(button);
+        return item;
+      }));
+
+      document.getElementById("prev-button").disabled = currentIndex === 0;
+      document.getElementById("next-button").disabled = currentIndex === questions.length - 1;
+      document.getElementById("review-panel").dataset.open = String(state.revealed);
+      document.getElementById("status-pill").textContent = getStatusText(question, state);
+      renderReview(question, state);
+      renderNumberGrid();
+      renderStats();
+      if (answerSheetOpen) renderAnswerSheet();
+    }
+
+    function renderReview(question, state) {
+      const answerLabel = getAnswerLabel(question);
+      document.getElementById("answer-line").textContent = state.selected
+        ? `내 선택: ${marker[state.selected - 1]} · 정답: ${answerLabel}`
+        : `정답: ${answerLabel} · 아직 선택하지 않고 해설을 열었다.`;
+      document.getElementById("explanation-text").textContent = question.explanation;
+      document.getElementById("concept-link").textContent = question.concept;
+      document.getElementById("review-note").textContent = question.note;
+      const trapList = document.getElementById("trap-list");
+      trapList.replaceChildren(...question.traps.map((trap) => {
+        const item = document.createElement("li");
+        item.textContent = trap;
+        return item;
+      }));
+    }
+
+    function getStatusText(question, state) {
+      if (!state.selected && !state.revealed) return "선택 대기";
+      if (!state.selected && state.revealed) return "정답 공개";
+      if (state.selected && !state.revealed) return `${marker[state.selected - 1]} 선택`;
+      if (isCorrectChoice(question, state.selected)) return "정답 확인";
+      if (state.revealed) return "오답 확인";
+      return "선택 대기";
+    }
+
+    function renderNumberGrid() {
+      const grid = document.getElementById("number-grid");
+      grid.replaceChildren(...questions.map((question, index) => {
+        const state = getState(question);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "number-button";
+        button.textContent = String(question.number).padStart(2, "0");
+        button.setAttribute("aria-label", `${question.number}번으로 이동`);
+        button.setAttribute("aria-current", String(index === currentIndex));
+        if (state.selected) button.classList.add("is-selected");
+        if (state.revealed && state.selected && isCorrectChoice(question, state.selected)) button.classList.add("is-correct");
+        if (state.revealed && state.selected && !isCorrectChoice(question, state.selected)) button.classList.add("is-wrong");
+        button.addEventListener("click", () => {
+          currentIndex = index;
+          renderQuestion();
+          document.getElementById("question-card").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        return button;
+      }));
+    }
+
+    function getScoreSummary() {
+      const states = questions.map(getState);
+      const selected = states.filter((state) => state.selected).length;
+      const revealed = states.filter((state) => state.revealed).length;
+      const correct = questions.filter((question) => {
+        const state = getState(question);
+        return state.revealed && state.selected && isCorrectChoice(question, state.selected);
+      }).length;
+      return { selected, revealed, correct, total: questions.length };
+    }
+
+    function renderStats() {
+      const summary = getScoreSummary();
+      document.getElementById("selected-count").textContent = `${summary.selected}/${summary.total}`;
+      document.getElementById("revealed-count").textContent = `${summary.revealed}/${summary.total}`;
+      document.getElementById("correct-count").textContent = `${summary.correct}/${summary.total}`;
+    }
+
+    function createSummaryItem(label, value) {
+      const item = document.createElement("div");
+      item.className = "answer-summary-item";
+      const labelNode = document.createElement("span");
+      labelNode.textContent = label;
+      const valueNode = document.createElement("strong");
+      valueNode.textContent = value;
+      item.append(labelNode, valueNode);
+      return item;
+    }
+
+    function renderAnswerSheet() {
+      const summary = getScoreSummary();
+      document.getElementById("answer-summary").replaceChildren(
+        createSummaryItem("전체 문항", `${summary.total}`),
+        createSummaryItem("선택 문항", `${summary.selected}/${summary.total}`),
+        createSummaryItem("해설 확인", `${summary.revealed}/${summary.total}`),
+        createSummaryItem("현재 정답", `${summary.correct}/${summary.total}`)
+      );
+
+      const answerSheetList = document.getElementById("answer-sheet-list");
+      answerSheetList.replaceChildren(...questions.map((question) => {
+        const state = getState(question);
+        const item = document.createElement("article");
+        item.className = "answer-item";
+
+        const header = document.createElement("div");
+        header.className = "answer-item-header";
+        const number = document.createElement("span");
+        number.textContent = `문제 ${String(question.number).padStart(2, "0")}`;
+        const tag = document.createElement("span");
+        tag.textContent = question.tag;
+        header.append(number, tag);
+
+        const titleNode = document.createElement("h3");
+        titleNode.textContent = question.title;
+        item.append(header, titleNode);
+
+        if (question.passage) {
+          const passageNode = document.createElement("div");
+          passageNode.className = "sheet-passage";
+          passageNode.textContent = question.passage;
+          item.append(passageNode);
+        }
+
+        const choices = document.createElement("ol");
+        choices.className = "sheet-choice-list";
+        question.choices.forEach((choice, index) => {
+          const choiceNumber = index + 1;
+          const choiceItem = document.createElement("li");
+          choiceItem.className = "sheet-choice";
+          if (isCorrectChoice(question, choiceNumber)) choiceItem.classList.add("is-answer");
+          if (state.selected === choiceNumber && !isCorrectChoice(question, choiceNumber)) choiceItem.classList.add("is-user-wrong");
+          const markerNode = document.createElement("span");
+          markerNode.className = "sheet-choice-marker";
+          markerNode.textContent = marker[index];
+          const textNode = document.createElement("span");
+          textNode.textContent = choice;
+          choiceItem.append(markerNode, textNode);
+          choices.append(choiceItem);
+        });
+        item.append(choices);
+
+        const explanation = document.createElement("div");
+        explanation.className = "sheet-explanation";
+        const answerBox = document.createElement("div");
+        answerBox.className = "sheet-box";
+        const answerTitle = document.createElement("strong");
+        answerTitle.textContent = "정답과 해설";
+        const answerText = document.createElement("p");
+        const selectedText = state.selected ? `내 선택 ${marker[state.selected - 1]}` : "내 선택 없음";
+        answerText.textContent = `${selectedText} · 정답 ${getAnswerLabel(question)} · ${question.explanation}`;
+        answerBox.append(answerTitle, answerText);
+
+        const trapBox = document.createElement("div");
+        trapBox.className = "sheet-box";
+        const trapTitle = document.createElement("strong");
+        trapTitle.textContent = "오답 포인트";
+        const trapList = document.createElement("ul");
+        question.traps.forEach((trap) => {
+          const trapItem = document.createElement("li");
+          trapItem.textContent = trap;
+          trapList.append(trapItem);
+        });
+        trapBox.append(trapTitle, trapList);
+
+        const conceptBox = document.createElement("div");
+        conceptBox.className = "sheet-box";
+        const conceptTitle = document.createElement("strong");
+        conceptTitle.textContent = "연결 개념";
+        const conceptText = document.createElement("p");
+        conceptText.textContent = question.concept;
+        conceptBox.append(conceptTitle, conceptText);
+
+        const noteBox = document.createElement("div");
+        noteBox.className = "sheet-box";
+        const noteTitle = document.createElement("strong");
+        noteTitle.textContent = "회독 메모";
+        const noteText = document.createElement("p");
+        noteText.textContent = question.note;
+        noteBox.append(noteTitle, noteText);
+
+        explanation.append(answerBox, trapBox, conceptBox, noteBox);
+        item.append(explanation);
+        return item;
+      }));
+    }
+
+    document.getElementById("prev-button").addEventListener("click", () => {
+      currentIndex = Math.max(0, currentIndex - 1);
+      renderQuestion();
+    });
+
+    document.getElementById("next-button").addEventListener("click", () => {
+      currentIndex = Math.min(questions.length - 1, currentIndex + 1);
+      renderQuestion();
+    });
+
+    document.getElementById("reveal-button").addEventListener("click", () => {
+      setState(questions[currentIndex], { revealed: true });
+      renderQuestion();
+    });
+
+    document.getElementById("reset-button").addEventListener("click", () => {
+      progress = {};
+      answerSheetOpen = false;
+      saveProgress();
+      const answerSheet = document.getElementById("answer-sheet");
+      answerSheet.hidden = true;
+      document.getElementById("sheet-button").setAttribute("aria-expanded", "false");
+      document.getElementById("sheet-button").textContent = "최종 해설지";
+      renderQuestion();
+    });
+
+    document.getElementById("sheet-button").addEventListener("click", () => {
+      questions.forEach((question) => setState(question, { revealed: true }));
+      answerSheetOpen = true;
+      const answerSheet = document.getElementById("answer-sheet");
+      answerSheet.hidden = false;
+      document.getElementById("sheet-button").setAttribute("aria-expanded", "true");
+      document.getElementById("sheet-button").textContent = "최종 해설지로 이동";
+      renderQuestion();
+      renderAnswerSheet();
+      answerSheet.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    themeToggle.addEventListener("click", () => {
+      applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    applyTheme(localStorage.getItem("mw-theme") || "light");
+    renderQuestion();
+  </script>
+</body>
+</html>

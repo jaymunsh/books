@@ -128,6 +128,18 @@ input {
   transform: translateY(0);
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -156,15 +168,41 @@ input {
 }
 
 .brand-mark {
+  position: relative;
   display: grid;
   width: 40px;
   height: 40px;
   place-items: center;
-  color: var(--surface-primary);
+  overflow: hidden;
+  color: transparent;
   background: var(--accent-green);
   border-radius: 8px;
   font-size: 12px;
   font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--surface-primary) 18%, transparent);
+}
+
+.brand-mark::before,
+.brand-mark::after {
+  position: absolute;
+  content: "";
+}
+
+.brand-mark::before {
+  width: 24px;
+  height: 24px;
+  background: var(--accent-yellow);
+  border-radius: 3px;
+  transform: rotate(45deg);
+}
+
+.brand-mark::after {
+  width: 16px;
+  height: 16px;
+  background:
+    linear-gradient(12deg, transparent 43%, var(--surface-primary) 44% 56%, transparent 57%),
+    var(--accent-blue);
+  border-radius: 999px;
 }
 
 .brand-title {
@@ -787,6 +825,7 @@ h3 {
   box-shadow: var(--shadow-soft);
 }
 
+.start-here,
 .curriculum,
 .resource-library,
 .part-summary,
@@ -862,6 +901,133 @@ h3 {
 
 .level-card li + li {
   margin-top: var(--space-1);
+}
+
+.first-session-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.first-session-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+
+.step-badge {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  color: var(--surface-primary);
+  background: var(--accent-green);
+  border-radius: 8px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.first-session-card h3 {
+  margin: 0;
+}
+
+.first-session-card p,
+.beginner-rule-grid p,
+.beginner-rule-grid li,
+.learning-logic span {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.beginner-rule-grid,
+.learning-logic {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.beginner-rule-grid {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+}
+
+.beginner-rule-grid article,
+.learning-logic div {
+  padding: var(--space-5);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+
+.beginner-rule-grid ol {
+  margin: var(--space-4) 0 0;
+  padding-left: var(--space-5);
+}
+
+.beginner-rule-grid li + li {
+  margin-top: var(--space-2);
+}
+
+.beginner-rule-grid a {
+  color: var(--accent-blue);
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.dont-open-yet {
+  border-top: 4px solid var(--accent-yellow);
+}
+
+.learning-logic {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.learning-logic strong,
+.learning-logic span {
+  display: block;
+}
+
+.learning-logic strong {
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.concept-flow {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+
+.concept-flow h3,
+.lesson-reading-order h3 {
+  margin: 0 0 var(--space-3);
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.concept-flow > p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.concept-flow .conjugation-guide {
+  margin-top: var(--space-5);
+}
+
+.lesson-reading-order {
+  margin-bottom: var(--space-6);
 }
 
 .resource-card-grid,
@@ -1545,21 +1711,62 @@ h3 {
 
 .part-summary-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.62fr);
   gap: var(--space-8);
+  align-items: end;
+}
+
+.part-summary {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-10) var(--space-8);
+  background:
+    linear-gradient(135deg, var(--surface-primary) 0%, var(--surface-primary) 52%, color-mix(in srgb, var(--accent-mint-bg) 56%, var(--surface-primary)) 100%);
+}
+
+.part-summary::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 5px;
+  content: "";
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-yellow));
+}
+
+.part-summary h2 {
+  max-width: 540px;
+  font-size: 34px;
+}
+
+.part-summary > .part-label {
+  border-radius: 6px;
+}
+
+.part-summary + #lessons {
+  margin-top: var(--space-10);
 }
 
 .part-goals {
   display: grid;
-  gap: var(--space-3);
   margin: 0;
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--border-default);
 }
 
 .part-goals div {
-  padding: var(--space-4);
-  background: var(--surface-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: 8px;
+  padding: var(--space-4) 0;
+  background: transparent;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.part-goals div:first-child {
+  padding-top: 0;
+}
+
+.part-goals div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .part-goals dt {
@@ -1745,11 +1952,20 @@ h3 {
   align-items: stretch;
 }
 
+.grammar-expanded .lesson-body {
+  grid-template-columns: 1fr;
+}
+
+.grammar-expanded .lesson-note .note-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .lesson-body > div,
 .lesson-note,
 .mini-grid > div,
 .table-box,
 .dialogue-box {
+  min-width: 0;
   background: var(--surface-secondary);
   border: 1px solid var(--border-default);
   border-radius: 8px;
@@ -1804,9 +2020,36 @@ h3 {
   margin-left: 0;
 }
 
+.mini-grid.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .mini-grid p,
 .lesson-note p {
   margin-bottom: 0;
+}
+
+.mini-grid p,
+.lesson-note p,
+.example-box p,
+.practice-lab p,
+.answer-sample p,
+.sentence-stack p {
+  overflow-wrap: anywhere;
+}
+
+.note-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.note-list strong {
+  color: var(--text-primary);
 }
 
 .table-box,
@@ -1888,6 +2131,93 @@ h3 {
 
 .compact-table div {
   grid-template-columns: 96px minmax(0, 1fr);
+}
+
+.conjugation-guide {
+  margin-top: var(--space-4);
+  overflow-x: auto;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+
+.lesson-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.compact-lesson-table {
+  min-width: 0;
+}
+
+.lesson-table th,
+.lesson-table td {
+  padding: var(--space-3);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lesson-table th {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.lesson-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.lesson-table td:not(:first-child):not(:last-child) {
+  color: var(--text-primary);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lesson-table td:first-child strong,
+.lesson-table td:first-child span {
+  display: block;
+}
+
+.lesson-table td:first-child strong {
+  color: var(--text-primary);
+}
+
+.lesson-table td:first-child span {
+  margin-top: var(--space-1);
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sentence-stack {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.sentence-stack p {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-primary);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+}
+
+.sample-translation {
+  color: var(--text-tertiary);
+  font-size: 14px;
 }
 
 .dialogue-box p {
@@ -2119,6 +2449,8 @@ h3 {
 
   .overview-grid,
   .stripe-grid,
+  .first-session-grid,
+  .learning-logic,
   .practice-grid,
   .audio-grid,
   .resource-card-grid,
@@ -2169,7 +2501,12 @@ h3 {
     margin-left: 0;
   }
 
+  .mini-grid.four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .focus-strip,
+  .beginner-rule-grid,
   .exam-grid,
   .speaking-ladder,
   .appendix-grid {
@@ -2225,6 +2562,9 @@ h3 {
   .hero-stats,
   .overview-grid,
   .stripe-grid,
+  .first-session-grid,
+  .learning-logic,
+  .beginner-rule-grid,
   .lesson-grid,
   .word-columns,
   .practice-grid,
@@ -2448,6 +2788,7 @@ h3 {
 
   .book-sidebar,
   .book-front,
+  .start-here,
   .curriculum,
   .resource-library,
   .part-summary,
@@ -2474,6 +2815,66 @@ h3 {
   .book-content .word-columns,
   .mini-grid {
     grid-template-columns: 1fr;
+  }
+
+  .mini-grid.four {
+    grid-template-columns: 1fr;
+  }
+
+  .grammar-expanded .lesson-note .note-list {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-table {
+    min-width: 0;
+  }
+
+  .lesson-table thead {
+    display: none;
+  }
+
+  .lesson-table,
+  .lesson-table tbody,
+  .lesson-table tr,
+  .lesson-table td {
+    display: block;
+  }
+
+  .lesson-table tr {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .lesson-table tr:last-child {
+    border-bottom: 0;
+  }
+
+  .lesson-table td,
+  .lesson-table td:not(:first-child):not(:last-child) {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: var(--space-2);
+    padding: var(--space-1) 0;
+    font-size: 15px;
+    border-bottom: 0;
+  }
+
+  .lesson-table td::before {
+    content: attr(data-label);
+    color: var(--text-tertiary);
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .lesson-table td:first-child strong,
+  .lesson-table td:first-child span {
+    display: block;
+    grid-column: 2;
+  }
+
+  .lesson-table td:first-child span {
+    margin-top: var(--space-1);
   }
 
   .book-front h1 {
@@ -2504,7 +2905,10 @@ h3 {
   }
 
   .table-box div,
-  .compact-table div {
+  .compact-table div,
+  .lookup-table div,
+  .sound-guide div,
+  .rubric-list div {
     grid-template-columns: 1fr;
     gap: var(--space-1);
   }

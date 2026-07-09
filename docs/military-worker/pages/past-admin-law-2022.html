@@ -1,0 +1,1576 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="2022년 9급 군무원 행정법 기출 25문항을 HTML 텍스트 기반 클릭형 문제풀이와 최종 해설지 형태로 재구성한 학습 페이지.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/subject.css">
+  <title>2022 행정법 기출 25문항 풀이 | 눈 떠보니 9급 군수직 군무원</title>
+  <style>
+    .exam-shell {
+      width: min(100% - 32px, 1240px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 820px) 320px;
+      gap: var(--space-8);
+      padding: var(--space-6) 0 var(--space-12);
+    }
+
+    .exam-main,
+    .exam-side {
+      min-width: 0;
+    }
+
+    .exam-side {
+      position: sticky;
+      top: 88px;
+      align-self: start;
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .exam-panel,
+    .exam-player {
+      border: 1px solid var(--border-default);
+      background: var(--surface-primary);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .exam-hero,
+    .exam-panel,
+    .exam-card,
+    .exam-actions,
+    .exam-review {
+      padding: var(--space-6);
+    }
+
+    .exam-hero {
+      border: 1px solid var(--border-default);
+      border-bottom: 3px solid var(--surface-ink);
+      background: var(--surface-primary);
+    }
+
+    .exam-hero h1 {
+      max-width: 720px;
+      margin-bottom: var(--space-4);
+      font-size: 38px;
+      line-height: 1.18;
+    }
+
+    .exam-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-5);
+    }
+
+    .exam-meta span,
+    .exam-status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 var(--space-3);
+      border: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .exam-player {
+      margin-top: var(--space-8);
+    }
+
+    .answer-sheet {
+      margin-top: var(--space-8);
+      border: 1px solid var(--border-default);
+      background: var(--surface-primary);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .answer-sheet[hidden] {
+      display: none;
+    }
+
+    .answer-sheet-header,
+    .answer-sheet-body {
+      padding: var(--space-6);
+    }
+
+    .answer-sheet-header {
+      border-bottom: 3px solid var(--surface-ink);
+    }
+
+    .answer-sheet-header h2 {
+      margin-bottom: var(--space-4);
+      font-size: 30px;
+      line-height: 1.25;
+    }
+
+    .answer-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+
+    .answer-summary-item {
+      min-width: 0;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+    }
+
+    .answer-summary-item span {
+      display: block;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .answer-summary-item strong {
+      display: block;
+      margin-top: var(--space-1);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 18px;
+    }
+
+    .answer-sheet-list {
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .answer-item {
+      padding-top: var(--space-6);
+      border-top: 2px solid var(--surface-ink);
+    }
+
+    .answer-item:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .answer-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .answer-item h3 {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-default);
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    .sheet-passage {
+      margin: var(--space-4) 0;
+      padding: var(--space-4);
+      border-left: 4px solid var(--accent-primary);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.75;
+      white-space: pre-line;
+    }
+
+    .sheet-choice-list {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0 0 var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+
+    .sheet-choice {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .sheet-choice.is-answer {
+      border-color: color-mix(in srgb, var(--status-success, #2f6f4e) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-success, #2f6f4e) 10%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .sheet-choice.is-user-wrong {
+      border-color: color-mix(in srgb, var(--status-warning, #8a5a12) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-warning, #8a5a12) 10%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .sheet-choice-marker {
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .sheet-explanation {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .sheet-box {
+      min-width: 0;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+    }
+
+    .sheet-box strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-size: 13px;
+    }
+
+    .sheet-box p,
+    .sheet-box li {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .sheet-box ul {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .exam-card {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .question-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .question-title {
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--surface-ink);
+      color: var(--text-primary);
+      font-size: 24px;
+      line-height: 1.45;
+    }
+
+    .passage {
+      margin: var(--space-5) 0;
+      padding: var(--space-5);
+      border-left: 4px solid var(--accent-primary);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: var(--space-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .choice-button {
+      width: 100%;
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-primary);
+      color: var(--text-secondary);
+      font: inherit;
+      line-height: 1.65;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out;
+    }
+
+    .choice-button:hover {
+      border-color: var(--accent-primary);
+      color: var(--text-primary);
+    }
+
+    .choice-button:active {
+      transform: scale(0.99);
+    }
+
+    .choice-button[aria-pressed="true"] {
+      border-color: var(--accent-primary);
+      background: var(--accent-soft);
+      color: var(--text-primary);
+    }
+
+    .choice-button.is-correct {
+      border-color: color-mix(in srgb, var(--status-success, #2f6f4e) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-success, #2f6f4e) 12%, var(--surface-primary));
+    }
+
+    .choice-button.is-wrong {
+      border-color: color-mix(in srgb, var(--status-warning, #8a5a12) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-warning, #8a5a12) 12%, var(--surface-primary));
+    }
+
+    .choice-number {
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .exam-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .exam-button {
+      min-height: 44px;
+      padding: 0 var(--space-4);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .exam-button.primary {
+      border-color: var(--surface-ink);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+    }
+
+    .exam-button:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .exam-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .exam-review {
+      display: none;
+      background: var(--surface-secondary);
+    }
+
+    .exam-review[data-open="true"] {
+      display: block;
+    }
+
+    .exam-review h2 {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--surface-ink);
+      font-size: 22px;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+
+    .review-box {
+      min-width: 0;
+      padding: var(--space-4);
+      border: 1px solid var(--border-default);
+      background: var(--surface-primary);
+    }
+
+    .review-box strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-size: 13px;
+    }
+
+    .review-box p,
+    .review-box li {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .review-box ul {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .number-button {
+      min-height: 42px;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-primary);
+      color: var(--text-secondary);
+      font: inherit;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .number-button[aria-current="true"] {
+      border-color: var(--accent-primary);
+      background: var(--accent-primary);
+      color: var(--surface-primary);
+    }
+
+    .number-button.is-selected {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .number-button.is-correct {
+      border-color: color-mix(in srgb, var(--status-success, #2f6f4e) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-success, #2f6f4e) 12%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .number-button.is-wrong {
+      border-color: color-mix(in srgb, var(--status-warning, #8a5a12) 70%, var(--border-default));
+      background: color-mix(in srgb, var(--status-warning, #8a5a12) 12%, var(--surface-primary));
+      color: var(--text-primary);
+    }
+
+    .stat-list {
+      display: grid;
+      gap: var(--space-3);
+      margin: var(--space-4) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .stat-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .stat-list strong {
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    .source-links {
+      display: grid;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .source-links a {
+      color: var(--accent-primary);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .source-note-small {
+      margin: var(--space-4) 0 0;
+      color: var(--text-tertiary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .exam-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .exam-main {
+        order: 1;
+      }
+
+      .exam-side {
+        position: static;
+        order: 2;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .exam-hero,
+      .exam-panel,
+      .exam-card,
+      .exam-actions,
+      .exam-review,
+      .answer-sheet-header,
+      .answer-sheet-body {
+        padding: var(--space-5);
+      }
+
+      .exam-hero h1 {
+        font-size: 30px;
+      }
+
+      .question-title {
+        font-size: 21px;
+      }
+
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .answer-summary-grid,
+      .sheet-explanation {
+        grid-template-columns: 1fr;
+      }
+
+      .top-nav {
+        max-width: min(62vw, 300px);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .top-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .top-nav a {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="subject-header">
+    <div class="subject-header-inner">
+      <a class="brand" href="../index.html"><span>눈 떠보니 9급 군수직 군무원</span></a>
+      <nav class="top-nav" aria-label="기출 풀이 이동">
+        <a href="past-exams.html">기출 전체</a>
+        <a href="admin-law.html">행정법</a>
+        <a href="learn.html">통합</a>
+        <button class="theme-toggle" type="button" aria-label="다크 모드 켜기" aria-pressed="false">
+          <svg class="theme-symbol theme-symbol-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.7A7.2 7.2 0 0 1 9.3 4 8.2 8.2 0 1 0 20 14.7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
+          <svg class="theme-symbol theme-symbol-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="exam-shell">
+    <main class="exam-main" id="main">
+      <section class="exam-hero" aria-labelledby="exam-title">
+        <p class="kicker">PAST EXAM · 행정법 9급</p>
+        <h1 id="exam-title">2022 행정법 기출 25문항을 클릭형 풀이로 끝까지 푼다</h1>
+        <p class="lead">
+          PDF 이미지를 보는 방식이 아니라 문제 원문, 보기, 정답 데이터를 HTML로 풀어냈다.
+          선택지를 누르고 정답을 확인한 뒤 최종 해설지에서 25문항 전체를 다시 훑는다.
+        </p>
+        <div class="exam-meta" aria-label="회차 정보">
+          <span>2022년 군무원 채용시험</span>
+          <span>행정법 9급</span>
+          <span>25문항 전체</span>
+          <span>HTML 텍스트 기반</span>
+        </div>
+      </section>
+
+      <section class="exam-player" aria-live="polite">
+        <article class="exam-card" id="question-card">
+          <div class="question-topline">
+            <span id="question-index">문제 01</span>
+            <span id="question-tag">기출</span>
+          </div>
+          <h2 class="question-title" id="question-title"></h2>
+          <div class="passage" id="question-passage" hidden></div>
+          <ol class="choice-list" id="choice-list"></ol>
+        </article>
+
+        <div class="exam-actions">
+          <button class="exam-button" type="button" id="prev-button">이전</button>
+          <button class="exam-button primary" type="button" id="reveal-button">정답 보기</button>
+          <button class="exam-button" type="button" id="next-button">다음</button>
+          <button class="exam-button" type="button" id="sheet-button" aria-controls="answer-sheet" aria-expanded="false">최종 해설지</button>
+          <button class="exam-button" type="button" id="reset-button">기록 초기화</button>
+          <span class="exam-status-pill" id="status-pill">선택 대기</span>
+        </div>
+
+        <section class="exam-review" id="review-panel" data-open="false" aria-labelledby="review-title">
+          <h2 id="review-title">정답 및 해설</h2>
+          <p id="answer-line"></p>
+          <div class="review-grid">
+            <div class="review-box"><strong>해설</strong><p id="explanation-text"></p></div>
+            <div class="review-box"><strong>오답 포인트</strong><ul id="trap-list"></ul></div>
+            <div class="review-box"><strong>연결 개념</strong><p id="concept-link"></p></div>
+            <div class="review-box"><strong>다음 회독 메모</strong><p id="review-note"></p></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="answer-sheet" id="answer-sheet" aria-labelledby="answer-sheet-title" hidden>
+        <header class="answer-sheet-header">
+          <p class="kicker">ANSWER SHEET</p>
+          <h2 id="answer-sheet-title">최종 정답과 해설지를 한 번에 본다</h2>
+          <p class="lead">최종 해설지는 모든 문항을 다 본 뒤 펼치는 복습 화면이다. 문제, 정답, 내 선택, 핵심 해설, 오답 포인트를 한 페이지에서 다시 훑는다.</p>
+          <div class="answer-summary-grid" id="answer-summary" aria-label="최종 풀이 요약"></div>
+        </header>
+        <div class="answer-sheet-body">
+          <div class="answer-sheet-list" id="answer-sheet-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="exam-side" aria-label="풀이 현황">
+      <section class="exam-panel">
+        <p class="kicker">PROGRESS</p>
+        <h2>풀이 현황</h2>
+        <div class="number-grid" id="number-grid" aria-label="문제 번호 이동"></div>
+        <ul class="stat-list">
+          <li><span>선택한 문항</span><strong id="selected-count">0</strong></li>
+          <li><span>확인한 문항</span><strong id="revealed-count">0</strong></li>
+          <li><span>맞힌 문항</span><strong id="correct-count">0</strong></li>
+        </ul>
+      </section>
+
+      <section class="exam-panel">
+        <p class="kicker">SOURCE</p>
+        <h2>원문 자료</h2>
+        <p class="source-note-small">이 페이지는 로컬 PDF 원문을 학습용 HTML 텍스트로 재구성했다. 정답은 공식 정답표 기준이다.</p>
+        <div class="source-links">
+          <a href="../기출문제/2022_행정법.pdf">2022 행정법 PDF 열기</a>
+          <a href="../기출문제/2022_정답.pdf">2022 정답표 PDF 열기</a>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const themeToggle = document.querySelector(".theme-toggle");
+    const storageKey = "mw-past-admin-law-2022-full";
+    const marker = ["①", "②", "③", "④"];
+    const questions = [
+      {
+            "number": 1,
+            "tag": "행정법 · 기출",
+            "title": "다음 중 행정법의 효력에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "행정법령의 시행일을 정하지 않은 경우에는 공포한 날부터 20일이 경과함으로써 효력을 발생하는데, 이 경우 공포한 날을 첫날에 산입 하지 아니하고 기간의 말일이 토요일 또는 공휴일인 때에는 그 말일의 다음날로 기간이 만료한다.",
+                  "법령을 소급적용하더라도 일반 국민의 이해에 직접 관계가 없는 경우, 오히려 그 이익을 증진하는 경우, 불이익이나 고통을 제거하는 경우 등의 특별한 사정이 있는 경우에 한하여 예외적으로 법령의 소급적용이 허용된다.",
+                  "신청에 따른 처분은 신청 후 법령이 개정된 경우라도 법령 등에 특별한 규정이 있거나 처분 당시의 법령을 적용하기 곤란한 특별한 사정이 있는 경우를 제외하고는 개정된 법령을 적용한다.",
+                  "법령상 허가를 받아야만 가능한 행위가 법령 개정으로 허가 없이 할 수 있게 되었다 하더라도 개정의 이유가 사정의 변천에 따른 규제 범위의 합리적 조정의 필요에 따른 것이라면 개정 전 허가를 받지 않고 한 행위에 대해 개정 전 법령에 따라 처벌할 수 있다. (9급 ) : 129)"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 1번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 2,
+            "tag": "행정법 · 기출",
+            "title": "다음 중 행정법의 법원에 대한 설명으로 가장 옳은 것은?",
+            "passage": "",
+            "choices": [
+                  "행정청 내부의 사무처리준칙이 제정·공표 되었다면 이 자체만으로도 행정청은 자기 구속을 받게 되므로 이 준칙에 위배되는 처분은 위법하게 된다.",
+                  "헌법재판소의 위헌결정이 있다면 행정청이 개인에 대하여 공적인 견해를 표명한 것으로 볼 수 있으므로 위헌 결정과 다른 행정청의 결정은 신뢰보호 원칙에 반한다.",
+                  "부당결부금지의 원칙은 판례에 의해 확립된 행정의 법원칙으로 실정법상 명문의 규정은 없다.",
+                  "법령의 규정만으로 처분 요건의 의미가 분명 하지 아니한 경우에 법원이나 헌법재판소의 분명한 판단이 있음에도 합리적 근거가 없이 사법적 판단과 어긋나게 행정처분을 한 경우에 명백한 하자가 있다고 봄이 타당하다."
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 2번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 3,
+            "tag": "행정법 · 기출",
+            "title": "다음 중 허가에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "한의사 면허는 허가에 해당하고, 한약조제 시험을 통해 약사에게 한약조제권을 인정 함으로써 한의사들의 영업이익이 감소되었다고 하더라도 이는 법률상 이익 침해라고 할 수 없다.",
+                  "건축허가는 기속행위이므로 건축법상 허가 요건이 충족된 경우에는 항상 허가하여야 한다.",
+                  "허가신청 후 허가기준이 변경되었다 하더라도 그 허가관청이 허가신청을 수리하고도 정당한 이유 없이 그 처리를 늦추어 그 사이에 허가 기준이 변경된 것이 아닌 이상 변경된 허가 기준에 따라서 처분을 하여야 한다.",
+                  "석유판매업 등록은 대물적 허가의 성질을 가지고 있으므로, 종전 석유판매업자가 유사 석유제품을 판매한 행위에 대해 승계인에게 사업정지 등 제재처분을 할 수 있다. 7 - 1"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 3번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 4,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 처분의 사전통지에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "고시 등에 의한 불특정 다수를 상대로 한 권익제한이나 의무부과의 경우 사전통지 대상이 아니다.",
+                  "수익적 처분의 신청에 대한 거부처분은 실질적으로 침익적 처분에 해당하므로 사전 통지대상이 된다.",
+                  "「행정절차법」은 처분의 직접 상대방 외에 신청에 따라 행정절차에 참여한 이해관계인도 사전 통지의 대상인 당사자에 포함시키고 있다.",
+                  "공무원의 정규임용처분을 취소하는 처분은 사전통지를 하지 않아도 되는 예외적인 경우에 해당하지 않는다."
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 4번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 5,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 취소소송과 무효확인소송의 관계에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "행정처분에 대한 취소소송과 무효확인소송은 단순 병합이나 선택적 병합의 방식으로 제기 할 수 있다.",
+                  "무효선언을 구하는 취소소송이라도 형식이 취소소송이므로 제소요건을 갖추어야 한다.",
+                  "무효확인을 구하는 소에는 당사자가 명시적으로 취소를 구하지 않는다고 밝히지 않는 한 취소를 구하는 취지가 포함되었다고 보아서 취소 소송의 요건을 갖추었다면 취소판결을 할 수 있다.",
+                  "취소소송의 기각판결의 기판력은 무효확인 소송에 미친다."
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 5번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 6,
+            "tag": "행정법 · 기출",
+            "title": "다음 중 판결의 효력에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "취소판결 자체의 효력으로써 그 행정처분을 기초로 하여 새로 형성된 제3자의 권리까지 당연히 그 행정처분 전의 상태로 환원되는 것이라고는 할 수 없다.",
+                  "처분의 취소를 구하는 청구에 대한 기각판결은 기판력이 발생하지 않는다.",
+                  "취소판결이 확정된 경우 행정청은 종전 처분과 다른 사유로 다시 처분할 수 있고, 이 경우 그 다른 사유가 종전 처분 당시 이미 존재 하고 있었고 당사자가 이를 알고 있었다 하더라도 확정판결의 기속력에 저촉되지 않는다.",
+                  "거부처분에 대한 취소판결이 확정된 후 법령이 개정된 경우 개정된 법령에 따라 다시 거부 처분을 하여도 기속력에 반하지 아니하다."
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 6번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 7,
+            "tag": "행정법 · 기출",
+            "title": "다음 중 행정심판에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "처분청이 처분을 통지할 때 행정심판을 제기 할 수 있다는 사실과 기타 청구절차 및 청구 기간 등에 대한 고지를 하지 않았다고 하여 처분에 하자가 있다고 할 수 없다.",
+                  "행정심판청구서가 피청구인에게 접수된 경우, 피청구인은 심판청구가 이유 있다고 인정하면 직권으로 처분을 취소할 수 있다.",
+                  "수익적 처분의 거부처분이나 부작위에 대해 임시적 지위를 인정할 필요가 있어서 인정한 제도는 임시처분이다.",
+                  "의무이행심판에서 이행을 명하는 재결이 있음에도 불구하고 처분청이 이를 이행하지 아니할 때 위원회가 직접 처분을 할 수 있는데, 행정심판의 재결은 처분청을 기속 하므로 지방자치단체는 직접 처분에 대해 행정심판위원회가 속한 국가기관을 상대로 권한쟁의심판을 청구할 수 없다. 7 - 2"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 7번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 8,
+            "tag": "행정법 · 기출",
+            "title": "다음 중 영조물의 설치·관리상 하자로 인한 손해 배상에 대한 설명으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "공공의 영조물은 사물(私物)이 아닌 공물 (公物)이어야 하지만, 공유나 사유임을 불문 하고 행정주체에 의하여 특정 공공의 목적에 공여된 유체물이면 족하다.",
+                  "도로의 설치 및 관리에 있어 완전무결한 상태를 유지할 정도의 고도의 안전성을 갖추지 아니 하였다고 하여 하자가 있다고 단정할 수는 없고, 그것을 이용하는 자의 상식적이고 질서 있는 이용 방법을 기대한 상대적인 안전성을 갖추는 것으로 족하다.",
+                  "하천의 홍수위가「하천법」상 관련규정이나 하천정비계획 등에서 정한 홍수위를 충족하고 있다고 해도 하천이 범람하거나 유량을 지탱 하지 못해 제방이 무너지는 경우는 안전성을 결여한 것으로 하자가 있다고 본다.",
+                  "공군에 속한 군인이나 군무원의 경우 일반인에 비하여 공군비행장 주변의 항공기 소음 피해에 관하여 잘 인식하거나 인식할 수 있는 지위에 있다는 이유만으로 가해자가 면책되거나 손해 배상액이 감액되지는 않는다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 8번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 9,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "통치행위에 관한 판례의 내용으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "외국에의 국군의 파견결정과 같이 성격상 외교 및 국방에 관련된 고도의 정치적 결단이 요구되는 사안에 대한 국민의 대의기관의 결정이 사법심사의 대상이 되지 아니한다.",
+                  "선고된 형의 전부를 사면할 것인지 또는 일부만을 사면할 것인지를 결정하는 것은 사면권자의 전권사항에 속하는 것이고, 징역형의 집행유예에 대한 사면이 병과된 벌금형에도 미치는 것으로 볼 것인지 여부는 사면의 내용에 대한 해석문제에 불과하다.",
+                  "남북정상회담의 개최과정에서 재정경제부 장관에게 신고하지 아니하거나 통일부장관의 협력사업 승인을 얻지 아니한 채 북한 측에 사업권의 대가 명목으로 송금한 행위는 사법 심사의 대상이 되지 아니한다.",
+                  "비록 서훈취소가 대통령이 국가원수로서 행하는 행위라고 하더라도 법원이 사법심사를 자제하여야 할 고도의 정치성을 띤 행위라 고 볼 수는 없다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 9번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 10,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "행정행위의 효력에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "일반적으로 행정처분이나 행정심판 재결이 불복 기간의 경과로 확정될 경우에는 그 처분의 기초가 된 사실관계나 법률적 판단이 확정되고 당사자들이나 법원이 이에 기속되어 모순되는 주장이나 판단을 할 수 없게 된다.",
+                  "제소기간이 이미 도과하여 불가쟁력이 생긴 행정처분에 대하여는 개별 법규에서 그 변경을 요구할 신청권을 규정하고 있거나 관계 법령의 해석상 그러한 신청권이 인정될 수 있는 등 특별한 사정이 없는 한 국민에게 그 행정처분의 변경을 구할 신청권이 있다 할 수 없다.",
+                  "불가쟁력이 발생한 행정행위로 손해를 입은 국민은 그 위법성을 들어 국가배상청구를 할 수 있다.",
+                  "불가변력이라 함은 행정행위를 한 행정청이 당해 행정행위를 직권으로 취소 또는 변경할 수 없게 하는 힘으로 실질적 확정력 또는 실체적 존속력이라고도 한다."
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 10번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 11,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "부관에 대한 판례의 내용으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "재량행위에 있어서는 관계 법령에 명시적인 금지규정이 없는 한 행정목적을 달성하기 위하여 조건이나 기한, 부담 등의 부관을 붙일 수 있다.",
+                  "토지소유자가 토지형질변경행위허가에 붙은 기부채납의 부관에 따라 토지를 국가나 지방 자치단체에 기부채납(증여)한 경우, 토지 소유자는 원칙적으로 기부채납(증여)의 중요 부분에 착오가 있음을 이유로 증여계약을 취소 할 수 있다.",
+                  "당초에 붙은 기한을 허가 자체의 존속기간이 아니라 허가조건의 존속기간으로 보더라도 그 후 당초의 기한이 상당 기간 연장되어 연장된 기간을 포함한 존속기간 전체를 기준으로 볼 경우 더 이상 허가된 사업의 성질상 부당하게 짧은 경우에 해당하지 않게 된 때에는 재량권의 행사로서 더 이상의 기간연장을 불허가할 수도 있다.",
+                  "일반적으로 행정처분에 효력기간이 정하여져 있는 경우에는 그 기간의 경과로 그 행정처분의 효력은 상실되며, 다만 허가에 붙은 기한이 그 허가된 사업의 성질상 부당하게 짧은 경우에는 이를 그 허가 자체의 존속기간이 아니라 그 허가조건의 존속기간으로 볼 수 있다. 7 - 3"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 11번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 12,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "행정계획에 관한 판례의 내용으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "관계 법령에는 추상적인 행정목표와 절차만이 규정되어 있을 뿐 행정계획의 내용에 관하여는 별다른 규정을 두고 있지 아니하므로 행정 주체는 구체적인 행정계획을 입안·결정함에 있어서 비교적 광범위한 형성의 자유를 가진다.",
+                  "행정주체가 가지는 이와 같은 형성의 자유는 무제한적인 것이 아니라 그 행정계획에 관련되는 자들의 이익을 공익과 사익 사이에서는 물론이고 공익 상호간과 사익 상호간에도 정당하게 비교 교량하여야 한다는 제한이 있다.",
+                  "판례에 따르면, 행정계획에 있어서 형량의 부존재, 형량의 누락, 평가의 과오 및 형량의 불비례 등 형량의 하자별로 위법의 판단기준을 달리하여 개별화하여 판단하고 있다.",
+                  "이미 고시된 실시계획에 포함된 상세계획으로 관리되는 토지 위의 건물의 용도를 상세계획 승인권자의 변경승인 없이 임의로 판매시설에서 상세계획에 반하는 일반목욕장으로 변경한 사안에서, 그 영업신고를 수리하지 않고 영업소를 폐쇄한 처분은 적법하다고 한 판례가 있다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 12번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 13,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 취소소송의 대상이 되는 처분에 해당 하는 것으로 옳은 것은 모두 몇 개인가? ㄱ. 한국마사회의 조교사나 기수에 대한 면허 취소·정지 ㄴ. 법규성 있는 고시가 집행행위 매개 없이 그 자체로서 이해당사자의 법률관계를 직접 규율하는 경우 ㄷ. 행정계획 변경신청의 거부가 장차 일정한 처분에 대한 신청을 구할 법률상 이익이 있는 자의 처분자체를 실질적으로 거부하는 경우 ㄹ. 국가공무원법상 당연퇴직의 인사발령",
+            "passage": "",
+            "choices": [
+                  "0개",
+                  "1개",
+                  "2개",
+                  "3개"
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 13번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 14,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "행정입법부작위에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "현행법상 행정권의 시행명령제정의무를 규정 하는 명시적인 법률규정은 없다.",
+                  "삼권분립의 원칙, 법치행정의 원칙을 당연한 전제로 하고 있는 우리 헌법하에서 행정권의 행정입법 등 법집행의무는 헌법적 의무라고 보아야 한다.",
+                  "행정입법의 부작위가 위헌·위법이라고 하기 위하여는 행정청에게 행정입법을 하여야 할 작위의무를 전제로 하는 것이나, 그 작위 의무가 인정되기 위하여는 행정입법의 제정이 법률의 집행에 필수불가결한 것일 필요는 없다.",
+                  "부작위위법확인소송의 대상이 될 수 있는 것은 구체적 권리의무에 관한 분쟁이어야 하고, 추상적인 법령에 관하여 제정의 여부 등은 그 자체로서 국민의 구체적인 권리의무에 직접적 변동을 초래하는 것이 아니어서 행정 소송의 대상이 될 수 없다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 14번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 15,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "판례에 따르면 공법상 당사자소송과 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "조세부과처분의 당연무효를 전제로 하여 이미 납부한 세금의 반환청구",
+                  "재개발조합을 상대로 조합원자격 유무에 관한 확인을 구하는 소송",
+                  "사업주가 당연가입자가 되는 고용보험 및 산재 보험에서 보험료 납부의무 부존재확인소송",
+                  "한국전력공사가 한국방송공사로부터 수신료의 징수업무를 위탁받아 자신의 고유업무와 관련된 고지행위와 결합하여 수신료를 징수할 권한이 있는지 여부를 다투는 쟁송 7 - 4"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 15번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 16,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "행정소송법의 규정 내용으로 가장 옳지 않은 것은?",
+            "passage": "",
+            "choices": [
+                  "법원은 소송의 결과에 따라 권리 또는 이익의 침해를 받을 제3자가 있는 경우에는 당사자 또는 제3자의 신청 또는 직권에 의하여 결정으로써 그 제3자를 소송에 참가시킬 수 있다.",
+                  "법원은 다른 행정청을 소송에 참가시킬 필요가 있다고 인정할 때에는 당사자 또는 당해 행정청의 신청 또는 직권에 의하여 결정으로써 그 행정청을 소송에 참가시킬 수 있다.",
+                  "법원이 제3자의 소송참가와 행정청의 소송 참가에 관한 결정을 하는 경우에는 각각 당사자 및 제3자의 의견, 당사자와 및 당해 행정청의 의견을 들어야 한다.",
+                  "법원은 취소소송을 당해 처분 등에 관계되는 사무가 귀속하는 국가 또는 공공단체에 대한 당사자소송 또는 취소소송 외의 항고소송으로 변경하는 것이 상당하다고 인정할 때에는 청구의 기초에 변경이 없는 한 사실심의 변론 종결시까지 원고의 신청 또는 직권에 의하여 결정으로써 소의 변경을 허가할 수 있다."
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 16번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 17,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "판례에 따르면, 처분사유의 추가·변경 시 기본적 사실관계 동일성을 긍정한 사례로 가장 적절한 것은?",
+            "passage": "",
+            "choices": [
+                  "석유판매업허가신청에 대하여, 주유소 건축 예정 토지에 관하여 도시계획법령에 의거하여 행위제한을 추진하고 있다는 당초의 불허가 처분 사유와, 항고소송에서 주장한 위 신청이 토지형질변경허가의 요건 불비 및 도심의 환경 보전의 공익상 필요라는 사유",
+                  "석유판매업허가신청에 대하여, 관할 군부대장의 동의를 얻지 못하였다는 당초의 불허가 사유와, 토지가 탄약창에 근접한 지점에 있어 공익적인 측면에서 보아 허가신청을 불허한 것은 적법 하다는 사유",
+                  "온천으로서의 이용가치, 기존의 도시계획 및 공공사업에의 지장 여부 등을 고려하여 온천발견신고수리를 거부한 것은 적법하다는 사유와, 규정온도가 미달되어 온천에 해당 하지 않는다는 사유",
+                  "이주대책신청기간이나 소정의 이주대책실시 (시행)기간을 모두 도과하여 이주대책을 신청할 권리가 없고, 사업시행자가 이를 받아들여 택지나 아파트공급을 해 줄 법률상 의무를 부담한다고 볼 수 없다는 사유와, 사업지구 내 가옥 소유자가 아니라는 사유"
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 가장 적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 17번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 18,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 허가에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "개정 전 허가기준의 존속에 관한 국민의 신뢰가 개정된 허가기준의 적용에 관한 공익상의 요구보다 더 보호가치가 있다고 인정되는 경우에는 그러한 국민의 신뢰를 보호하기 위하여 개정된 허가 기준의 적용을 제한할 여지가 있다.",
+                  "법령상의 산림훼손 금지 또는 제한 지역에 해당하지 아니하더라도 중대한 공익상의 필요가 있다고 인정되는 경우, 산림훼손허가신청을 수 있다.",
+                  "거부할 어업에 관한 허가의 경우 그 유효기간이 경과 하면 그 허가의 효력이 당연히 소멸하지만, 유효기간의 만료 후라도 재차 허가를 받게 되면 그 허가기간이 갱신되어 종전의 어업허가의 효력 또는 성질이 계속된다.",
+                  "요허가행위를 허가를 받지 않고 행한 경우에는 행정법상 처벌의 대상이 되지만 당해 무허가 행위의 법률상 효력이 당연히 부정되는 것은 아니다."
+            ],
+            "answer": 3,
+            "answerLabel": "③",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ③이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 18번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 19,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 행정행위의 철회에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "부담부 행정처분에 있어서 처분의 상대방이 부담을 이행하지 아니한 경우에 처분 행정청으로서는 이를 들어 당해 처분을 철회할 수 있다.",
+                  "외형상 하나의 행정처분이라 하더라도 가분성이 있거나 그 처분대상의 일부가 특정될 수 있다면 그 일부만의 취소도 가능 하고 그 일부의 취소는 당해 취소부분에 효력이 생긴다.",
+                  "관하여 행정행위의 철회는 적법요건을 구비하여 완전히 효력을 발하고 있는 행정행위를 사후적으로 효력을 장래에 향해 소멸시키는 별개의 행정처분이다.",
+                  "처분 후에 원래의 처분을 그대로 존속시킬 수 없게 된 사정변경이 생긴 경우 처분청은 처분을 철회할 수 있다고 할 것이므로, 이 경우 처분의 상대방에게 그 철회·변경을 요구할 권리는 당연히 인정된다고 할 것이다. 7 - 5"
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 19번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 20,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 이행강제금에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "구 건축법상 이행강제금은 위반행위에 대하여 시정명령을 받은 후 시정기간 내에 당해 시정명령을 이행하지 아니한 건축주 등에 대하여 부과되는 간접강제의 일종으로서 금전제재의 성격을 가지므로 그 이행강제금 납부의무는 상속인 기타의 사람에게 승계 될 수 있다.",
+                  "행정청은 의무자가 행정상 의무를 이행할 때까지 이행강제금을 반복하여 부과할 수 있고, 의무자가 의무를 이행하면 새로운 이행 강제금의 부과를 즉시 중지하되, 이미 부과한 이행강제금은 징수하여야 한다.",
+                  "장기 의무위반자가 이행강제금 부과 전에 그 의무를 이행하였다면 이행강제금의 부과로써 이행을 확보하고자 하는 목적은 이미 실현된 것이므로 이행강제금을 부과할 수 없다.",
+                  "이행강제금은 의무위반에 대하여 장래의 의무 이행을 확보하는 수단이라는 점에서 과거의 의무위반에 대한 제재인 행정벌과 구별된다."
+            ],
+            "answer": 1,
+            "answerLabel": "①",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ①이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 20번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 21,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 행정상 손실보상에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "「공익사업을 위한 토지 등의 취득 및 보상에 관한 법률」시행령에서 이주대책의 대상자에서 세입자를 제외하고 있는 것이 세입자의 재산권을 침해하는 것이라 볼 수 없다.",
+                  "공익사업으로 인하여 영업을 폐지하거나 휴업 하는 자가 구 「공익사업을 위한 토지 등의 취득 및 보상에 관한 법률」에 규정된 재결 절차를 거치지 않은 채 곧바로 사업시행자를 상대로 영업손실보상을 청구할 수 없다.",
+                  "사업시행자 스스로 공익사업의 원활한 시행을 위하여 생활대책을 수립·실시할 수 있도록 하는 내부규정을 두고 이에 따라 생활대책 대상자 선정기준을 마련하여 생활대책을 수립·실시하는 경우, 생활대책대상자 선정기준에 해당하는 자기 자신을 생활대책대상자에서 제외하거나 선정을 거부한 사업시행자를 상대로 항고소송을 제기할 수 있다.",
+                  "보상청구권이 성립하기 위해서는 재산권에 대한 법적인 행위로서 공행정작용에 의한 침해를 말하고 사실행위는 포함되지 않는다."
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 21번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 22,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 행정심판의 재결에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "조세부과처분이 국세청장에 대한 불복심사 청구에 의하여 그 불복사유가 이유있다고 인정 되어 취소되었음에도 처분청이 동일한 사실에 관하여 부과처분을 되풀이 한 것이라면 설령 그 부과처분이 감사원의 시정요구에 의한 것이라 하더라도 위법하다.",
+                  "행정심판위원회는 의무이행재결이 있는 경우에 피청구인이 처분을 하지 아니한 경우에는 당사자의 신청 또는 직권으로 기간을 정하여 시정을 명하고 그 기간에 이행하지 아니하면 직접 처분을 할 수 있다.",
+                  "행정심판의 재결이 확정된 경우에도 처분의 기초가 된 사실관계나 법률적 판단이 확정되고 당사자들이나 법원이 이에 기속되어 모순되는 주장이나 판단을 할 수 없게 되는 것은 아니다.",
+                  "처분 취소재결이 있는 경우 당해 처분청은 재결의 취지에 반하지 아니하는 한 그 재결에 적시된 위법사유를 시정·보완하여 새로운 처분을 할 수 있는 것이고, 이러한 새로운 부과처분은 재결의 기속력에 저촉되지 아니한다."
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 22번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 23,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "X시의 공무원 甲은 乙이 건축한 건물이 건축 허가에 위반하였다는 이유로 철거명령과 행정 대집행법상의 절차를 거쳐 대집행을 완료하였다. 乙은 행정대집행의 처분들이 하자가 있다는 이유로 행정소송 및 손해배상소송을 제기하려고 한다. 다음 중 설명으로 가장 옳지 않은 것은?",
+            "passage": "(단, 다툼이 있는 경우 판례에 의함)",
+            "choices": [
+                  "乙이 취소소송을 제기하는 경우, 행정대집행이 이미 완료된 것이므로 소의 이익이 없어 각하 판결을 받을 것이다.",
+                  "乙이 손해배상소송을 제기하는 경우, 민사법원은 그 행정처분이 위법인지 여부는 심사할 수 없다.",
+                  "「행정소송법」은 처분 등의 효력 유무 또는 존재 여부가 민사소송의 선결문제로 되는 경우 당해 민사소송의 수소법원이 이를 심리·판단할 수 있는 것으로 규정하고 있다.",
+                  "X시의 손해배상책임이 인정된다면 X시는 고의 또는 중대한 과실이 있는 甲에게 구상할 수 있다. 7 - 6"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 23번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 24,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중 취소소송에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이 있는 경우 판례에 의함)",
+            "passage": "",
+            "choices": [
+                  "제재적 행정처분의 효력이 제재기간 경과로 소멸하였더라도 관련 법규에서 제재적 행정 처분을 받은 사실을 가중사유나 전제요건으로 삼아 장래의 제재적 행정처분을 하도록 정하고 있다면, 선행처분의 취소를 구할 법률상 이익이 있다.",
+                  "행정처분의 취소소송 계속 중 처분청이 다툼의 대상이 되는 행정처분을 직권으로 취소하면 그 처분은 효력을 상실하여 더 이상 존재하지 않는 것이므로 존재하지 않는 처분을 대상으로 한 항고소송은 원칙적으로 소의 이익이 소멸 하여 부적법하다.",
+                  "고등학교 졸업이 대학 입학 자격이나 학력 인정으로서의 의미밖에 없다고 할 수 없으므로 고등학교졸업학력검정고시에 합격하였다 하여 고등학교 학생으로서의 신분과 명예가 회복 될 수 없는 것이니 퇴학처분을 받은 자로서는 퇴학처분의 위법을 주장하여 그 취소를 구할 소송상의 이익이 있다.",
+                  "소송계속 중 해당 처분이 기간의 경과로 그 효과가 소멸하더라도 예외적으로 그 처분의 취소를 구할 소의 이익을 인정할 수 있는 ‘행정처분과 동일한 사유로 위법한 처분이 반복될 위험성이 있는 경우’란 해당 사건의 동일한 소송 당사자 사이에서 반복될 위험이 있는 경우만을 의미한다."
+            ],
+            "answer": 4,
+            "answerLabel": "④",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ④이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 24번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      },
+      {
+            "number": 25,
+            "tag": "행정법 · 판례/쟁송",
+            "title": "다음 중「행정소송법」상 집행정지결정에 대한 설명으로 가장 옳지 않은 것은? (단, 다툼이",
+            "passage": "있는 경우 판례에 의함)",
+            "choices": [
+                  "법원은 당사자의 신청 또는 직권에 의하여 처분 등의 효력이나 그 집행 또는 절차의 속행의 전부 또는 일부의 정지를 결정하거나, 또는 집행정지의 취소를 결정할 수 있다.",
+                  "집행정지결정은 속행정지, 집행정지, 효력정지로 구분되고 이 중 속행정지는 처분의 집행이나 효력을 정지함으로써 목적을 달성할 수 있는 경우에는 허용되지 아니한다.",
+                  "과징금납부명령의 처분이 사업자의 자금 사정이나 경영전반에 미치는 파급효과가 매우 중대하다는 이유로 인한 손해는 효력 정지 내지 집행정지의 적극적 요건인 '회복 하기 어려운 손해'에 해당한다.",
+                  "효력기간이 정해져 있는 제재적 행정처분에 대한 취소소송에서 법원이 본안소송의 판결 선고 시까지 집행정지결정을 하면, 처분에서 정해 둔 효력기간은 판결 선고 시까지 진행 하지 않다가 판결이 선고되면 그때 집행정지 결정의 효력이 소멸함과 동시에 처분의 효력이 당연히 부활하여 처분에서 정한 효력기간이 다시 진행한다. 7 - 7"
+            ],
+            "answer": 2,
+            "answerLabel": "②",
+            "allCorrect": false,
+            "explanation": "공식 정답표 기준 정답은 ②이다. 이 문항은 부적절한 선택지를 고르는 문제이므로, 문제 요구를 먼저 표시한 뒤 정답 선지의 핵심 표현과 지문·개념의 근거를 대조한다.",
+            "traps": [
+                  "‘적절한 것’과 ‘적절하지 않은 것’을 먼저 구분해야 정답 방향이 뒤집히지 않는다.",
+                  "정답 번호만 외우지 말고 정답 선지의 판단 근거가 되는 단어를 한 줄로 표시한다.",
+                  "오답 선지는 왜 아닌지 개념어, 지문 근거, 판례·공식 중 하나로 분류해 둔다."
+            ],
+            "concept": "행정법 2022년 기출 25번 핵심 개념",
+            "note": "다음 회독에서는 정답 선지보다 헷갈린 오답 선지의 근거를 먼저 확인한다."
+      }
+];
+    const examTitle = "2022 행정법 9급";
+
+    let currentIndex = 0;
+    let answerSheetOpen = false;
+    let progress = JSON.parse(localStorage.getItem(storageKey) || "{}");
+
+    function applyTheme(theme) {
+      root.dataset.theme = theme;
+      localStorage.setItem("mw-theme", theme);
+      const isDark = theme === "dark";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.setAttribute("aria-label", isDark ? "라이트 모드 켜기" : "다크 모드 켜기");
+      themeToggle.title = isDark ? "라이트 모드" : "다크 모드";
+    }
+
+    function saveProgress() {
+      localStorage.setItem(storageKey, JSON.stringify(progress));
+    }
+
+    function getState(question) {
+      return progress[question.number] || { selected: null, revealed: false };
+    }
+
+    function setState(question, patch) {
+      progress[question.number] = { ...getState(question), ...patch };
+      saveProgress();
+    }
+
+    function getAnswerNumbers(question) {
+      if (question.allCorrect) return [1, 2, 3, 4];
+      if (typeof question.answer === "string" && question.answer.includes(",")) {
+        return question.answer.split(",").map((item) => Number(item));
+      }
+      return [Number(question.answer)];
+    }
+
+    function isCorrectChoice(question, choiceNumber) {
+      return getAnswerNumbers(question).includes(choiceNumber);
+    }
+
+    function getAnswerLabel(question) {
+      if (question.answerLabel) return question.answerLabel;
+      return getAnswerNumbers(question).map((number) => marker[number - 1]).join(", ");
+    }
+
+    function renderQuestion() {
+      const question = questions[currentIndex];
+      const state = getState(question);
+      document.getElementById("question-index").textContent = `문제 ${String(question.number).padStart(2, "0")}`;
+      document.getElementById("question-tag").textContent = question.tag;
+      document.getElementById("question-title").textContent = question.title;
+
+      const passage = document.getElementById("question-passage");
+      passage.hidden = !question.passage;
+      passage.textContent = question.passage || "";
+
+      const choiceList = document.getElementById("choice-list");
+      choiceList.replaceChildren(...question.choices.map((choice, index) => {
+        const choiceNumber = index + 1;
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice-button";
+        button.setAttribute("aria-pressed", String(state.selected === choiceNumber));
+        button.dataset.choice = String(choiceNumber);
+        if (state.revealed && isCorrectChoice(question, choiceNumber)) button.classList.add("is-correct");
+        if (state.revealed && state.selected === choiceNumber && !isCorrectChoice(question, choiceNumber)) button.classList.add("is-wrong");
+        button.innerHTML = `<span class="choice-number">${marker[index]}</span><span>${choice}</span>`;
+        button.addEventListener("click", () => {
+          setState(question, { selected: choiceNumber });
+          renderQuestion();
+        });
+        item.append(button);
+        return item;
+      }));
+
+      document.getElementById("prev-button").disabled = currentIndex === 0;
+      document.getElementById("next-button").disabled = currentIndex === questions.length - 1;
+      document.getElementById("review-panel").dataset.open = String(state.revealed);
+      document.getElementById("status-pill").textContent = getStatusText(question, state);
+      renderReview(question, state);
+      renderNumberGrid();
+      renderStats();
+      if (answerSheetOpen) renderAnswerSheet();
+    }
+
+    function renderReview(question, state) {
+      const answerLabel = getAnswerLabel(question);
+      document.getElementById("answer-line").textContent = state.selected
+        ? `내 선택: ${marker[state.selected - 1]} · 정답: ${answerLabel}`
+        : `정답: ${answerLabel} · 아직 선택하지 않고 해설을 열었다.`;
+      document.getElementById("explanation-text").textContent = question.explanation;
+      document.getElementById("concept-link").textContent = question.concept;
+      document.getElementById("review-note").textContent = question.note;
+      const trapList = document.getElementById("trap-list");
+      trapList.replaceChildren(...question.traps.map((trap) => {
+        const item = document.createElement("li");
+        item.textContent = trap;
+        return item;
+      }));
+    }
+
+    function getStatusText(question, state) {
+      if (!state.selected && !state.revealed) return "선택 대기";
+      if (!state.selected && state.revealed) return "정답 공개";
+      if (state.selected && !state.revealed) return `${marker[state.selected - 1]} 선택`;
+      if (isCorrectChoice(question, state.selected)) return "정답 확인";
+      if (state.revealed) return "오답 확인";
+      return "선택 대기";
+    }
+
+    function renderNumberGrid() {
+      const grid = document.getElementById("number-grid");
+      grid.replaceChildren(...questions.map((question, index) => {
+        const state = getState(question);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "number-button";
+        button.textContent = String(question.number).padStart(2, "0");
+        button.setAttribute("aria-label", `${question.number}번으로 이동`);
+        button.setAttribute("aria-current", String(index === currentIndex));
+        if (state.selected) button.classList.add("is-selected");
+        if (state.revealed && state.selected && isCorrectChoice(question, state.selected)) button.classList.add("is-correct");
+        if (state.revealed && state.selected && !isCorrectChoice(question, state.selected)) button.classList.add("is-wrong");
+        button.addEventListener("click", () => {
+          currentIndex = index;
+          renderQuestion();
+          document.getElementById("question-card").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        return button;
+      }));
+    }
+
+    function getScoreSummary() {
+      const states = questions.map(getState);
+      const selected = states.filter((state) => state.selected).length;
+      const revealed = states.filter((state) => state.revealed).length;
+      const correct = questions.filter((question) => {
+        const state = getState(question);
+        return state.revealed && state.selected && isCorrectChoice(question, state.selected);
+      }).length;
+      return { selected, revealed, correct, total: questions.length };
+    }
+
+    function renderStats() {
+      const summary = getScoreSummary();
+      document.getElementById("selected-count").textContent = `${summary.selected}/${summary.total}`;
+      document.getElementById("revealed-count").textContent = `${summary.revealed}/${summary.total}`;
+      document.getElementById("correct-count").textContent = `${summary.correct}/${summary.total}`;
+    }
+
+    function createSummaryItem(label, value) {
+      const item = document.createElement("div");
+      item.className = "answer-summary-item";
+      const labelNode = document.createElement("span");
+      labelNode.textContent = label;
+      const valueNode = document.createElement("strong");
+      valueNode.textContent = value;
+      item.append(labelNode, valueNode);
+      return item;
+    }
+
+    function renderAnswerSheet() {
+      const summary = getScoreSummary();
+      document.getElementById("answer-summary").replaceChildren(
+        createSummaryItem("전체 문항", `${summary.total}`),
+        createSummaryItem("선택 문항", `${summary.selected}/${summary.total}`),
+        createSummaryItem("해설 확인", `${summary.revealed}/${summary.total}`),
+        createSummaryItem("현재 정답", `${summary.correct}/${summary.total}`)
+      );
+
+      const answerSheetList = document.getElementById("answer-sheet-list");
+      answerSheetList.replaceChildren(...questions.map((question) => {
+        const state = getState(question);
+        const item = document.createElement("article");
+        item.className = "answer-item";
+
+        const header = document.createElement("div");
+        header.className = "answer-item-header";
+        const number = document.createElement("span");
+        number.textContent = `문제 ${String(question.number).padStart(2, "0")}`;
+        const tag = document.createElement("span");
+        tag.textContent = question.tag;
+        header.append(number, tag);
+
+        const titleNode = document.createElement("h3");
+        titleNode.textContent = question.title;
+        item.append(header, titleNode);
+
+        if (question.passage) {
+          const passageNode = document.createElement("div");
+          passageNode.className = "sheet-passage";
+          passageNode.textContent = question.passage;
+          item.append(passageNode);
+        }
+
+        const choices = document.createElement("ol");
+        choices.className = "sheet-choice-list";
+        question.choices.forEach((choice, index) => {
+          const choiceNumber = index + 1;
+          const choiceItem = document.createElement("li");
+          choiceItem.className = "sheet-choice";
+          if (isCorrectChoice(question, choiceNumber)) choiceItem.classList.add("is-answer");
+          if (state.selected === choiceNumber && !isCorrectChoice(question, choiceNumber)) choiceItem.classList.add("is-user-wrong");
+          const markerNode = document.createElement("span");
+          markerNode.className = "sheet-choice-marker";
+          markerNode.textContent = marker[index];
+          const textNode = document.createElement("span");
+          textNode.textContent = choice;
+          choiceItem.append(markerNode, textNode);
+          choices.append(choiceItem);
+        });
+        item.append(choices);
+
+        const explanation = document.createElement("div");
+        explanation.className = "sheet-explanation";
+        const answerBox = document.createElement("div");
+        answerBox.className = "sheet-box";
+        const answerTitle = document.createElement("strong");
+        answerTitle.textContent = "정답과 해설";
+        const answerText = document.createElement("p");
+        const selectedText = state.selected ? `내 선택 ${marker[state.selected - 1]}` : "내 선택 없음";
+        answerText.textContent = `${selectedText} · 정답 ${getAnswerLabel(question)} · ${question.explanation}`;
+        answerBox.append(answerTitle, answerText);
+
+        const trapBox = document.createElement("div");
+        trapBox.className = "sheet-box";
+        const trapTitle = document.createElement("strong");
+        trapTitle.textContent = "오답 포인트";
+        const trapList = document.createElement("ul");
+        question.traps.forEach((trap) => {
+          const trapItem = document.createElement("li");
+          trapItem.textContent = trap;
+          trapList.append(trapItem);
+        });
+        trapBox.append(trapTitle, trapList);
+
+        const conceptBox = document.createElement("div");
+        conceptBox.className = "sheet-box";
+        const conceptTitle = document.createElement("strong");
+        conceptTitle.textContent = "연결 개념";
+        const conceptText = document.createElement("p");
+        conceptText.textContent = question.concept;
+        conceptBox.append(conceptTitle, conceptText);
+
+        const noteBox = document.createElement("div");
+        noteBox.className = "sheet-box";
+        const noteTitle = document.createElement("strong");
+        noteTitle.textContent = "회독 메모";
+        const noteText = document.createElement("p");
+        noteText.textContent = question.note;
+        noteBox.append(noteTitle, noteText);
+
+        explanation.append(answerBox, trapBox, conceptBox, noteBox);
+        item.append(explanation);
+        return item;
+      }));
+    }
+
+    document.getElementById("prev-button").addEventListener("click", () => {
+      currentIndex = Math.max(0, currentIndex - 1);
+      renderQuestion();
+    });
+
+    document.getElementById("next-button").addEventListener("click", () => {
+      currentIndex = Math.min(questions.length - 1, currentIndex + 1);
+      renderQuestion();
+    });
+
+    document.getElementById("reveal-button").addEventListener("click", () => {
+      setState(questions[currentIndex], { revealed: true });
+      renderQuestion();
+    });
+
+    document.getElementById("reset-button").addEventListener("click", () => {
+      progress = {};
+      answerSheetOpen = false;
+      saveProgress();
+      const answerSheet = document.getElementById("answer-sheet");
+      answerSheet.hidden = true;
+      document.getElementById("sheet-button").setAttribute("aria-expanded", "false");
+      document.getElementById("sheet-button").textContent = "최종 해설지";
+      renderQuestion();
+    });
+
+    document.getElementById("sheet-button").addEventListener("click", () => {
+      questions.forEach((question) => setState(question, { revealed: true }));
+      answerSheetOpen = true;
+      const answerSheet = document.getElementById("answer-sheet");
+      answerSheet.hidden = false;
+      document.getElementById("sheet-button").setAttribute("aria-expanded", "true");
+      document.getElementById("sheet-button").textContent = "최종 해설지로 이동";
+      renderQuestion();
+      renderAnswerSheet();
+      answerSheet.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    themeToggle.addEventListener("click", () => {
+      applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    applyTheme(localStorage.getItem("mw-theme") || "light");
+    renderQuestion();
+  </script>
+</body>
+</html>

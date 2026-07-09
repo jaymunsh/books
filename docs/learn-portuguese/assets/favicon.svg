@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Brazilian Portuguese guidebook icon">
+  <rect width="64" height="64" rx="14" fill="#2f6b4f"/>
+  <path d="M32 12 54 32 32 52 10 32Z" fill="#d7a21f"/>
+  <circle cx="32" cy="32" r="13.5" fill="#1f6c9f"/>
+  <path d="M21 31c6-3 16-3 22 0" fill="none" stroke="#fbfaf7" stroke-width="4" stroke-linecap="round"/>
+</svg>

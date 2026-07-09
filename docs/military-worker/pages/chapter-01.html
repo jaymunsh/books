@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="눈 떠보니 9급 군수직 군무원 1부 학습 화면. 군무원이 어떤 직업인지 목차, 본문, 핵심정리, 학습 체크로 읽는 온라인 교재형 레이아웃.">
+  <link rel="icon" href="data:,">
+  <title>1-1 군무원은 어떤 직업인가 | 눈 떠보니 9급 군수직 군무원</title>
+  <style>
+    :root {
+      --surface-primary: #ffffff;
+      --surface-secondary: #f7f7f4;
+      --surface-elevated: #ffffff;
+      --surface-ink: #111111;
+      --text-primary: #191917;
+      --text-secondary: #5f625c;
+      --text-tertiary: #898b84;
+      --border-default: #deded7;
+      --border-subtle: #ecece6;
+      --accent-primary: #2463a6;
+      --accent-hover: #164d83;
+      --accent-soft: #e8f1fb;
+      --status-success: #2f6f4e;
+      --status-warning: #8a5a12;
+      --shadow-fine: rgba(25, 25, 23, 0.08);
+      --overlay-scrim: rgba(25, 25, 23, 0.34);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --font-primary: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", system-ui, sans-serif;
+      --font-mono: SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      color-scheme: light;
+    }
+
+    [data-theme="dark"] {
+      --surface-primary: #151515;
+      --surface-secondary: #20201d;
+      --surface-elevated: #272723;
+      --surface-ink: #f4f1ea;
+      --text-primary: #f5f2ec;
+      --text-secondary: #c2bdb2;
+      --text-tertiary: #8f8a80;
+      --border-default: #3a3933;
+      --border-subtle: #2f2e29;
+      --accent-primary: #7db4f0;
+      --accent-hover: #a7cdf5;
+      --accent-soft: #1c3146;
+      --status-success: #91d0a8;
+      --status-warning: #e7bd71;
+      --shadow-fine: rgba(0, 0, 0, 0.3);
+      --overlay-scrim: rgba(0, 0, 0, 0.46);
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in srgb, var(--border-default) 82%, var(--surface-primary)) transparent;
+    }
+
+    html {
+      background: var(--surface-secondary);
+      color: var(--text-primary);
+      scroll-behavior: smooth;
+    }
+
+    *::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      border: 3px solid transparent;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--border-default) 82%, var(--surface-primary));
+      background-clip: padding-box;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+      background: color-mix(in srgb, var(--accent-primary) 48%, var(--border-default));
+      background-clip: padding-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      line-height: 1.75;
+      background: var(--surface-secondary);
+      color: var(--text-primary);
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-color: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+      text-underline-offset: 5px;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      text-decoration-color: var(--accent-hover);
+    }
+
+    button,
+    a,
+    input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent-primary) 70%, transparent);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: var(--space-4);
+      top: var(--space-4);
+      z-index: 40;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+      transform: translateY(-140%);
+      transition: transform 150ms ease-out;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .reader-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid var(--border-subtle);
+      background: color-mix(in srgb, var(--surface-primary) 92%, transparent);
+      backdrop-filter: blur(16px);
+    }
+
+    .reader-header-inner {
+      width: min(100% - 32px, 1320px);
+      min-height: 64px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      min-height: 44px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .brand span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .menu-toggle,
+    .theme-toggle {
+      width: auto;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .theme-toggle {
+      width: 44px;
+      padding: 0;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .menu-toggle:hover,
+    .theme-toggle:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .menu-toggle:active,
+    .theme-toggle:active {
+      transform: scale(0.98);
+    }
+
+    .theme-symbol {
+      width: 20px;
+      height: 20px;
+      display: none;
+      color: currentColor;
+    }
+
+    [data-theme="light"] .theme-symbol-moon,
+    [data-theme="dark"] .theme-symbol-sun {
+      display: block;
+    }
+
+    .mobile-nav-layer {
+      display: none;
+      visibility: hidden;
+    }
+
+    .nav-backdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: var(--overlay-scrim);
+      cursor: pointer;
+    }
+
+    .mobile-nav-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(360px, calc(100% - 48px));
+      height: 100%;
+      padding: var(--space-5);
+      border-left: 1px solid var(--border-default);
+      background: var(--surface-primary);
+      box-shadow: -12px 0 32px var(--shadow-fine);
+      transform: translateX(100%);
+      transition: transform 220ms ease-in-out;
+      overflow: auto;
+    }
+
+    .mobile-nav-layer[data-open="true"] .mobile-nav-panel {
+      transform: translateX(0);
+    }
+
+    .mobile-nav-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .mobile-nav-kicker {
+      display: block;
+      margin-bottom: var(--space-1);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .mobile-nav-title {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .mobile-nav-close {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .reader-shell {
+      width: min(100% - 32px, 1320px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr) 280px;
+      gap: var(--space-6);
+      padding: var(--space-6) 0 var(--space-12);
+      align-items: start;
+    }
+
+    .toc-panel,
+    .study-panel {
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .toc-panel {
+      position: sticky;
+      top: 88px;
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100dvh - 112px);
+      overflow: auto;
+    }
+
+    .toc-panel > .panel-title {
+      order: 0;
+    }
+
+    .toc-panel > .part-meta {
+      order: 1;
+    }
+
+    .toc-panel > nav {
+      order: 2;
+    }
+
+    .study-panel {
+      position: sticky;
+      top: 88px;
+    }
+
+    .panel-title {
+      margin: 0;
+      padding: var(--space-5) var(--space-5) var(--space-3);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 800;
+    }
+
+    .part-meta {
+      display: block;
+      padding: 0 var(--space-5) var(--space-4);
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .toc-list {
+      display: grid;
+      gap: var(--space-1);
+      margin: 0;
+      padding: 0 var(--space-3) var(--space-4);
+      list-style: none;
+    }
+
+    .toc-list a {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: start;
+      min-height: 52px;
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .toc-list a:hover,
+    .toc-list a[aria-current="true"] {
+      background: var(--surface-secondary);
+      color: var(--text-primary);
+    }
+
+    .toc-list a[aria-current="true"] .toc-number {
+      border-color: transparent;
+      background: var(--accent-primary);
+      color: var(--surface-primary);
+    }
+
+    .toc-number {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .toc-list strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .toc-list a > span:last-child > span {
+      display: block;
+      margin-top: var(--space-1);
+      color: var(--text-tertiary);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .lesson {
+      min-width: 0;
+    }
+
+    .lesson,
+    .lesson-block {
+      scroll-margin-top: 96px;
+    }
+
+    .lesson-card {
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-primary);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+      overflow: hidden;
+    }
+
+    .lesson-hero {
+      padding: var(--space-8);
+      border-bottom: 1px solid var(--border-subtle);
+      background:
+        linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), var(--border-subtle) calc(100% - 1px)) 0 0 / 32px 32px,
+        var(--surface-primary);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin: 0 0 var(--space-4);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--accent-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: var(--space-4);
+      font-size: 40px;
+      line-height: 1.18;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .lesson-lead {
+      max-width: 760px;
+      margin-bottom: 0;
+      color: var(--text-secondary);
+      font-size: 18px;
+      line-height: 1.75;
+      font-weight: 500;
+    }
+
+    .lesson-body {
+      padding: var(--space-8);
+    }
+
+    .lesson-block {
+      padding-bottom: var(--space-8);
+      margin-bottom: var(--space-8);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .lesson-block:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+
+    h2 {
+      margin-bottom: var(--space-4);
+      font-size: 28px;
+      line-height: 1.28;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: var(--space-2);
+      font-size: 18px;
+      line-height: 1.4;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .lesson-block p {
+      max-width: 760px;
+      margin-bottom: var(--space-4);
+      color: var(--text-secondary);
+    }
+
+    .lesson-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+
+    .concept-card {
+      padding: var(--space-5);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-secondary);
+    }
+
+    .concept-card span {
+      display: inline-flex;
+      margin-bottom: var(--space-3);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .concept-card p {
+      margin-bottom: 0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .rule-box,
+    .study-check {
+      margin-top: var(--space-5);
+      padding: var(--space-5);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-secondary);
+    }
+
+    .rule-box strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .comparison-table {
+      width: 100%;
+      margin-top: var(--space-5);
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--border-default);
+      background: var(--surface-secondary);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .comparison-table th {
+      color: var(--accent-primary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .comparison-table td {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .comparison-table td strong {
+      display: block;
+      margin-bottom: var(--space-1);
+      color: var(--text-primary);
+    }
+
+    .check-question {
+      display: grid;
+      gap: var(--space-3);
+      margin: var(--space-4) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-question label,
+    .completion-list label {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: center;
+      min-height: 44px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: var(--accent-primary);
+    }
+
+    .answer-note {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      border-left: 3px solid var(--accent-primary);
+      background: var(--surface-primary);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .study-panel {
+      display: grid;
+      gap: var(--space-4);
+      padding: var(--space-5);
+    }
+
+    .side-section {
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .side-section:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .side-section h2 {
+      margin-bottom: var(--space-3);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .side-section p,
+    .side-section li {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .side-section ul {
+      display: grid;
+      gap: var(--space-2);
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .progress-box {
+      display: grid;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--surface-secondary);
+    }
+
+    .progress-box span {
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .progress-box strong {
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .progress-box .done-count {
+      color: inherit;
+      font: inherit;
+    }
+
+    .completion-list {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .source-list a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    .lesson-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-6) var(--space-8);
+      border-top: 1px solid var(--border-subtle);
+      background: var(--surface-secondary);
+    }
+
+    .nav-button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--space-5);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .nav-button.primary {
+      border-color: transparent;
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+    }
+
+    @media (max-width: 1080px) {
+      body.nav-open {
+        overflow: hidden;
+      }
+
+      .reader-shell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .toc-panel,
+      .study-panel {
+        position: static;
+        max-height: none;
+      }
+
+      .toc-panel {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .mobile-nav-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 150ms ease-out, visibility 0s linear 150ms;
+      }
+
+      .mobile-nav-layer[data-open="true"] {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 150ms ease-out;
+      }
+
+      .study-panel {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .side-section {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .reader-header-inner {
+        min-height: 60px;
+      }
+
+      .header-actions {
+        gap: var(--space-2);
+      }
+
+      .brand {
+        font-size: 14px;
+      }
+
+      .menu-toggle,
+      .theme-toggle {
+        padding: 0 var(--space-3);
+      }
+
+      .theme-toggle {
+        width: 44px;
+        padding: 0;
+      }
+
+      .reader-shell {
+        width: min(100% - 24px, 1320px);
+        gap: var(--space-4);
+        padding-top: var(--space-4);
+      }
+
+      .lesson-hero,
+      .lesson-body,
+      .lesson-footer {
+        padding: var(--space-5);
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .lesson-lead {
+        font-size: 16px;
+      }
+
+      .concept-grid,
+      .study-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-table,
+      .comparison-table thead,
+      .comparison-table tbody,
+      .comparison-table tr,
+      .comparison-table th,
+      .comparison-table td {
+        display: block;
+      }
+
+      .comparison-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .comparison-table tr {
+        margin-bottom: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
+        background: var(--surface-secondary);
+        overflow: hidden;
+      }
+
+      .comparison-table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: var(--space-1);
+        color: var(--accent-primary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .lesson-footer {
+        flex-direction: column;
+      }
+
+      .nav-button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#lesson-main">본문으로 이동</a>
+  <header class="reader-header">
+    <div class="reader-header-inner">
+      <a class="brand" href="../index.html" aria-label="첫 화면으로 이동">
+        <span>눈 떠보니 9급 군수직 군무원</span>
+      </a>
+      <div class="header-actions">
+        <button class="menu-toggle" type="button" aria-label="목차 열기" aria-controls="mobile-nav" aria-expanded="false">목차</button>
+        <button class="theme-toggle" type="button" aria-label="다크 모드 켜기" aria-pressed="false">
+          <svg class="theme-symbol theme-symbol-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.7A7.2 7.2 0 0 1 9.3 4 8.2 8.2 0 1 0 20 14.7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+          </svg>
+          <svg class="theme-symbol theme-symbol-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-layer" id="mobile-nav" aria-hidden="true" data-open="false">
+    <button class="nav-backdrop" type="button" aria-label="목차 닫기"></button>
+    <aside class="mobile-nav-panel" aria-labelledby="mobile-nav-title">
+      <div class="mobile-nav-header">
+        <div>
+          <span class="mobile-nav-kicker">LESSON 1-1</span>
+          <h2 class="mobile-nav-title" id="mobile-nav-title">이번 단원 목차</h2>
+        </div>
+        <button class="mobile-nav-close" type="button">닫기</button>
+      </div>
+      <nav class="mobile-nav-section" aria-label="모바일 단원 목차">
+        <ol class="toc-list">
+          <li>
+            <a class="toc-link" href="#lesson-main" aria-current="true">
+              <span class="toc-number">01</span>
+              <span><strong>강 개요</strong><span>직업 이해의 기준</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#concept">
+              <span class="toc-number">02</span>
+              <span><strong>핵심개념</strong><span>특정직 국가공무원</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#why">
+              <span class="toc-number">03</span>
+              <span><strong>수험포인트</strong><span>지원동기와 과목 연결</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#compare">
+              <span class="toc-number">04</span>
+              <span><strong>비교표</strong><span>군무원·군인·일반행정</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#check">
+              <span class="toc-number">05</span>
+              <span><strong>학습 확인</strong><span>핵심 문장 고정</span></span>
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </aside>
+  </div>
+
+  <div class="reader-shell">
+    <aside class="toc-panel" aria-labelledby="toc-title">
+      <h2 class="panel-title" id="toc-title">이번 단원</h2>
+      <span class="part-meta">LESSON 1-1</span>
+      <nav aria-label="1부 학습 목차">
+        <ol class="toc-list">
+          <li>
+            <a class="toc-link" href="#lesson-main" aria-current="true">
+              <span class="toc-number">01</span>
+              <span><strong>강 개요</strong><span>직업 이해의 기준</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#concept">
+              <span class="toc-number">02</span>
+              <span><strong>핵심개념</strong><span>특정직 국가공무원</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#why">
+              <span class="toc-number">03</span>
+              <span><strong>수험포인트</strong><span>지원동기와 과목 연결</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#compare">
+              <span class="toc-number">04</span>
+              <span><strong>비교표</strong><span>군무원·군인·일반행정</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="toc-link" href="#check">
+              <span class="toc-number">05</span>
+              <span><strong>학습 확인</strong><span>핵심 문장 고정</span></span>
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </aside>
+
+    <main class="lesson" id="lesson-main">
+      <article class="lesson-card" aria-labelledby="lesson-title">
+        <header class="lesson-hero">
+          <p class="eyebrow">1부 · 1강</p>
+          <h1 id="lesson-title">군무원은 어떤 직업인가</h1>
+          <p class="lesson-lead">
+            이 단원에서는 군무원을 “군인 비슷한 직업”으로 뭉뚱그리지 않고, 국가공무원 신분과 군 조직 근무환경을 분리해서 이해한다.
+            이 구분이 잡혀야 지원동기, 면접 답변, 기관 선택이 흔들리지 않는다.
+          </p>
+        </header>
+
+        <div class="lesson-body">
+          <section class="lesson-block" id="concept" aria-labelledby="concept-title">
+            <p class="eyebrow">핵심개념</p>
+            <h2 id="concept-title">군무원은 군 조직에서 일하는 특정직 국가공무원이다</h2>
+            <p>
+              군무원을 처음 준비하는 사람은 보통 두 가지를 헷갈린다. 하나는 군무원이 군인인지 여부이고, 다른 하나는 일반 공무원과 같은 방식으로 일하는지 여부다.
+              답은 둘 다 단순하지 않다. 군무원은 군인이 아니라 국가공무원이다. 다만 근무하는 장소와 협업 대상이 군 조직 안에 있기 때문에 일반 행정기관 공무원과 업무 감각이 다르다.
+            </p>
+            <p>
+              국가공무원법은 특정직공무원의 예로 군무원을 명시한다. 따라서 수험생은 “공무원 시험을 준비한다”는 감각과 “군 조직에서 일한다”는 감각을 동시에 가져야 한다.
+              이 둘 중 하나만 보면 시험 준비가 한쪽으로 치우친다.
+            </p>
+
+            <div class="concept-grid" aria-label="군무원 이해의 세 축">
+              <article class="concept-card">
+                <span>신분</span>
+                <h3>국가공무원</h3>
+                <p>군무원은 군인이 아니라 특정직 국가공무원으로 이해해야 한다.</p>
+              </article>
+              <article class="concept-card">
+                <span>환경</span>
+                <h3>군 조직</h3>
+                <p>근무지는 군 관련 기관과 부대이며, 보안과 보고 체계가 중요하다.</p>
+              </article>
+              <article class="concept-card">
+                <span>준비</span>
+                <h3>9급 공채</h3>
+                <p>이 책은 9급 군수직 공채의 과목, 절차, 면접을 기준으로 설명한다.</p>
+              </article>
+            </div>
+
+            <aside class="rule-box">
+              <strong>외워둘 문장</strong>
+              군무원은 군인이 아니라 군 조직에서 일하는 특정직 국가공무원이다. 그래서 시험은 공무원 시험처럼 준비하되, 직장 현실은 군 조직 기준으로 판단해야 한다.
+            </aside>
+          </section>
+
+          <section class="lesson-block" id="why" aria-labelledby="why-title">
+            <p class="eyebrow">수험포인트</p>
+            <h2 id="why-title">왜 이 구분이 중요한가</h2>
+            <p>
+              이 구분은 단순 상식이 아니다. 지원동기를 만들 때 바로 영향을 준다. “공무원이 안정적이라서 지원했다”는 답변은 너무 넓고 약하다.
+              반대로 “군인이 되고 싶어서 지원했다”는 답변도 군무원 직무와 어긋날 수 있다.
+            </p>
+            <p>
+              9급 군수직 지원자는 “군 조직의 운영을 행정과 물자관리로 지원하는 사람”에 가깝게 자신을 설명해야 한다.
+              이 관점이 있으면 경영학을 공부하는 이유도 보인다. 조직, 인사, 생산, 재고, 자원 배분 같은 개념이 군수직 업무 감각과 연결되기 때문이다.
+            </p>
+          </section>
+
+          <section class="lesson-block" id="compare" aria-labelledby="compare-title">
+            <p class="eyebrow">비교해서 이해하기</p>
+            <h2 id="compare-title">군무원, 군인, 일반행정 공무원은 이렇게 다르다</h2>
+            <table class="comparison-table" aria-label="군무원 군인 일반행정 공무원 비교">
+              <thead>
+                <tr>
+                  <th scope="col">구분</th>
+                  <th scope="col">핵심</th>
+                  <th scope="col">수험생에게 의미</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="구분"><strong>군무원</strong></td>
+                  <td data-label="핵심">군 조직에서 근무하는 특정직 국가공무원</td>
+                  <td data-label="수험생에게 의미">공무원 시험 준비와 군 조직 적응을 함께 고려한다.</td>
+                </tr>
+                <tr>
+                  <td data-label="구분"><strong>군인</strong></td>
+                  <td data-label="핵심">군사 임무와 지휘체계의 중심이 되는 신분</td>
+                  <td data-label="수험생에게 의미">군무원 지원동기를 군인 지원동기처럼 쓰면 어긋날 수 있다.</td>
+                </tr>
+                <tr>
+                  <td data-label="구분"><strong>일반행정 공무원</strong></td>
+                  <td data-label="핵심">일반 행정기관에서 행정 업무를 담당</td>
+                  <td data-label="수험생에게 의미">군수직은 민원보다 물자, 조직운영, 보급 흐름에 더 가까운 답변이 필요하다.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="lesson-block" id="check" aria-labelledby="check-title">
+            <p class="eyebrow">학습 확인</p>
+            <h2 id="check-title">읽고 끝내지 말고 한 문장으로 고정한다</h2>
+            <p>
+              아래 문항은 시험문제가 아니라 개념 고정용이다. 답을 맞히는 것보다 왜 그 답이 맞는지 말로 설명할 수 있는지가 중요하다.
+            </p>
+            <div class="study-check" role="group" aria-labelledby="quiz-title">
+              <h3 id="quiz-title">확인문제</h3>
+              <p>다음 중 9급 군수직 지원동기를 만들 때 가장 안전한 출발점은?</p>
+              <ul class="check-question">
+                <li><label><input type="radio" name="quiz-1"> 군인이 되고 싶어서 군무원을 선택했다.</label></li>
+                <li><label><input type="radio" name="quiz-1"> 안정적인 공무원이면 직렬은 크게 상관없다.</label></li>
+                <li><label><input type="radio" name="quiz-1"> 군 조직의 운영을 물자관리와 행정 절차로 지원하고 싶다.</label></li>
+              </ul>
+              <div class="answer-note">
+                정답 방향은 세 번째다. 군수직은 군 조직의 운영과 물자 흐름을 지원하는 직렬이므로, 안정성만 말하기보다 직무와 조직의 연결을 말해야 한다.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="lesson-footer">
+          <a class="nav-button" href="../index.html">첫 화면으로</a>
+          <a class="nav-button primary" href="chapter-02.html">다음 단원으로</a>
+        </footer>
+      </article>
+    </main>
+
+    <aside class="study-panel" aria-labelledby="study-panel-title" role="complementary">
+      <section class="side-section">
+        <h2 id="study-panel-title">오늘의 목표</h2>
+        <div class="progress-box" aria-live="polite">
+          <span>LESSON CHECK</span>
+          <strong><span class="done-count">0</span>/3</strong>
+          <p>아래 체크를 끝내면 다음 단원으로 넘어갈 준비가 된다.</p>
+        </div>
+      </section>
+
+      <section class="side-section" aria-labelledby="terms-title">
+        <h2 id="terms-title">핵심 용어</h2>
+        <ul>
+          <li><strong>특정직공무원</strong>: 특수 분야 업무를 담당하는 공무원 분류.</li>
+          <li><strong>군무원</strong>: 군 조직에서 일하는 국가공무원.</li>
+          <li><strong>군수직</strong>: 조달, 보급, 재고, 물자 흐름과 가까운 직렬.</li>
+        </ul>
+      </section>
+
+      <section class="side-section" aria-labelledby="complete-title">
+        <h2 id="complete-title">완료 체크</h2>
+        <div class="completion-list">
+          <label><input class="done-item" type="checkbox"> 군무원과 군인의 차이를 한 문장으로 설명할 수 있다.</label>
+          <label><input class="done-item" type="checkbox"> 군수직 지원동기에서 피해야 할 표현을 알았다.</label>
+          <label><input class="done-item" type="checkbox"> 다음 단원에서 볼 군수직 업무 흐름을 예상할 수 있다.</label>
+        </div>
+      </section>
+
+      <section class="side-section source-list" aria-labelledby="source-title">
+        <h2 id="source-title">근거</h2>
+        <ul>
+          <li><a href="https://www.law.go.kr/LSW//lsLawLinkInfo.do?chrClsCd=010202&amp;lsId=001719&amp;lsJoLnkSeq=900768227&amp;print=print" target="_blank" rel="noreferrer">국가공무원법 제2조</a></li>
+          <li><a href="../docs/목차.md">전체 목차 보기</a></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.querySelector(".theme-toggle");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileNav = document.querySelector(".mobile-nav-layer");
+    const mobileNavClose = document.querySelector(".mobile-nav-close");
+    const navBackdrop = document.querySelector(".nav-backdrop");
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const trackedSections = ["lesson-main", "concept", "why", "compare", "check"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    const doneItems = Array.from(document.querySelectorAll(".done-item"));
+    const doneCount = document.querySelector(".done-count");
+    let scrollTicking = false;
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      root.dataset.theme = isDark ? "dark" : "light";
+      toggle.setAttribute("aria-pressed", String(isDark));
+      toggle.setAttribute("aria-label", isDark ? "라이트 모드 켜기" : "다크 모드 켜기");
+      toggle.setAttribute("title", isDark ? "라이트 모드" : "다크 모드");
+      localStorage.setItem("mw-theme", root.dataset.theme);
+    }
+
+    function setMobileNav(open) {
+      mobileNav.dataset.open = String(open);
+      mobileNav.setAttribute("aria-hidden", String(!open));
+      menuToggle.setAttribute("aria-expanded", String(open));
+      document.body.classList.toggle("nav-open", open);
+      if (open) {
+        mobileNavClose.focus();
+      } else {
+        menuToggle.focus();
+      }
+    }
+
+    function setCurrentSection(id) {
+      tocLinks.forEach((link) => {
+        const isCurrent = link.getAttribute("href") === `#${id}`;
+        if (isCurrent) {
+          link.setAttribute("aria-current", "true");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    function updateActiveSection() {
+      const headerHeight = document.querySelector(".reader-header")?.getBoundingClientRect().height || 64;
+      const offset = Math.max(headerHeight + 112, window.innerHeight * 0.45);
+      let currentId = trackedSections[0]?.id;
+      if (window.scrollY < headerHeight + 80) {
+        setCurrentSection(currentId);
+        scrollTicking = false;
+        return;
+      }
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (isAtBottom) {
+        setCurrentSection(trackedSections[trackedSections.length - 1].id);
+        scrollTicking = false;
+        return;
+      }
+      trackedSections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= offset) {
+          currentId = section.id;
+        }
+      });
+      if (currentId) {
+        setCurrentSection(currentId);
+      }
+      scrollTicking = false;
+    }
+
+    function requestActiveSectionUpdate() {
+      if (scrollTicking) {
+        return;
+      }
+      scrollTicking = true;
+      requestAnimationFrame(updateActiveSection);
+    }
+
+    function updateProgress() {
+      const count = doneItems.filter((item) => item.checked).length;
+      doneCount.textContent = String(count);
+    }
+
+    applyTheme(localStorage.getItem("mw-theme") || "light");
+    toggle.addEventListener("click", () => {
+      applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+    menuToggle.addEventListener("click", () => setMobileNav(true));
+    mobileNavClose.addEventListener("click", () => setMobileNav(false));
+    navBackdrop.addEventListener("click", () => setMobileNav(false));
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        const target = link.getAttribute("href")?.slice(1);
+        if (target) {
+          setCurrentSection(target);
+        }
+        if (mobileNav.dataset.open === "true") {
+          setMobileNav(false);
+        }
+        window.setTimeout(requestActiveSectionUpdate, 320);
+      });
+    });
+    window.addEventListener("scroll", requestActiveSectionUpdate, { passive: true });
+    window.addEventListener("resize", requestActiveSectionUpdate);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && mobileNav.dataset.open === "true") {
+        setMobileNav(false);
+      }
+    });
+    doneItems.forEach((item) => item.addEventListener("change", updateProgress));
+    updateActiveSection();
+    updateProgress();
+  </script>
+</body>
+</html>

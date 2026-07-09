@@ -1,0 +1,1676 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="눈 떠보니 9급 군수직 군무원 프롤로그와 1부. 2026년 기준 9급 군수직 이해부터 문제풀이 로드맵까지 정리한 합격 매뉴얼.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <title>눈 떠보니 9급 군수직 군무원 | 프롤로그 + 1부</title>
+  <style>
+    :root {
+      --surface-primary: #ffffff;
+      --surface-secondary: #f7f7f4;
+      --surface-elevated: #ffffff;
+      --surface-ink: #111111;
+      --text-primary: #191917;
+      --text-secondary: #5f625c;
+      --text-tertiary: #898b84;
+      --border-default: #deded7;
+      --border-subtle: #ecece6;
+      --accent-primary: #2463a6;
+      --accent-hover: #164d83;
+      --accent-soft: #e8f1fb;
+      --status-success: #2f6f4e;
+      --status-warning: #8a5a12;
+      --status-info: #2463a6;
+      --shadow-soft: rgba(25, 25, 23, 0.14);
+      --shadow-fine: rgba(25, 25, 23, 0.08);
+      --cover-main: #f5f0e7;
+      --cover-side: #d9d1c2;
+      --cover-ink: #17213a;
+      --cover-band: #d9e9f6;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --content-max: 1160px;
+      --reading-max: 760px;
+      --font-primary: "Noto Sans KR", Pretendard, "Apple SD Gothic Neo", "Segoe UI", system-ui, sans-serif;
+      --font-mono: SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    }
+
+    [data-theme="dark"] {
+      --surface-primary: #151515;
+      --surface-secondary: #20201d;
+      --surface-elevated: #272723;
+      --surface-ink: #f4f1ea;
+      --text-primary: #f5f2ec;
+      --text-secondary: #c2bdb2;
+      --text-tertiary: #8f8a80;
+      --border-default: #3a3933;
+      --border-subtle: #2f2e29;
+      --accent-primary: #7db4f0;
+      --accent-hover: #a7cdf5;
+      --accent-soft: #1c3146;
+      --status-success: #91d0a8;
+      --status-warning: #e7bd71;
+      --status-info: #7db4f0;
+      --shadow-soft: rgba(0, 0, 0, 0.42);
+      --shadow-fine: rgba(0, 0, 0, 0.3);
+      --cover-main: #2d2b25;
+      --cover-side: #171713;
+      --cover-ink: #f4f1ea;
+      --cover-band: #1c3146;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--surface-primary);
+      color: var(--text-primary);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      line-height: 1.75;
+      background:
+        linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), var(--border-subtle) calc(100% - 1px)) 0 0 / 32px 32px,
+        var(--surface-primary);
+      color: var(--text-primary);
+      transition: background-color 220ms ease-in-out, color 220ms ease-in-out;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-color: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+      text-underline-offset: 5px;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      text-decoration-color: var(--accent-hover);
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent-primary) 70%, transparent);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: var(--space-4);
+      top: var(--space-4);
+      z-index: 30;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+      transform: translateY(-140%);
+      transition: transform 150ms ease-out;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--border-subtle);
+      background: color-mix(in srgb, var(--surface-primary) 91%, transparent);
+      backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      width: min(100% - 32px, var(--content-max));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      min-height: 44px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .brand span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 1px 2px var(--shadow-fine);
+      transition: transform 150ms ease-out, border-color 150ms ease-out;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.98);
+    }
+
+    .theme-symbol {
+      width: 20px;
+      height: 20px;
+      display: none;
+      color: currentColor;
+    }
+
+    [data-theme="light"] .theme-symbol-moon,
+    [data-theme="dark"] .theme-symbol-sun {
+      display: block;
+    }
+
+    .hero {
+      padding: var(--space-20) 0 var(--space-16);
+      background: var(--surface-primary);
+    }
+
+    .hero-inner {
+      width: min(100% - 32px, var(--content-max));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin: 0 0 var(--space-5);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--accent-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin-bottom: var(--space-6);
+      font-size: 56px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .hero-lead {
+      max-width: 720px;
+      margin-bottom: var(--space-8);
+      color: var(--text-secondary);
+      font-size: 18px;
+      line-height: 1.75;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 var(--space-5);
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 150ms ease-out, background-color 150ms ease-out;
+    }
+
+    .button:hover {
+      color: var(--surface-primary);
+      background: color-mix(in srgb, var(--surface-ink) 86%, var(--accent-primary));
+      text-decoration: none;
+    }
+
+    .button:active {
+      transform: scale(0.98);
+    }
+
+    .button.secondary {
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border-color: var(--border-default);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .button.secondary:hover {
+      color: var(--accent-hover);
+      background: var(--surface-elevated);
+      border-color: var(--accent-primary);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .meta-row li {
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      background: var(--surface-secondary);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .book-figure {
+      margin: 0;
+      justify-self: center;
+      width: min(100%, 380px);
+    }
+
+    .book-cover {
+      position: relative;
+      min-height: 500px;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(90deg, var(--cover-side) 0 16%, transparent 16%),
+        linear-gradient(180deg, color-mix(in srgb, var(--cover-main) 88%, var(--surface-primary)) 0, var(--cover-main) 100%);
+      color: var(--cover-ink);
+      box-shadow: 0 12px 36px var(--shadow-soft);
+      overflow: hidden;
+      transform: rotate(1deg);
+    }
+
+    .book-cover::before,
+    .book-cover::after {
+      content: "";
+      position: absolute;
+      inset: auto 24px 24px 64px;
+      height: 14px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--cover-ink) 12%, transparent);
+    }
+
+    .book-cover::after {
+      bottom: 48px;
+      width: 52%;
+    }
+
+    .cover-binding {
+      position: absolute;
+      left: 15%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: color-mix(in srgb, var(--cover-ink) 18%, transparent);
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 1;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: var(--space-8) var(--space-8) var(--space-8) 88px;
+    }
+
+    .cover-kicker {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-primary);
+    }
+
+    .cover-title {
+      margin: var(--space-12) 0 var(--space-5);
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .cover-subtitle {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .cover-band {
+      display: grid;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      border: 1px solid color-mix(in srgb, var(--accent-primary) 18%, transparent);
+      border-radius: var(--radius-md);
+      background: var(--cover-band);
+    }
+
+    .cover-band span {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-primary);
+    }
+
+    .cover-band strong {
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    .page-stack {
+      width: 88%;
+      height: 14px;
+      margin: -2px auto 0;
+      border: 1px solid var(--border-default);
+      border-top: 0;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      background: var(--surface-secondary);
+      box-shadow: 0 6px 18px var(--shadow-fine);
+    }
+
+    .band {
+      padding: var(--space-16) 0;
+      background: var(--surface-primary);
+    }
+
+    .band.secondary {
+      background: var(--surface-secondary);
+      border-block: 1px solid var(--border-subtle);
+    }
+
+    .section-inner {
+      width: min(100% - 32px, var(--content-max));
+      margin: 0 auto;
+    }
+
+    .reading {
+      max-width: var(--reading-max);
+    }
+
+    h2 {
+      margin-bottom: var(--space-5);
+      font-size: 40px;
+      line-height: 1.18;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: var(--space-2);
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .body-lg {
+      color: var(--text-secondary);
+      font-size: 18px;
+      line-height: 1.75;
+      font-weight: 500;
+    }
+
+    .prologue-text p {
+      margin-bottom: var(--space-5);
+    }
+
+    .callout {
+      margin: var(--space-8) 0 0;
+      padding: var(--space-6);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .card {
+      min-height: 220px;
+      padding: var(--space-6);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--text-secondary);
+    }
+
+    .card-marker {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      margin-bottom: var(--space-5);
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .route-list {
+      display: grid;
+      gap: var(--space-3);
+      max-width: 900px;
+      margin: var(--space-8) 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: route;
+    }
+
+    .route-list li {
+      counter-increment: route;
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: var(--space-4);
+      align-items: start;
+      padding: var(--space-5);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+    }
+
+    .route-list li::before {
+      content: counter(route, decimal-leading-zero);
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-sm);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .route-list p {
+      margin-bottom: 0;
+      color: var(--text-secondary);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.8fr);
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    .check-panel {
+      padding: var(--space-6);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .check-panel h3 {
+      margin-bottom: var(--space-5);
+    }
+
+    .check-list {
+      display: grid;
+      gap: var(--space-4);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: var(--space-3);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .check-list li::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      margin-top: 5px;
+      border: 1px solid var(--status-success);
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--status-success) 12%, transparent);
+    }
+
+    .chapter-map {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.7fr);
+      gap: var(--space-10);
+      align-items: start;
+      margin-top: var(--space-10);
+    }
+
+    .chapter-nav {
+      padding: var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .chapter-nav a {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: var(--space-4);
+      align-items: center;
+      min-height: 72px;
+      padding: var(--space-3);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+    }
+
+    .chapter-nav a:hover {
+      background: var(--surface-secondary);
+      color: var(--accent-hover);
+    }
+
+    .chapter-number {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chapter-nav strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .chapter-nav a > span:last-child > span {
+      display: block;
+      margin-top: var(--space-1);
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .source-panel {
+      padding: var(--space-6);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-secondary);
+    }
+
+    .source-panel h3,
+    .source-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .source-panel p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .fact-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .fact-card {
+      padding: var(--space-5);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+    }
+
+    .fact-card span {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .fact-card p {
+      margin-bottom: 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .duty-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .duty-card {
+      min-height: 260px;
+      padding: var(--space-6);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .duty-step {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      margin-bottom: var(--space-5);
+      border-radius: var(--radius-sm);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .duty-card p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .duty-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .comparison-wrap {
+      margin-top: var(--space-8);
+      overflow-x: auto;
+    }
+
+    .comparison-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: separate;
+      border-spacing: 0;
+      color: var(--text-primary);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: var(--space-5);
+      border-bottom: 1px solid var(--border-default);
+      background: var(--surface-elevated);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .comparison-table th {
+      color: var(--accent-primary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .comparison-table td {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .comparison-table td strong {
+      display: block;
+      margin-bottom: var(--space-1);
+      color: var(--text-primary);
+      font-size: 15px;
+    }
+
+    .fit-grid,
+    .practice-roadmap {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .fit-card,
+    .practice-card {
+      padding: var(--space-6);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      box-shadow: 0 1px 2px var(--shadow-fine);
+    }
+
+    .fit-card.warning {
+      border-color: color-mix(in srgb, var(--status-warning) 42%, var(--border-default));
+    }
+
+    .fit-card h3,
+    .practice-card h3 {
+      margin-bottom: var(--space-4);
+    }
+
+    .fit-card ul,
+    .practice-card ul {
+      display: grid;
+      gap: var(--space-3);
+      margin: 0;
+      padding-left: var(--space-5);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .practice-roadmap {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .practice-card {
+      min-height: 280px;
+    }
+
+    .practice-status {
+      display: inline-flex;
+      margin-bottom: var(--space-4);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .part-divider {
+      padding: var(--space-20) 0;
+      border-block: 1px solid var(--border-subtle);
+      background: var(--surface-ink);
+      color: var(--surface-primary);
+    }
+
+    .part-divider .section-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.45fr);
+      gap: var(--space-10);
+      align-items: end;
+    }
+
+    .part-divider .eyebrow,
+    .part-divider h2,
+    .part-divider p {
+      color: var(--surface-primary);
+    }
+
+    .part-divider .eyebrow::before {
+      background: var(--surface-primary);
+    }
+
+    .part-label {
+      display: grid;
+      gap: var(--space-3);
+      padding: var(--space-6);
+      border: 1px solid color-mix(in srgb, var(--surface-primary) 18%, transparent);
+      border-radius: var(--radius-md);
+      background: color-mix(in srgb, var(--surface-primary) 8%, transparent);
+    }
+
+    .part-label span {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .part-label strong {
+      font-size: 28px;
+      line-height: 1.25;
+    }
+
+    .closing {
+      max-width: 920px;
+    }
+
+    .closing p:last-child {
+      margin-bottom: 0;
+    }
+
+    .site-footer {
+      padding: var(--space-10) 0;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--surface-primary);
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      width: min(100% - 32px, var(--content-max));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .header-inner {
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .header-actions {
+        width: auto;
+        justify-content: flex-end;
+        gap: 0;
+      }
+
+      .hero {
+        padding-top: var(--space-12);
+      }
+
+      .hero-inner,
+      .split,
+      .chapter-map,
+      .part-divider .section-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      h2 {
+        font-size: 34px;
+      }
+
+      .book-figure {
+        width: min(100%, 340px);
+      }
+
+      .book-cover {
+        min-height: 450px;
+      }
+
+      .cover-content {
+        min-height: 450px;
+      }
+
+      .grid,
+      .fact-strip,
+      .duty-map,
+      .practice-roadmap {
+        grid-template-columns: 1fr;
+      }
+
+      .fit-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        background: var(--surface-primary);
+      }
+
+      .header-actions {
+        display: flex;
+      }
+
+      .brand {
+        font-size: 14px;
+      }
+
+      .theme-toggle {
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .hero-lead,
+      .body-lg {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .book-cover {
+        min-height: 410px;
+      }
+
+      .cover-content {
+        min-height: 410px;
+        padding: var(--space-6) var(--space-5) var(--space-6) 72px;
+      }
+
+      .cover-title {
+        font-size: 28px;
+      }
+
+      .band {
+        padding: var(--space-12) 0;
+      }
+
+      .route-list li {
+        grid-template-columns: 1fr;
+      }
+
+      .chapter-nav a {
+        grid-template-columns: 40px minmax(0, 1fr);
+        min-height: 76px;
+      }
+
+      .comparison-table {
+        min-width: 0;
+      }
+
+      .comparison-table,
+      .comparison-table thead,
+      .comparison-table tbody,
+      .comparison-table tr,
+      .comparison-table th,
+      .comparison-table td {
+        display: block;
+      }
+
+      .comparison-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .comparison-table tr {
+        margin-bottom: var(--space-4);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
+        background: var(--surface-elevated);
+        overflow: hidden;
+      }
+
+      .comparison-table td {
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .comparison-table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: var(--space-1);
+        color: var(--accent-primary);
+        font-size: 12px;
+        font-weight: 800;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media print {
+      .site-header,
+      .hero-actions,
+      .site-footer {
+        display: none;
+      }
+
+      body {
+        background: var(--surface-primary);
+        color: var(--text-primary);
+      }
+
+      .band,
+      .hero {
+        padding: 24px 0;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="눈 떠보니 9급 군수직 군무원 처음으로">
+        <span>눈 떠보니 9급 군수직 군무원</span>
+      </a>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" aria-label="다크 모드 켜기" aria-pressed="false">
+          <svg class="theme-symbol theme-symbol-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.7A7.2 7.2 0 0 1 9.3 4 8.2 8.2 0 1 0 20 14.7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+          </svg>
+          <svg class="theme-symbol theme-symbol-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="page-title">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">2026 기준 · 9급 군수직 전용 합격 매뉴얼</p>
+          <h1 id="page-title">눈 떠보니 9급 군수직 군무원</h1>
+          <p class="hero-lead">
+            이 책은 군무원을 소개하는 책이 아니라, 처음 준비하는 사람이 9급 군수직 합격까지 가는 길을 잃지 않도록 만든 실행 안내서다.
+            공고문을 읽는 법부터 국어·행정법·경영학 공부, 원서접수, 필기 당일, 면접까지 한 흐름으로 묶는다.
+          </p>
+          <div class="hero-actions" aria-label="주요 이동">
+            <a class="button" href="#promise">프롤로그 읽기</a>
+            <a class="button secondary" href="pages/learn.html#lesson-1-1">학습 리더 보기</a>
+            <a class="button secondary" href="pages/past-exams.html">기출문제 풀기</a>
+          </div>
+          <ul class="meta-row" aria-label="책의 범위">
+            <li>9급 공채 중심</li>
+            <li>군수직 단일 직렬</li>
+            <li>라이트 기본 · 다크 지원</li>
+            <li><a href="pages/past-exams.html">2022~2026 기출 전체</a></li>
+          </ul>
+        </div>
+
+        <figure class="book-figure" aria-label="책 표지 시각화">
+          <div class="book-cover">
+            <span class="cover-binding" aria-hidden="true"></span>
+            <div class="cover-content">
+              <div>
+                <div class="cover-kicker">PROLOGUE</div>
+                <div class="cover-title">눈 떠보니<br>9급 군수직<br>군무원</div>
+                <p class="cover-subtitle">노베이스부터 필기·면접까지<br>한 권으로 따라가는 합격 안내서</p>
+              </div>
+              <div class="cover-band">
+                <span>FIRST MISSION</span>
+                <strong>내가 응시 가능한 상태인지 먼저 확인한다.</strong>
+              </div>
+            </div>
+          </div>
+          <div class="page-stack" aria-hidden="true"></div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="band secondary" id="promise" aria-labelledby="promise-title">
+      <div class="section-inner split">
+        <div class="reading prologue-text">
+          <p class="eyebrow">프롤로그</p>
+          <h2 id="promise-title">이 책의 약속</h2>
+          <p class="body-lg">
+            군무원 시험은 겉으로 보면 단순하다. 공고가 뜨고, 원서를 넣고, 필기를 보고, 면접을 본다.
+            하지만 처음 준비하는 사람에게는 시작점부터 헷갈린다. 영어와 한국사는 왜 따로 준비해야 하는지,
+            국방부와 육군 중 어디를 선택해야 하는지, 군수직은 실제로 어떤 일을 하는지, 국어·행정법·경영학은 어디까지 해야 하는지 막막하다.
+          </p>
+          <p>
+            그래서 이 책은 어려운 말을 먼저 늘어놓지 않는다. 대신 합격에 필요한 순서대로 묻고 답한다.
+            내가 응시할 수 있는 사람인지 확인하고, 어떤 기관에 지원할지 정하고, 세 과목의 점수를 만들고,
+            접수와 시험장에서 실수하지 않고, 면접에서 군수직 지원자로 보이도록 준비하는 것이 이 책의 흐름이다.
+          </p>
+          <p>
+            이 책 하나만 본다고 자동으로 합격하는 것은 아니다. 그러나 이 책을 제대로 따라가면 적어도 무엇을 해야 하는지 몰라서 멈추는 일은 없게 만든다.
+            수험생활의 불안은 대부분 정보 부족이 아니라, 정보가 흩어져 있어서 생긴다. 이 책은 그 흩어진 조각을 9급 군수직 합격이라는 한 방향으로 정리한다.
+          </p>
+          <aside class="callout">
+            <strong>이 책의 기준</strong>
+            7급, 경채, 지역인재, 다른 직렬은 과감히 덜어낸다. 목표는 하나다. 2026년 기준 9급 군무원 군수직을 준비하는 일반인이 합격까지 따라갈 수 있는 길을 만든다.
+          </aside>
+        </div>
+
+        <aside class="check-panel" aria-labelledby="reader-title">
+          <h3 id="reader-title">이런 사람을 위해 쓴다</h3>
+          <ul class="check-list">
+            <li>군무원이라는 말을 들었지만 공무원과 무엇이 다른지 아직 모르는 사람</li>
+            <li>9급 군수직을 준비하고 싶지만 국방부·육군·해군·공군 선택에서 막힌 사람</li>
+            <li>국어, 행정법, 경영학을 어떤 순서로 공부해야 할지 모르는 초시생</li>
+            <li>원서접수, 영어·한국사, 면접 준비에서 실수하고 싶지 않은 사람</li>
+            <li>기출문제를 풀어도 무엇을 분석해야 하는지 감이 오지 않는 사람</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="method-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">책의 방식</p>
+          <h2 id="method-title">소개보다 실행을 먼저 둔다</h2>
+          <p class="body-lg">
+            군수직을 설명하는 글은 많지만, 초시생에게 필요한 것은 더 많은 설명이 아니라 다음 행동이다.
+            이 책의 각 장은 읽고 끝나는 장이 아니라, 확인하고 표시하고 풀고 고치는 장으로 설계한다.
+          </p>
+        </div>
+        <div class="grid" aria-label="책의 구성 원칙">
+          <article class="card">
+            <div class="card-marker">01</div>
+            <h3>공고문을 해석한다</h3>
+            <p>공식 공고에서 선발기관, 응시자격, 영어·한국사, 가산점, 일정, 면접 흐름을 직접 확인하는 법부터 익힌다.</p>
+          </article>
+          <article class="card">
+            <div class="card-marker">02</div>
+            <h3>점수를 만든다</h3>
+            <p>국어·행정법·경영학을 과목 소개가 아니라 합격점 확보 관점에서 쪼갠다. 기출 원문과 정답표는 전체 기출 목록으로 연결한다.</p>
+          </article>
+          <article class="card">
+            <div class="card-marker">03</div>
+            <h3>실수를 줄인다</h3>
+            <p>원서접수, 시험 당일, 면접 답변처럼 한 번의 실수로 흔들릴 수 있는 구간을 체크리스트로 고정한다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band secondary" id="route" aria-labelledby="route-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">합격 루트</p>
+          <h2 id="route-title">처음부터 이 순서로 간다</h2>
+          <p class="body-lg">
+            9급 군수직 준비는 열심히보다 순서가 먼저다. 영어·한국사 기준을 놓치거나, 기관 선택을 감으로 하거나,
+            기출을 풀고도 기록하지 않으면 공부량이 많아도 합격과 멀어진다.
+          </p>
+        </div>
+        <ol class="route-list">
+          <li>
+            <div>
+              <h3>응시 가능 상태 확인</h3>
+              <p>결격사유, 영어, 한국사, 가산점, 시험 일정부터 점검한다. 이 단계가 끝나야 진짜 수험계획을 세울 수 있다.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>기관 선택</h3>
+              <p>국방부, 육군, 해군·해병대, 공군의 선발인원과 근무 현실을 비교한다. 많이 뽑는 곳과 내게 맞는 곳은 다를 수 있다.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>세 과목 점수화</h3>
+              <p>국어는 안정점, 행정법은 기본기, 경영학은 군수직 승부처로 본다. 과목별 회독표와 오답 기록을 남긴다.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>기출 분석</h3>
+              <p>문제를 많이 푸는 것보다 반복되는 쟁점과 내가 틀리는 패턴을 잡는다. 기출 원문과 정답표는 <a href="pages/past-exams.html">전체 기출 목록</a>에서 확인한다.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>필기와 면접 통과</h3>
+              <p>시험장 행동 순서와 면접 답변 구조까지 미리 만든다. 합격은 필기 점수와 절차 실수 방지의 합이다.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band" id="start" aria-labelledby="start-title">
+      <div class="section-inner split">
+        <div class="reading prologue-text">
+          <p class="eyebrow">시작 전 확인</p>
+          <h2 id="start-title">오늘 해야 할 첫 행동</h2>
+          <p class="body-lg">
+            책을 펼친 첫날의 목표는 공부를 많이 하는 것이 아니다. 내가 지금 어디에 서 있는지 확인하는 것이다.
+            준비 상태를 모르고 강의부터 결제하면, 나중에 일정과 자격요건에서 다시 막힌다.
+          </p>
+          <p>
+            첫날에는 세 가지만 적는다. 첫째, 영어와 한국사를 언제까지 확보할 것인가. 둘째, 하루에 실제로 공부할 수 있는 시간은 얼마인가.
+            셋째, 올해 지원할 기관을 어떤 기준으로 고를 것인가. 이 세 가지가 적히면 수험생활은 막연한 결심에서 구체적인 작업으로 바뀐다.
+          </p>
+          <p>
+            다음 장부터는 이 세 가지를 하나씩 구체화한다. 공고문을 읽고, 응시 가능 상태를 만들고, 12개월·6개월·3개월 플랜 중 내게 맞는 길을 고른다.
+            그리고 그 길에 맞춰 국어, 행정법, 경영학을 공부한다.
+          </p>
+        </div>
+        <aside class="check-panel" aria-labelledby="today-title">
+          <h3 id="today-title">첫날 체크리스트</h3>
+          <ul class="check-list">
+            <li>최근 군무원 채용 공고문을 열어 시험 일정과 선발기관을 확인한다.</li>
+            <li>영어 검정과 한국사능력검정시험 기준을 내 캘린더에 표시한다.</li>
+            <li>국어·행정법·경영학 중 가장 낯선 과목을 하나 고른다.</li>
+            <li>평일과 주말의 실제 공부 가능 시간을 숫자로 적는다.</li>
+            <li><a href="pages/past-exams.html">전체 기출 목록</a>에서 연도별 PDF와 정답표를 확인하고 과목별 오답 패턴을 쌓는다.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="band secondary" aria-labelledby="closing-title">
+      <div class="section-inner closing">
+        <p class="eyebrow">다음 장으로</p>
+        <h2 id="closing-title">우리는 이제 출발선에 선다</h2>
+        <p class="body-lg">
+          군수직은 멀리서 보면 안정적인 직업이고, 가까이서 보면 군 조직 안에서 물자와 행정을 책임지는 실무 직렬이다.
+          이 책은 그 차이를 숨기지 않는다. 좋은 점은 좋은 점대로, 불편한 점은 불편한 점대로 본다.
+          그래야 합격 후에도 흔들리지 않는다.
+        </p>
+        <p>
+          다음 장의 제목은 단순하다. <strong>“9급 군수직은 정확히 무엇을 하는가.”</strong>
+          직무를 알아야 공부의 이유가 생기고, 면접 답변도 자기 말이 된다.
+        </p>
+      </div>
+    </section>
+
+    <section class="part-divider" id="part1" aria-labelledby="part1-title">
+      <div class="section-inner">
+        <div>
+          <p class="eyebrow">1부</p>
+          <h2 id="part1-title">9급 군수직 합격 구조부터 이해하기</h2>
+          <p class="body-lg">
+            공부를 시작하기 전에 먼저 알아야 할 것은 직업의 모양이다. 군무원이 어떤 신분인지, 군수직이 실제로 무엇을 다루는지,
+            행정직과 무엇이 다른지 알아야 과목 공부와 면접 답변이 한 방향으로 연결된다.
+          </p>
+        </div>
+        <div class="part-label" aria-label="1부 핵심">
+          <span>PART 01</span>
+          <strong>직업 이해가 곧 지원 전략이다.</strong>
+          <a class="button secondary" href="pages/learn.html#lesson-1-1">통합 학습 리더 보기</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="chapter-map-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">1부 목차</p>
+          <h2 id="chapter-map-title">무엇을 알고 넘어갈 것인가</h2>
+          <p class="body-lg">
+            1부는 동기부여 파트가 아니다. 군수직을 선택해도 되는 사람인지 판단하고, 이후 공부할 국어·행정법·경영학이 왜 필요한지 연결하는 준비 단계다.
+          </p>
+        </div>
+        <div class="chapter-map">
+          <nav class="chapter-nav" aria-label="1부 세부 목차">
+            <a href="pages/learn.html#lesson-1-1">
+              <span class="chapter-number">1-1</span>
+              <span><strong>군무원은 어떤 직업인가</strong><span>군인과 함께 일하지만 법적으로는 국가공무원인 구조를 먼저 이해한다.</span></span>
+            </a>
+            <a href="pages/learn.html#lesson-1-2">
+              <span class="chapter-number">1-2</span>
+              <span><strong>9급 군수직의 실제 업무</strong><span>소요, 조달, 보급, 재고, 물자수불, 정비계획이 어떤 흐름인지 본다.</span></span>
+            </a>
+            <a href="pages/learn.html#lesson-1-3">
+              <span class="chapter-number">1-3</span>
+              <span><strong>군수직과 행정직의 차이</strong><span>비슷해 보이는 두 직렬이 시험과 업무에서 어디서 갈리는지 비교한다.</span></span>
+            </a>
+            <a href="pages/learn.html#lesson-1-4">
+              <span class="chapter-number">1-4</span>
+              <span><strong>나에게 맞는지 판단</strong><span>안정성만 보고 들어가기 전에 감수해야 할 근무 현실을 점검한다.</span></span>
+            </a>
+            <a href="pages/learn.html#lesson-1-7">
+              <span class="chapter-number">1-5</span>
+              <span><strong>문제풀이 파트로 연결</strong><span>직무 이해를 세 과목과 기출 분석으로 이어 붙인다.</span></span>
+            </a>
+          </nav>
+          <aside class="source-panel" aria-labelledby="source-title">
+            <h3 id="source-title">1부에서 쓰는 기준</h3>
+            <p>
+              군무원 신분은 국가공무원법상 특정직공무원 범주를 기준으로 설명한다.
+              군수직 업무와 9급 시험과목은 공개 수험정보에서 반복 확인되는 군수직 주요업무와 과목 구조를 기준으로 정리한다.
+            </p>
+            <p>
+              이 장의 목표는 “군무원이 좋다”가 아니라 “내가 9급 군수직을 준비해도 되는가”에 답하는 것이다.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="band secondary" id="what-is-military-worker" aria-labelledby="worker-title">
+      <div class="section-inner split">
+        <div class="reading prologue-text">
+          <p class="eyebrow">1-1</p>
+          <h2 id="worker-title">군무원은 군인이 아니라, 군 조직에서 일하는 국가공무원이다</h2>
+          <p class="body-lg">
+            군무원을 처음 들으면 “군인인가, 공무원인가”부터 헷갈린다. 결론부터 말하면 군무원은 군인이 아니다.
+            다만 근무하는 공간과 함께 일하는 사람들이 군 조직 안에 있기 때문에 일반 행정기관 공무원과 일하는 감각이 다르다.
+          </p>
+          <p>
+            국가공무원법은 특정직공무원의 예로 군인을 따로 들고, 군무원도 따로 든다. 즉 군무원은 군인과 같은 지휘 체계 안에서 협업하지만,
+            신분 자체는 군인이 아니라 특정 분야 업무를 맡는 국가공무원으로 이해하는 편이 정확하다.
+          </p>
+          <p>
+            그래서 군무원을 준비할 때는 두 가지를 동시에 봐야 한다. 하나는 공무원 시험처럼 일정, 과목, 합격선, 면접을 관리하는 수험 전략이다.
+            다른 하나는 군 조직의 보안, 보고, 근무지, 계급 문화와 함께 일하는 직장 현실이다. 둘 중 하나만 보면 판단이 흔들린다.
+          </p>
+        </div>
+        <aside class="check-panel" aria-labelledby="worker-check-title">
+          <h3 id="worker-check-title">초시생이 바로잡을 오해</h3>
+          <ul class="check-list">
+            <li>군무원은 군복 입고 전투하는 직업이 아니다.</li>
+            <li>군 조직 안에서 일하므로 일반 시청·구청 공무원과 분위기는 다르다.</li>
+            <li>직렬에 따라 맡는 일이 크게 다르며, 군수직은 물자와 운영 흐름에 가깝다.</li>
+            <li>합격 전략은 시험과목만이 아니라 지원기관 선택까지 포함한다.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="section-inner">
+        <div class="fact-strip" aria-label="군무원 핵심 사실">
+          <article class="fact-card">
+            <span>신분</span>
+            <h3>국가공무원</h3>
+            <p>군무원은 군 조직에서 근무하지만, 국가공무원법 체계에서 특정직공무원으로 분류된다.</p>
+          </article>
+          <article class="fact-card">
+            <span>환경</span>
+            <h3>군 조직</h3>
+            <p>부대, 본부, 직할기관 등 군 관련 조직에서 근무하므로 보안과 보고 체계가 중요하다.</p>
+          </article>
+          <article class="fact-card">
+            <span>준비</span>
+            <h3>9급 공채</h3>
+            <p>이 책은 9급 군수직 공채를 중심으로 국어, 행정법, 경영학과 면접까지 다룬다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="supply-role" aria-labelledby="supply-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">1-2</p>
+          <h2 id="supply-title">9급 군수직은 군의 물자 흐름을 다루는 직렬이다</h2>
+          <p class="body-lg">
+            군수직을 한 문장으로 말하면, 군 조직이 필요한 물자와 장비가 필요한 곳에 맞게 흐르도록 관리하는 직렬이다.
+            수험생 입장에서는 “보급”이라는 단어만 떠올리기 쉽지만, 실제 군수 업무는 소요 판단부터 조달, 재고, 불출, 정비계획까지 이어진다.
+          </p>
+        </div>
+        <div class="duty-map" aria-label="군수직 업무 흐름">
+          <article class="duty-card">
+            <span class="duty-step">01</span>
+            <h3>소요를 파악한다</h3>
+            <p>부대나 기관이 무엇을 얼마나 필요로 하는지 확인한다. 필요한 물품을 정확히 잡지 못하면 이후 조달과 보급도 흔들린다.</p>
+          </article>
+          <article class="duty-card">
+            <span class="duty-step">02</span>
+            <h3>조달과 계약 흐름을 본다</h3>
+            <p>군수품을 확보하기 위한 행정 절차를 이해한다. 이 지점에서 행정법과 경영학의 기본 개념이 업무 감각과 연결된다.</p>
+          </article>
+          <article class="duty-card">
+            <span class="duty-step">03</span>
+            <h3>보급과 재고를 관리한다</h3>
+            <p>필요한 곳에 필요한 물자가 가도록 기록과 수량을 맞춘다. 초과 보유도 문제고 부족도 문제다.</p>
+          </article>
+          <article class="duty-card">
+            <span class="duty-step">04</span>
+            <h3>정비와 물자수불을 챙긴다</h3>
+            <p>장비와 물품이 계속 쓸 수 있는 상태인지, 청구와 불출 기록이 맞는지 확인한다. 꼼꼼함과 반복 확인이 중요하다.</p>
+          </article>
+        </div>
+        <aside class="callout">
+          <strong>수험 포인트</strong>
+          군수직을 “창고 관리” 정도로 좁게 보면 면접 답변이 약해진다. 조달, 보급, 재고, 품질, 안전, 자원 활용까지 이어지는 운영 직렬로 이해해야 한다.
+        </aside>
+      </div>
+    </section>
+
+    <section class="band secondary" id="admin-vs-supply" aria-labelledby="compare-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">1-3</p>
+          <h2 id="compare-title">군수직과 행정직은 비슷해 보여도 준비 방향이 다르다</h2>
+          <p class="body-lg">
+            초시생은 행정직과 군수직을 자주 비교한다. 둘 다 문과생이 접근하기 좋아 보이고, 책상에서 일하는 이미지가 강하기 때문이다.
+            하지만 군수직은 물자와 운영 흐름을 다루기 때문에 경영학과 직무 이해가 더 직접적으로 연결된다.
+          </p>
+        </div>
+        <div class="comparison-wrap">
+          <table class="comparison-table" aria-label="군수직과 행정직 비교">
+            <thead>
+              <tr>
+                <th scope="col">구분</th>
+                <th scope="col">군수직</th>
+                <th scope="col">행정직</th>
+                <th scope="col">수험생에게 의미</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="구분"><strong>업무 중심</strong></td>
+                <td data-label="군수직">군수품, 조달, 보급, 재고, 물자수불, 정비계획</td>
+                <td data-label="행정직">인사, 문서, 일반행정, 정책지원, 기관 운영 행정</td>
+                <td data-label="수험생에게 의미">군수직은 “물건과 흐름”을 생각해야 면접과 경영학이 붙는다.</td>
+              </tr>
+              <tr>
+                <td data-label="구분"><strong>9급 과목 감각</strong></td>
+                <td data-label="군수직">국어, 행정법, 경영학</td>
+                <td data-label="행정직">국어, 행정법, 행정학</td>
+                <td data-label="수험생에게 의미">경영학이 부담이면 군수직 선택 전에 공부 성향을 확인해야 한다.</td>
+              </tr>
+              <tr>
+                <td data-label="구분"><strong>답변 키워드</strong></td>
+                <td data-label="군수직">정확한 수량, 적정 재고, 절차 준수, 자원 활용</td>
+                <td data-label="행정직">문서 정확성, 민원·조직 지원, 정책 이해, 조정 능력</td>
+                <td data-label="수험생에게 의미">지원동기와 면접 사례를 직렬에 맞게 다르게 만들어야 한다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="fit-check" aria-labelledby="fit-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">1-4</p>
+          <h2 id="fit-title">9급 군수직이 맞는 사람, 다시 생각해야 할 사람</h2>
+          <p class="body-lg">
+            안정성만 보고 선택하면 수험생활 중간에 흔들릴 수 있다. 군수직은 반복 확인, 기록, 절차, 조직 적응이 중요한 직렬이다.
+            “붙기 쉬워 보인다”보다 “이 업무를 받아들일 수 있다”가 먼저다.
+          </p>
+        </div>
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>잘 맞는 사람</h3>
+            <ul>
+              <li>숫자, 기록, 재고, 일정처럼 맞아야 하는 것을 챙기는 데 거부감이 없다.</li>
+              <li>눈에 띄는 성과보다 안정적인 운영 지원 업무에 만족할 수 있다.</li>
+              <li>군 조직의 보고 체계와 보안 문화를 직장 조건으로 받아들일 수 있다.</li>
+              <li>경영학을 암기 과목이 아니라 조직과 운영을 이해하는 과목으로 볼 수 있다.</li>
+            </ul>
+          </article>
+          <article class="fit-card warning">
+            <h3>다시 생각해야 할 사람</h3>
+            <ul>
+              <li>근무지와 조직 분위기보다 “공무원 안정성”만 보고 선택하려 한다.</li>
+              <li>반복되는 행정 처리와 기록 확인을 매우 답답하게 느낀다.</li>
+              <li>군 조직 특유의 위계와 보안 규정을 받아들이기 어렵다.</li>
+              <li>경영학을 끝까지 끌고 갈 자신이 없는데 군수직을 쉬운 선택지로만 본다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band secondary" id="practice-map" aria-labelledby="practice-title">
+      <div class="section-inner">
+        <div class="reading">
+          <p class="eyebrow">문제풀이 파트 예고</p>
+          <h2 id="practice-title">문제 푸는 부분은 따로, 더 선명하게 간다</h2>
+          <p class="body-lg">
+            문제풀이 HTML은 이 본문과 분리해서 과목별로 정리한다. 책 본문은 왜 공부해야 하는지를 잡고,
+            <a href="pages/past-exams.html">기출문제 전체</a>는 실제 원문을 열고, 답을 맞춰 보고, 다시 보는 공간으로 쓴다.
+          </p>
+        </div>
+        <div class="practice-roadmap" aria-label="과목별 문제풀이 로드맵">
+          <article class="practice-card">
+            <span class="practice-status">국어</span>
+            <h3><a href="pages/korean.html">기본 점수를 안정화한다</a></h3>
+            <ul>
+              <li>문법과 어휘를 먼저 고정한다.</li>
+              <li>기출 지문은 시간 제한을 걸고 푼다.</li>
+              <li>틀린 문제는 개념 부족인지 시간 부족인지 나눈다.</li>
+            </ul>
+          </article>
+          <article class="practice-card">
+            <span class="practice-status">행정법</span>
+            <h3><a href="pages/admin-law.html">쟁점과 절차를 반복한다</a></h3>
+            <ul>
+              <li>용어, 조문, 판례, 문제 순서로 회독한다.</li>
+              <li>선지의 틀린 이유를 한 줄로 적는다.</li>
+              <li>반복 오답은 쟁점노트로 압축한다.</li>
+            </ul>
+          </article>
+          <article class="practice-card">
+            <span class="practice-status">경영학</span>
+            <h3><a href="pages/management.html">군수직 승부처로 다룬다</a></h3>
+            <ul>
+              <li>조직, 인사, 생산, 재무의 큰 지도를 만든다.</li>
+              <li>계산형과 암기형 문제를 구분한다.</li>
+              <li>기출 빈출표를 만들어 마지막 30일에 쓴다.</li>
+            </ul>
+          </article>
+        </div>
+        <aside class="callout">
+          <strong>전용 교재로 이동</strong>
+          5·6·7부는 <a href="pages/korean.html">국어</a>, <a href="pages/admin-law.html">행정법</a>, <a href="pages/management.html">경영학</a>으로 분리했다.
+          예상 문제는 각 과목 교재의 마지막에서 개념 적용용으로 풀고, 실제 원문 기출은 <a href="pages/past-exams.html">기출문제 전체</a>에서 연도별 클릭형 풀이로 연다.
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>눈 떠보니 9급 군수직 군무원 · 프롤로그 + 1부 초안</span>
+      <span>Light by default · Dark mode supported</span>
+    </div>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.querySelector(".theme-toggle");
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      root.dataset.theme = isDark ? "dark" : "light";
+      toggle.setAttribute("aria-pressed", String(isDark));
+      toggle.setAttribute("aria-label", isDark ? "라이트 모드 켜기" : "다크 모드 켜기");
+      toggle.setAttribute("title", isDark ? "라이트 모드" : "다크 모드");
+      localStorage.setItem("mw-theme", root.dataset.theme);
+    }
+
+    applyTheme(localStorage.getItem("mw-theme") || "light");
+
+    toggle.addEventListener("click", () => {
+      applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+  </script>
+</body>
+</html>
