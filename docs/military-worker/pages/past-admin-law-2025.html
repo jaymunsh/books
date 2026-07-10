@@ -290,6 +290,13 @@
       line-height: 1.8;
     }
 
+    .exam-underline {
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-decoration-color: var(--surface-ink);
+      text-underline-offset: 4px;
+    }
+
     .choice-list {
       display: grid;
       gap: var(--space-3);
@@ -1291,6 +1298,31 @@
       return progress[question.number] || { selected: null, revealed: false };
     }
 
+    function renderExamText(target, text, { underlineQuoted = false } = {}) {
+      target.replaceChildren();
+      const source = String(text || "");
+      const markerPattern = /⟦([^⟧]+)⟧/g;
+      const quotedPattern = /([‘“])([^’”]+)([’”])/g;
+      const pattern = underlineQuoted ? new RegExp(`${markerPattern.source}|${quotedPattern.source}`, "g") : markerPattern;
+      let cursor = 0;
+      let match;
+
+      while ((match = pattern.exec(source))) {
+        if (match.index > cursor) {
+          target.append(document.createTextNode(source.slice(cursor, match.index)));
+        }
+        const underline = document.createElement("u");
+        underline.className = "exam-underline";
+        underline.textContent = match[1] || match[3] || "";
+        target.append(underline);
+        cursor = match.index + match[0].length;
+      }
+
+      if (cursor < source.length) {
+        target.append(document.createTextNode(source.slice(cursor)));
+      }
+    }
+
     function setState(question, patch) {
       progress[question.number] = { ...getState(question), ...patch };
       saveProgress();
@@ -1318,11 +1350,11 @@
       const state = getState(question);
       document.getElementById("question-index").textContent = `문제 ${String(question.number).padStart(2, "0")}`;
       document.getElementById("question-tag").textContent = question.tag;
-      document.getElementById("question-title").textContent = question.title;
+      renderExamText(document.getElementById("question-title"), question.title);
 
       const passage = document.getElementById("question-passage");
       passage.hidden = !question.passage;
-      passage.textContent = question.passage || "";
+      renderExamText(passage, question.passage, { underlineQuoted: question.title.includes("밑줄") });
 
       const choiceList = document.getElementById("choice-list");
       choiceList.replaceChildren(...question.choices.map((choice, index) => {
@@ -1335,7 +1367,12 @@
         button.dataset.choice = String(choiceNumber);
         if (state.revealed && isCorrectChoice(question, choiceNumber)) button.classList.add("is-correct");
         if (state.revealed && state.selected === choiceNumber && !isCorrectChoice(question, choiceNumber)) button.classList.add("is-wrong");
-        button.innerHTML = `<span class="choice-number">${marker[index]}</span><span>${choice}</span>`;
+        const choiceText = document.createElement("span");
+        renderExamText(choiceText, choice, { underlineQuoted: question.title.includes("밑줄") });
+        const choiceMarker = document.createElement("span");
+        choiceMarker.className = "choice-number";
+        choiceMarker.textContent = marker[index];
+        button.append(choiceMarker, choiceText);
         button.addEventListener("click", () => {
           setState(question, { selected: choiceNumber });
           renderQuestion();
@@ -1454,7 +1491,7 @@
         header.append(number, tag);
 
         const titleNode = document.createElement("h3");
-        titleNode.textContent = question.title;
+        renderExamText(titleNode, question.title);
         item.append(header, titleNode);
 
         if (question.passage) {
@@ -1476,7 +1513,7 @@
           markerNode.className = "sheet-choice-marker";
           markerNode.textContent = marker[index];
           const textNode = document.createElement("span");
-          textNode.textContent = choice;
+          renderExamText(textNode, choice, { underlineQuoted: question.title.includes("밑줄") });
           choiceItem.append(markerNode, textNode);
           choices.append(choiceItem);
         });

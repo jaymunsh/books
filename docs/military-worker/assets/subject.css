@@ -810,6 +810,49 @@ h3 {
   margin-top: var(--space-4);
 }
 
+.answer-reveal {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.answer-reveal summary {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-3);
+  color: var(--accent-primary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  list-style: none;
+}
+
+.answer-reveal summary::-webkit-details-marker {
+  display: none;
+}
+
+.answer-reveal summary::before {
+  content: "+";
+  display: inline-grid;
+  width: 20px;
+  height: 20px;
+  margin-right: var(--space-2);
+  place-items: center;
+  border: 1px solid currentColor;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.answer-reveal[open] summary::before {
+  content: "-";
+}
+
+.answer-reveal summary:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
 .answer-strip span {
   min-width: 0;
   display: grid;

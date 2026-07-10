@@ -290,6 +290,13 @@
       line-height: 1.8;
     }
 
+    .exam-underline {
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-decoration-color: var(--surface-ink);
+      text-underline-offset: 4px;
+    }
+
     .choice-list {
       display: grid;
       gap: var(--space-3);
@@ -733,10 +740,10 @@
         tag: "어휘 · 관용 표현",
         title: "밑줄 친 관용 표현의 쓰임이 문맥상 가장 적절하지 않은 것은?",
         choices: [
-          "실수하지 않게 눈 똑바로 뜨고 일해라.",
-          "잠시 눈을 붙였더니 몸이 한결 나아졌다.",
-          "동생은 눈에 모를 세운 친근한 얼굴로 나를 보았다.",
-          "생일을 맞아 눈 딱 감고 비싼 선물을 준비했다."
+          "실수하지 않게 ⟦눈 똑바로 뜨고⟧ 일해라.",
+          "잠시 ⟦눈을 붙였더니⟧ 몸이 한결 나아졌다.",
+          "동생은 ⟦눈에 모를 세운⟧ 친근한 얼굴로 나를 보았다.",
+          "생일을 맞아 ⟦눈 딱 감고⟧ 비싼 선물을 준비했다."
         ],
         answer: 3,
         explanation: "‘눈에 모를 세우다’는 성난 눈매나 적대적인 태도와 관련된다. ‘친근한 얼굴’이라는 문맥과 충돌한다.",
@@ -774,10 +781,10 @@
         tag: "어문규정 · 외래어 표기",
         title: "밑줄 친 외래어 표기로 가장 적절하지 않은 것은?",
         choices: [
-          "생일을 맞아 케이크(cake)를 준비했다.",
-          "관광지 안내용 팜플렛(pamphlet)을 제작하였다.",
-          "동생은 달콤한 초콜릿(chocolate)을 무척 좋아한다.",
-          "세계가 우리의 전통 콘텐츠(contents)에 공감하고 있다."
+          "생일을 맞아 ⟦케이크⟧(cake)를 준비했다.",
+          "관광지 안내용 ⟦팜플렛⟧(pamphlet)을 제작하였다.",
+          "동생은 달콤한 ⟦초콜릿⟧(chocolate)을 무척 좋아한다.",
+          "세계가 우리의 전통 ⟦콘텐츠⟧(contents)에 공감하고 있다."
         ],
         answer: 2,
         explanation: "pamphlet의 표준적인 외래어 표기는 ‘팸플릿’이다. 일상에서 자주 보이는 표기라도 규범 표기와 다를 수 있다.",
@@ -856,7 +863,7 @@
         number: 8,
         tag: "문학 · 현대소설",
         title: "다음 글의 밑줄 친 ‘동전’에 대한 설명으로 가장 적절한 것은?",
-        passage: "구보는 단장을 왼팔에 걸고, 바지 주머니에 손을 넣었다. 그러나 그가 그 속에서 다섯 닢의 동전을 골라 내었을 때, 차는 종묘 앞에 서고 ... 그것은 적어도 ‘행복’은 아니었을 게다. - 박태원, 「소설가 구보 씨의 일일」",
+        passage: "구보는 단장을 왼팔에 걸고, 바지 주머니에 손을 넣었다. 그러나 그가 그 속에서 다섯 닢의 ⟦동전⟧을 골라 내었을 때, 차는 종묘 앞에 서고 ... 그것은 적어도 ‘행복’은 아니었을 게다. - 박태원, 「소설가 구보 씨의 일일」",
         choices: [
           "인물이 장차 획득하게 될 막대한 부와 명예를 상징한다.",
           "인물이 처한 고독한 처지와 현실적 삶의 무게를 상징한다.",
@@ -961,10 +968,10 @@
         tag: "어휘 · 혼동어",
         title: "밑줄 친 부분의 쓰임이 가장 적절하지 않은 것은?",
         choices: [
-          "수심에 싸인 그의 표정은 한없이 어둡기만 하였다.",
-          "이 곤욕스러운 문제에 대하여 친구에게 조언을 구했다.",
-          "이번 음악회에는 해외에서 활동하는 성악가들이 대거 출연하였다.",
-          "우리 경제는 세계에 유례가 없을 정도로 괄목할 만한 성장을 이루었다."
+          "⟦수심⟧에 싸인 그의 표정은 한없이 어둡기만 하였다.",
+          "이 ⟦곤욕스러운⟧ 문제에 대하여 친구에게 조언을 구했다.",
+          "이번 음악회에는 해외에서 활동하는 성악가들이 ⟦대거⟧ 출연하였다.",
+          "우리 경제는 세계에 유례가 없을 정도로 ⟦괄목할 만한⟧ 성장을 이루었다."
         ],
         answer: 2,
         explanation: "‘곤욕’은 심한 모욕이나 참기 어려운 일을 겪는 상황에 가깝다. ‘문제’가 어렵고 난처하다는 뜻으로는 ‘곤혹스러운’, ‘난처한’ 등이 더 자연스럽다.",
@@ -1063,7 +1070,7 @@
         number: 18,
         tag: "문학 · 표현법",
         title: "다음 시의 밑줄 친 ‘결별이 이룩하는 축복’에 사용된 표현 기법과 유형이 같은 것은?",
-        passage: "결별이 이룩하는 축복에 쌓여\n지금은 가야 할 때\n무성한 녹음과 그리고\n머지않아 열매 맺는\n가을을 향하여\n나의 청춘은 꽃답게 죽는다.\n- 이형기, 「낙화」",
+        passage: "⟦결별이 이룩하는 축복⟧에 쌓여\n지금은 가야 할 때\n무성한 녹음과 그리고\n머지않아 열매 맺는\n가을을 향하여\n나의 청춘은 꽃답게 죽는다.\n- 이형기, 「낙화」",
         choices: [
           "먼 훗날 당신이 찾으시면 그때에 내 말이 ‘잊었노라’",
           "내 마음은 호수요, 그대 노 저어 오오.",
@@ -1189,7 +1196,7 @@
         number: 24,
         tag: "문학 · 시어 해석",
         title: "밑줄 친 ㉠∼㉣에 대한 설명으로 가장 적절하지 않은 것은?",
-        passage: "㉠ 험한 벼랑을 굽이굽이 돌아간\n백무선 철길 위에\n느릿느릿 밤새어 달리는\n화물차의 검은 지붕에\n㉡ 연달린 산과 산 사이\n너를 남기고 온\n㉢ 작은 마을에도 복된 눈 내리는가\n...\n㉣ 그리운 곳 차마 그리운 곳",
+        passage: "㉠ ⟦험한 벼랑을 굽이굽이 돌아간\n백무선 철길 위에\n느릿느릿 밤새어 달리는\n화물차의 검은 지붕에⟧\n㉡ ⟦연달린 산과 산 사이⟧\n너를 남기고 온\n㉢ ⟦작은 마을에도 복된 눈 내리는가⟧\n...\n㉣ ⟦그리운 곳 차마 그리운 곳⟧",
         choices: [
           "㉠의 표현으로 보아 화자가 말하는 북쪽은 산악지대인 것을 알 수 있다.",
           "㉠과 ㉡은 모두 북쪽의 지형을 암시하며, 기차로도 쉽게 가기는 어렵다는 암시를 준다.",
@@ -1259,6 +1266,31 @@
       return progress[question.number] || { selected: null, revealed: false };
     }
 
+    function renderExamText(target, text, { underlineQuoted = false } = {}) {
+      target.replaceChildren();
+      const source = String(text || "");
+      const markerPattern = /⟦([^⟧]+)⟧/g;
+      const quotedPattern = /([‘“])([^’”]+)([’”])/g;
+      const pattern = underlineQuoted ? new RegExp(`${markerPattern.source}|${quotedPattern.source}`, "g") : markerPattern;
+      let cursor = 0;
+      let match;
+
+      while ((match = pattern.exec(source))) {
+        if (match.index > cursor) {
+          target.append(document.createTextNode(source.slice(cursor, match.index)));
+        }
+        const underline = document.createElement("u");
+        underline.className = "exam-underline";
+        underline.textContent = match[1] || match[3] || "";
+        target.append(underline);
+        cursor = match.index + match[0].length;
+      }
+
+      if (cursor < source.length) {
+        target.append(document.createTextNode(source.slice(cursor)));
+      }
+    }
+
     function setState(question, patch) {
       progress[question.number] = { ...getState(question), ...patch };
       saveProgress();
@@ -1269,11 +1301,11 @@
       const state = getState(question);
       document.getElementById("question-index").textContent = `문제 ${String(question.number).padStart(2, "0")}`;
       document.getElementById("question-tag").textContent = question.tag;
-      document.getElementById("question-title").textContent = question.title;
+      renderExamText(document.getElementById("question-title"), question.title);
 
       const passage = document.getElementById("question-passage");
       passage.hidden = !question.passage;
-      passage.textContent = question.passage || "";
+      renderExamText(passage, question.passage, { underlineQuoted: question.title.includes("밑줄") });
 
       const choiceList = document.getElementById("choice-list");
       choiceList.replaceChildren(...question.choices.map((choice, index) => {
@@ -1290,7 +1322,12 @@
         if (state.revealed && state.selected === choiceNumber && choiceNumber !== question.answer) {
           button.classList.add("is-wrong");
         }
-        button.innerHTML = `<span class="choice-number">${marker[index]}</span><span>${choice}</span>`;
+        const choiceText = document.createElement("span");
+        renderExamText(choiceText, choice, { underlineQuoted: question.title.includes("밑줄") });
+        const choiceMarker = document.createElement("span");
+        choiceMarker.className = "choice-number";
+        choiceMarker.textContent = marker[index];
+        button.append(choiceMarker, choiceText);
         button.addEventListener("click", () => {
           setState(question, { selected: choiceNumber });
           renderQuestion();
@@ -1417,13 +1454,13 @@
         header.append(number, tag);
 
         const title = document.createElement("h3");
-        title.textContent = question.title;
+        renderExamText(title, question.title);
         item.append(header, title);
 
         if (question.passage) {
           const passage = document.createElement("div");
           passage.className = "sheet-passage";
-          passage.textContent = question.passage;
+          renderExamText(passage, question.passage, { underlineQuoted: question.title.includes("밑줄") });
           item.append(passage);
         }
 
@@ -1443,7 +1480,7 @@
           markerNode.className = "sheet-choice-marker";
           markerNode.textContent = marker[index];
           const textNode = document.createElement("span");
-          textNode.textContent = choice;
+          renderExamText(textNode, choice, { underlineQuoted: question.title.includes("밑줄") });
           choiceItem.append(markerNode, textNode);
           choices.append(choiceItem);
         });
