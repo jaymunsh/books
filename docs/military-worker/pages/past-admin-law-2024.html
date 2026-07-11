@@ -1354,7 +1354,7 @@
 
       const passage = document.getElementById("question-passage");
       passage.hidden = !question.passage;
-      renderExamText(passage, question.passage, { underlineQuoted: question.title.includes("밑줄") });
+      renderExamText(passage, question.passage);
 
       const choiceList = document.getElementById("choice-list");
       choiceList.replaceChildren(...question.choices.map((choice, index) => {
@@ -1368,7 +1368,7 @@
         if (state.revealed && isCorrectChoice(question, choiceNumber)) button.classList.add("is-correct");
         if (state.revealed && state.selected === choiceNumber && !isCorrectChoice(question, choiceNumber)) button.classList.add("is-wrong");
         const choiceText = document.createElement("span");
-        renderExamText(choiceText, choice, { underlineQuoted: question.title.includes("밑줄") });
+        renderExamText(choiceText, choice);
         const choiceMarker = document.createElement("span");
         choiceMarker.className = "choice-number";
         choiceMarker.textContent = marker[index];
@@ -1513,7 +1513,7 @@
           markerNode.className = "sheet-choice-marker";
           markerNode.textContent = marker[index];
           const textNode = document.createElement("span");
-          renderExamText(textNode, choice, { underlineQuoted: question.title.includes("밑줄") });
+          renderExamText(textNode, choice);
           choiceItem.append(markerNode, textNode);
           choices.append(choiceItem);
         });

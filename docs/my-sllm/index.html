@@ -82,7 +82,12 @@
   }
 
   /* ── Base ───────────────────────────────────────────────── */
+  /* 가로 오버플로우 최종 안전망. clip은 스크롤 컨테이너를 만들지 않아
+     내부의 position:sticky(사이드바)를 깨지 않습니다. */
+  html { overflow-x: clip; }
+
   body {
+    max-width: 100%;
     background: var(--ground);
     color: var(--ink);
     font-family: var(--sans);
@@ -322,6 +327,7 @@
     margin: 1.75rem 0 2rem; border-radius: 6px; overflow: hidden;
     background: var(--term-bg); box-shadow: var(--shadow);
     border: 1px solid var(--term-rule);
+    max-width: 100%; min-width: 0;   /* 어떤 컨테이너 안에서도 넘치지 않게 */
   }
   .panel__bar {
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -394,7 +400,9 @@
     color: var(--ink-3); font-variant-numeric: tabular-nums; padding-top: .3em;
   }
   .steps__title { font-weight: 700; margin-bottom: .4rem; }
-  .steps__body { grid-column: 2; }
+  /* min-width:0 이 없으면 grid 자식의 기본값 auto 때문에 안쪽 <pre>가
+     제 내용 폭만큼 늘어나 페이지를 가로로 밀어냅니다(모바일 흔들림). */
+  .steps__body { grid-column: 2; min-width: 0; }
   .steps__body > :last-child { margin-bottom: 0; }
 
   /* ── Checkpoint ─────────────────────────────────────────── */

@@ -988,10 +988,10 @@
         tag: "어문규정 · 문장 다듬기",
         title: "의미가 중복된 표현을 바로잡은 예로 가장 적절하지 않은 것은?",
         choices: [
-          "외국인 불법 체류! 더 이상은 안 됩니다. → 외국인 불법 체류! 더는 안 됩니다.",
-          "사료용 교잡종을 재배하면 8월 하순 무렵에 수확할 수 있어 연간 삼모작 재배도 가능하다. → 사료용 교잡종을 재배하면 8월 하순 무렵에 수확할 수 있어 한 해 동안에 삼모작도 가능하다.",
-          "계획 수립 과정에서 녹색 성장 관련 전문가 그룹인 녹색성장위원회와 녹색성장기획 연구단을 통해 자문과 의견을 수렴하고 → 계획 수립 과정에서 녹색 성장 관련 전문가 그룹인 녹색성장위원회와 녹색성장기획 연구단에 자문하고",
-          "가로변 쓰레기통은 결박하고, 현수막 등은 제거함 → 가로변 쓰레기통은 고정해 두고, 현수막 등은 제거함"
+          "외국인 불법 체류! ⟦더 이상은⟧ 안 됩니다. → 외국인 불법 체류! ⟦더는⟧ 안 됩니다.",
+          "사료용 교잡종을 재배하면 8월 하순 무렵에 수확할 수 있어 ⟦연간 삼모작 재배도 가능하다⟧. → 사료용 교잡종을 재배하면 8월 하순 무렵에 수확할 수 있어 ⟦한 해 동안에 삼모작도 가능하다⟧.",
+          "계획 수립 과정에서 ⟦녹색 성장 관련 전문가 그룹인 녹색성장위원회와 녹색성장기획 연구단을 통해 자문과 의견을 수렴하고⟧ → 계획 수립 과정에서 ⟦녹색 성장 관련 전문가 그룹인 녹색성장위원회와 녹색성장기획 연구단에 자문하고⟧",
+          "⟦가로변 쓰레기통은 결박하고⟧, 현수막 등은 제거함 → ⟦가로변 쓰레기통은 고정해 두고⟧, 현수막 등은 제거함"
         ],
         answer: 4,
         explanation: "④는 ‘결박’을 ‘고정’으로 바꾼 표현 개선에 가깝다. 의미가 겹치는 말을 줄여 고친 사례라고 보기는 어렵다.",
@@ -1305,7 +1305,7 @@
 
       const passage = document.getElementById("question-passage");
       passage.hidden = !question.passage;
-      renderExamText(passage, question.passage, { underlineQuoted: question.title.includes("밑줄") });
+      renderExamText(passage, question.passage);
 
       const choiceList = document.getElementById("choice-list");
       choiceList.replaceChildren(...question.choices.map((choice, index) => {
@@ -1323,7 +1323,7 @@
           button.classList.add("is-wrong");
         }
         const choiceText = document.createElement("span");
-        renderExamText(choiceText, choice, { underlineQuoted: question.title.includes("밑줄") });
+        renderExamText(choiceText, choice);
         const choiceMarker = document.createElement("span");
         choiceMarker.className = "choice-number";
         choiceMarker.textContent = marker[index];
@@ -1460,7 +1460,7 @@
         if (question.passage) {
           const passage = document.createElement("div");
           passage.className = "sheet-passage";
-          renderExamText(passage, question.passage, { underlineQuoted: question.title.includes("밑줄") });
+          renderExamText(passage, question.passage);
           item.append(passage);
         }
 
@@ -1480,7 +1480,7 @@
           markerNode.className = "sheet-choice-marker";
           markerNode.textContent = marker[index];
           const textNode = document.createElement("span");
-          renderExamText(textNode, choice, { underlineQuoted: question.title.includes("밑줄") });
+          renderExamText(textNode, choice);
           choiceItem.append(markerNode, textNode);
           choices.append(choiceItem);
         });
