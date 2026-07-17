@@ -59,11 +59,13 @@
       font-size: 1.05rem;
     }
     .list {
+      min-width: 0;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
       gap: 1rem;
     }
     article {
+      min-width: 0;
       min-height: 11rem;
       padding: 1.35rem;
       border: 1px solid var(--line);
@@ -83,15 +85,26 @@
       margin: 0;
       color: var(--muted);
       font-size: 0.95rem;
+      overflow-wrap: break-word;
     }
     article a {
       display: inline-flex;
       align-items: center;
       width: fit-content;
-      margin-top: 1.25rem;
       color: var(--accent);
       font-weight: 800;
       text-decoration: none;
+    }
+    .article-meta {
+      margin-top: 1.25rem;
+    }
+    .updated {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      font-variant-numeric: tabular-nums;
     }
     article a:hover {
       text-decoration: underline;
@@ -112,123 +125,72 @@
     </header>
     <section class="list" aria-label="문서">
       <article>
-        <div>
-          <h2>LLM 업무 활용 가이드</h2>
-          <p>LLM을 실제 업무 흐름에 적용하는 방법과 예시를 정리한 문서입니다.</p>
-        </div>
-        <a href="llm-usage-guide/">문서 열기</a>
+        <div><h2>비전공자를 위한 AI 블로그 자동화 가이드</h2><p>블로그 주제 선정부터 AI 활용, 도구 연결, 반자동 운영과 성과 분석까지 쉽게 따라 하는 가이드입니다.</p></div>
+        <div class="article-meta"><a href="automatic-blog/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-18 00:22:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>LLM의 모든 것</h2>
-          <p>LLM의 원리, 사용법, 응용, 생태계를 입문부터 심화까지 정리한 가이드북입니다.</p>
-        </div>
-        <a href="llm-guide/">문서 열기</a>
+        <div><h2>한국사: 선사에서 2026년까지</h2><p>선사 시대부터 현대사까지 한국사의 흐름과 핵심 사건, 시험 대비 문제를 한 권으로 정리한 가이드입니다.</p></div>
+        <div class="article-meta"><a href="korean-history/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-16 17:32:16</small></div>
       </article>
       <article>
-        <div>
-          <h2>LLM 파인튜닝 실전 가이드</h2>
-          <p>LLM 파인튜닝을 데이터 설계부터 평가와 배포까지 실무 흐름으로 학습하는 가이드입니다.</p>
-        </div>
-        <a href="fine-tuning/">문서 열기</a>
+        <div><h2>오픈클로 완전 정복</h2><p>메신저로 컴퓨터 작업을 자동화하는 OpenClaw의 설치, 활용, 로컬 LLM 연동과 실전 운영을 정리한 가이드입니다.</p></div>
+        <div class="article-meta"><a href="openclaw-guide/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-12 00:38:21</small></div>
       </article>
       <article>
-        <div>
-          <h2>Java 코딩 테스트 가이드북</h2>
-          <p>Java로 코딩 테스트를 준비하는 입문자를 위한 학습 로드맵과 문제 풀이 가이드입니다.</p>
-        </div>
-        <a href="java-coding-test/">문서 열기</a>
+        <div><h2>나만의 sLLM 만들기</h2><p>로컬 sLLM 실행부터 데이터셋 구축, 파인튜닝, 평가와 서빙까지 실습 중심으로 정리한 가이드입니다.</p></div>
+        <div class="article-meta"><a href="my-sllm/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-11 13:16:05</small></div>
       </article>
       <article>
-        <div>
-          <h2>일본어 가이드북</h2>
-          <p>제로에서 JLPT N1까지 이어지는 일본어 학습 로드맵과 단어장, 문제 풀이 도구를 담은 가이드입니다.</p>
-        </div>
-        <a href="learn-japanese/">문서 열기</a>
+        <div><h2>눈 떠보니 9급 군수직 군무원</h2><p>2026년 기준 9급 군수직 이해부터 문제풀이 로드맵까지 정리한 군무원 합격 매뉴얼입니다.</p></div>
+        <div class="article-meta"><a href="military-worker/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-11 13:16:05</small></div>
       </article>
       <article>
-        <div>
-          <h2>브라질식 포르투갈어 가이드북</h2>
-          <p>입문부터 고급 학습, Celpe-Bras 최고등급 목표까지 이어지는 포르투갈어 학습 가이드입니다.</p>
-        </div>
-        <a href="learn-portuguese/">문서 열기</a>
+        <div><h2>아파트 경매 완전정복</h2><p>아파트 경매의 권리분석, 입찰, 명도, 대출, 리스크 관리를 실전 흐름으로 정리한 가이드입니다.</p></div>
+        <div class="article-meta"><a href="apartment-auction-guide/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 12:49:48</small></div>
       </article>
       <article>
-        <div>
-          <h2>스페인어 마스터 가이드북</h2>
-          <p>CEFR A1부터 DELE C2까지 스페인어 학습 로드맵과 단어장, 기출형 문제를 정리한 가이드입니다.</p>
-        </div>
-        <a href="learn-spanish/">문서 열기</a>
+        <div><h2>처음 배우는 경제와 투자</h2><p>경제, 금융, 주식투자를 입문부터 고급 퀀트까지 시나리오와 실무 예시로 배우는 가이드북입니다.</p></div>
+        <div class="article-meta"><a href="starting-economy-and-investment/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>처음 배우는 경제와 투자</h2>
-          <p>경제, 금융, 주식투자를 입문부터 고급 퀀트까지 시나리오와 실무 예시로 배우는 가이드북입니다.</p>
-        </div>
-        <a href="starting-economy-and-investment/">문서 열기</a>
+        <div><h2>LLM 업무 활용 가이드</h2><p>LLM을 실제 업무 흐름에 적용하는 방법과 예시를 정리한 문서입니다.</p></div>
+        <div class="article-meta"><a href="llm-usage-guide/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>아파트 경매 완전정복</h2>
-          <p>아파트 경매의 권리분석, 입찰, 명도, 대출, 리스크 관리를 실전 흐름으로 정리한 가이드입니다.</p>
-        </div>
-        <a href="apartment-auction-guide/">문서 열기</a>
+        <div><h2>LLM의 모든 것</h2><p>LLM의 원리, 사용법, 응용, 생태계를 입문부터 심화까지 정리한 가이드북입니다.</p></div>
+        <div class="article-meta"><a href="llm-guide/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>하네스 엔지니어링</h2>
-          <p>에이전트 루프, 툴, 컨텍스트, 권한, 메모리, 검증, 운영까지 하네스 설계를 정리한 가이드북입니다.</p>
-        </div>
-        <a href="harness-engineering/">문서 열기</a>
+        <div><h2>스페인어 마스터 가이드북</h2><p>CEFR A1부터 DELE C2까지 스페인어 학습 로드맵과 단어장, 기출형 문제를 정리한 가이드입니다.</p></div>
+        <div class="article-meta"><a href="learn-spanish/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>눈 떠보니 9급 군수직 군무원</h2>
-          <p>2026년 기준 9급 군수직 이해부터 문제풀이 로드맵까지 정리한 군무원 합격 매뉴얼입니다.</p>
-        </div>
-        <a href="military-worker/">문서 열기</a>
+        <div><h2>브라질식 포르투갈어 가이드북</h2><p>입문부터 고급 학습, Celpe-Bras 최고등급 목표까지 이어지는 포르투갈어 학습 가이드입니다.</p></div>
+        <div class="article-meta"><a href="learn-portuguese/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>Codex CLI 완벽 가이드</h2>
-          <p>Codex CLI의 설치, 명령, AGENTS.md, sandbox, MCP, 자동화, API 활용을 다루는 실전 가이드입니다.</p>
-        </div>
-        <a href="codexguide/">문서 열기</a>
+        <div><h2>일본어 가이드북</h2><p>제로에서 JLPT N1까지 이어지는 일본어 학습 로드맵과 단어장, 문제 풀이 도구를 담은 가이드입니다.</p></div>
+        <div class="article-meta"><a href="learn-japanese/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>Claude Code 완벽 가이드</h2>
-          <p>Claude Code의 명령어, 스킬, 서브에이전트, MCP, 워크플로우, Agent SDK 활용을 정리한 가이드입니다.</p>
-        </div>
-        <a href="ccguide/">문서 열기</a>
+        <div><h2>Java 코딩 테스트 가이드북</h2><p>Java로 코딩 테스트를 준비하는 입문자를 위한 학습 로드맵과 문제 풀이 가이드입니다.</p></div>
+        <div class="article-meta"><a href="java-coding-test/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>나만의 sLLM 만들기</h2>
-          <p>로컬 sLLM 실행부터 데이터셋 구축, 파인튜닝, 평가와 서빙까지 실습 중심으로 정리한 가이드입니다.</p>
-        </div>
-        <a href="my-sllm/">문서 열기</a>
+        <div><h2>하네스 엔지니어링</h2><p>에이전트 루프, 툴, 컨텍스트, 권한, 메모리, 검증, 운영까지 하네스 설계를 정리한 가이드북입니다.</p></div>
+        <div class="article-meta"><a href="harness-engineering/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>오픈클로 완전 정복</h2>
-          <p>메신저로 컴퓨터 작업을 자동화하는 OpenClaw의 설치, 활용, 로컬 LLM 연동과 실전 운영을 정리한 가이드입니다.</p>
-        </div>
-        <a href="openclaw-guide/">문서 열기</a>
+        <div><h2>LLM 파인튜닝 실전 가이드</h2><p>LLM 파인튜닝을 데이터 설계부터 평가와 배포까지 실무 흐름으로 학습하는 가이드입니다.</p></div>
+        <div class="article-meta"><a href="fine-tuning/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-09 11:56:38</small></div>
       </article>
       <article>
-        <div>
-          <h2>비전공자를 위한 AI 블로그 자동화 가이드</h2>
-          <p>블로그 주제 선정부터 AI 활용, 도구 연결, 반자동 운영과 성과 분석까지 쉽게 따라 하는 가이드입니다.</p>
-        </div>
-        <a href="automatic-blog/">문서 열기</a>
+        <div><h2>Codex CLI 완벽 가이드</h2><p>Codex CLI의 설치, 명령, AGENTS.md, sandbox, MCP, 자동화, API 활용을 다루는 실전 가이드입니다.</p></div>
+        <div class="article-meta"><a href="codexguide/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-05 21:55:09</small></div>
       </article>
       <article>
-        <div>
-          <h2>한국사: 선사에서 2026년까지</h2>
-          <p>선사 시대부터 현대사까지 한국사의 흐름과 핵심 사건, 시험 대비 문제를 한 권으로 정리한 가이드입니다.</p>
-        </div>
-        <a href="korean-history/">문서 열기</a>
+        <div><h2>Claude Code 완벽 가이드</h2><p>Claude Code의 명령어, 스킬, 서브에이전트, MCP, 워크플로우, Agent SDK 활용을 정리한 가이드입니다.</p></div>
+        <div class="article-meta"><a href="ccguide/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-05 21:55:09</small></div>
       </article>
     </section>
   </main>
