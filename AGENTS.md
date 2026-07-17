@@ -9,7 +9,7 @@ Before committing, pushing, or deploying this static books repository:
    - Link each book as `book-name/`.
    - Keep the card title and description in Korean and consistent with the existing list style.
 
-2. Every uploaded book HTML page must load and use `Noto Sans KR`.
+2. Every uploaded book HTML page must load `Noto Sans KR` as a cross-platform fallback.
    - Standalone book `index.html` files should include:
 
      ```html
@@ -18,8 +18,8 @@ Before committing, pushing, or deploying this static books repository:
      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
      ```
 
-   - The main sans-serif font stack should put `"Noto Sans KR"` first.
-   - Folder-based books may load the font once from their shared CSS with `@import`, but the shared `--font-sans` or equivalent stack must still put `"Noto Sans KR"` first.
+   - The main sans-serif font stack should put the preferred platform font first, such as `-apple-system` or `Apple SD Gothic Neo` on macOS, followed by `"Noto Sans KR"` before generic fallbacks.
+   - Folder-based books may load the font once from their shared CSS with `@import`; the shared `--font-sans` or equivalent stack must include `"Noto Sans KR"` before generic fallbacks.
 
 3. Before pushing, verify the changed public entry points locally:
    - `docs/index.html` contains the new book link.
