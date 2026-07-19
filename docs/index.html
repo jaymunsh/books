@@ -73,6 +73,12 @@
       background: var(--card);
       display: flex;
       flex-direction: column;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+    article:hover {
+      border-color: var(--accent);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.18);
     }
     .cover-link {
       display: block;
@@ -130,7 +136,7 @@
       text-decoration: underline;
       text-underline-offset: 0.18em;
     }
-    article:focus-within {
+    article:focus-visible {
       outline: 3px solid var(--accent-soft);
       outline-offset: 3px;
     }
@@ -187,8 +193,8 @@
         <div class="article-meta"><a class="document-link" href="learning-guide-for-ordinary/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-18 22:12:23</small></div></div>
       </article>
       <article>
-        <a class="cover-link" href="automatic-blog/" aria-label="비전공자를 위한 AI 블로그 자동화 가이드 문서 열기"><img src="imgs/covers/automatic-blog.jpg" width="640" height="960" alt="비전공자를 위한 AI 블로그 자동화 가이드 표지" loading="lazy" decoding="async"></a>
-        <div class="card-body"><div><h2>비전공자를 위한 AI 블로그 자동화 가이드</h2><p>블로그 주제 선정부터 AI 활용, 도구 연결, 반자동 운영과 성과 분석까지 쉽게 따라 하는 가이드입니다.</p></div>
+        <a class="cover-link" href="automatic-blog/" aria-label="AI 블로그 자동화 가이드 문서 열기"><img src="imgs/covers/automatic-blog.jpg" width="640" height="960" alt="AI 블로그 자동화 가이드 표지" loading="lazy" decoding="async"></a>
+        <div class="card-body"><div><h2>AI 블로그 자동화 가이드</h2><p>블로그 주제 선정부터 AI 활용, 도구 연결, 반자동 운영과 성과 분석까지 쉽게 따라 하는 가이드입니다.</p></div>
         <div class="article-meta"><a class="document-link" href="automatic-blog/">문서 열기</a><small class="updated">최근 업데이트: 2026-07-18 17:19:07</small></div></div>
       </article>
       <article>
@@ -273,5 +279,32 @@
       </article>
     </section>
   </main>
+  <script>
+    document.querySelectorAll(".list article").forEach((card) => {
+      const link = card.querySelector(".document-link");
+      const title = card.querySelector("h2");
+
+      if (!link || !title) return;
+
+      card.tabIndex = 0;
+      card.setAttribute("role", "link");
+      card.setAttribute("aria-label", `${title.textContent} 문서 열기`);
+
+      const openDocument = () => {
+        window.location.href = link.href;
+      };
+
+      card.addEventListener("click", (event) => {
+        if (event.target.closest("a")) return;
+        openDocument();
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openDocument();
+      });
+    });
+  </script>
 </body>
 </html>
