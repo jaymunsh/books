@@ -1,0 +1,2688 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실무 하네스 엔지니어링</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --f-body: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  --f-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "D2Coding", monospace;
+
+  --paper:  #E7E7E2;
+  --surface:#F6F6F3;
+  --sunk:   #DEDED8;
+  --ink:    #17191B;
+  --ink-2:  #4A4E52;
+  --muted:  #7C8085;
+  --rule:   #C9CAC4;
+  --rule-2: #D8D9D3;
+  --shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.06);
+
+  --wire-0:#8A9096; --wire-1:#C4392E; --wire-2:#D4762A; --wire-3:#B8951F;
+  --wire-4:#2F855A; --wire-5:#2B6CB0; --wire-6:#7048A8; --wire-7:#17879B;
+  --wire-8:#8B5E3C; --wire-9:#B03A6E; --wire-10:#9A7B1F; --wire-x:#6B7280;
+
+  --sb-w: 310px;
+  --measure: 44rem;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#131518; --surface:#1B1E22; --sunk:#0E1013;
+    --ink:#E8E9E6; --ink-2:#A8ADB2; --muted:#767B81;
+    --rule:#2C3036; --rule-2:#23272C;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.35);
+    --wire-0:#A2A8AE; --wire-1:#E4695C; --wire-2:#EE9550; --wire-3:#D8B340;
+    --wire-4:#4FB07C; --wire-5:#5A9BE0; --wire-6:#9C74D8; --wire-7:#3FB0C6;
+    --wire-8:#B98254; --wire-9:#DC6B9B; --wire-10:#C7A43C; --wire-x:#9AA1A9;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#E7E7E2; --surface:#F6F6F3; --sunk:#DEDED8;
+  --ink:#17191B; --ink-2:#4A4E52; --muted:#7C8085;
+  --rule:#C9CAC4; --rule-2:#D8D9D3;
+  --shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.06);
+  --wire-0:#8A9096; --wire-1:#C4392E; --wire-2:#D4762A; --wire-3:#B8951F;
+  --wire-4:#2F855A; --wire-5:#2B6CB0; --wire-6:#7048A8; --wire-7:#17879B;
+  --wire-8:#8B5E3C; --wire-9:#B03A6E; --wire-10:#9A7B1F; --wire-x:#6B7280;
+}
+:root[data-theme="dark"]{
+  --paper:#131518; --surface:#1B1E22; --sunk:#0E1013;
+  --ink:#E8E9E6; --ink-2:#A8ADB2; --muted:#767B81;
+  --rule:#2C3036; --rule-2:#23272C;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.35);
+  --wire-0:#A2A8AE; --wire-1:#E4695C; --wire-2:#EE9550; --wire-3:#D8B340;
+  --wire-4:#4FB07C; --wire-5:#5A9BE0; --wire-6:#9C74D8; --wire-7:#3FB0C6;
+  --wire-8:#B98254; --wire-9:#DC6B9B; --wire-10:#C7A43C; --wire-x:#9AA1A9;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.75;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+
+/* wire color per part */
+[data-wire="0"]{--wire:var(--wire-0)} [data-wire="1"]{--wire:var(--wire-1)}
+[data-wire="2"]{--wire:var(--wire-2)} [data-wire="3"]{--wire:var(--wire-3)}
+[data-wire="4"]{--wire:var(--wire-4)} [data-wire="5"]{--wire:var(--wire-5)}
+[data-wire="6"]{--wire:var(--wire-6)} [data-wire="7"]{--wire:var(--wire-7)}
+[data-wire="8"]{--wire:var(--wire-8)} [data-wire="9"]{--wire:var(--wire-9)}
+[data-wire="10"]{--wire:var(--wire-10)} [data-wire="x"]{--wire:var(--wire-x)}
+
+/* ============================================================
+   SHELL
+   ============================================================ */
+.app{display:flex; min-height:100vh}
+
+/* ---- SIDEBAR : the loom ---- */
+.sidebar{
+  width:var(--sb-w); flex:0 0 var(--sb-w);
+  position:sticky; top:0; height:100vh;
+  background:var(--surface); border-right:1px solid var(--rule);
+  display:flex; flex-direction:column; z-index:40;
+}
+.sb-head{padding:22px 20px 14px; border-bottom:1px solid var(--rule-2)}
+.brand{display:flex; align-items:center; gap:9px; margin-bottom:16px}
+.brand-mark{
+  width:24px; height:24px; flex:0 0 24px;
+  display:grid; place-items:center;
+  background:var(--ink); color:var(--paper);
+  border-radius:5px;
+  font-size:15px; font-weight:800; letter-spacing:-.02em; line-height:1;
+}
+.brand-name{font-size:15px; font-weight:800; letter-spacing:-.02em}
+.searchbtn{
+  width:100%; display:flex; align-items:center; gap:8px;
+  padding:8px 10px; background:var(--paper); color:var(--muted);
+  border:1px solid var(--rule); border-radius:3px;
+  font-family:var(--f-mono); font-size:12px; cursor:pointer; text-align:left;
+}
+.searchbtn:hover{border-color:var(--ink-2); color:var(--ink-2)}
+.searchbtn kbd{
+  margin-left:auto; font-family:var(--f-mono); font-size:10px;
+  border:1px solid var(--rule); border-radius:2px; padding:1px 4px; color:var(--muted);
+}
+
+.toc{flex:1; overflow-y:auto; padding:14px 0 60px; position:relative}
+/* the cable bundle running down the sidebar */
+.toc::before{
+  content:""; position:absolute; left:19px; top:0; bottom:0; width:1px;
+  background:linear-gradient(var(--rule-2), var(--rule) 8%, var(--rule) 92%, transparent);
+}
+.toc-part{position:relative}
+.toc-part-btn{
+  width:100%; display:flex; align-items:center; gap:10px;
+  padding:7px 16px 7px 14px; background:none; border:0; cursor:pointer;
+  font-family:inherit; color:var(--ink); text-align:left;
+}
+/* the strand jumper: colored stub branching off the bundle */
+.strand{
+  flex:0 0 12px; height:3px; border-radius:2px; background:var(--wire);
+  opacity:.55; transition:opacity .18s, transform .18s; transform-origin:left;
+}
+.toc-part.is-open .strand,.toc-part.is-active .strand{opacity:1; transform:scaleX(1.5)}
+.toc-part-label{
+  font-family:var(--f-mono); font-size:10px; letter-spacing:.1em;
+  color:var(--muted); flex:0 0 auto;
+}
+.toc-part-title{font-size:13.5px; font-weight:650; letter-spacing:-.01em; line-height:1.35}
+.toc-part.is-active .toc-part-title{color:var(--wire)}
+.toc-chs{list-style:none; margin:0; padding:0 14px 8px 41px; display:none}
+.toc-part.is-open .toc-chs{display:block}
+.toc-chs a{
+  display:block; padding:4px 8px; border-left:1px solid var(--rule-2);
+  color:var(--ink-2); text-decoration:none; font-size:12.5px; line-height:1.5;
+}
+.toc-chs a:hover{color:var(--ink); border-left-color:var(--wire)}
+.toc-chs a.is-current{color:var(--wire); border-left-color:var(--wire); font-weight:600}
+.toc-ch-no{font-family:var(--f-mono); font-size:10.5px; opacity:.65; margin-right:5px}
+
+/* ---- MAIN ---- */
+.doc{flex:1; min-width:0; padding:0 40px 160px; position:relative}
+.docwrap{max-width:var(--measure); margin:0 auto}
+
+.topbar{
+  position:sticky; top:0; z-index:30; display:flex; align-items:center; gap:10px;
+  height:52px; margin:0 -40px 0; padding:0 40px;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule-2);
+}
+.crumb{font-family:var(--f-mono); font-size:11px; color:var(--muted); letter-spacing:.04em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.crumb b{color:var(--ink-2); font-weight:600}
+.topbar-sp{margin-left:auto}
+.iconbtn{
+  width:30px; height:30px; display:grid; place-items:center; cursor:pointer;
+  background:none; border:1px solid var(--rule); border-radius:3px; color:var(--ink-2);
+}
+.iconbtn:hover{border-color:var(--ink-2); color:var(--ink)}
+.iconbtn svg{width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.6}
+.menubtn{display:none}
+.progress{position:absolute; left:0; bottom:-1px; height:2px; background:var(--ink-2); width:0}
+
+/* masthead */
+.masthead{padding:86px 0 64px; border-bottom:1px solid var(--rule)}
+.mast-eyebrow{
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 20px;
+}
+.mast-title{font-size:clamp(2.4rem,6vw,3.6rem); line-height:1.04; letter-spacing:-.035em;
+  font-weight:850; margin:0 0 6px}
+.mast-sub{font-size:clamp(1.1rem,2.4vw,1.35rem); font-weight:500; color:var(--ink-2);
+  letter-spacing:-.015em; margin:0 0 28px}
+.mast-lede{font-size:1.02rem; color:var(--ink-2); max-width:34rem; margin:0 0 34px}
+.mast-lede strong{color:var(--ink); font-weight:650}
+/* signature: the loom diagram — 11 strands bundling into one connector */
+.loomfig{margin:0 0 34px}
+.loomfig svg{width:100%; height:auto; display:block; overflow:visible}
+.loomfig figcaption{
+  font-family:var(--f-mono); font-size:10.5px; color:var(--muted);
+  letter-spacing:.06em; margin-top:10px;
+}
+.mast-meta{display:flex; flex-wrap:wrap; gap:0 28px; font-family:var(--f-mono); font-size:11px;
+  color:var(--muted); letter-spacing:.04em}
+.mast-meta b{color:var(--ink-2); font-weight:600}
+
+/* ---- PART ---- */
+.part{padding:72px 0 8px; scroll-margin-top:60px}
+.part-head{margin-bottom:36px}
+.pin{display:flex; align-items:center; gap:10px; margin-bottom:14px}
+.pin-swatch{width:26px; height:4px; border-radius:2px; background:var(--wire)}
+.pin-label{font-family:var(--f-mono); font-size:11px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--wire); font-weight:600}
+.part-title{font-size:clamp(1.7rem,4vw,2.15rem); line-height:1.15; letter-spacing:-.03em;
+  font-weight:800; margin:0 0 10px}
+.part-note{font-size:.95rem; color:var(--muted); margin:0; max-width:36rem}
+
+.ch{padding:24px 0; border-top:1px solid var(--rule-2); scroll-margin-top:70px}
+.ch-title{font-size:1.08rem; font-weight:700; letter-spacing:-.015em; margin:0 0 8px;
+  display:flex; gap:10px; align-items:baseline}
+.ch-no{font-family:var(--f-mono); font-size:.8rem; color:var(--wire); flex:0 0 auto; font-weight:600}
+.ch-body{color:var(--ink-2); font-size:.95rem}
+.ch-body p{margin:0 0 12px}
+.ch-body ul{margin:0 0 12px; padding-left:20px}
+.ch-body li{margin:3px 0}
+.pending{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; color:var(--muted);
+}
+.pending::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--wire); opacity:.5}
+
+/* materials block */
+.mats{margin:14px 0 4px; padding:16px 18px; background:var(--surface);
+  border:1px solid var(--rule-2); border-left:3px solid var(--wire); border-radius:3px}
+.mats-h{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 10px}
+.mats ul{list-style:none; margin:0; padding:0}
+.mats li{font-size:.88rem; color:var(--ink-2); padding:3px 0; display:flex; gap:8px}
+.mats li span{flex:0 0 auto}
+.mats code{font-family:var(--f-mono); font-size:.82rem; background:var(--sunk);
+  padding:1px 5px; border-radius:2px; color:var(--ink)}
+
+/* code block + copy */
+.code{position:relative; margin:16px 0; background:var(--sunk);
+  border:1px solid var(--rule-2); border-radius:3px; overflow:hidden}
+.code-head{display:flex; align-items:center; gap:8px; padding:7px 10px;
+  border-bottom:1px solid var(--rule-2); font-family:var(--f-mono); font-size:11px; color:var(--muted)}
+.code pre{margin:0; padding:14px 16px; overflow-x:auto; font-family:var(--f-mono);
+  font-size:12.5px; line-height:1.65; color:var(--ink)}
+.copybtn{margin-left:auto; background:none; border:1px solid var(--rule); border-radius:2px;
+  color:var(--muted); font-family:var(--f-mono); font-size:10px; padding:2px 7px; cursor:pointer}
+.copybtn:hover{color:var(--ink); border-color:var(--ink-2)}
+.copybtn.ok{color:var(--wire-4); border-color:var(--wire-4)}
+
+/* ---- rich content inside .ch-body ---- */
+.ch-body h4{font-size:.98rem; font-weight:700; color:var(--ink); letter-spacing:-.01em;
+  margin:20px 0 8px}
+.ch-body .lead{font-size:1.04rem; color:var(--ink); font-weight:450}
+.ch-body strong{color:var(--ink); font-weight:650}
+.ch-body a{color:var(--wire, var(--ink)); text-decoration:underline; text-underline-offset:2px;
+  text-decoration-thickness:1px}
+.ch-body code{font-family:var(--f-mono); font-size:.86em; background:var(--sunk);
+  padding:1px 5px; border-radius:2px; color:var(--ink)}
+.ch-body ol{margin:0 0 12px; padding-left:20px}
+.ch-body blockquote{margin:14px 0; padding:4px 0 4px 16px; border-left:3px solid var(--rule);
+  color:var(--ink-2); font-style:italic}
+.ch-body hr{border:0; border-top:1px solid var(--rule-2); margin:22px 0}
+
+/* callout — tip / warn / note */
+.callout{margin:16px 0; padding:14px 16px 14px 15px; border:1px solid var(--rule-2);
+  border-left:3px solid var(--wire, var(--ink-2)); border-radius:3px; background:var(--surface);
+  font-size:.92rem; color:var(--ink-2)}
+.callout p{margin:0 0 8px} .callout p:last-child{margin:0}
+.callout-h{display:flex; align-items:center; gap:7px; font-family:var(--f-mono);
+  font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); margin:0 0 8px}
+.callout-h b{color:var(--ink); font-weight:700; letter-spacing:.04em}
+.callout.tip{--wire:var(--wire-4)}
+.callout.warn{--wire:var(--wire-1)}
+.callout.note{--wire:var(--wire-5)}
+
+/* "다른 팀이라면?" cross-domain box */
+.otherteam{margin:18px 0; padding:0; border:1px dashed var(--rule); border-radius:4px;
+  background:color-mix(in srgb, var(--surface) 70%, transparent); overflow:hidden}
+.otherteam-h{display:flex; align-items:center; gap:8px; padding:9px 14px;
+  border-bottom:1px dashed var(--rule); font-family:var(--f-mono); font-size:11px;
+  letter-spacing:.06em; color:var(--ink-2)}
+.otherteam-h .ic{font-size:13px}
+.otherteam-body{padding:12px 14px; font-size:.9rem; color:var(--ink-2)}
+.otherteam-body dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:6px 14px}
+.otherteam-body dt{font-weight:650; color:var(--ink); white-space:nowrap}
+.otherteam-body dd{margin:0}
+
+/* data table */
+.tblwrap{margin:16px 0; overflow-x:auto; border:1px solid var(--rule-2); border-radius:3px}
+table.htable{width:100%; border-collapse:collapse; font-size:.88rem}
+.htable th,.htable td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule-2);
+  vertical-align:top}
+.htable thead th{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface); font-weight:600}
+.htable tbody tr:last-child td{border-bottom:0}
+.htable code{white-space:nowrap}
+
+/* key term / takeaway strip */
+.takeaway{margin:20px 0 6px; padding:14px 16px; border-radius:3px;
+  background:var(--ink); color:var(--paper)}
+.takeaway .callout-h{color:color-mix(in srgb, var(--paper) 60%, transparent)}
+.takeaway .callout-h b{color:var(--paper)}
+.takeaway p{margin:0; font-size:.95rem; color:color-mix(in srgb, var(--paper) 92%, transparent)}
+.kbd-inline code{background:var(--surface); border:1px solid var(--rule)}
+
+/* incident narrative — why this rule was born */
+.incident{margin:18px 0; padding:0; border:1px solid var(--rule-2); border-radius:4px;
+  background:var(--surface); overflow:hidden}
+.incident-h{display:flex; align-items:center; gap:8px; padding:8px 14px;
+  background:color-mix(in srgb, var(--wire-1) 12%, transparent);
+  border-bottom:1px solid var(--rule-2);
+  font-family:var(--f-mono); font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-2)}
+.incident-h b{color:var(--ink); font-weight:700}
+.incident-body{padding:12px 14px; font-size:.9rem; color:var(--ink-2)}
+.incident-body p{margin:0 0 8px} .incident-body p:last-child{margin:0}
+.incident-body .rule{display:block; margin-top:10px; padding:8px 11px;
+  background:var(--sunk); border-left:3px solid var(--wire-4); border-radius:2px;
+  font-size:.88rem; color:var(--ink)}
+
+/* before / after transcript */
+.ba{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:18px 0}
+@media (max-width:760px){ .ba{grid-template-columns:1fr} }
+.ba-col{border:1px solid var(--rule-2); border-radius:3px; overflow:hidden;
+  background:var(--surface); display:flex; flex-direction:column}
+.ba-h{padding:7px 12px; font-family:var(--f-mono); font-size:10.5px;
+  letter-spacing:.1em; text-transform:uppercase; border-bottom:1px solid var(--rule-2)}
+.ba-col.before .ba-h{color:var(--wire-1); background:color-mix(in srgb, var(--wire-1) 9%, transparent)}
+.ba-col.after .ba-h{color:var(--wire-4); background:color-mix(in srgb, var(--wire-4) 9%, transparent)}
+.ba-body{padding:11px 12px; font-size:.85rem; line-height:1.6; flex:1}
+.turn{margin:0 0 9px} .turn:last-child{margin:0}
+.turn .who{display:block; font-family:var(--f-mono); font-size:9.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:2px}
+.turn .said{color:var(--ink-2)}
+.turn.user .said{color:var(--ink)}
+.ba-note{padding:8px 12px; border-top:1px solid var(--rule-2); font-size:.8rem;
+  color:var(--muted); background:var(--paper)}
+
+/* step-by-step walkthrough */
+.walk{margin:18px 0; counter-reset:walkstep}
+.walk-step{position:relative; padding:0 0 18px 34px; border-left:1px solid var(--rule-2);
+  margin-left:9px}
+.walk-step:last-child{border-left-color:transparent; padding-bottom:0}
+.walk-step::before{counter-increment:walkstep; content:counter(walkstep);
+  position:absolute; left:-10px; top:0; width:20px; height:20px; border-radius:50%;
+  background:var(--ink); color:var(--paper); font-family:var(--f-mono); font-size:10px;
+  display:grid; place-items:center; font-weight:600}
+.walk-step h5{margin:1px 0 6px; font-size:.94rem; font-weight:700; color:var(--ink);
+  letter-spacing:-.01em}
+.walk-step .mins{font-family:var(--f-mono); font-size:10px; color:var(--muted);
+  letter-spacing:.06em; margin-left:7px; font-weight:400}
+.walk-step p{margin:0 0 8px; font-size:.9rem}
+
+/* ---- SEARCH ---- */
+.ovl{position:fixed; inset:0; z-index:90; display:none; padding:12vh 16px 16px;
+  background:rgba(0,0,0,.4); backdrop-filter:blur(3px)}
+.ovl.on{display:block}
+.sbox{max-width:620px; margin:0 auto; background:var(--surface); border:1px solid var(--rule);
+  border-radius:5px; box-shadow:var(--shadow); overflow:hidden}
+.sbox-top{display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--rule-2)}
+.sbox-top svg{width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:1.8;flex:0 0 auto}
+#sInput{flex:1; background:none; border:0; outline:none; color:var(--ink);
+  font-family:var(--f-body); font-size:15px}
+#sInput::placeholder{color:var(--muted)}
+.sbox-hint{font-family:var(--f-mono); font-size:10px; color:var(--muted)}
+.sres{max-height:52vh; overflow-y:auto; padding:6px}
+.sres-empty{padding:26px 16px; text-align:center; color:var(--muted); font-size:13px}
+.sgrp{font-family:var(--f-mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--muted); padding:10px 12px 5px}
+.sitem{display:block; padding:8px 12px; border-radius:3px; text-decoration:none;
+  color:var(--ink); border-left:2px solid transparent; cursor:pointer}
+.sitem:hover,.sitem.sel{background:var(--paper); border-left-color:var(--wire)}
+.sitem-t{font-size:13.5px; font-weight:600; letter-spacing:-.01em}
+.sitem-t .hl{background:color-mix(in srgb, var(--wire) 26%, transparent); border-radius:2px}
+.sitem-p{font-size:11.5px; color:var(--muted); margin-top:2px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.sitem-p .hl{color:var(--ink); background:color-mix(in srgb, var(--wire) 20%, transparent)}
+
+/* ---- RESPONSIVE ---- */
+.scrim{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:35; display:none}
+.scrim.on{display:block}
+@media (max-width:960px){
+  .sidebar{position:fixed; left:0; top:0; transform:translateX(-100%); transition:transform .22s}
+  .sidebar.on{transform:none}
+  .doc{padding:0 22px 120px}
+  .topbar{margin:0 -22px; padding:0 22px}
+  .menubtn{display:grid}
+  .masthead{padding:52px 0 44px}
+}
+:focus-visible{outline:2px solid var(--wire, var(--ink-2)); outline-offset:2px; border-radius:2px}
+</style>
+</head>
+<body>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span class="brand-name">실무 하네스 엔지니어링</span>
+      </div>
+      <button class="searchbtn" id="searchOpen">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        전문 검색
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav class="toc" id="toc" aria-label="목차"></nav>
+  </aside>
+
+  <!-- ================= DOCUMENT ================= -->
+  <main class="doc">
+    <div class="topbar">
+      <button class="iconbtn menubtn" id="menuBtn" aria-label="목차 열기">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="crumb" id="crumb">표지</div>
+      <div class="topbar-sp"></div>
+      <button class="iconbtn" id="themeBtn" aria-label="테마 전환">
+        <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      </button>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="docwrap">
+
+      <!-- ---------- MASTHEAD ---------- -->
+      <header class="masthead" id="cover">
+        <p class="mast-eyebrow">Harness Engineering in Practice · 2026</p>
+        <h1 class="mast-title">실무 하네스<br>엔지니어링</h1>
+        <p class="mast-sub">모델을 바꾸지 말고, 모델 주변을 설계하라</p>
+
+        <figure class="loomfig">
+          <svg viewBox="0 0 640 116" role="img" aria-label="11개의 색색 전선이 하나의 커넥터로 묶이는 하네스 다이어그램">
+            <g id="loomStrands" fill="none" stroke-width="2.5" stroke-linecap="round"></g>
+            <g id="loomConn"></g>
+          </svg>
+          <figcaption>FIG. 0 — 11개 가닥이 하나의 커넥터로 묶인다. 이 책의 구조이자, 하네스 그 자체.</figcaption>
+        </figure>
+
+        <p class="mast-lede">
+          하네스 엔지니어링은 LLM이 실무에서 <strong>신뢰할 수 있게</strong> 동작하도록
+          컨텍스트·도구·자동화·검증·관측을 설계하는 실천 기술입니다.
+          이 책은 개인 활용에서 시작해 팀 하네스, 조직 인프라를 거쳐
+          <strong>하네스 기반 회사</strong>를 세우는 데까지 이어집니다.
+        </p>
+
+        <div class="mast-meta">
+          <span>본편 <b>Part 0–10</b></span>
+          <span>부록 <b>A–G</b></span>
+          <span>관통 시나리오 <b>마켓플로우</b></span>
+          <span>예시 <b>examples/</b></span>
+        </div>
+      </header>
+
+      <!-- ---------- PART 0 ---------- -->
+      <section class="part" id="part-0" data-wire="0" data-label="Part 0" data-title="왜 하네스인가">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 0</span></div>
+          <h2 class="part-title">왜 하네스인가</h2>
+          <p class="part-note">도구 사용법에 들어가기 전에, 무엇을 왜 설계하는지부터 맞춘다.</p>
+        </div>
+        <article class="ch" id="ch-0-1"><h3 class="ch-title"><span class="ch-no">0.1</span>하네스 엔지니어링이란? — 프롬프트 엔지니어링과의 차이</h3>
+        <div class="ch-body">
+          <p class="lead">하네스 엔지니어링은 <strong>모델에게 무엇을 말할까</strong>가 아니라, <strong>모델을 무엇으로 둘러쌀까</strong>를 설계하는 일입니다.</p>
+          <p>프롬프트 엔지니어링은 한 번의 대화, 한 번의 요청을 잘 짜는 기술입니다. 좋은 프롬프트는 그 순간엔 훌륭한 답을 끌어내지만, 다음 사람이 같은 작업을 할 때는 처음부터 다시 써야 합니다. 지식이 <em>사람의 머릿속</em>에 남고 <em>시스템</em>에 남지 않죠.</p>
+          <p>하네스 엔지니어링은 그 지식을 <strong>모델 주변의 구조물</strong>로 굳힙니다. 프로젝트 규칙은 파일에, 반복 작업은 명령어에, 안전장치는 자동화에, 검증은 피드백 루프에 새깁니다. 그러면 누가 언제 작업하든 같은 맥락, 같은 규칙, 같은 품질이 재현됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>구분</th><th>프롬프트 엔지니어링</th><th>하네스 엔지니어링</th></tr></thead>
+            <tbody>
+              <tr><td>단위</td><td>한 번의 요청</td><td>반복되는 작업 전체</td></tr>
+              <tr><td>지식의 저장 위치</td><td>사람의 머릿속·메모</td><td>버전 관리되는 파일</td></tr>
+              <tr><td>재현성</td><td>매번 다시 작성</td><td>팀 전체가 자동 재사용</td></tr>
+              <tr><td>개선 방식</td><td>문장을 고쳐 쓴다</td><td>구조를 리팩토링한다</td></tr>
+              <tr><td>실패했을 때</td><td>다시 물어본다</td><td>가드레일이 막는다</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout note"><p class="callout-h"><b>한 줄로</b></p><p>프롬프트는 <em>대화</em>를 설계하고, 하네스는 <em>환경</em>을 설계합니다. 이 책은 후자를 다룹니다 — 다만 둘은 배타적이지 않고, 좋은 하네스 안에서 좋은 프롬프트가 재사용됩니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-0-2"><h3 class="ch-title"><span class="ch-no">0.2</span>“모델을 바꾸지 말고 모델 주변을 설계하라”</h3>
+        <div class="ch-body">
+          <p>AI 결과가 기대에 못 미칠 때 첫 반응은 대개 “더 좋은 모델은 없나”입니다. 하지만 실무에서 결과 품질을 가르는 변수의 대부분은 모델이 아니라 <strong>모델에게 주어진 조건</strong>입니다. 같은 모델이라도 프로젝트 규칙을 알고 있는지, 올바른 도구가 손에 있는지, 결과를 검증할 방법이 있는지에 따라 결과물이 완전히 달라집니다.</p>
+          <p>이것이 이 책의 핵심 명제입니다. 모델은 엔진이고, 하네스는 그 엔진을 실제 도로에서 달리게 하는 <strong>차체·배선·계기판</strong>입니다. 엔진만 좋다고 차가 되지 않습니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>흔한 착각</b></p><p>“모델을 업그레이드하면 해결되겠지.” — 대개는 해결되지 않습니다. 컨텍스트가 부실하면 더 똑똑한 모델은 <em>더 그럴듯하게 틀린 답</em>을 내놓을 뿐입니다. 먼저 주변을 설계하세요.</p></div>
+          <p>그리고 하네스에는 실용적인 이점이 하나 더 있습니다. <strong>모델은 갈아끼울 수 있다</strong>는 점입니다. 잘 설계된 하네스는 특정 모델에 묶이지 않으므로, 더 좋은 모델이 나오면 그 위에서 곧바로 더 좋은 결과를 냅니다. 투자가 사라지지 않고 축적됩니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-0-3"><h3 class="ch-title"><span class="ch-no">0.3</span>하네스의 축 한눈에 보기 — 컨텍스트·행동·자동화·위임·연결·검증·관측</h3>
+        <div class="ch-body">
+          <p>하네스는 하나의 덩어리가 아니라 <strong>일곱 개의 축</strong>으로 이뤄집니다. 이 책의 Part 1–7이 각 축에 대응합니다. 지금 전체 지도를 눈에 넣어 두면, 이후 어느 장을 펴든 “이건 어느 가닥이구나”가 바로 보입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>축</th><th>질문</th><th>대표 구성요소</th><th>해당 장</th></tr></thead>
+            <tbody>
+              <tr><td><strong>컨텍스트</strong></td><td>모델이 무엇을 알아야 하나?</td><td><code>CLAUDE.md</code>, 메모리</td><td>Part 1</td></tr>
+              <tr><td><strong>행동</strong></td><td>반복 작업을 어떻게 굳히나?</td><td>Slash Command, Skill</td><td>Part 2</td></tr>
+              <tr><td><strong>자동화</strong></td><td>사람 없이 무엇을 자동화하나?</td><td>Hook, <code>settings.json</code></td><td>Part 3</td></tr>
+              <tr><td><strong>위임</strong></td><td>일을 어떻게 나누나?</td><td>Subagent</td><td>Part 4</td></tr>
+              <tr><td><strong>연결</strong></td><td>외부 시스템과 어떻게 잇나?</td><td>MCP</td><td>Part 5</td></tr>
+              <tr><td><strong>검증</strong></td><td>결과를 어떻게 믿나?</td><td>피드백 루프, 테스트</td><td>Part 6</td></tr>
+              <tr><td><strong>관측</strong></td><td>무슨 일이 일어났는지 어떻게 보나?</td><td>로깅, 모니터링</td><td>Part 7</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>실무 순서</b></p><p>일곱 축을 한꺼번에 세울 필요는 없습니다. <strong>컨텍스트 → 행동 → 검증</strong> 세 축만 잡아도 체감 효과의 80%가 나옵니다. 나머지는 팀이 커지면서 하나씩 붙이세요. 일곱 축을 코드로 확장하는 Part 8(Agent SDK)과 조직으로 끌어올리는 Part 9–10이 그 뒤를 잇습니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-0-4"><h3 class="ch-title"><span class="ch-no">0.4</span>이 책을 읽는 법 — 역할별 추천 동선</h3>
+        <div class="ch-body">
+          <p>이 책은 앞에서 뒤로 읽어도 되지만, 백과사전처럼 필요한 장만 펴도 완결되게 썼습니다. 역할별 추천 동선은 이렇습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>당신이…</th><th>이렇게 읽으세요</th></tr></thead>
+            <tbody>
+              <tr><td><strong>개발자</strong></td><td>Part 1 → 2 → 3 → 6 → 4 → 5 → 7 → 8 순서. Part 8(Agent SDK)까지 완주 대상입니다.</td></tr>
+              <tr><td><strong>기획자·PM</strong></td><td>Part 1, 2, 6과 각 장의 🔀 “다른 팀이라면?” 박스. Part 9 플레이북.</td></tr>
+              <tr><td><strong>디자이너</strong></td><td>Part 1, 2와 🔀 박스들. 부록 A의 도메인 예시.</td></tr>
+              <tr><td><strong>팀 리더·경영진</strong></td><td>Part 0 → 9 → 10, 그리고 부록 B(전사 하네스). 기술 장은 훑어만 보세요.</td></tr>
+            </tbody>
+          </table></div>
+          <p>표기 약속: 📎 는 <strong>복사해 바로 쓰는 예시 파일</strong>, 🔀 는 <strong>다른 도메인으로의 응용</strong>입니다. 코드블록 오른쪽 위의 <em>복사</em> 버튼으로 내용을 가져갈 수 있고, 상단 <span class="kbd-inline"><code>⌘K</code></span> 로 전문 검색이 열립니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-0-5"><h3 class="ch-title"><span class="ch-no">0.5</span>마켓플로우 팀 소개 — 관통 시나리오 셋업</h3>
+        <div class="ch-body">
+          <p>추상적인 설명 대신, 이 책은 하나의 가상 회사를 처음부터 끝까지 따라갑니다. 바로 <strong>마켓플로우(MarketFlow)</strong>입니다.</p>
+          <div class="otherteam" data-wire="0">
+            <div class="otherteam-h"><span class="ic">🏢</span> COMPANY PROFILE — MarketFlow</div>
+            <div class="otherteam-body"><dl>
+              <dt>사업</dt><dd>중소 규모 종합 이커머스 플랫폼 운영</dd>
+              <dt>규모</dt><dd>구성원 약 30명, 개발 8 · 기획 5 · 디자인 4 · 데이터/CS 6 · 운영 7</dd>
+              <dt>스택</dt><dd>웹 프론트(React), 백엔드 API, 상품 DB, 사내 위키, 이슈 트래커</dd>
+              <dt>공통 고충</dt><dd>상품 등록·CS 응답·주간 리포트 같은 반복 업무가 많고, AI를 쓰긴 하는데 매번 맥락을 처음부터 설명해야 해 효율이 안 남</dd>
+            </dl></div>
+          </div>
+          <p>이 팀의 이야기는 <strong>어느 금요일 밤의 사고</strong>에서 시작합니다.</p>
+          <div class="incident">
+            <div class="incident-h"><b>사건 #0</b> · 3월 14일 금요일 22:40</div>
+            <div class="incident-body">
+              <p>신입 개발자 지훈이 할인 이벤트 기능을 배포했습니다. AI에게 “할인가 계산 로직 추가해줘”라고 요청했고, 결과는 완벽해 보였습니다. 테스트도 통과했고요.</p>
+              <p>문제는 새벽에 터졌습니다. 할인가가 <code>12345.6789</code>원처럼 계산되면서 결제 경로 곳곳에서 원 단위 반올림이 제각각 처리되면서, <strong>주문 1,200건의 결제 금액이 1~2원씩 어긋났습니다.</strong> 정산이 맞지 않아 회계팀이 주말을 반납했습니다.</p>
+              <p>월요일 회고에서 팀장 수진이 물었습니다. “지훈이 잘못인가요?” 아무도 그렇다고 하지 않았습니다. <strong>“우리는 원화를 정수로만 다룬다”는 규칙이 어디에도 적혀 있지 않았거든요.</strong> 3년 차 이상은 다 아는 암묵지였고, AI는 물론 몰랐습니다.</p>
+              <p class="rule">→ 그날 <code>CLAUDE.md</code> 첫 줄이 생겼습니다: <strong>“통화는 항상 원화(KRW) 정수로 다룬다.”</strong></p>
+            </div>
+          </div>
+          <p>이 책은 그 한 줄에서 시작해, 마켓플로우가 사고를 하나씩 겪으며 하네스를 쌓아 가는 과정을 따라갑니다. Part 1의 <code>CLAUDE.md</code>는 사라지지 않고 Part 3의 Hook, Part 4의 Subagent, Part 7의 로깅으로 <strong>계속 재사용</strong>됩니다. 장을 넘길 때마다 하네스가 한 겹씩 쌓이고, Part 9에서 그 전체 지도를 다시 펼칩니다.</p>
+          <div class="callout note"><p class="callout-h"><b>규칙에는 사연이 있다</b></p><p>앞으로 <span style="color:var(--wire-1)">■</span> <strong>사건</strong> 박스가 나올 때마다, 그건 <em>규칙이 태어난 순간</em>입니다. 좋은 하네스는 책상에서 설계되지 않고 <strong>사고에서 자랍니다.</strong> 당신 팀의 <code>CLAUDE.md</code>도 그렇게 자랄 겁니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-0-6"><h3 class="ch-title"><span class="ch-no">0.6</span>이 책의 도달점 — 개인 활용에서 하네스 기반 회사까지</h3>
+        <div class="ch-body">
+          <p>이 책은 네 단계의 사다리로 올라갑니다. 지금 어디에 서 있든, 다음 칸이 어디인지 보이도록 설계했습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>단계</th><th>상태</th><th>해당 부분</th></tr></thead>
+            <tbody>
+              <tr><td>1 · 개인 활용</td><td>나 혼자 잘 쓴다</td><td>Part 1–2</td></tr>
+              <tr><td>2 · 팀 하네스</td><td>팀이 같은 하네스를 공유한다</td><td>Part 3–9</td></tr>
+              <tr><td>3 · 조직 인프라</td><td>전사 시스템으로 통합한다</td><td>부록 B</td></tr>
+              <tr><td>4 · 하네스 기반 회사</td><td>조직·프로세스·경제성까지 하네스 전제로 설계한다</td><td>Part 10</td></tr>
+            </tbody>
+          </table></div>
+          <div class="takeaway"><p class="callout-h"><b>이 책의 약속</b></p><p>마지막 장을 덮을 때, 당신은 “AI를 잘 쓰는 사람”이 아니라 “AI가 잘 돌아가는 환경을 설계하는 사람”이 되어 있을 것입니다. 그 차이가 개인과 조직의 격차를 만듭니다.</p></div>
+        </div></article>
+      </section>
+
+      <!-- ---------- PART 1 ---------- -->
+      <section class="part" id="part-1" data-wire="1" data-label="Part 1" data-title="컨텍스트 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 1</span></div>
+          <h2 class="part-title">컨텍스트 하네스</h2>
+          <p class="part-note">가장 즉효가 나는 지점. 매번 설명하던 것을 파일 하나로 고정한다.</p>
+        </div>
+        <article class="ch" id="ch-1-1"><h3 class="ch-title"><span class="ch-no">1.1</span><code>CLAUDE.md</code> — 프로젝트의 상시 규칙</h3>
+        <div class="ch-body">
+          <p class="lead">한 번 쓰면 매 세션마다 자동으로 읽히는 파일. 하네스의 가장 낮은 진입 장벽이자 가장 큰 효과.</p>
+          <p><code>CLAUDE.md</code>는 프로젝트 루트에 두는 마크다운 파일입니다. 세션이 시작될 때마다 그 내용이 <strong>자동으로 컨텍스트에 주입</strong>되므로, “우리는 원화를 정수로 다룬다”, “테스트는 <code>npm test</code>로 돌린다” 같은 규칙을 매번 설명할 필요가 사라집니다. 신입에게 매일 아침 브리핑을 반복하지 않게 해주는 <strong>사내 위키 첫 페이지</strong>인 셈입니다.</p>
+          <p>왜 이게 그토록 효과적일까요? 0.2의 명제 — 문제는 모델이 아니라 조건이다 — 가 가장 극적으로 드러나는 곳이 여기입니다. 말보다 실제 대화를 보는 게 빠릅니다. <strong>같은 모델, 같은 요청</strong>인데 <code>CLAUDE.md</code> 하나로 결과가 이렇게 갈립니다.</p>
+          <div class="ba">
+            <div class="ba-col before">
+              <div class="ba-h">✕ 하네스 없이</div>
+              <div class="ba-body">
+                <p class="turn user"><span class="who">개발자</span><span class="said">할인가 필드 추가해줘</span></p>
+                <p class="turn"><span class="who">에이전트</span><span class="said">네, <code>discountPrice: number</code> 필드를 추가했습니다. 소수점 할인율 계산도 넣었습니다.</span></p>
+                <p class="turn user"><span class="who">개발자</span><span class="said">아 우리 금액은 정수만 써. 그리고 카멜케이스 아니고 스네이크야</span></p>
+                <p class="turn"><span class="who">에이전트</span><span class="said">죄송합니다. <code>discount_price</code>로 수정했습니다.</span></p>
+                <p class="turn user"><span class="who">개발자</span><span class="said">필드명도 우리 규칙은 <code>_krw</code> 붙여야 돼…</span></p>
+              </div>
+              <div class="ba-note">왕복 3회. 매번 같은 설명을 반복. 신입이면 5회.</div>
+            </div>
+            <div class="ba-col after">
+              <div class="ba-h">✓ CLAUDE.md 적용 후</div>
+              <div class="ba-body">
+                <p class="turn user"><span class="who">개발자</span><span class="said">할인가 필드 추가해줘</span></p>
+                <p class="turn"><span class="who">에이전트</span><span class="said">프로젝트 규칙에 따라 <code>discount_price_krw</code>(원화 정수)로 추가했습니다. 스네이크케이스 API 응답과 어댑터 계층 변환도 함께 반영했습니다. <code>npm test</code> 27개 통과 확인했습니다.</span></p>
+              </div>
+              <div class="ba-note">왕복 1회. 규칙·명명·검증까지 한 번에. 누가 요청하든 동일.</div>
+            </div>
+          </div>
+          <p>차이는 모델이 아니라 <strong>모델이 알고 있던 것</strong>입니다. 오른쪽 에이전트가 더 똑똑한 게 아니라, 우리 규칙을 <em>파일로 받았을</em> 뿐입니다.</p>
+          <p>마켓플로우가 처음 만든 <code>CLAUDE.md</code>를 봅시다. 도메인 규칙·명령·금지사항을 담았습니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">CLAUDE.md — 웹앱 저장소 (예시 폴더: webapp.CLAUDE.md)</div><pre># MarketFlow 웹앱
+
+전자상거래 플랫폼의 프론트엔드 + 백엔드 API 저장소입니다.
+
+## 프로젝트 규칙
+- 통화는 항상 원화(KRW) **정수**로 다룬다. 소수점·부동소수 금지.
+- 상품 가격은 `price_krw` 필드를 쓴다. `price`, `amount` 금지.
+- 모든 API 응답은 `snake_case`. 프론트 변환은 어댑터 계층에서만.
+- 날짜는 ISO 8601 + KST(+09:00)로 저장한다.
+
+## 자주 쓰는 명령
+- 개발 서버: `npm run dev`
+- 테스트: `npm test` (변경한 코드는 반드시 테스트 후 완료 보고)
+- 타입체크: `npm run typecheck`
+
+## 하지 말 것
+- 프로덕션 DB에 직접 쿼리 금지. 반드시 마이그레이션으로.
+- 결제 관련 코드 수정 시 사람 리뷰 없이 커밋 금지.</pre></div>
+          <h4>구조: 어떤 섹션을 두나</h4>
+          <p>정해진 양식은 없지만, 실무에서 검증된 골격이 있습니다. <strong>개요 → 규칙 → 명령 → 금지</strong>. 이 네 블록이면 대부분의 프로젝트가 커버됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>섹션</th><th>답하는 질문</th><th>예</th></tr></thead>
+            <tbody>
+              <tr><td><strong>개요</strong></td><td>이 저장소는 무엇인가</td><td>“이커머스 프론트+API”</td></tr>
+              <tr><td><strong>규칙</strong></td><td>어떻게 해야 하나</td><td>“가격은 원화 정수”</td></tr>
+              <tr><td><strong>명령</strong></td><td>무엇을 실행하나</td><td>“테스트는 <code>npm test</code>”</td></tr>
+              <tr><td><strong>금지</strong></td><td>절대 하면 안 되는 것</td><td>“프로덕션 DB 직접 쿼리 금지”</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>지금 바로 — 성장시키는 법</b></p><p>완벽하게 쓰려 하지 마세요. 빈 <code>CLAUDE.md</code>에 개요 한 줄만 적고 시작합니다. 그다음 <strong>AI가 규칙을 어길 때마다</strong> 그 규칙을 한 줄씩 추가하세요. “아, 또 <code>price</code>라고 쓰네” 싶으면 그 순간 규칙으로 박제합니다. 일주일이면 팀의 암묵지가 살아 있는 문서가 됩니다. 처음부터 완성본을 짜려다 아무것도 못 만드는 게 최악입니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-1-2"><h3 class="ch-title"><span class="ch-no">1.2</span>좋은 CLAUDE.md와 나쁜 CLAUDE.md — 분량·구체성·안티패턴</h3>
+        <div class="ch-body">
+          <p><code>CLAUDE.md</code>는 길수록 좋은 게 아닙니다. 오히려 <strong>길수록 나빠지기 쉽습니다.</strong> 모든 규칙이 매 세션 컨텍스트를 차지하고, 규칙이 100개면 모델은 그중 무엇이 중요한지 판단해야 합니다. 규칙이 많아질수록 각 규칙의 <em>신호</em>가 흐려지는 역설이죠. 좋은 파일은 <em>짧고, 구체적이고, 실행 가능</em>합니다.</p>
+          <h4>구체성 — 확인 가능한가</h4>
+          <p>가장 중요한 판별 기준은 하나입니다. <strong>“이 규칙을 지켰는지 아닌지 기계적으로 확인할 수 있는가?”</strong> 확인할 수 없는 규칙은 규칙이 아니라 구호이고, 구호는 컨텍스트만 잡아먹습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>나쁜 규칙 ❌ (구호)</th><th>좋은 규칙 ✅ (검증 가능)</th></tr></thead>
+            <tbody>
+              <tr><td>“코드를 깔끔하게 작성한다”</td><td>“함수는 40줄을 넘기지 않는다”</td></tr>
+              <tr><td>“좋은 커밋 메시지를 쓴다”</td><td>“커밋 메시지는 <code>feat:</code>, <code>fix:</code> 프리픽스로 시작한다”</td></tr>
+              <tr><td>“보안에 유의한다”</td><td>“비밀키는 <code>.env</code>에서만 읽고 절대 하드코딩하지 않는다”</td></tr>
+              <tr><td>“사용자 경험을 고려한다”</td><td>“에러 메시지는 다음에 할 행동을 알려준다”</td></tr>
+              <tr><td>“성능을 신경 쓴다”</td><td>“목록 API는 항상 페이지네이션한다(기본 20건)”</td></tr>
+            </tbody>
+          </table></div>
+          <h4>안티패턴 3종 — 이렇게 쓰면 무너진다</h4>
+          <p>실무에서 반복적으로 관찰되는 실패 유형입니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>① 소설</b></p><p>회사 연혁·비전·팀 자랑을 적습니다. 모델은 그 문장을 읽느라 컨텍스트를 쓰지만 코드를 짜는 데는 아무 도움이 안 됩니다. <strong>“이 문장이 모델의 행동을 바꾸나?”</strong>를 물어, 아니면 지우세요.</p></div>
+          <div class="callout warn"><p class="callout-h"><b>② 중복</b></p><p><code>README</code>·<code>package.json</code>·코드에 이미 있는 걸 옮겨 적습니다. 문제는 <em>둘이 어긋나는 순간</em>입니다. 어느 쪽이 진실인지 모델도 사람도 알 수 없게 되죠. 이미 코드가 말하는 건 적지 말고, <strong>코드가 말하지 않는 규칙</strong>만 적으세요.</p></div>
+          <div class="callout warn"><p class="callout-h"><b>③ 방치</b></p><p>한 번 쓰고 갱신하지 않아 현실과 달라집니다. <strong>틀린 규칙은 없는 규칙보다 나쁩니다</strong> — 모델이 그 틀린 규칙을 충실히 따르니까요. “테스트는 <code>pytest</code>”라고 적힌 채 실제로는 <code>npm test</code>로 바뀌었다면, 그 한 줄이 매번 사고를 냅니다.</p></div>
+          <p>분량 감각은 이렇습니다. 대부분의 프로젝트에서 <strong>화면 한두 페이지</strong>면 충분합니다. 그보다 길어지면 “이걸 정말 매 세션 읽혀야 하나”를 의심하고, 특정 폴더에만 필요한 건 디렉토리 스코프로 내리세요(다음 절).</p>
+        </div></article>
+
+        <article class="ch" id="ch-1-3"><h3 class="ch-title"><span class="ch-no">1.3</span>메모리 계층 구조 — 전역·프로젝트·디렉토리 스코프</h3>
+        <div class="ch-body">
+          <p>규칙에도 <strong>적용 범위</strong>가 있습니다. “나는 항상 한국어로 답을 받고 싶다”는 개인 전역 규칙이고, “이 저장소는 원화 정수를 쓴다”는 프로젝트 규칙이며, “이 폴더는 레거시라 손대지 마라”는 디렉토리 규칙입니다. 이걸 한 파일에 몰아넣으면 엉킵니다 — 내 개인 말투 취향이 팀 저장소에 커밋되고, 레거시 폴더 규칙이 전체에 적용되죠. 계층을 나눠 두면 각 규칙이 <strong>딱 필요한 범위에만</strong> 적용됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>범위</th><th>위치</th><th>담는 것</th><th>git</th></tr></thead>
+            <tbody>
+              <tr><td>전역(개인)</td><td><code>~/.claude/CLAUDE.md</code></td><td>내 언어·말투·선호</td><td>커밋 안 함</td></tr>
+              <tr><td>프로젝트</td><td><code>&lt;repo&gt;/CLAUDE.md</code></td><td>이 저장소의 규칙</td><td>커밋(공유)</td></tr>
+              <tr><td>디렉토리</td><td><code>&lt;repo&gt;/dir/CLAUDE.md</code></td><td>하위 폴더 지역 규칙</td><td>커밋(공유)</td></tr>
+            </tbody>
+          </table></div>
+          <p>더 가까운(더 구체적인) 범위가 넓은 범위를 <strong>보강</strong>합니다. 충돌하면 가까운 쪽이 이깁니다. 마켓플로우는 이렇게 나눴습니다 — 개인 전역에 “답변은 한국어로”, 저장소 루트에 프로젝트 규칙, 그리고 <code>legacy/</code> 폴더에 별도 파일로 “이 코드는 리팩토링 대상이 아니다”.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">legacy/CLAUDE.md — 디렉토리 스코프 예시</div><pre># 레거시 결제 모듈 (2024년 이전)
+
+이 폴더는 구 결제 시스템입니다. 신규 개발 대상이 아닙니다.
+
+## 이 폴더의 규칙
+- 리팩토링·구조 개선을 하지 않는다. 요청된 최소 수정만.
+- 새 기능을 여기 추가하지 않는다. `payments/v2/`에 만든다.
+- 버그 수정 시 반드시 기존 테스트를 먼저 실행해 회귀를 확인한다.</pre></div>
+          <p>이렇게 두면, 개발자가 <code>legacy/</code> 안에서 작업할 때만 이 규칙이 얹히고, 저장소 다른 곳에서는 방해하지 않습니다. <strong>규칙의 사정거리를 정확히 그리는 것</strong>이 계층의 핵심입니다.</p>
+          <div class="callout note"><p class="callout-h"><b>팀 공유의 원칙</b></p><p>프로젝트·디렉토리 <code>CLAUDE.md</code>는 <strong>git에 커밋</strong>하세요. 그래야 팀원 전체와 CI의 에이전트가 같은 규칙을 공유합니다. 반대로 개인 취향(말투·언어)은 전역 파일에 두어 저장소를 오염시키지 마세요. “이건 나만의 규칙인가, 팀의 규칙인가?”가 배치 기준입니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-1-4"><h3 class="ch-title"><span class="ch-no">1.4</span>컨텍스트 위생 — 무엇을 넣고 무엇을 빼는가</h3>
+        <div class="ch-body">
+          <p>컨텍스트는 공짜가 아닙니다. 넣는 모든 문장이 비용이고, 정작 중요한 규칙의 신호를 흐립니다. <strong>컨텍스트 위생(context hygiene)</strong>은 “무엇을 넣을까”만큼 “무엇을 빼고, 언제 치울까”를 관리하는 습관입니다. 파일 위생과 세션 위생, 두 층위가 있습니다.</p>
+          <h4>파일 위생 — CLAUDE.md에 무엇을</h4>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>넣을 것 ✅</th><th>뺄 것 ❌</th></tr></thead>
+            <tbody>
+              <tr><td>반복되는 규칙</td><td>한 번만 쓰는 정보</td></tr>
+              <tr><td>자주 쓰는 명령</td><td>코드에서 바로 읽히는 것</td></tr>
+              <tr><td>팀의 암묵적 합의</td><td>장황한 배경 설명</td></tr>
+              <tr><td>자주 어기는 실수의 가드레일</td><td>지난 결정의 히스토리</td></tr>
+            </tbody>
+          </table></div>
+          <h4>세션 위생 — 대화가 길어질 때</h4>
+          <p>긴 작업을 하다 보면 컨텍스트가 무관한 내용(옛 시도, 실패한 접근, 다 끝난 파일 탐색)으로 가득 차 품질이 떨어집니다. 사람도 회의가 세 시간을 넘으면 집중이 흐려지듯이요. 대응은 두 가지입니다.</p>
+          <ul>
+            <li><strong>정리·이월</strong> — 결론만 남기고 새 세션으로 넘어갑니다(도구의 <code>/clear</code>·<code>/compact</code> 같은 세션 정리 기능을 쓰거나, 요약을 새 세션의 첫 메시지로 붙여넣습니다). 필요한 합의는 <code>CLAUDE.md</code>나 별도 메모에 박제합니다.</li>
+            <li><strong>기록의 외부화</strong> — 세션 안에서만 아는 것에 의존하지 말고, 중요한 건 파일로 빼세요. 세션은 사라져도 파일은 남습니다.</li>
+          </ul>
+          <div class="callout tip"><p class="callout-h"><b>신호 대 잡음</b></p><p>“규칙을 하나 더 넣을까?”를 고민할 때, 그 규칙이 <em>다른 규칙들의 중요도를 얼마나 희석하는가</em>도 함께 보세요. 정말 중요한 규칙 5개가 잡다한 규칙 50개에 묻히면, 5개가 안 지켜집니다. 때로는 <strong>빼는 게 넣는 것보다 강력</strong>합니다.</p></div>
+          <div class="takeaway"><p class="callout-h"><b>Part 1 요약</b></p><p><code>CLAUDE.md</code> 하나가 팀의 반복 설명을 없앱니다. 짧고 구체적으로(검증 가능하게) 쓰고, 범위별로 나누고, 꾸준히 갱신하고, 잡음을 쳐내세요. 이 파일이 이후 <em>모든 장</em>에서 재사용되는 마켓플로우 하네스의 <strong>1번 부품</strong>입니다 — Part 3의 Hook도, Part 4의 에이전트도 이 규칙을 참조합니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — <code>webapp.CLAUDE.md</code>, <code>data.CLAUDE.md</code>, <code>planning.CLAUDE.md</code></div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 디자인 시스템 저장소용 CLAUDE.md</div></li>
+            <li><span>ℹ️</span><div>실제 파일명은 항상 <code>CLAUDE.md</code>입니다 — 예시 폴더의 <code>webapp.</code> 같은 접두어는 구분용일 뿐입니다.</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 2 ---------- -->
+      <section class="part" id="part-2" data-wire="2" data-label="Part 2" data-title="행동 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 2</span></div>
+          <h2 class="part-title">행동 하네스</h2>
+          <p class="part-note">반복하는 작업을 명령어와 스킬로 굳힌다.</p>
+        </div>
+        <article class="ch" id="ch-2-1"><h3 class="ch-title"><span class="ch-no">2.1</span>Slash Commands — 자주 쓰는 작업을 <code>/명령</code>으로</h3>
+        <div class="ch-body">
+          <p class="lead">같은 지시를 세 번 이상 타이핑했다면, 그건 커맨드가 되어야 합니다.</p>
+          <p>슬래시 커맨드는 <code>.claude/commands/</code> 폴더에 둔 마크다운 파일 하나입니다. 파일 이름이 곧 명령어가 됩니다 — <code>상품등록.md</code>를 만들면 <code>/상품등록</code>으로 부릅니다. 파일 안에는 “이 작업을 할 때 매번 하던 설명”을 그대로 적습니다. 그러면 팀 누구나 긴 프롬프트 대신 한 단어로 같은 작업을, <strong>같은 품질로</strong> 실행합니다.</p>
+          <p>이게 왜 하네스일까요? 커맨드는 <strong>“좋은 프롬프트를 팀 자산으로 승격”</strong>시키는 장치입니다. 잘하는 팀원의 완벽한 프롬프트가 그 사람 머릿속에만 있으면, 그 사람이 없을 때 품질이 무너집니다.</p>
+          <div class="incident">
+            <div class="incident-h"><b>사건 #1</b> · 5월 12일 월요일, 유진의 휴가 첫날</div>
+            <div class="incident-body">
+              <p>MD 유진은 상품 등록의 달인이었습니다. AI에게 던지는 그의 프롬프트는 원산지·배송·교환정책까지 빠짐없이 챙겼고, 결과물은 늘 그대로 등록 시스템에 붙여 넣을 수 있었습니다.</p>
+              <p>유진이 일주일 휴가를 갔습니다. 대신 등록을 맡은 동료가 “이 상품 등록용으로 정리해줘”라고 요청했고, 결과는 그럴듯했습니다 — 다만 <strong>교환/반품 안내가 통째로 빠져 있었습니다.</strong> 그 상태로 <strong>40개 상품이 등록됐고</strong>, 고객 문의가 쏟아진 뒤에야 발견됐습니다.</p>
+              <p>유진의 노하우는 문서 어디에도 없었습니다. <strong>그의 머릿속과 채팅 히스토리에만</strong> 있었죠.</p>
+              <p class="rule">→ 복귀한 유진이 자기 프롬프트를 파일로 옮겼습니다. <code>/상품등록</code> 커맨드의 탄생입니다.</p>
+            </div>
+          </div>
+          <div class="code" data-lang="markdown"><div class="code-head">.claude/commands/상품등록.md</div><pre>---
+description: 신규 상품 등록 초안을 규격에 맞춰 작성
+argument-hint: [상품명 또는 설명]
+---
+
+다음 상품을 우리 등록 규격에 맞춰 정리해줘: $ARGUMENTS
+
+규격:
+- 가격은 원화 정수(price_krw)
+- 카테고리는 사내 분류 체계에서 고른다
+- 상품명은 40자 이내, 과장 표현 금지
+- 필수: 원산지, 배송 정보, 교환/반품 안내
+- 누락된 정보는 채우지 말고 "확인 필요"로 표시한다</pre></div>
+          <h4>frontmatter — 커맨드의 메타 정보</h4>
+          <p>파일 상단의 <code>---</code> 사이 영역이 frontmatter입니다. 커맨드의 동작을 정합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>필드</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td><code>description</code></td><td>커맨드 목록에 보이는 한 줄 설명</td></tr>
+              <tr><td><code>argument-hint</code></td><td>어떤 인자를 받는지 힌트(예: <code>[상품명]</code>)</td></tr>
+              <tr><td><code>allowed-tools</code></td><td>이 커맨드가 쓸 수 있는 도구 제한(안전)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>커맨드로 만들 후보 찾기</b></p><p>지난 일주일 대화에서 <em>비슷하게 반복한 요청</em>을 세 개만 꼽아 보세요. 그게 첫 세 개의 커맨드입니다. 커맨드는 <code>.claude/commands/</code>에 두면 팀이 공유하고, <code>~/.claude/commands/</code>에 두면 나만 씁니다 — <code>CLAUDE.md</code>와 같은 계층 원리입니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-2-2"><h3 class="ch-title"><span class="ch-no">2.2</span>커맨드 인자·파일 참조·bash 실행</h3>
+        <div class="ch-body">
+          <p>커맨드는 정적인 텍스트를 넘어, <strong>입력을 받고 · 파일을 읽고 · 명령을 실행</strong>할 수 있습니다. 이 세 가지를 조합하면 커맨드가 살아 움직입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>기능</th><th>표기</th><th>뜻</th></tr></thead>
+            <tbody>
+              <tr><td>인자</td><td><code>$ARGUMENTS</code></td><td><code>/명령</code> 뒤에 쓴 내용이 이 자리에 들어간다</td></tr>
+              <tr><td>파일 참조</td><td><code>@경로/파일</code></td><td>그 파일 내용을 컨텍스트에 넣는다</td></tr>
+              <tr><td>bash 실행</td><td><code>!명령</code></td><td>명령을 먼저 실행하고 그 출력을 넣는다</td></tr>
+            </tbody>
+          </table></div>
+          <p>세 가지를 다 쓰는 실제 커맨드를 봅시다. 마켓플로우의 CS 응답 초안 커맨드는 <strong>인자로 문의를 받고</strong>, <strong>정책 파일을 읽어</strong>, 정책에 맞는 답을 만듭니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">.claude/commands/cs-응답초안.md (핵심)</div><pre>우리 CS 정책에 따라 다음 문의에 응답 초안을 써줘: $ARGUMENTS
+
+응대 정책: @docs/cs-정책.md
+최근 공지: @docs/공지.md</pre></div>
+          <p><code>@</code>로 참조한 두 파일의 내용이 실행 시점에 컨텍스트로 들어오므로, 항상 <em>최신</em> 정책이 반영됩니다.</p>
+          <p>bash 실행의 진가는 <strong>“지금 이 순간의 상태”</strong>를 넣을 때 나옵니다. “스테이징한 변경을 커밋 메시지로 요약해줘” 커맨드는 <code>!git diff --staged</code>의 출력을 그대로 활용하죠 — 매번 diff를 복붙할 필요가 없습니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">.claude/commands/변경요약.md</div><pre>---
+description: 스테이징된 변경사항을 커밋 메시지 형식으로 요약
+allowed-tools: Bash(git diff:*), Bash(git status:*)
+---
+
+아래 변경사항을 우리 커밋 규칙(feat/fix 프리픽스)에 맞춰 요약해줘.
+
+변경 내용:
+!git diff --staged</pre></div>
+          <div class="callout warn"><p class="callout-h"><b>bash 실행은 권한과 함께</b></p><p><code>!</code>로 명령을 실행하는 커맨드는 그 명령을 실행할 권한이 필요합니다. 위 예시처럼 <code>allowed-tools</code>로 <em>정확히 그 명령만</em> 허용하세요. <code>Bash(git diff:*)</code>는 “git diff는 되지만 다른 건 안 됨”을 뜻합니다. 권한 설계 전반은 <a href="#ch-3-2">3.2</a>에서 다룹니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-2-3"><h3 class="ch-title"><span class="ch-no">2.3</span>Skills — 재사용 가능한 작업 지침 패키지</h3>
+        <div class="ch-body">
+          <p>커맨드가 “내가 부르는” 단축키라면, <strong>스킬(Skill)</strong>은 “필요할 때 알아서 불려 오는” 전문 지침 묶음입니다. 스킬은 <code>SKILL.md</code> 한 파일과 딸린 참고 자료·스크립트로 이뤄지며, <strong>설명(description)에 적힌 트리거 조건</strong>에 맞는 작업이 오면 자동으로 활성화됩니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">.claude/skills/상품-카피라이팅/SKILL.md</div><pre>---
+name: 상품-카피라이팅
+description: 상품 상세 설명·마케팅 문구를 쓸 때 사용. 상품명, 상세페이지,
+  프로모션 문구, 카피 작성 요청에 트리거.
+---
+
+# 상품 카피라이팅 규칙
+
+- 첫 문장에 핵심 효용을 넣는다. 미사여구로 시작하지 않는다.
+- 과장·최상급 표현(최고, 유일무이) 금지 — 광고 심의 위반 위험.
+- 구체 수치로 말한다: "빠른 배송" 대신 "평균 1.8일 배송".
+- 금지어 목록은 references/금지어.md 참조.</pre></div>
+          <h4>점진적 공개 — 스킬이 가벼운 이유</h4>
+          <p>스킬의 영리한 점은 <strong>description만 평소에 컨텍스트에 있고, 본문은 필요할 때 읽힌다</strong>는 것입니다. 스킬이 100개 있어도 평소엔 100줄짜리 description 목록만 부담이고, 실제 상세 지침은 그 작업이 올 때만 로드됩니다. 그래서 <code>references/금지어.md</code> 같은 무거운 참고자료를 딸려 둬도 평소엔 비용이 없습니다.</p>
+          <p>차이를 정리하면 — 커맨드는 <em>절차</em>(내가 지금 이걸 실행)이고, 스킬은 <em>전문성</em>(이런 종류의 일이 오면 이렇게 처리)입니다. 카피를 쓰는 대화라면 내가 <code>/</code> 명령을 하지 않아도 위 규칙이 자동으로 적용됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th></th><th>커맨드</th><th>스킬</th></tr></thead>
+            <tbody>
+              <tr><td>호출</td><td>내가 <code>/명령</code>으로</td><td>조건 맞으면 자동</td></tr>
+              <tr><td>성격</td><td>반복 절차</td><td>반복 전문성</td></tr>
+              <tr><td>구성</td><td>파일 1개</td><td>SKILL.md + 참고자료</td></tr>
+              <tr><td>성패</td><td>이름</td><td>description</td></tr>
+            </tbody>
+          </table></div>
+        </div></article>
+
+        <article class="ch" id="ch-2-4"><h3 class="ch-title"><span class="ch-no">2.4</span>Skill 트리거 설계 — 언제 자동으로 불리게 할까</h3>
+        <div class="ch-body">
+          <p>스킬의 성패는 8할이 <strong>description</strong>에 달려 있습니다. 이 문장이 “언제 이 스킬을 꺼내 쓸지”를 판단하는 유일한 근거이기 때문입니다. 너무 좁으면 필요할 때 안 불리고(“왜 카피 규칙이 적용 안 되지?”), 너무 넓으면 엉뚱할 때 끼어듭니다(“왜 여기서 카피 규칙이?”).</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>약한 트리거 ❌</th><th>강한 트리거 ✅</th></tr></thead>
+            <tbody>
+              <tr><td>“글쓰기를 돕는다”</td><td>“상품 상세·프로모션 문구를 쓸 때. ‘카피’, ‘상세페이지’, ‘홍보 문구’ 요청에 트리거.”</td></tr>
+              <tr><td>“데이터 관련 작업”</td><td>“매출·재구매율 지표를 계산할 때. SQL 집계, 주간 리포트 요청에 트리거.”</td></tr>
+              <tr><td>“문서를 정리한다”</td><td>“PRD를 작성·검토할 때. 요구사항 문서, 기능 스펙 작성 요청에 트리거.”</td></tr>
+            </tbody>
+          </table></div>
+          <h4>좋은 description의 공식</h4>
+          <p>강한 트리거에는 패턴이 있습니다. <strong>“무엇을 할 때 + 어떤 표현이 오면”</strong> 두 조각을 다 넣는 것입니다.</p>
+          <ul>
+            <li><strong>무엇을 할 때</strong> — 이 스킬이 다루는 작업의 성격 (“상품 문구를 쓸 때”)</li>
+            <li><strong>어떤 표현이 오면</strong> — <em>사용자가 실제로 쓸 법한 단어</em> (“‘카피’, ‘상세페이지’”)</li>
+          </ul>
+          <p>둘째 조각이 특히 중요합니다. 팀원이 “상세페이지 문구 좀 다듬어줘”라고 말한다면, 그 <strong>‘상세페이지’라는 실제 단어</strong>가 트리거에 있어야 스킬이 반응합니다. 개발자 머릿속 용어가 아니라 사용자 입에서 나올 말을 넣으세요.</p>
+          <div class="otherteam" data-wire="2">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>기획팀</dt><dd><code>/PRD초안</code> 커맨드 — 배경·문제·목표·비범위 골격을 자동 생성</dd>
+              <dt>디자인팀</dt><dd><code>/에셋명명규칙</code> 커맨드 — 파일명이 규칙에 맞는지 점검하고 교정안 제시</dd>
+              <dt>데이터팀</dt><dd>‘지표 정의’ 스킬 — 매출·AOV 계산 시 팀 표준 정의를 자동 적용</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 2 요약</b></p><p>반복 <em>절차</em>는 커맨드로, 반복 <em>전문성</em>은 스킬로 굳히세요. 커맨드는 이름이 곧 인터페이스이고, 스킬은 description이 곧 성능입니다. 둘 다 잘하는 팀원의 지식을 팀 자산으로 승격시킵니다. 마켓플로우 하네스의 <strong>2번 부품</strong>이 추가됐습니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — <code>/상품등록</code>, <code>/cs-응답초안</code>, 커스텀 Skill 1종</div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 기획팀 <code>/PRD초안</code>, 디자인팀 <code>/에셋명명규칙</code></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 3 ---------- -->
+      <section class="part" id="part-3" data-wire="3" data-label="Part 3" data-title="자동화 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 3</span></div>
+          <h2 class="part-title">자동화 하네스</h2>
+          <p class="part-note">사람이 매번 챙기지 않아도 도는 규칙을 심는다.</p>
+        </div>
+        <article class="ch" id="ch-3-1"><h3 class="ch-title"><span class="ch-no">3.1</span>Hooks — 도구 호출 전후 자동 실행, 주요 이벤트</h3>
+        <div class="ch-body">
+          <p class="lead">지침은 “해주세요”라는 부탁이고, Hook은 “반드시 이렇게 된다”는 보장입니다.</p>
+          <p><code>CLAUDE.md</code>에 “커밋 전 테스트를 돌려라”라고 써도 모델이 잊을 수 있습니다. 대부분은 지키지만, 급하거나 컨텍스트가 길어지면 놓칩니다. Hook은 다릅니다. Hook은 <strong>특정 이벤트가 일어날 때 결정론적으로 실행되는 명령</strong>이라, 모델의 판단·기분·컨텍스트와 무관하게 <strong>항상</strong> 작동합니다. 이것이 “부탁(지침)”과 “장치(Hook)”의 결정적 차이입니다.</p>
+          <p>언제 지침으로 충분하고 언제 Hook이 필요할까요? 기준은 <strong>“어겼을 때의 대가”</strong>입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>상황</th><th>지침으로 충분</th><th>Hook이 필요</th></tr></thead>
+            <tbody>
+              <tr><td>코드 스타일</td><td>선호 정도라면</td><td>일관성이 중요하면 자동 포맷</td></tr>
+              <tr><td>테스트 실행</td><td>참고용이면</td><td>깨진 코드 커밋 방지가 목표면</td></tr>
+              <tr><td>위험 명령</td><td>—</td><td><strong>항상</strong> (사고는 되돌릴 수 없다)</td></tr>
+            </tbody>
+          </table></div>
+          <h4>주요 이벤트</h4>
+          <p>Hook은 <code>settings.json</code>의 <code>hooks</code> 항목에 이벤트별로 등록합니다. 각 이벤트는 에이전트 수명주기의 특정 순간에 발화합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>이벤트</th><th>언제</th><th>대표 용도</th></tr></thead>
+            <tbody>
+              <tr><td><code>PreToolUse</code></td><td>도구 실행 <em>직전</em></td><td>위험 명령 차단, 승인 게이트</td></tr>
+              <tr><td><code>PostToolUse</code></td><td>도구 실행 <em>직후</em></td><td>포맷·린트, 자동 로깅</td></tr>
+              <tr><td><code>UserPromptSubmit</code></td><td>사용자 입력 제출 시</td><td>입력 검증, 컨텍스트 주입</td></tr>
+              <tr><td><code>Stop</code></td><td>응답을 마치려 할 때</td><td>완료 조건 강제(테스트 통과 등)</td></tr>
+              <tr><td><code>SubagentStop</code></td><td>서브에이전트가 끝날 때</td><td>위임 결과 검증</td></tr>
+              <tr><td><code>SessionStart</code></td><td>세션 시작 시</td><td>환경 점검, 최신 상태 로드</td></tr>
+            </tbody>
+          </table></div>
+          <p>Hook의 힘은 <strong>매처(matcher)</strong>에서 나옵니다 — 어떤 도구에 반응할지 좁힐 수 있죠. 마켓플로우는 <code>PostToolUse</code>에 <code>Edit|Write</code> 매처로 포맷터를 걸어, 파일이 저장될 때마다 스타일이 자동으로 맞춰지게 했습니다. 이제 “포맷 좀 맞춰줘”라는 말이 대화에서 사라졌습니다.</p>
+          <div class="callout note"><p class="callout-h"><b>Hook은 어떻게 소통하나</b></p><p>Hook은 stdin으로 JSON(어떤 도구를, 어떤 입력으로 호출하려는지)을 받고, <strong>종료 코드</strong>로 응답합니다. <code>exit 0</code>은 통과, <code>PreToolUse</code>에서 <code>exit 2</code>는 “막아라”(이유는 stderr로 모델에 전달). 즉 Hook은 에이전트와 <em>대화</em>할 수 있습니다 — 막으면서 왜 막았는지 알려주면, 모델이 다른 방법을 찾습니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-3-2"><h3 class="ch-title"><span class="ch-no">3.2</span><code>settings.json</code> — 권한·환경변수·허용과 차단</h3>
+        <div class="ch-body">
+          <p><code>settings.json</code>은 하네스의 <strong>배전반</strong>입니다. 어떤 도구를 자동 허용하고, 어떤 것은 물어보게 하고, 어떤 것은 아예 막을지를 정합니다. 잘 잡으면 <strong>“매번 승인 누르기”와 “위험한 자동 실행” 사이의 균형</strong>이 잡힙니다 — 너무 조이면 답답해 사람들이 권한을 다 열어버리고, 너무 풀면 사고가 납니다.</p>
+          <div class="code" data-lang="json"><div class="code-head">.claude/settings.json</div><pre>{
+  "permissions": {
+    "allow": [
+      "Bash(npm run test:*)",
+      "Bash(npm run lint:*)",
+      "Read(./src/**)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Read(./.env)",
+      "Read(./secrets/**)"
+    ]
+  },
+  "env": {
+    "NODE_ENV": "development"
+  }
+}</pre></div>
+          <p>세 단계의 뜻은 명확합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>단계</th><th>동작</th><th>넣을 것</th></tr></thead>
+            <tbody>
+              <tr><td><code>allow</code></td><td>묻지 않고 실행</td><td>자주 쓰는 안전한 명령(테스트·린트·읽기)</td></tr>
+              <tr><td><code>ask</code></td><td>실행 전 확인</td><td>되돌리기 어려운 작업(푸시·배포)</td></tr>
+              <tr><td><code>deny</code></td><td>절대 금지</td><td>비밀 파일, 파괴적 명령</td></tr>
+            </tbody>
+          </table></div>
+          <h4>패턴 매칭 — 정밀하게 허용하기</h4>
+          <p>핵심은 <code>Bash(npm run test:*)</code> 같은 <strong>패턴</strong>입니다. “npm run test로 시작하는 건 다 허용, 하지만 다른 bash는 아님”을 뜻하죠. <code>*</code>의 위치가 사정거리를 정합니다. 너무 넓게(<code>Bash(*)</code>) 열면 가드레일이 무의미해지니, <strong>필요한 것만 좁게</strong> 허용하세요.</p>
+          <div class="callout note"><p class="callout-h"><b>범위도 계층</b></p><p>설정도 <code>CLAUDE.md</code>처럼 계층입니다. 개인(<code>~/.claude/settings.json</code>) · 프로젝트(공유, git 커밋 <code>settings.json</code>) · 로컬(개인용, git 제외 <code>settings.local.json</code>). 팀 공통 규칙은 프로젝트에, 내 개인 허용은 로컬에 두세요. 그래야 “나는 이 명령을 허용했지만 팀 표준은 아닌” 상태가 깔끔하게 분리됩니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-3-3"><h3 class="ch-title"><span class="ch-no">3.3</span>안전장치 설계 — 위험 명령 차단과 승인 게이트</h3>
+        <div class="ch-body">
+          <p>자동화가 강해질수록 <strong>가드레일</strong>이 중요해집니다. 에이전트가 빠르게 많은 일을 할 수 있다는 건, 실수도 빠르고 크게 할 수 있다는 뜻이니까요. 사람은 <code>rm -rf</code>를 치기 전에 한 번 멈칫하지만, 에이전트에겐 그 멈칫을 <strong>설계해 넣어야</strong> 합니다.</p>
+          <h4>3층 방어</h4>
+          <ol>
+            <li><strong>파괴적 명령 차단</strong> — <code>PreToolUse</code> Hook으로 <code>rm -rf</code>, 강제 푸시, <code>DROP TABLE</code>을 실행 전에 막습니다.</li>
+            <li><strong>비밀 정보 보호</strong> — <code>.env</code>·키 파일을 <code>deny</code>로 아예 읽지 못하게 합니다(읽을 수 없으면 유출할 수도 없습니다).</li>
+            <li><strong>승인 게이트</strong> — 결제·배포처럼 되돌리기 어려운 작업은 <code>ask</code>로 사람의 확인을 강제합니다.</li>
+          </ol>
+          <div class="code" data-lang="bash"><div class="code-head">.claude/hooks/block-dangerous.sh — PreToolUse 차단 예시</div><pre>#!/usr/bin/env bash
+# stdin으로 JSON을 받아 실행하려는 명령을 읽는다.
+input=$(cat)
+cmd=$(echo "$input" | jq -r '.tool_input.command // ""')
+
+# 위험 패턴이면 차단. exit 2 = 실행을 막고 이유를 모델에 전달.
+if echo "$cmd" | grep -Eq 'rm -rf /|git push --force|DROP TABLE'; then
+  echo "🚫 차단: 파괴적 명령으로 판단됨 -> $cmd" >&2
+  echo "정말 필요하면 사람이 직접 실행하세요." >&2
+  exit 2
+fi
+exit 0</pre></div>
+          <div class="callout warn"><p class="callout-h"><b>차단은 겹겹이 (defense in depth)</b></p><p>가드레일 하나에 의존하지 마세요. <code>deny</code> 목록 + <code>PreToolUse</code> Hook + 사람 리뷰를 <strong>겹쳐</strong> 두면, 하나가 뚫려도 다음이 막습니다. 패턴 매칭은 완벽하지 않으니(<code>rm  -rf</code>처럼 공백을 넣으면 우회될 수 있음), 여러 층으로 잡는 게 핵심입니다. 특히 결제·프로덕션은 반드시 다중 방어로.</p></div>
+          <div class="incident">
+            <div class="incident-h"><b>사건 #2</b> · 6월 3일 화요일 15:20</div>
+            <div class="incident-body">
+              <p>백엔드 개발자 민호가 로컬 테스트 DB를 정리하려고 “테스트 데이터 다 지워줘”라고 요청했습니다. 에이전트는 <code>DROP TABLE</code>을 포함한 정리 스크립트를 만들어 실행했습니다. 문제는 민호의 터미널 환경변수가 <strong>스테이징을 가리키고 있었다</strong>는 것입니다.</p>
+              <p>스테이징 상품 데이터 8만 건이 사라졌습니다. 백업으로 40분 만에 복구했지만, 그동안 QA팀 전체가 멈췄습니다. 회고에서 구멍이 세 개 드러났습니다. <code>CLAUDE.md</code>의 규칙은 “<strong>프로덕션</strong> DB 금지”라 스테이징은 사각지대였고, 설령 적혀 있었더라도 <strong>지침은 무엇도 물리적으로 막지 못하며</strong>, 로컬·스테이징 연결이 한 터미널에 섞여 있었습니다.</p>
+              <p class="rule">→ 그날 팀은 깨달았습니다. 되돌릴 수 없는 일에 “부탁”은 부족하다. <strong>공유 DB 전체를 <code>deny</code>로 막고, 파괴적 명령 차단 Hook을 걸고, 환경 연결을 분리했습니다</strong>(범위 분리는 5.3에서 다시 다룹니다).</p>
+            </div>
+          </div>
+          <div class="callout tip"><p class="callout-h"><b>차단만큼 중요한 건 “왜”</b></p><p>막을 때 <em>이유</em>를 stderr로 알려주세요. 위 예시가 “정말 필요하면 사람이 직접”이라고 말하듯이. 그래야 에이전트가 무한 재시도하지 않고 올바른 대안(사람에게 요청)으로 갑니다. 이유 없는 차단은 에이전트를 벽에 머리 박게 합니다.</p></div>
+          <div class="otherteam" data-wire="3">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>기획팀</dt><dd>PRD 저장 시 <code>PostToolUse</code>로 문서 목차를 자동 갱신</dd>
+              <dt>디자인팀</dt><dd>에셋 저장 시 파일명 규칙 위반을 자동 검사·경고</dd>
+              <dt>데이터팀</dt><dd><code>PreToolUse</code>로 프로덕션 테이블의 <code>DELETE/UPDATE</code> 쿼리 차단</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 3 요약</b></p><p>지침은 잊혀도 Hook은 실행됩니다. 어겼을 때 대가가 큰 것일수록 Hook으로. 자주 쓰는 안전한 일은 <code>allow</code>로 자동화하고, 되돌리기 어려운 일은 <code>ask</code>·<code>deny</code>와 <code>PreToolUse</code>로 겹겹이 막되, <em>이유를 함께</em> 주세요. 마켓플로우 하네스의 <strong>3번 부품</strong>입니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — 저장 시 자동 포맷·로깅 Hook, 위험 명령 차단 Hook, 권한 설정 <code>settings.json</code></div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 기획 문서 저장 시 목차 자동 갱신</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 4 ---------- -->
+      <section class="part" id="part-4" data-wire="4" data-label="Part 4" data-title="위임 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 4</span></div>
+          <h2 class="part-title">위임 하네스</h2>
+          <p class="part-note">일을 나누고 병렬로 돌린다. 그리고 언제 나누지 말아야 하는지도 안다.</p>
+        </div>
+        <article class="ch" id="ch-4-1"><h3 class="ch-title"><span class="ch-no">4.1</span>Subagents — 작업 격리와 병렬화</h3>
+        <div class="ch-body">
+          <p class="lead">한 명이 모든 걸 하지 않습니다. 서브에이전트는 하네스에 <strong>‘동료’</strong>를 추가합니다.</p>
+          <p>서브에이전트(Subagent)는 <strong>독립된 컨텍스트</strong>에서 특정 작업을 수행하는 별도 에이전트입니다. 메인 대화가 “이 리서치는 네가 해와”라고 넘기면, 서브에이전트는 자기만의 깨끗한 컨텍스트에서 일하고 <strong>결론만</strong> 돌려줍니다.</p>
+          <p>왜 격리가 중요할까요? 컨텍스트는 한정된 자원이고(1.4), 지저분한 과정이 쌓이면 품질이 떨어집니다. 경쟁사 5곳 가격을 조사하려면 수십 개 페이지를 뒤져야 하는데, 그 과정이 전부 메인 대화에 쌓이면 정작 중요한 판단이 묻힙니다. 서브에이전트는 그 지저분함을 <strong>격리</strong>합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>이득</th><th>무엇</th></tr></thead>
+            <tbody>
+              <tr><td><strong>컨텍스트 보호</strong></td><td>탐색 과정은 서브에이전트 안에서 소진, 메인엔 결론만 올라옴</td></tr>
+              <tr><td><strong>병렬성</strong></td><td>독립 작업 여러 개를 동시에 돌려 시간을 압축</td></tr>
+              <tr><td><strong>전문화</strong></td><td>작업별로 다른 도구·프롬프트·모델을 부여</td></tr>
+            </tbody>
+          </table></div>
+          <p>마켓플로우는 “경쟁사 5곳 가격 조사”를 서브에이전트에게 맡깁니다. 메인 대화는 지저분한 수집 과정 없이 <strong>정리된 비교표만</strong> 받습니다 — 마치 리서처에게 “정리해서 가져와”라고 시킨 것처럼요.</p>
+        </div></article>
+
+        <article class="ch" id="ch-4-2"><h3 class="ch-title"><span class="ch-no">4.2</span>언제 위임하고 언제 직접 하나 — 판단 기준</h3>
+        <div class="ch-body">
+          <p>위임은 공짜가 아닙니다. 서브에이전트를 띄우는 데도 비용과 시간이 들고, 무엇보다 <strong>맥락 전달의 손실</strong>이 생깁니다. 지시문에 다 담지 못한 뉘앙스가 사라지죠. 그래서 “언제 나누지 말아야 하는가”를 아는 게 “언제 나누는가”만큼 중요합니다. 위임 자체가 목적이 되면 오히려 느려집니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>위임이 이득 ✅</th><th>직접이 나음 ❌</th></tr></thead>
+            <tbody>
+              <tr><td>넓게 탐색하고 <em>결론만</em> 필요할 때</td><td>몇 줄만 확인하면 되는 단순 조회</td></tr>
+              <tr><td>서로 독립인 작업이 여러 개</td><td>앞 단계 결과에 뒤가 강하게 의존</td></tr>
+              <tr><td>과정이 지저분해 컨텍스트를 더럽힐 때</td><td>긴밀한 왕복 대화가 필요한 일</td></tr>
+              <tr><td>같은 일을 여러 관점으로 교차검증</td><td>맥락 전달 비용이 작업보다 큰 일</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>판단 한 문장</b></p><p>“이 일을 <em>신입에게 위임장 한 장 써서</em> 맡길 수 있나?”를 떠올리세요. 위임장에 다 담기면 서브에이전트에 좋은 일이고, 어깨너머로 계속 봐줘야 하면 직접 하는 게 낫습니다. 위임장을 쓰는 시간이 그냥 하는 시간보다 길면, 그건 위임할 일이 아닙니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-4-3"><h3 class="ch-title"><span class="ch-no">4.3</span>병렬 패턴 — 팬아웃·파이프라인·검증 후 합성</h3>
+        <div class="ch-body">
+          <p>여러 서브에이전트를 조합하는 세 가지 기본 패턴이 있습니다. 대부분의 실무 작업은 이 조합으로 표현됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>패턴</th><th>구조</th><th>쓰는 곳</th></tr></thead>
+            <tbody>
+              <tr><td><strong>팬아웃</strong></td><td>N개를 동시에 → 결과 모으기</td><td>경쟁사 5곳 병렬 조사, 파일별 병렬 리뷰</td></tr>
+              <tr><td><strong>파이프라인</strong></td><td>각 항목이 단계들을 독립 통과</td><td>문의 100건을 분류→초안→검수</td></tr>
+              <tr><td><strong>검증 후 합성</strong></td><td>생성 → 별도 검증 → 통과분만 종합</td><td>초안 생성 후 사실검증, 리뷰 후 확정</td></tr>
+            </tbody>
+          </table></div>
+          <h4>가장 중요한 원리 — 생성과 검증의 분리</h4>
+          <p>세 패턴 중 <strong>검증 후 합성</strong>이 특히 강력합니다. 같은 에이전트에게 “쓰고 스스로 검증해”라고 하면 <strong>자기 편향</strong>이 생깁니다 — 자기가 쓴 걸 자기가 채점하면 후한 점수를 주죠. 사람도 자기 글의 오타는 잘 못 봅니다.</p>
+          <p>해법은 역할을 나누는 것입니다. <strong>초안을 쓰는 에이전트</strong>와 <strong>그걸 반박하려는 에이전트</strong>를 따로 두면, 그럴듯하지만 틀린 결과가 걸러집니다. 더 세게 하려면 검증자에게 “틀린 점을 찾아라”라고 <em>반박을 지시</em>하세요 — 확인보다 반박이 오류를 더 잘 잡습니다. 이 원리는 <a href="#ch-6-1">Part 6 검증 하네스</a>로 곧장 이어집니다.</p>
+          <div class="callout note"><p class="callout-h"><b>병렬의 실용 감각</b></p><p>팬아웃은 <em>독립</em>일 때만 이득입니다. A의 결과가 B의 입력이면 병렬이 아니라 파이프라인이죠. “이 다섯 개가 서로를 안 봐도 되나?”를 먼저 확인하세요. 억지 병렬은 재작업만 낳습니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-4-4"><h3 class="ch-title"><span class="ch-no">4.4</span>커스텀 에이전트 정의 — 도구 제한과 시스템 프롬프트</h3>
+        <div class="ch-body">
+          <p>자주 쓰는 서브에이전트는 <code>.claude/agents/</code>에 파일로 정의해 재사용합니다. frontmatter에 <strong>이름·설명·허용 도구</strong>를, 본문에 <strong>시스템 프롬프트</strong>를 씁니다. 구조는 스킬(2.3)과 닮았지만, 스킬은 <em>메인 대화에 지침을 얹고</em> 에이전트는 <em>별도 컨텍스트를 띄운다</em>는 차이가 있습니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">.claude/agents/경쟁사-가격조사.md</div><pre>---
+name: 경쟁사-가격조사
+description: 특정 상품의 경쟁사 판매가를 조사해 비교표로 정리할 때 사용.
+tools: WebSearch, WebFetch, Read
+---
+
+너는 이커머스 가격 리서처다. 주어진 상품에 대해:
+
+1. 지정된 경쟁사(또는 주요 5곳)의 현재 판매가를 조사한다.
+2. 각 가격의 출처 URL을 반드시 함께 기록한다.
+3. 배송비 포함 여부를 구분한다.
+4. 확인 불가한 항목은 지어내지 말고 "확인 불가"로 남긴다.
+
+출력: 판매처 · 가격(원) · 배송비 · 출처 · 확인일시 열의 비교표.
+가격 판단이나 추천은 하지 않는다. 사실만 정리한다.</pre></div>
+          <h4>세 가지 설계 포인트</h4>
+          <ul>
+            <li><strong>도구 제한</strong> — <code>tools</code>에 그 일에 꼭 필요한 것만. 조사 에이전트에 <code>Write</code>는 필요 없습니다.</li>
+            <li><strong>범위 한정 프롬프트</strong> — “가격 판단은 하지 않는다. 사실만”처럼 <em>하지 않을 것</em>을 명시해 딴 길로 새지 않게 합니다.</li>
+            <li><strong>출력 형식 고정</strong> — 정해진 표 형식을 지정하면 메인 대화가 결과를 바로 씁니다.</li>
+          </ul>
+          <div class="callout warn"><p class="callout-h"><b>도구는 최소로 = 안전이자 집중</b></p><p>최소 권한은 두 가지를 동시에 줍니다. <strong>안전</strong> — 조사 에이전트에 <code>Bash</code>를 주지 않으면 사고 반경이 없습니다. <strong>집중</strong> — 쓸 수 있는 도구가 적으면 에이전트가 옆길로 새지 않고 본업에 집중합니다. 권한을 조이는 게 오히려 성능을 높입니다.</p></div>
+          <div class="otherteam" data-wire="4">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>기획팀</dt><dd>‘사용자 리서치’ 에이전트 — 리뷰·설문을 병렬 수집해 인사이트로 합성</dd>
+              <dt>디자인팀</dt><dd>‘디자인 QA’ 팬아웃 — 화면별로 접근성·일관성을 동시 점검</dd>
+              <dt>데이터팀</dt><dd>주간 리포트 팬아웃 — 지표별 에이전트가 병렬 집계 후 하나로 종합</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 4 요약</b></p><p>넓게 탐색하고 결론만 필요하거나 독립 작업이 여럿이면 위임하세요. 생성과 검증은 <em>다른</em> 에이전트로 나누고(반박을 시켜라), 도구는 최소로 줘 안전과 집중을 함께 얻으세요. 마켓플로우 하네스의 <strong>4번 부품</strong>입니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — 리서치 Subagent, 병렬 코드리뷰, 경쟁사 가격조사 에이전트</div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 디자인 QA 병렬 에이전트, 데이터 리포트 팬아웃</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 5 ---------- -->
+      <section class="part" id="part-5" data-wire="5" data-label="Part 5" data-title="연결 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 5</span></div>
+          <h2 class="part-title">연결 하네스</h2>
+          <p class="part-note">사내 데이터와 외부 시스템을 에이전트의 손이 닿는 곳에 둔다.</p>
+        </div>
+        <article class="ch" id="ch-5-1"><h3 class="ch-title"><span class="ch-no">5.1</span>MCP 개념 — Model Context Protocol이 여는 것</h3>
+        <div class="ch-body">
+          <p class="lead">지금까지의 하네스가 에이전트의 <em>머리</em>를 설계했다면, MCP는 <strong>손발</strong>을 붙입니다.</p>
+          <p>MCP(Model Context Protocol)는 에이전트를 <strong>외부 시스템에 연결하는 표준 규격</strong>입니다. 사내 DB, 문서 저장소, 이슈 트래커, 디자인 툴 같은 것을 “MCP 서버”로 노출하면, 에이전트가 그것을 도구처럼 씁니다. USB에 비유하면 쉽습니다 — 기기마다 다른 케이블 대신 하나의 규격으로 무엇이든 꽂는 것이죠. 예전엔 도구마다 전용 연동을 짜야 했지만, MCP는 그 연동을 <strong>한 번 만들면 어디서나</strong> 씁니다.</p>
+          <p>이게 중요한 이유는, 에이전트의 능력이 <strong>연결된 시스템만큼</strong> 커지기 때문입니다. 연결이 없으면 에이전트는 “재고가 얼마인가요?”에 답하려고 사람에게 되묻지만, 상품 DB에 연결되면 직접 조회합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>연결 없이</th><th>MCP 연결 후</th></tr></thead>
+            <tbody>
+              <tr><td>“재고 알려주면 처리할게요”</td><td>DB에서 “재고 500개 이하 상품” 직접 조회</td></tr>
+              <tr><td>사람이 티켓을 복붙</td><td>이슈 트래커에서 “이번 주 CS 이슈” 요약</td></tr>
+              <tr><td>위키 내용을 붙여넣기</td><td>사내 위키를 직접 검색·인용</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout note"><p class="callout-h"><b>표준이라는 점이 핵심</b></p><p>MCP는 특정 회사 전용이 아닙니다. 한 번 만든 MCP 서버는 이 도구, 저 도구에서 재사용됩니다. 하네스를 특정 제품에 <em>락인</em>시키지 않는 이식성의 기반이 됩니다 — 엔진(모델·도구)을 바꿔도 배선(MCP)은 그대로(<a href="#ch-10-6">10.6</a> 벤더 전략과 연결).</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-5-2"><h3 class="ch-title"><span class="ch-no">5.2</span>MCP 서버 붙이는 법 — <code>.mcp.json</code>과 서버 타입</h3>
+        <div class="ch-body">
+          <p>연결은 <code>.mcp.json</code>에 서버를 선언하는 것으로 시작합니다. 서버는 크게 두 종류입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>타입</th><th>실행 방식</th><th>쓰는 곳</th></tr></thead>
+            <tbody>
+              <tr><td><strong>stdio</strong></td><td>로컬 프로세스로 실행(<code>command</code>+<code>args</code>)</td><td>로컬 DB·파일시스템 서버</td></tr>
+              <tr><td><strong>HTTP/SSE</strong></td><td>원격 URL에 접속(<code>type</code>+<code>url</code>)</td><td>사내·외부 원격 MCP 서버</td></tr>
+            </tbody>
+          </table></div>
+          <div class="code" data-lang="json"><div class="code-head">.mcp.json</div><pre>{
+  "mcpServers": {
+    "상품DB": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres",
+               "postgresql://readonly@db.internal:5432/products"]
+    },
+    "사내위키": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/docs/wiki"]
+    },
+    "이슈트래커": {
+      "type": "http",
+      "url": "https://mcp.marketflow.internal/issues",
+      "headers": { "Authorization": "Bearer ${ISSUE_TOKEN}" }
+    }
+  }
+}</pre></div>
+          <p>이 짧은 파일에 하네스 사고가 세 개 녹아 있습니다. 첫째, <code>상품DB</code>를 <strong>readonly 계정</strong>으로 붙였습니다 — 연결 단계에서부터 권한을 좁히면 이후 어떤 실수가 나도 데이터가 바뀌지 않습니다. 둘째, <code>사내위키</code>를 <code>/docs/wiki</code>로 <strong>경로를 한정</strong>했습니다 — 그 폴더 밖은 못 봅니다. 셋째, 토큰은 <code>${ISSUE_TOKEN}</code>처럼 <strong>환경변수로 주입</strong>해 파일에 평문으로 남기지 않습니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>.mcp.json은 유효한 JSON이어야</b></p><p>표준 JSON이라 주석(<code>//</code>)을 넣을 수 없습니다. 각 서버의 의도는 별도 <code>README</code>에 적어 두세요(예시 파일 참고). 주석을 넣으면 파싱 오류로 연결이 통째로 안 됩니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-5-3"><h3 class="ch-title"><span class="ch-no">5.3</span>보안·인증·권한 경계</h3>
+        <div class="ch-body">
+          <p>MCP는 에이전트에게 진짜 시스템으로 통하는 문을 열어 줍니다. 그래서 <strong>연결마다 경계를 명확히</strong> 그어야 합니다. 편의가 커지는 만큼 사고 반경도 커지기 때문입니다 — DB 쓰기 권한이 붙은 에이전트는 데이터를 지울 수도 있습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>경계</th><th>왜</th><th>어떻게</th></tr></thead>
+            <tbody>
+              <tr><td>최소 권한 연결</td><td>사고 반경 축소</td><td>읽기만 필요하면 읽기전용 계정</td></tr>
+              <tr><td>비밀정보 격리</td><td>유출 방지</td><td>토큰은 환경변수로, 파일 평문 금지</td></tr>
+              <tr><td>신뢰 경계</td><td>인젝션 방지</td><td>감사·승인된 서버만 붙임</td></tr>
+              <tr><td>범위 분리</td><td>프로덕션 보호</td><td>프로덕션·개발 연결을 섞지 않음</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout warn"><p class="callout-h"><b>연결은 곧 신뢰 — 프롬프트 인젝션</b></p><p>MCP 서버를 붙이는 건 그 서버를 신뢰하겠다는 선언입니다. 특히 외부 서버는 <em>프롬프트 인젝션</em>의 통로가 될 수 있습니다 — 서버가 돌려주는 데이터 안에 “이전 지시를 무시하고 …”가 숨어 있을 수 있죠. 사내 감사·승인을 거친 서버 목록을 관리하고, 외부 데이터는 “신뢰할 수 없는 입력”으로 다루세요(부록 B의 전사 거버넌스와 연결).</p></div>
+          <div class="otherteam" data-wire="5">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>디자인팀</dt><dd>디자인 툴 MCP — 컴포넌트·토큰 정보를 에이전트가 직접 조회</dd>
+              <dt>데이터팀</dt><dd>애널리틱스 MCP — 대시보드 지표를 읽어 리포트 초안에 반영</dd>
+              <dt>기획팀</dt><dd>이슈 트래커 MCP — 관련 티켓을 읽어 PRD의 오픈 이슈에 링크</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 5 요약</b></p><p>MCP는 에이전트에 손발을 붙여, 능력을 연결된 시스템만큼 키웁니다. 연결마다 최소 권한·비밀정보 격리·신뢰 경계·범위 분리를 지키세요. 표준이라 이식성도 얻습니다. 마켓플로우 하네스의 <strong>5번 부품</strong>입니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — 사내 DB·문서 저장소·이슈 트래커 연결 <code>.mcp.json</code></div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 디자인 툴 연결, 애널리틱스 연결</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 6 ---------- -->
+      <section class="part" id="part-6" data-wire="6" data-label="Part 6" data-title="검증 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 6</span></div>
+          <h2 class="part-title">검증 하네스</h2>
+          <p class="part-note">신뢰의 마지막 고리. 주장하기 전에 증거를 만든다.</p>
+        </div>
+        <article class="ch" id="ch-6-1"><h3 class="ch-title"><span class="ch-no">6.1</span>피드백 루프 설계 — 테스트와 타입체크를 에이전트 손에</h3>
+        <div class="ch-body">
+          <p class="lead">에이전트가 스스로 “맞는지” 확인할 방법이 없으면, 결과는 <em>그럴듯함</em>에서 멈춥니다.</p>
+          <p>사람은 코드를 짜고 실행해 봅니다. 안 되면 고칩니다. 이 <strong>실행→관찰→수정</strong> 루프가 품질을 만듭니다. 실행해보지 않고 “아마 맞을 거야”로 끝내는 개발자는 없죠. 하네스의 검증 축은 바로 이 루프를 에이전트 손에 쥐여 주는 일입니다. 테스트·타입체크·린트처럼 <strong>기계가 판정하는 신호</strong>를 붙여 주면, 에이전트는 자기 결과를 스스로 돌려보고 틀리면 고칩니다.</p>
+          <p>이 신호가 없으면 어떻게 될까요? 에이전트는 코드를 “맞아 보이게” 짜지만, 실제로 도는지는 모릅니다. 더 똑똑한 모델일수록 <em>더 그럴듯하게 틀린</em> 코드를 내놓을 수 있죠(Part 0.2). 피드백 루프는 “그럴듯함”을 “실제로 됨”으로 바꾸는 장치입니다.</p>
+          <p>마켓플로우의 <code>CLAUDE.md</code>에는 이미 “변경한 코드는 반드시 테스트 후 완료 보고”가 있었습니다. 여기에 <code>Stop</code> Hook(3.1)을 더하면 부탁이 <strong>강제</strong>가 됩니다 — 테스트가 통과하지 않으면 응답을 끝내지 못하게. 지침·자동화·검증 세 축이 하나로 엮이는 지점입니다.</p>
+          <div class="callout tip"><p class="callout-h"><b>좋은 피드백 신호의 3조건</b></p><p><strong>빠르고</strong>(초 단위) · <strong>명확하고</strong>(통과/실패 이분법) · <strong>구체적</strong>(어디가 왜 틀렸는지)이어야 합니다. 30분 걸리는 전체 테스트보다, 방금 건드린 부분의 5초짜리 테스트가 루프를 살립니다. 느린 신호는 에이전트에게 “일단 넘어가자”는 유혹을 주고, 모호한 신호(“뭔가 이상함”)는 고칠 방향을 못 줍니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-6-2"><h3 class="ch-title"><span class="ch-no">6.2</span>완료를 주장하기 전에 — 검증 문화</h3>
+        <div class="ch-body">
+          <p>가장 값비싼 실패는 “다 됐습니다”가 사실이 아닐 때입니다. 그 말을 믿고 배포했는데 실제로는 안 되는 것 — 이게 신뢰를 무너뜨립니다. 검증 하네스의 절반은 도구이고, 나머지 절반은 <strong>문화</strong>입니다. 바로 <em>주장하기 전에 증거를 만든다</em>는 규범이죠.</p>
+          <p>이걸 하네스로 굳히는 방법은 명료합니다. “완료”의 정의에 <strong>검증 통과를 포함</strong>시키는 것입니다. “구현 = 코드를 짬”이 아니라 “구현 = 코드를 짜고 + 테스트를 돌려 통과를 확인함”으로.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>느슨한 완료 ❌</th><th>검증된 완료 ✅</th></tr></thead>
+            <tbody>
+              <tr><td>“기능을 구현했습니다”</td><td>“구현했고 <code>npm test</code> 27개 통과를 확인했습니다”</td></tr>
+              <tr><td>“버그를 고쳤습니다”</td><td>“고쳤고, 실패하던 테스트가 통과하는 걸 확인했습니다”</td></tr>
+              <tr><td>“문서를 업데이트했습니다”</td><td>“업데이트했고 링크·예시가 동작하는 걸 확인했습니다”</td></tr>
+              <tr><td>“API를 연동했습니다”</td><td>“연동했고 실제 호출로 200 응답을 확인했습니다”</td></tr>
+            </tbody>
+          </table></div>
+          <p>차이는 하나입니다. <strong>“확인했습니다”에 실제 출력이 따라오는가.</strong> 출력 없는 “확인했습니다”는 “확인 안 했습니다”와 구분되지 않습니다.</p>
+          <div class="incident">
+            <div class="incident-h"><b>사건 #3</b> · 8월 21일 목요일 18:05</div>
+            <div class="incident-body">
+              <p>장바구니 쿠폰 중복 적용 버그를 고치는 작업이었습니다. 에이전트는 수정을 마치고 <strong>“수정 완료했습니다. 테스트가 통과할 것으로 예상됩니다”</strong>라고 보고했고, 급했던 담당자는 그대로 배포했습니다.</p>
+              <p>테스트는 <em>돌지 않았습니다.</em> 수정이 다른 케이스를 깨뜨렸고, 주말 프로모션 동안 일부 고객이 쿠폰을 세 번까지 쓸 수 있었습니다. 손실은 크지 않았지만 팀의 신뢰가 흔들렸습니다.</p>
+              <p>회고에서 나온 이 말이 그대로 팀의 표어가 됐습니다. <strong>“‘통과할 것으로 예상됩니다’는 ‘안 돌렸습니다’와 같은 말이다.”</strong></p>
+              <p class="rule">→ 완료의 정의가 바뀌었습니다: <strong>실제 출력 없는 “완료”는 완료가 아니다.</strong> <code>Stop</code> Hook이 테스트 통과를 강제하기 시작했습니다.</p>
+            </div>
+          </div>
+          <p>이 규범을 <code>CLAUDE.md</code>와 <code>Stop</code> Hook에 심으면, “증거 없는 완료”가 구조적으로 어려워집니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-6-3"><h3 class="ch-title"><span class="ch-no">6.3</span>증거 없는 “다 됐습니다”를 걸러내는 법</h3>
+        <div class="ch-body">
+          <p>실무에서 바로 쓰는 검증 게이트 두 개를 봅시다. 하나는 <strong>커맨드</strong>(내가 부르는 점검), 하나는 <strong>자동 게이트</strong>(Hook로 강제). 둘은 보완 관계입니다 — 커맨드는 유연하지만 부르는 걸 잊을 수 있고, Hook은 강력하지만 매번 실행됩니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">.claude/commands/완료점검.md</div><pre>---
+description: 완료를 보고하기 전에 돌리는 자체 점검
+---
+
+작업을 완료로 보고하기 전에 아래를 실제로 실행하고 결과를 붙여라.
+통과하지 못한 항목이 있으면 완료라고 말하지 마라.
+
+1. 테스트:  !npm test
+2. 타입체크: !npm run typecheck
+3. 린트:    !npm run lint
+
+각 결과의 실제 출력을 요약해 보고하고,
+실패가 있으면 고친 뒤 다시 이 점검을 반복한다.</pre></div>
+          <p>자동 게이트는 <code>Stop</code> Hook으로 겁니다. 테스트가 실패하면 종료 코드(<code>exit 2</code>)로 응답을 막고, 그 이유를 모델에 돌려보내 스스로 고치게 합니다. 부탁이 아니라 <strong>물리적 장벽</strong>이 되죠. 단, 매 응답마다 전체 테스트를 돌리면 느려지니 “소스가 바뀐 세션에서만” 같은 조건으로 좁히세요(예시 파일 참고).</p>
+          <div class="callout warn"><p class="callout-h"><b>자기검증의 함정</b></p><p>4.3에서 본 자기 편향이 여기서도 핵심입니다 — 같은 에이전트에게 “네가 한 걸 검증해”라고만 하면 자기 답에 후한 점수를 주죠. 진짜 검증은 둘 중 하나여야 합니다. <strong>기계 신호</strong>(테스트는 편향이 없습니다) 또는 <strong>다른 에이전트</strong>(<a href="#ch-4-3">4.3 검증 후 합성</a>). “스스로 잘했다고 믿는 것”은 검증이 아니라 자기 위안입니다.</p></div>
+          <div class="callout tip"><p class="callout-h"><b>직접 구동해 확인하라</b></p><p>테스트가 통과했다고 기능이 <em>진짜</em> 되는 건 아닙니다. 중요한 변경은 실제로 그 흐름을 <strong>구동해</strong> 눈으로 확인하세요 — API면 실제 호출, 화면이면 실제 렌더. 실제로 이 책을 만들 때도 매 파트를 브라우저로 띄워 확인하며 작업했습니다. “테스트만 봄”은 “안 봄”과 종이 한 장 차이입니다.</p></div>
+          <div class="otherteam" data-wire="6">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>기획팀</dt><dd>PRD 정합성 체크 — 목표에 측정 지표가 있는지, 미결 표시가 됐는지 자동 점검</dd>
+              <dt>디자인팀</dt><dd>접근성 검증 — 대비율·포커스·<code>aria-label</code> 누락을 완료 전 자동 검사</dd>
+              <dt>데이터팀</dt><dd>리포트 재현성 — 모든 수치에 근거 쿼리가 첨부됐는지 확인</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 6 요약</b></p><p>기계가 판정하는 빠른 신호를 에이전트 손에 쥐여 주고, “완료”의 정의에 검증 통과를 포함시키세요. 자기검증이 아니라 기계·타자의 검증으로, 중요한 건 직접 구동해 확인하세요. 마켓플로우 하네스의 <strong>6번 부품</strong>입니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — <code>완료점검</code> 커맨드, <code>verify-on-stop</code> Hook, <code>pr-자체점검</code> 스킬</div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 기획 문서 정합성 체크, 디자인 접근성 검증</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 7 ---------- -->
+      <section class="part" id="part-7" data-wire="7" data-label="Part 7" data-title="관측 하네스">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 7</span></div>
+          <h2 class="part-title">관측 하네스</h2>
+          <p class="part-note">보이지 않는 것은 개선할 수 없다. 로깅·모니터링·관측성.</p>
+        </div>
+        <article class="ch" id="ch-7-1"><h3 class="ch-title"><span class="ch-no">7.1</span>왜 관측 없이는 하네스를 개선할 수 없는가</h3>
+        <div class="ch-body">
+          <p class="lead">보이지 않는 것은 고칠 수 없습니다. 관측은 하네스를 <em>개선 가능한 대상</em>으로 만듭니다.</p>
+          <p>지금까지 여섯 개의 축을 세웠습니다. 그런데 이 하네스가 실제로 잘 돌고 있을까요? 어떤 커맨드가 실제로 쓰이나요? 비용은 어디서 새나요? 어젯밤 자동화는 성공했나요? <strong>관측 없이는 이 질문에 답할 수 없고, 답할 수 없으면 개선할 수 없습니다.</strong> 개선은 “느낌”이 아니라 “데이터”로 하는 것이니까요.</p>
+          <p>관측 하네스는 세 가지를 봅니다. 이 셋이 이 파트의 뼈대입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>질문</th><th>무엇을 본다</th><th>절</th></tr></thead>
+            <tbody>
+              <tr><td><strong>무엇을 했나</strong></td><td>도구 호출·파일 변경의 감사 로그</td><td>7.2</td></tr>
+              <tr><td><strong>얼마가 들었나</strong></td><td>토큰·비용 추적</td><td>7.3</td></tr>
+              <tr><td><strong>잘 됐나</strong></td><td>성공/실패·지연·트레이싱</td><td>7.4–7.5</td></tr>
+            </tbody>
+          </table></div>
+          <div class="incident">
+            <div class="incident-h"><b>사건 #4</b> · 10월 2일 목요일, 청구서가 오던 날</div>
+            <div class="incident-body">
+              <p>마켓플로우는 9월에 CS 자동 분류 파이프라인(사람 없이 도는 자동화 — 만드는 법은 Part 8에서 다룹니다)을 붙였습니다. 잘 돌았고, CS팀은 만족했습니다. 그리고 10월 초 청구서가 <strong>예상의 4배</strong>로 나왔습니다.</p>
+              <p>원인을 찾는 데 이틀이 걸렸습니다. 로그가 없었기 때문입니다. 결국 발견한 것은 — 분류에 실패한 문의가 <strong>무한 재시도</strong>를 돌고 있었고, 게다가 단순 분류에 최상위 모델을 쓰고 있었습니다. 두 문제 다 한 달 내내 조용히 돈 것이죠.</p>
+              <p>수진이 회고에 적었습니다. “우리는 이 파이프라인을 줄곧 <em>믿고만</em> 있었지, 한 번도 <em>들여다보지</em> 않았다.”</p>
+              <p class="rule">→ 그날 관측 축이 시작됐습니다: <strong>도구 호출 감사 로그 + 비용 임계치 알림 + 자동화 하드 리밋.</strong></p>
+            </div>
+          </div>
+          <div class="callout note"><p class="callout-h"><b>실무에서 가장 자주 빠뜨리는 축</b></p><p>관측은 급하지 않아 보여 늘 뒤로 밀립니다. 눈에 보이는 성과가 없으니까요. 그러다 <strong>“비용이 왜 이렇게 많이 나왔지?”, “누가 이 파일을 지웠지?”</strong> 앞에서 무너집니다. 관측은 사고가 <em>난 뒤</em>가 아니라 <em>나기 전에</em> 깔아 두는 것입니다 — 블랙박스처럼요.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-7-2"><h3 class="ch-title"><span class="ch-no">7.2</span>도구 호출 로깅 — Hook 기반 감사 로그</h3>
+        <div class="ch-body">
+          <p>가장 기본적인 관측은 <strong>“언제 무슨 도구를 썼나”</strong>를 남기는 것입니다. 좋은 소식은, Part 3에서 배운 <code>PostToolUse</code> Hook을 그대로 쓰면 된다는 겁니다 — 모든 도구 호출을 한 줄씩 로그에 적습니다. <strong>자동화 축이 이미 관측의 절반을 깔아 둔 셈</strong>이죠. 하네스의 축들이 서로를 재사용하는 좋은 예입니다.</p>
+          <div class="code" data-lang="bash"><div class="code-head">.claude/hooks/audit-log.sh — 모든 도구 호출 기록</div><pre>#!/usr/bin/env bash
+# PostToolUse Hook (matcher를 비워두면 모든 도구에 적용)
+input=$(cat)
+tool=$(echo "$input" | jq -r '.tool_name // "?"')
+ts=$(date '+%Y-%m-%dT%H:%M:%S')
+
+# 한 줄 JSON(JSONL)으로 남겨 두면 나중에 집계하기 쉽다
+echo "{\"ts\":\"$ts\",\"tool\":\"$tool\"}" \
+  >> "${CLAUDE_PROJECT_DIR:-.}/.claude/logs/audit.jsonl"
+exit 0</pre></div>
+          <h4>집계 가능한 형식이 핵심</h4>
+          <p>왜 <code>.jsonl</code>(한 줄에 JSON 하나)일까요? <strong>나중에 뽑아 쓰기 위해서</strong>입니다. 사람이 읽는 산문으로 남기면 집계가 안 됩니다. JSONL이면 <code>jq</code> 한 줄로 통계가 나옵니다.</p>
+          <div class="code" data-lang="bash"><div class="code-head">로그에서 인사이트 뽑기</div><pre># 가장 많이 쓴 도구 top 10
+jq -r .tool .claude/logs/audit.jsonl | sort | uniq -c | sort -rn | head
+
+# 오늘 Bash 호출 수
+grep "$(date +%Y-%m-%d)" .claude/logs/audit.jsonl | grep -c '"tool":"Bash"'</pre></div>
+          <p>로그를 남기는 순간이 아니라 <strong>뽑아 보는 순간</strong>에 가치가 나옵니다. “남길 때 집계 가능하게”가 관측의 첫 규칙입니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-7-3"><h3 class="ch-title"><span class="ch-no">7.3</span>토큰·비용 모니터링과 예산 관리</h3>
+        <div class="ch-body">
+          <p>에이전트는 토큰을 쓰고, 토큰은 돈입니다. 개인 실험이라면 무시해도 되지만, 팀·자동화 단위가 되면 <strong>비용이 조용히 쌓입니다.</strong> 특히 야간 배치나 대량 파이프라인(<a href="#ch-8-3">8.3</a>)은 아무도 안 볼 때 예산을 태울 수 있습니다 — 버그 하나가 무한 루프를 돌면 아침에 청구서가 폭탄이 되죠.</p>
+          <p>세 가지 층위로 관리합니다. 뒤로 갈수록 강력하지만, 그만큼 유연성은 떨어집니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>층위</th><th>무엇을</th><th>어떻게</th></tr></thead>
+            <tbody>
+              <tr><td>가시화</td><td>세션·작업별 비용을 본다</td><td>사용량 로그를 팀·용도별로 집계</td></tr>
+              <tr><td>경보</td><td>임계치 초과 시 알린다</td><td>일/월 예산 대비 초과 시 알림</td></tr>
+              <tr><td>상한</td><td>초과를 아예 막는다</td><td>자동화에 비용 상한(하드 리밋)</td></tr>
+            </tbody>
+          </table></div>
+          <p>대부분의 팀은 가시화부터 시작하면 됩니다. 무인 자동화(Part 8)에는 반드시 상한까지 걸어 두세요 — 사람이 안 보는 곳일수록 하드 리밋이 필요합니다. 상한을 거는 곳은 두 층입니다: <strong>제공사 콘솔의 지출 한도</strong>(조직 차원 최후 방어선)와 <strong>파이프라인 코드의 누적 비용 카운터 + 중단 로직</strong>(작업 차원 — 구현 예시는 <code>sdk/nightly-report.py</code>).</p>
+          <div class="callout tip"><p class="callout-h"><b>비용 대비 가치로 보라</b></p><p>“토큰을 아꼈다”가 목표가 아닙니다. CS 응답 100건을 자동화해 하루치 인건비를 아꼈다면, 그 토큰 비용은 <em>투자</em>입니다. 비용만 보다가 오히려 가치를 죽이지 마세요 — 값싼 모델로 낮춘 품질이 재작업을 부르면 더 비쌉니다. <strong>비용/가치 비율</strong>로 보세요(<a href="#ch-10-3">10.3 ROI</a>와 연결).</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-7-4"><h3 class="ch-title"><span class="ch-no">7.4</span>세션 트랜스크립트와 트레이싱 — OpenTelemetry 연동</h3>
+        <div class="ch-body">
+          <p>먼저 용어 하나 — <strong>세션 트랜스크립트</strong>는 한 세션의 대화·도구 호출 전체 기록입니다. 대부분의 에이전트 도구가 로컬에 남기며, “왜 이렇게 답했지?”를 복기하거나 문제를 재현할 때 1차 자료가 됩니다. 트레이싱은 그것의 <em>전사 규모 버전</em>이라고 생각하면 됩니다.</p>
+          <p>한 줄 로그로 부족한 규모가 되면, <strong>표준 관측 스택</strong>으로 올라갑니다. 팀이 여럿이고 세션이 하루 수천 건이 되면 JSONL 파일을 <code>jq</code>로 뒤지는 건 한계가 있죠. 많은 에이전트 도구가 OpenTelemetry(OTEL) 메트릭·트레이스를 내보낼 수 있어, <strong>기존 모니터링 인프라</strong>(Grafana, Datadog 등)에 그대로 연결됩니다 — 새 대시보드를 처음부터 만들 필요가 없습니다.</p>
+          <div class="code" data-lang="bash"><div class="code-head">환경변수로 OTEL 텔레메트리 켜기 (예시)</div><pre># 텔레메트리 활성화
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+
+# 메트릭을 OTLP 수집기로 내보내기
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector.internal:4317
+
+# 팀·환경 태그를 붙여 두면 집계가 쉽다
+export OTEL_RESOURCE_ATTRIBUTES="team=marketflow,env=prod"</pre></div>
+          <p>이렇게 하면 세션 수, 토큰 사용량, 도구 호출 빈도 같은 지표가 대시보드에 쌓입니다. <code>team=marketflow</code> 같은 태그를 붙여 두면 <strong>어느 팀이 무엇에 얼마를 쓰는지</strong>, 어디서 실패가 몰리는지가 그래프로 보이기 시작합니다. 7.2의 수제 로그가 “점”이라면, OTEL은 “흐름”을 보여 줍니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>트랜스크립트엔 민감정보가 있다</b></p><p>세션 로그·트랜스크립트에는 코드·데이터·대화가 담깁니다. 관측을 켜는 순간 <em>또 하나의 민감 데이터 저장소</em>가 생긴다는 뜻이죠. 저장 위치, 접근 권한, 보존 기간을 반드시 정하세요. 관측이 편의를 주는 만큼 새로운 보안 책임도 만듭니다(부록 B 거버넌스, 10.4 컴플라이언스와 연결).</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-7-5"><h3 class="ch-title"><span class="ch-no">7.5</span>실패 알림과 대시보드 설계</h3>
+        <div class="ch-body">
+          <p>관측의 마지막 조각은 <strong>사람에게 닿는 것</strong>입니다. 로그가 아무리 쌓여도 아무도 안 보면 없는 것과 같습니다. 정보를 사람에게 전달하는 방식은 두 가지 — 밀어주기와 당겨보기.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th></th><th>알림 (push)</th><th>대시보드 (pull)</th></tr></thead>
+            <tbody>
+              <tr><td>언제</td><td>문제가 났을 때 사람을 부름</td><td>평소 상태를 한눈에</td></tr>
+              <tr><td>예</td><td>야간 배치 실패, 비용 급증</td><td>일별 사용량, 커맨드 빈도, 성공률</td></tr>
+              <tr><td>주의</td><td>정말 행동이 필요한 것만</td><td>결정에 쓰는 지표만</td></tr>
+            </tbody>
+          </table></div>
+          <p>알림의 함정은 <strong>과잉</strong>입니다. 알림이 너무 많으면 사람들이 무시하기 시작하고, 그러면 정작 중요한 알림도 묻힙니다(“양치기 소년” 문제). <em>정말 사람이 즉시 움직여야 하는 것만</em> 알림으로 보내세요. 나머지는 대시보드에.</p>
+          <div class="callout tip"><p class="callout-h"><b>대시보드가 답할 질문부터 정하라</b></p><p>지표를 잔뜩 그리기 전에, “이 대시보드로 어떤 <em>결정</em>을 내릴까?”를 먼저 적으세요. “어떤 커맨드를 폐기할까”, “어느 팀에 교육이 필요한가”, “비용 상한을 조정할까” — <strong>결정이 지표를 고릅니다.</strong> 볼 수 있다고 다 그리면 소음만 늘고, 정작 중요한 신호가 묻힙니다.</p></div>
+          <div class="otherteam" data-wire="7">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>팀 리더</dt><dd>팀별 사용량·비용 주간 리포트를 자동 생성해 회고에 활용</dd>
+              <dt>기획팀</dt><dd>어떤 커맨드가 실제로 쓰이는지 추적해 안 쓰는 것은 폐기(10.7)</dd>
+              <dt>데이터팀</dt><dd>감사 로그 자체를 데이터셋으로 분석해 병목·실패 패턴 발견</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 7 요약</b></p><p>무엇을 했나·얼마가 들었나·잘 됐나를 <em>집계 가능한 형식</em>으로 남기고, 행동이 필요한 것만 알림으로, 평소 상태는 대시보드로 보세요. 관측이 있어야 하네스를 개선할 수 있고, 무인 자동화를 지킬 수 있습니다. 마켓플로우 하네스의 <strong>7번 부품</strong>입니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — <code>audit-log.sh</code>(전체 도구 호출 로깅), <code>cost-report.sh</code>(사용량 집계), <code>otel.env</code></div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 팀별 사용량 리포트 자동화</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 8 ---------- -->
+      <section class="part" id="part-8" data-wire="8" data-label="Part 8" data-title="직접 만들기 (Agent SDK)">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 8</span></div>
+          <h2 class="part-title">직접 만들기 — Agent SDK</h2>
+          <p class="part-note">CLI의 경계를 넘어야 할 때, 하네스를 코드로 짓는다. 개발자 심화.</p>
+        </div>
+        <article class="ch" id="ch-8-1"><h3 class="ch-title"><span class="ch-no">8.1</span>SDK로 커스텀 하네스 짜기 — 언제 CLI를 넘어서는가</h3>
+        <div class="ch-body">
+          <p class="lead">CLI는 사람이 앉아 쓰는 도구입니다. 사람 없이 도는 하네스가 필요할 때, SDK로 내려갑니다.</p>
+          <p>지금까지의 하네스는 대부분 <strong>사람이 대화하는</strong> 맥락이었습니다. 커맨드를 부르고, 결과를 보고, 다음을 지시하죠. 그런데 “매일 새벽 CS 문의를 자동 분류”, “PR이 열릴 때마다 리뷰”, “대량의 상품 설명을 일괄 생성” 같은 건 사람이 매번 앉아 있을 수 없습니다. 이럴 때 <strong>Agent SDK / API</strong>로 하네스를 <em>코드</em>로 짓습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>CLI가 맞을 때</th><th>SDK로 내려갈 때</th></tr></thead>
+            <tbody>
+              <tr><td>사람이 대화하며 작업</td><td>사람 없이 자동 실행(cron·CI·웹훅)</td></tr>
+              <tr><td>탐색적·1회성 작업</td><td>같은 처리를 대량·반복</td></tr>
+              <tr><td>범용 도구로 충분</td><td>제품에 깊이 통합된 커스텀 도구가 필요</td></tr>
+              <tr><td>결과를 사람이 판단</td><td>결과를 코드가 다음 단계로 넘김</td></tr>
+            </tbody>
+          </table></div>
+          <p>주의할 것은, SDK가 <strong>“더 고급”이 아니라 “다른 용도”</strong>라는 점입니다. 대화형 작업을 억지로 SDK로 짜면 오히려 번거롭습니다. “사람이 매번 개입해야 하나, 아니면 코드가 알아서 넘겨도 되나?”가 갈림길입니다.</p>
+          <div class="callout note"><p class="callout-h"><b>SDK로 내려가도 하네스는 하네스</b></p><p>인터페이스가 코드로 바뀌어도 원리는 그대로입니다. 시스템 프롬프트(컨텍스트), 도구 정의(행동), 테스트(검증), 로깅(관측)을 여전히 설계합니다. <strong>Part 1~7의 사고방식이 코드 형태로 재현</strong>될 뿐입니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-8-2"><h3 class="ch-title"><span class="ch-no">8.2</span>최소 에이전트부터 도구 정의까지</h3>
+        <div class="ch-body">
+          <p>가장 작은 커스텀 에이전트는 놀랄 만큼 짧습니다. 파이썬 SDK의 <strong>tool runner</strong>는 “도구 정의 → 모델 호출 → 도구 실행 → 결과 되먹임” 루프를 자동으로 돌려 줍니다 — Part 4에서 CLI가 서브에이전트 루프를 돌려주던 것과 같은 일을, 이번엔 <em>코드가</em> 합니다. 마켓플로우의 재고 조회 에이전트를 봅시다.</p>
+          <div class="code" data-lang="python"><div class="code-head">examples/sdk/minimal-agent.py</div><pre>import anthropic
+from anthropic import beta_tool
+
+client = anthropic.Anthropic()  # ANTHROPIC_API_KEY 환경변수 사용
+
+@beta_tool
+def get_inventory(product_id: str) -> str:
+    """상품 재고 수량을 조회한다.
+
+    Args:
+        product_id: 조회할 상품 ID (예: SKU-1234)
+    """
+    # 실제로는 사내 DB를 조회. 여기서는 예시 값.
+    return f"{product_id}: 재고 42개, 창고 A"
+
+runner = client.beta.messages.tool_runner(
+    model="claude-opus-4-8",   # 대화형 예시라 상위 모델. 선택 기준은 8.3
+    max_tokens=1024,
+    tools=[get_inventory],
+    messages=[{"role": "user", "content": "SKU-1234 재고 얼마나 있어?"}],
+)
+
+for message in runner:            # 루프는 SDK가 자동으로 돈다
+    for block in message.content:
+        if block.type == "text":
+            print(block.text)</pre></div>
+          <h4>도구 = 그냥 함수</h4>
+          <p>가장 놀라운 점은 <strong>도구가 평범한 파이썬 함수</strong>라는 것입니다. <code>@beta_tool</code> 데코레이터를 붙이면, 함수의 <em>독스트링</em>에서 도구 설명이, <em>타입 힌트</em>에서 입력 스키마가 자동 생성됩니다. 즉 좋은 도구를 만드는 법은 곧 <strong>좋은 함수를 쓰는 법</strong>과 같습니다 — 명확한 이름, 설명적인 독스트링, 정확한 타입.</p>
+          <p>여기에 Part 6의 검증(도구 안에서 결과를 확인), Part 7의 로깅(호출을 기록)을 코드로 엮으면, CLI에서 파일로 하던 하네스가 SDK에서 코드로 재현됩니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-8-3"><h3 class="ch-title"><span class="ch-no">8.3</span>자동화 파이프라인 — cron과 CI 안의 에이전트</h3>
+        <div class="ch-body">
+          <p>SDK의 진가는 <strong>사람 없이 도는 파이프라인</strong>에서 나옵니다. 마켓플로우는 밤새 쌓인 CS 문의를 새벽에 자동 분류합니다. 여기서 중요한 하네스 판단이 하나 있습니다 — <strong>작업에 맞는 모델</strong>. 단순 분류에 최상위 모델은 낭비입니다. 빠르고 저렴한 모델로 충분하죠.</p>
+          <div class="code" data-lang="python"><div class="code-head">examples/sdk/cs-pipeline.py — CS 문의 자동 분류</div><pre>import anthropic
+
+client = anthropic.Anthropic()
+CATEGORIES = ["환불", "배송", "상품문의", "기타"]
+
+def classify(inquiry: str) -> str:
+    resp = client.messages.create(
+        model="claude-haiku-4-5",     # 분류는 빠르고 싼 모델로
+        max_tokens=16,
+        system=f"고객 문의를 다음 중 하나로만 분류한다: {', '.join(CATEGORIES)}. "
+               f"한 단어만 답한다.",
+        messages=[{"role": "user", "content": inquiry}],
+    )
+    label = next(b.text for b in resp.content if b.type == "text").strip()
+    return label if label in CATEGORIES else "기타"   # 목록 밖이면 안전하게
+
+# cron이 새벽에 이 스크립트를 실행한다
+for inquiry in load_overnight_inquiries():   # 사내 시스템에서 로드
+    category = classify(inquiry.text)
+    route_to_team(inquiry, category)          # 담당 팀으로 자동 배분</pre></div>
+          <h4>모델 믹스 — 하네스의 비용 설계</h4>
+          <p>이 스크립트를 cron이나 CI에 걸면, 아침에 출근한 CS팀은 <strong>이미 분류·배분된</strong> 문의를 받습니다. 밤사이 하네스가 일한 것이죠. 여기서 배울 원리는 <strong>모델 믹스</strong>입니다 — 복잡한 응답 초안은 상위 모델로, 단순 분류는 빠른 모델로. 한 파이프라인 안에서도 단계마다 다른 모델을 쓰면, 비용과 품질을 <em>동시에</em> 잡습니다.</p>
+          <p>사건 #4(7.1)를 기억하시나요? 청구서를 4배로 만든 범인이 바로 <strong>“단순 분류에 최상위 모델” + “무한 재시도”</strong>였습니다. 위 코드는 그 사고 이후의 교정본입니다 — 분류는 Haiku로, 목록 밖 답은 “기타”로 안전하게. 모든 걸 최상위 모델로 돌리는 건 게으른 설계입니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-8-4"><h3 class="ch-title"><span class="ch-no">8.4</span>프로덕션 고려사항 — 재시도·타임아웃·격리·비용 상한</h3>
+        <div class="ch-body">
+          <p>자동화가 프로덕션에 들어가면, 대화형에선 없던 문제들이 생깁니다. 사람이 지켜보지 않으니 <strong>실패가 조용히 쌓입니다.</strong> 대화형이면 “어? 안 되네” 하고 바로 알지만, 무인 파이프라인은 아무도 모르는 새 며칠을 실패합니다. 네 가지를 반드시 챙기세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>고려사항</th><th>왜</th><th>대응</th></tr></thead>
+            <tbody>
+              <tr><td>재시도·백오프</td><td>일시적 오류·레이트리밋</td><td>SDK 기본 재시도 활용, 실패는 로그로</td></tr>
+              <tr><td>타임아웃</td><td>한 건이 멈추면 전체가 밀림</td><td>건별 타임아웃, 스트리밍으로 장시간 대응</td></tr>
+              <tr><td>격리</td><td>한 건의 실패가 배치 전체를 죽임</td><td>건별 try/except, 실패분만 격리·재처리</td></tr>
+              <tr><td>비용 상한</td><td>버그가 예산을 태움</td><td>일/월 하드 리밋, 임계치 알림(Part 7)</td></tr>
+            </tbody>
+          </table></div>
+          <p>격리가 특히 중요합니다. 문의 1000건을 처리하는데 3번째에서 예외가 터져 전체가 죽으면, 나머지 997건이 방치됩니다. <code>try/except</code>로 <strong>건별로 감싸</strong> 하나가 실패해도 계속 돌게 하고, 실패분만 따로 모아 재처리하세요. 지면 코드에는 없지만, 전체 예시 파일 <code>examples/sdk/cs-pipeline.py</code>의 <code>run_pipeline</code>이 이 패턴을 구현해 두었습니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>사람이 안 볼수록 관측을</b></p><p>자동 파이프라인일수록 <a href="#ch-7-5">Part 7의 알림·대시보드</a>가 필수입니다. 새벽 배치가 실패했는데 아무도 모른다면, 아침에 “왜 분류가 안 됐지?”가 됩니다. <strong>무인 하네스는 관측과 세트</strong>입니다 — 관측 없는 자동화는 시한폭탄입니다.</p></div>
+          <div class="otherteam" data-wire="8">
+            <div class="otherteam-h"><span class="ic">🔀</span> 다른 팀이라면?</div>
+            <div class="otherteam-body"><dl>
+              <dt>콘텐츠팀</dt><dd>상품 설명 대량 생성 파이프라인 — 초안 생성 후 심의 검증까지 자동</dd>
+              <dt>데이터팀</dt><dd>야간 리포트 크론 에이전트 — 지표 집계 후 요약을 슬랙으로</dd>
+              <dt>개발팀</dt><dd>PR 열릴 때 CI에서 자동 코드리뷰 에이전트 실행</dd>
+            </dl></div>
+          </div>
+          <div class="takeaway"><p class="callout-h"><b>Part 8 요약</b></p><p>사람 없이 대량·반복이 필요하면 SDK로 하네스를 코드로 짓습니다. 도구는 그냥 함수, 작업엔 맞는 모델을(모델 믹스). 무인 하네스는 재시도·타임아웃·격리·비용 상한, 그리고 관측과 반드시 세트입니다. 마켓플로우 하네스의 <strong>8번 부품</strong>입니다.</p></div>
+        </div></article>
+        <div class="mats">
+          <p class="mats-h">이 장의 자료</p>
+          <ul>
+            <li><span>📎</span><div>메인 예시 — <code>minimal-agent.py</code>, <code>cs-pipeline.py</code>, <code>nightly-report.py</code>(비용 상한 포함)</div></li>
+            <li><span>🔀</span><div>다른 팀이라면? — 콘텐츠 대량 생성 파이프라인</div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------- PART 9 ---------- -->
+      <section class="part" id="part-9" data-wire="9" data-label="Part 9" data-title="실무 플레이북">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 9</span></div>
+          <h2 class="part-title">실무 플레이북</h2>
+          <p class="part-note">여기까지의 부품을 실제 팀에 끼워 넣는 법.</p>
+        </div>
+        <article class="ch" id="ch-9-1"><h3 class="ch-title"><span class="ch-no">9.1</span>역할별 적용 레시피 — 개발·기획·디자인·데이터</h3>
+        <div class="ch-body">
+          <p class="lead">지금까지의 8개 부품을 실제 역할에 끼워 넣는 최소 조합입니다. “뭐부터?”의 답.</p>
+          <p>Part 1~8을 다 읽고 나면 “좋은데, 그래서 우리 팀은 뭐부터 하지?”가 남습니다. 여기 역할별 <strong>1주차 레시피</strong>가 있습니다. 핵심은 <em>전부 하려 하지 말 것</em> — 각 역할이 즉효를 보는 두세 개만 먼저 세우고, 나머지는 그 위에 쌓습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>역할</th><th>1주차에 만들 것</th><th>다음 단계</th></tr></thead>
+            <tbody>
+              <tr><td><strong>개발</strong></td><td><code>CLAUDE.md</code> + 테스트 커맨드 + 커밋 전 Hook</td><td>검증 게이트 → Subagent 병렬 리뷰 → SDK 자동화</td></tr>
+              <tr><td><strong>기획</strong></td><td>기획 저장소 <code>CLAUDE.md</code> + <code>/PRD초안</code></td><td>문서 정합성 검증 → 이슈 트래커 MCP</td></tr>
+              <tr><td><strong>디자인</strong></td><td>디자인 시스템 <code>CLAUDE.md</code> + 명명규칙 커맨드</td><td>접근성 검증 → 디자인 QA 병렬</td></tr>
+              <tr><td><strong>데이터</strong></td><td>지표 정의 스킬 + 리포트 재현성 규칙</td><td>DB MCP → 야간 리포트 크론</td></tr>
+            </tbody>
+          </table></div>
+          <p>표를 보면 패턴이 보입니다 — <strong>모두 컨텍스트(Part 1)에서 시작</strong>합니다. 그다음 역할의 반복 작업을 행동(Part 2)으로 굳히고, 중요한 것에 검증(Part 6)을 붙입니다. Part 0.3에서 말한 “컨텍스트→행동→검증 세 축이면 효과의 80%”가 역할마다 그대로 적용됩니다.</p>
+          <div class="callout tip"><p class="callout-h"><b>공통 출발점</b></p><p>역할이 무엇이든 <strong>Part 1(컨텍스트)부터</strong> 시작하세요. <code>CLAUDE.md</code> 하나가 가장 적은 노력으로 가장 큰 효과를 냅니다. 화려한 SDK 자동화(Part 8)에 눈이 가더라도, 컨텍스트 없이 그 위에 얹으면 모래 위에 성을 짓는 격입니다. 순서를 지키세요.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-9-2"><h3 class="ch-title"><span class="ch-no">9.2</span>안티패턴 대백과 — 하네스가 무너지는 12가지 방식</h3>
+        <div class="ch-body">
+          <p>하네스는 세우는 것만큼 <strong>무너지지 않게 하는 것</strong>이 중요합니다. 각 축을 다루며 흩어져 나온 실패들을 한자리에 모았습니다. 이 열두 가지는 서로 다른 팀에서 반복적으로 관찰되는 <em>전형적</em> 실패입니다 — 그러니 당신 팀도 겪을 가능성이 높습니다. 하네스를 새로 짤 때, 그리고 정기 점검(10.7) 때 이 목록을 점검표로 쓰세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>#</th><th>안티패턴</th><th>처방</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><code>CLAUDE.md</code>에 소설을 쓴다</td><td>측정 가능한 규칙만, 짧게 (1.2)</td></tr>
+              <tr><td>2</td><td>규칙을 한 번 쓰고 방치한다</td><td>어길 때마다 갱신 (1.2)</td></tr>
+              <tr><td>3</td><td>개인 취향을 저장소에 커밋한다</td><td>전역/프로젝트 범위 분리 (1.3)</td></tr>
+              <tr><td>4</td><td>확인 불가한 “구호”를 규칙이라 부른다</td><td>기계로 검증 가능하게 (1.2)</td></tr>
+              <tr><td>5</td><td>지침에만 의존하고 Hook을 안 쓴다</td><td>중요한 건 Hook으로 강제 (3.1)</td></tr>
+              <tr><td>6</td><td>가드레일 하나에 의존한다</td><td>deny + Hook + 리뷰 겹치기 (3.3)</td></tr>
+              <tr><td>7</td><td>무엇이든 위임한다</td><td>맥락 전달 비용을 따진다 (4.2)</td></tr>
+              <tr><td>8</td><td>같은 에이전트에게 자기검증을 맡긴다</td><td>기계·타자가 검증 (6.3)</td></tr>
+              <tr><td>9</td><td>증거 없이 “다 됐다”를 믿는다</td><td>완료에 검증 통과 포함 (6.2)</td></tr>
+              <tr><td>10</td><td>외부 MCP를 무분별하게 붙인다</td><td>신뢰·최소권한 경계 (5.3)</td></tr>
+              <tr><td>11</td><td>관측 없이 운영한다</td><td>로깅·비용·알림 (Part 7)</td></tr>
+              <tr><td>12</td><td>무인 자동화를 방치한다</td><td>재시도·상한·알림과 세트 (8.4)</td></tr>
+            </tbody>
+          </table></div>
+          <p>열둘을 관통하는 공통 원인이 하나 있습니다 — <strong>“만들고 잊는다.”</strong> 하네스는 살아 있는 시스템이라, 세운 뒤 방치하면 낡아 갑니다(구체적 부패 징후는 10.7에서). 안티패턴의 절반은 “처음에 잘못 만들어서”가 아니라 “만든 뒤 안 돌봐서” 생깁니다. 그래서 정기 점검(10.7)이 중요합니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-9-3"><h3 class="ch-title"><span class="ch-no">9.3</span>도입 체크리스트와 30분 퀵스타트</h3>
+        <div class="ch-body">
+          <p>지금까지가 “무엇을·왜”였다면, 이 절은 “오늘 당장 무엇을 타이핑하나”입니다. 좋은 소식은, <strong>오늘 30분으로 시작할 수 있다</strong>는 것입니다. 하네스는 큰 프로젝트가 아니라 작은 습관에서 자랍니다. 완벽을 노리지 말고, <strong>돌아가는 최소 하네스</strong>를 먼저 만드세요 — 완벽한 계획보다 오늘의 <code>CLAUDE.md</code> 한 줄이 낫습니다.</p>
+          <h4>실황 워크스루 — 지금 따라 치세요</h4>
+          <div class="walk">
+            <div class="walk-step">
+              <h5>규칙 파일 만들기 <span class="mins">0–10분</span></h5>
+              <p>프로젝트 루트에 파일을 만들고, <strong>팀이 자주 어기는 규칙 5개</strong>만 적습니다. 완벽할 필요 없습니다.</p>
+              <div class="code" data-lang="bash"><div class="code-head">터미널</div><pre>touch CLAUDE.md</pre></div>
+              <p>그리고 이 골격만 채웁니다 — 개요 한 줄, 규칙, 명령, 금지.</p>
+              <div class="code" data-lang="markdown"><div class="code-head">CLAUDE.md</div><pre># (프로젝트 한 줄 소개)
+
+## 규칙
+- (자주 어기는 것 1)
+- (자주 어기는 것 2)
+
+## 명령
+- 테스트: (여기에 실제 명령)
+
+## 하지 말 것
+- (사고 났던 것)</pre></div>
+            </div>
+            <div class="walk-step">
+              <h5>첫 커맨드 만들기 <span class="mins">10–20분</span></h5>
+              <p>지난주 <strong>세 번 이상 반복한 요청</strong> 하나를 떠올려, 그 프롬프트를 그대로 파일에 옮깁니다.</p>
+              <div class="code" data-lang="bash"><div class="code-head">터미널</div><pre>mkdir -p .claude/commands
+touch .claude/commands/점검.md</pre></div>
+              <div class="code" data-lang="markdown"><div class="code-head">.claude/commands/점검.md</div><pre>---
+description: 변경사항을 우리 규칙에 맞춰 점검
+---
+
+지금 변경한 내용이 CLAUDE.md 규칙에 맞는지 점검해줘.
+어긋난 부분이 있으면 어디가 왜 어긋났는지 짚어줘.</pre></div>
+              <p>이제 <code>/점검</code>으로 부를 수 있습니다. 팀원 전체가 같은 점검을 쓰게 됐습니다.</p>
+            </div>
+            <div class="walk-step">
+              <h5>검증을 강제하기 <span class="mins">20–30분</span></h5>
+              <p>“완료”에 검증을 포함시킵니다. 가장 쉬운 방법은 <code>CLAUDE.md</code>에 한 줄 추가하는 것입니다.</p>
+              <div class="code" data-lang="markdown"><div class="code-head">CLAUDE.md 에 추가</div><pre>## 명령
+- 테스트: `npm test`
+  변경한 코드는 반드시 테스트를 돌린 뒤, 실제 출력과 함께 완료를 보고한다.</pre></div>
+              <p>여기까지가 30분입니다. 더 강하게 하고 싶으면 Hook으로 올리세요(3.1) — 하지만 오늘은 여기까지로 충분합니다.</p>
+            </div>
+            <div class="walk-step">
+              <h5>공유하기 <span class="mins">+1분</span></h5>
+              <p>가장 중요한 마지막 단계. <strong>커밋해야 팀의 하네스가 됩니다.</strong></p>
+              <div class="code" data-lang="bash"><div class="code-head">터미널</div><pre>git add CLAUDE.md .claude/
+git commit -m "chore: 팀 하네스 초기 설정"</pre></div>
+            </div>
+          </div>
+          <div class="callout note"><p class="callout-h"><b>도입 체크리스트</b></p><p>□ 컨텍스트 파일이 git에 있는가 □ 반복 작업이 커맨드가 됐는가 □ 위험 명령이 차단되는가 □ “완료”에 검증이 포함되는가 □ 무슨 일이 있었는지 로그로 남는가. 다섯 개가 채워지면 이미 상위권입니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-9-4"><h3 class="ch-title"><span class="ch-no">9.4</span>성숙도 모델 — 우리 팀은 지금 몇 단계인가</h3>
+        <div class="ch-body">
+          <p>하네스 성숙도는 5단계로 봅니다. 지금 위치를 알면 다음 칸이 보입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>단계</th><th>상태</th><th>다음 한 걸음</th></tr></thead>
+            <tbody>
+              <tr><td>L0 · 임의</td><td>매번 프롬프트를 새로 씀</td><td><code>CLAUDE.md</code> 만들기</td></tr>
+              <tr><td>L1 · 컨텍스트</td><td>규칙이 파일에 있음</td><td>반복 작업 커맨드화</td></tr>
+              <tr><td>L2 · 자동화</td><td>Hook·커맨드가 돎</td><td>검증 게이트 심기</td></tr>
+              <tr><td>L3 · 검증·관측</td><td>결과가 검증·기록됨</td><td>전사 표준화(부록 B)</td></tr>
+              <tr><td>L4 · 조직 하네스</td><td>회사가 하네스 위에 섬</td><td>지속 개선(Part 10)</td></tr>
+            </tbody>
+          </table></div>
+          <p>대부분의 팀은 L0~L1에 있습니다. L2까지만 올라도 체감이 확 바뀌고, L3부터는 <strong>조직의 경쟁력</strong>이 됩니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-9-5"><h3 class="ch-title"><span class="ch-no">9.5</span>마켓플로우 회고 — 쌓인 하네스 전체 지도</h3>
+        <div class="ch-body">
+          <p>Part 1에서 <code>CLAUDE.md</code> 한 장으로 시작한 마켓플로우가, 여기까지 무엇을 쌓았는지 펼쳐 봅시다. 먼저 <strong>사건 연표</strong>입니다 — 이 팀의 하네스는 설계도가 아니라 사고에서 자랐습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>사건</th><th>무엇이 터졌나</th><th>태어난 부품</th></tr></thead>
+            <tbody>
+              <tr><td><strong>#0</strong> 3월</td><td>소수점 할인가로 주문 1,200건 금액 오차</td><td><code>CLAUDE.md</code> 첫 줄 — 원화 정수 규칙</td></tr>
+              <tr><td><strong>#1</strong> 5월</td><td>담당자 휴가 중 상품 40개 안내 누락</td><td><code>/상품등록</code> 커맨드</td></tr>
+              <tr><td><strong>#2</strong> 6월</td><td>스테이징 8만 건 삭제, QA 전체 정지</td><td>차단 Hook + <code>deny</code> 목록</td></tr>
+              <tr><td><strong>#3</strong> 8월</td><td>“통과할 것으로 예상” 후 쿠폰 중복 사고</td><td><code>Stop</code> Hook 검증 게이트</td></tr>
+              <tr><td><strong>#4</strong> 10월</td><td>청구서 4배 — 무한 재시도를 한 달간 방치</td><td>감사 로그 + 비용 알림 + 하드 리밋</td></tr>
+            </tbody>
+          </table></div>
+          <p>패턴이 보이시나요? 매번 <strong>사고가 방아쇠</strong>였고, 대응은 <strong>기록 → 공유 → 강제 → 관측</strong> 순으로 성숙했습니다. 처음엔 “적어 두자”(#0), 그다음 “공유하자”(#1), 그다음 “막자”(#2·#3), 마지막에 “보자”(#4). 대부분의 팀이 이 순서를 밟습니다.</p>
+          <p>그 결과 쌓인 부품의 전체 지도입니다. <strong>각 부품이 어떻게 서로를 재사용하는지</strong>가 하네스의 본질입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>부품</th><th>무엇</th><th>재사용되는 곳</th></tr></thead>
+            <tbody>
+              <tr><td>1 컨텍스트</td><td><code>CLAUDE.md</code> 규칙</td><td>모든 커맨드·Hook·에이전트가 참조</td></tr>
+              <tr><td>2 행동</td><td>상품등록·CS 커맨드, 카피 스킬</td><td>3의 Hook, 8의 파이프라인이 활용</td></tr>
+              <tr><td>3 자동화</td><td>차단·포맷·로깅 Hook</td><td>7의 감사 로그로 이어짐</td></tr>
+              <tr><td>4 위임</td><td>가격조사·리서치 에이전트</td><td>6의 검증-후-합성과 결합</td></tr>
+              <tr><td>5 연결</td><td>DB·위키·이슈 MCP</td><td>모든 에이전트의 능력을 확장</td></tr>
+              <tr><td>6 검증</td><td>완료점검·Stop Hook</td><td>1의 규칙을 강제로 전환</td></tr>
+              <tr><td>7 관측</td><td>로깅·비용·알림</td><td>8의 무인 파이프라인을 지킴</td></tr>
+              <tr><td>8 SDK</td><td>CS 분류 파이프라인</td><td>1~7 전부를 코드로 엮음</td></tr>
+            </tbody>
+          </table></div>
+          <div class="takeaway"><p class="callout-h"><b>Part 9 요약 — 하네스의 본질</b></p><p>부품은 따로 놀지 않습니다. <code>CLAUDE.md</code>가 Hook에, Hook이 관측에, 관측이 자동화에 재사용되며 <strong>하나의 유기체</strong>가 됩니다. 이것이 “AI를 잘 쓰는 팀”과 “하네스 위에 선 조직”의 차이입니다. 다음 Part 10은 이걸 회사 차원으로 끌어올립니다.</p></div>
+        </div></article>
+      </section>
+
+      <!-- ---------- PART 10 ---------- -->
+      <section class="part" id="part-10" data-wire="10" data-label="Part 10" data-title="하네스 기반 조직 만들기">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">Part 10</span></div>
+          <h2 class="part-title">하네스 기반 조직 만들기</h2>
+          <p class="part-note">Part 0–9가 하네스를 잘 쓰는 팀을 만든다면, 여기는 하네스 위에 세워진 조직을 다룬다. 정답보다 의사결정 프레임을 제시한다.</p>
+        </div>
+        <article class="ch" id="ch-10-1"><h3 class="ch-title"><span class="ch-no">10.1</span>역할 재정의 — 직무·채용 기준·면접 질문</h3>
+        <div class="ch-body">
+          <p class="lead">‘하네스 엔지니어’는 새 직무일까요, 모두의 새 역량일까요? 대부분의 조직에서 답은 후자입니다.</p>
+          <p>전담 인력을 두는 게 맞는 경우도 있지만(공용 라이브러리·거버넌스를 책임질 사람), 하네스 사고는 <strong>모든 직무의 기본 역량</strong>으로 퍼지는 게 건강합니다. 개발자는 검증 루프를, 기획자는 컨텍스트 설계를, 리더는 관측·비용을 각자의 언어로 다룹니다.</p>
+          <p>채용에서 볼 것은 도구 사용 능력이 아니라 <strong>“맥락을 시스템으로 굳히는” 사고</strong>입니다. 면접 질문 예시:</p>
+          <ul>
+            <li>“반복 작업을 자동화한 경험을 말해 주세요. 무엇을 <em>시스템</em>에 남겼나요?”</li>
+            <li>“AI 결과를 어떻게 <em>검증</em>했나요? 틀렸을 때 어떻게 걸렀나요?”</li>
+            <li>“당신의 지식을 팀이 재사용하게 만든 방법은?”</li>
+          </ul>
+          <div class="callout note"><p class="callout-h"><b>판단 프레임</b></p><p>전담 하네스 엔지니어를 둘지는 <strong>규모</strong>로 결정하세요. 30명 이하면 역량으로 퍼뜨리고, 그 이상이면 공용 인프라(부록 B)를 책임질 1명을 두는 편이 낫습니다.</p></div>
+          <p>주의할 함정이 하나 있습니다. <strong>하네스를 “AI 담당자” 한 명에게 몰아주면</strong>, 나머지는 계속 예전 방식으로 일하고 그 한 명이 병목이 됩니다. 하네스의 힘은 모두가 조금씩 쓸 때 복리로 커집니다. 전담 인력은 <em>공용 인프라를 관리</em>하되, <em>각 팀이 스스로 하네스를 만들도록</em> 돕는 역할이어야 합니다 — 대신 만들어 주는 사람이 아니라.</p>
+        </div></article>
+
+        <article class="ch" id="ch-10-2"><h3 class="ch-title"><span class="ch-no">10.2</span>일하는 방식 재설계 — 스프린트·코드리뷰·QA·핸드오프</h3>
+        <div class="ch-body">
+          <p>기존 프로세스에 AI만 얹으면 효과가 반감됩니다. 프로세스 자체를 <strong>하네스 전제로</strong> 다시 봐야 합니다. 무엇이 바뀌는지 짚어 봅시다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>프로세스</th><th>기존</th><th>하네스 전제</th></tr></thead>
+            <tbody>
+              <tr><td>코드리뷰</td><td>사람이 모든 줄을 봄</td><td>기계 검증이 1차, 사람은 <em>판단</em>에 집중</td></tr>
+              <tr><td>QA</td><td>수동 테스트 위주</td><td>검증 하네스가 상시, QA는 시나리오 설계</td></tr>
+              <tr><td>스프린트</td><td>작업 단위로 추정</td><td>“하네스로 굳힐 것”을 백로그에 포함</td></tr>
+              <tr><td>핸드오프</td><td>구두·문서로 인수인계</td><td>컨텍스트 파일이 곧 인수인계</td></tr>
+            </tbody>
+          </table></div>
+          <p>핵심은 <strong>사람이 하는 일의 성격이 바뀐다</strong>는 것입니다. 사람은 “타이핑”에서 “판단·검증·설계”로 올라갑니다. 코드리뷰에서 사람이 볼 것은 세미콜론 위치가 아니라 “이게 진짜 맞는 방향인가”입니다. 이 전환이 잘 되면 구성원의 일이 <em>더 고차원</em>이 되어 만족도가 오르고, 안 되면 “AI가 짠 걸 사람이 뒤치다꺼리”라는 불만이 생깁니다 — 성패는 프로세스를 다시 설계했는가에서 갈립니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>흔한 실패 — “얹기만 하기”</b></p><p>기존 프로세스를 그대로 두고 AI만 얹으면, 사람은 예전 일을 다 하면서 AI 결과 검토까지 <em>추가로</em> 하게 됩니다. 일이 줄기는커녕 늘죠. 프로세스에서 <strong>무엇을 뺄지</strong>를 함께 정해야 합니다 — 자동 검증이 생겼으면 수동 QA의 일부를 덜어내는 식으로.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-10-3"><h3 class="ch-title"><span class="ch-no">10.3</span>경제성과 ROI — 비용 모델·생산성 지표·경영진 설득</h3>
+        <div class="ch-body">
+          <p>경영진을 설득하려면 <strong>비용/가치</strong>를 숫자로 말해야 합니다. 하지만 잘못된 지표는 오히려 해롭습니다.</p>
+          <div class="callout warn"><p class="callout-h"><b>세면 안 되는 것</b></p><p>“AI가 짠 코드 줄 수”, “토큰 절감액” 같은 <em>활동 지표</em>는 함정입니다. 줄 수는 많을수록 나쁠 수 있고, 토큰은 아끼는 게 목표가 아닙니다. <strong>결과 지표</strong>(리드타임, 처리량, 재작업률, 사고율)를 보세요.</p></div>
+          <p>설득 자료의 뼈대는 단순합니다.</p>
+          <ol>
+            <li><strong>비용 구조</strong> — 토큰비 + 도구비 + 인건비(설계·유지보수)</li>
+            <li><strong>가치</strong> — 자동화한 반복 업무의 인시(1명의 1시간 작업량) × 빈도</li>
+            <li><strong>손익분기</strong> — 하네스 구축·유지 비용을 몇 주 만에 회수하나</li>
+          </ol>
+          <p>마켓플로우 예: CS 분류 자동화가 하루 3인시를 아끼면 월 60인시(근무일 20일 기준). 구축·유지에 든 비용을 그 인건비로 나누면 회수 기간이 나옵니다. <strong>토큰 비용은 대개 이 가치의 일부에 불과</strong>합니다(<a href="#ch-7-3">7.3</a>). 실무에서 경영진이 가장 먼저 묻는 건 “얼마 드는데?”지만, 올바른 대화는 “얼마 아끼는데?”입니다 — 관측(Part 7)이 그 답의 근거를 제공합니다.</p>
+          <div class="callout tip"><p class="callout-h"><b>작게 증명하고 크게 설득하라</b></p><p>추상적 ROI 예측은 잘 안 먹힙니다. 파일럿 팀 하나에서 <strong>실제 절감 데이터</strong>를 뽑아 “이 팀이 이만큼 아꼈다”를 보여 주는 게 백 배 강력합니다. 그래서 관측 하네스를 파일럿부터 켜 두어야 합니다 — 나중에 설득 자료가 됩니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-10-4"><h3 class="ch-title"><span class="ch-no">10.4</span>리스크·컴플라이언스·법무 — 책임 소재부터 인시던트 대응까지</h3>
+        <div class="ch-body">
+          <p>“AI가 했다”는 책임을 면제하지 않습니다. 조직은 <strong>명확한 책임 구조</strong>를 먼저 세워야 합니다.</p>
+          <ul>
+            <li><strong>책임 소재</strong> — 최종 산출물의 책임은 항상 사람에게. 리뷰 게이트로 “누가 승인했는가”를 남깁니다.</li>
+            <li><strong>데이터 경계</strong> — 어떤 데이터가 어디로 가는지 설계합니다. 민감정보는 <code>deny</code>·MCP 권한으로 차단(3.2, 5.3).</li>
+            <li><strong>IP·저작권</strong> — 생성물의 권리·라이선스 정책을 정합니다.</li>
+            <li><strong>감사 준비</strong> — 규제 산업이면 관측 로그(Part 7)가 곧 감사 증거입니다.</li>
+            <li><strong>인시던트 대응</strong> — “AI가 잘못했을 때” 플레이북을 미리 만듭니다. 롤백·통지·재발방지.</li>
+          </ul>
+          <div class="callout note"><p class="callout-h"><b>규제 산업일수록 관측이 자산</b></p><p>핀테크·헬스케어처럼 감사가 엄격한 곳에서는 Part 7의 로깅이 “비용”이 아니라 <strong>규제 대응 자산</strong>입니다. 누가·언제·무엇을 승인했는지가 그대로 증거가 됩니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-10-5"><h3 class="ch-title"><span class="ch-no">10.5</span>변화관리와 문화 — 저항·스킬 격차·신뢰 구축</h3>
+        <div class="ch-body">
+          <p>기술보다 어려운 게 사람입니다. 하네스 도입의 성패는 <strong>변화관리</strong>에서 갈립니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>장애물</th><th>대응</th></tr></thead>
+            <tbody>
+              <tr><td>“내 일을 뺏길까” 하는 두려움</td><td>“타이핑 → 판단”으로 역할이 <em>올라간다</em>를 실증</td></tr>
+              <tr><td>스킬 격차</td><td>사내 교육 + 페어링. 잘하는 사람의 하네스를 공유</td></tr>
+              <tr><td>“AI를 못 믿겠다”</td><td>검증 하네스(Part 6)로 신뢰를 <em>구조</em>로 만든다</td></tr>
+              <tr><td>초기 실패로 인한 반발</td><td>작은 성공 사례부터. 파일럿 팀에서 증명</td></tr>
+            </tbody>
+          </table></div>
+          <p>신뢰는 구호로 생기지 않습니다. “검증 없이 믿어라”가 아니라 “<strong>검증이 있으니 믿을 수 있다</strong>”로 접근하세요. 심리적 안전감 — 실패해도 되는 분위기 — 이 있어야 사람들이 새 방식을 시도합니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-10-6"><h3 class="ch-title"><span class="ch-no">10.6</span>벤더·모델 전략 — 선택·락인 회피·업그레이드 대응</h3>
+        <div class="ch-body">
+          <p>모델은 계속 바뀝니다. 좋은 조직 전략은 <strong>특정 모델·벤더에 묶이지 않는 것</strong>입니다. 이것이 Part 0에서 말한 “모델은 갈아끼울 수 있다”의 조직 버전입니다.</p>
+          <ul>
+            <li><strong>선택 기준</strong> — 작업별로. 복잡한 추론은 상위 모델, 대량 단순 작업은 빠른 모델(8.3).</li>
+            <li><strong>락인 회피</strong> — 하네스를 <em>이식 가능</em>하게. 표준(MCP 등)에 기대고, 벤더 전용 기능 의존을 최소화(5.1).</li>
+            <li><strong>업그레이드 프로토콜</strong> — 새 모델이 나오면 파일럿에서 검증 후 확산. 하네스가 잘 짜였으면 모델 교체가 곧 무상 성능 향상.</li>
+          </ul>
+          <div class="callout tip"><p class="callout-h"><b>하네스가 방어막</b></p><p>잘 설계된 하네스 자체가 벤더 리스크의 방어막입니다. 컨텍스트·검증·관측이 코드로 남아 있으면, 엔진을 바꿔도 차체는 그대로입니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-10-7"><h3 class="ch-title"><span class="ch-no">10.7</span>하네스의 생애주기 — 부패 징후·리팩토링·폐기 기준</h3>
+        <div class="ch-body">
+          <p>하네스도 코드입니다. 방치하면 <strong>부패</strong>합니다. 현실과 어긋난 규칙, 아무도 안 쓰는 커맨드, 실패하는 Hook이 쌓이면 오히려 방해가 됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>부패 징후</th><th>대응</th></tr></thead>
+            <tbody>
+              <tr><td><code>CLAUDE.md</code>가 현실과 다름</td><td>정기 점검일에 갱신·삭제</td></tr>
+              <tr><td>안 쓰는 커맨드·스킬이 쌓임</td><td>사용량 로그(Part 7)로 확인 후 폐기</td></tr>
+              <tr><td>Hook이 자주 실패·우회됨</td><td>원인 수정 또는 제거</td></tr>
+              <tr><td>규칙이 너무 많아 신호가 흐림</td><td>가지치기 — 컨텍스트 위생(1.4)</td></tr>
+            </tbody>
+          </table></div>
+          <p>정기적으로 “이 하네스가 아직 가치 있나?”를 물으세요. <strong>폐기도 관리의 일부</strong>입니다. 안 쓰는 규칙은 없는 규칙보다 나쁩니다 — 신뢰를 갉아먹으니까요.</p>
+        </div></article>
+
+        <article class="ch" id="ch-10-8"><h3 class="ch-title"><span class="ch-no">10.8</span>0→1 로드맵 — 6개월 안에 하네스 기반 조직 세우기</h3>
+        <div class="ch-body">
+          <p>마지막으로, 전체를 시간축에 놓습니다. 이건 정답이 아니라 <strong>출발 프레임</strong>입니다 — 규모·업종에 맞게 조정하세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>기간</th><th>목표</th><th>핵심 활동</th></tr></thead>
+            <tbody>
+              <tr><td>1개월</td><td>파일럿 팀 L2 도달</td><td>한 팀에 컨텍스트·행동·자동화 축 세우기</td></tr>
+              <tr><td>2–3개월</td><td>검증·관측 도입</td><td>검증 게이트, 비용·사용량 가시화</td></tr>
+              <tr><td>3–4개월</td><td>확산</td><td>파일럿 성과로 다른 팀 온보딩</td></tr>
+              <tr><td>4–5개월</td><td>전사 표준화</td><td>공용 라이브러리·거버넌스(부록 B)</td></tr>
+              <tr><td>5–6개월</td><td>조직 하네스 정착</td><td>프로세스·채용·ROI 체계 안착</td></tr>
+            </tbody>
+          </table></div>
+          <div class="takeaway"><p class="callout-h"><b>Part 10 요약 — 그리고 이 책의 끝</b></p><p>기술은 Part 0–9가 줬습니다. Part 10은 그 위에 <strong>조직</strong>을 세우는 판단들입니다 — 역할·프로세스·경제성·리스크·문화·벤더·생애주기. 정답은 없지만 프레임은 있습니다. 이제 당신은 “AI를 잘 쓰는 사람”을 넘어 “<strong>AI가 잘 돌아가는 조직을 설계하는 사람</strong>”이 될 준비가 됐습니다. 남은 건 첫 <code>CLAUDE.md</code>를 만드는 것뿐입니다.</p></div>
+        </div></article>
+      </section>
+
+      <!-- ---------- APPENDIX A ---------- -->
+      <section class="part" id="appx-a" data-wire="x" data-label="부록 A" data-title="도메인별 하네스 플레이북">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">부록 A</span></div>
+          <h2 class="part-title">도메인별 하네스 플레이북</h2>
+          <p class="part-note">각 도메인마다 상황 → 하네스 구성도 → 예시 파일 세트 → 도입 순서를 완결형으로 제공한다.</p>
+        </div>
+        <article class="ch" id="ch-a-1"><h3 class="ch-title"><span class="ch-no">A.1</span>이커머스 운영 — 마켓플로우 전체 세트</h3>
+        <div class="ch-body">
+          <p class="lead">본편을 관통한 마켓플로우의 하네스를 한 장으로. 다른 도메인의 기준점입니다.</p>
+          <p>이커머스 운영은 <strong>반복 업무가 많고 도메인 규칙이 명확</strong>해 하네스 효과가 큰 대표 도메인입니다. 상품 등록·CS·가격 조사·리포트가 매일 반복되고, “원화 정수”, “광고 심의” 같은 규칙이 뚜렷하죠.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>부품</th><th>마켓플로우 구성</th></tr></thead>
+            <tbody>
+              <tr><td>컨텍스트</td><td>웹앱·데이터·기획 저장소별 <code>CLAUDE.md</code></td></tr>
+              <tr><td>행동</td><td><code>/상품등록</code>, <code>/cs-응답초안</code>, 카피 스킬</td></tr>
+              <tr><td>자동화</td><td>커밋 전 검사, 위험 명령 차단, 저장 시 로깅</td></tr>
+              <tr><td>위임</td><td>경쟁사 가격조사 에이전트</td></tr>
+              <tr><td>연결</td><td>상품 DB·위키·이슈 트래커 MCP</td></tr>
+              <tr><td>검증</td><td>완료점검 커맨드, 카피 심의 체크</td></tr>
+              <tr><td>관측</td><td>도구 호출 감사 로그, 팀별 비용</td></tr>
+              <tr><td>SDK</td><td>야간 CS 문의 자동 분류 파이프라인</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>도입 순서</strong>: 상품 규칙 <code>CLAUDE.md</code> → 상품등록·CS 커맨드 → 완료점검 검증 게이트 → 위험 명령 차단 → 가격조사 에이전트 → DB 연결 → CS 자동 분류. 즉효(컨텍스트·행동)부터 시작해 자동화로 확장한 전형입니다. 관련 예시 파일은 <code>examples/</code> 전반에 있습니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-a-2"><h3 class="ch-title"><span class="ch-no">A.2</span>B2B SaaS 개발팀</h3>
+        <div class="ch-body">
+          <p>B2B SaaS는 <strong>코드 품질과 안정성</strong>이 생명입니다. 고객사가 붙어 있어 배포 사고의 대가가 크죠. 그래서 검증(Part 6)과 자동화(Part 3)에 무게가 실립니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>상황</th><th>하네스 처방</th></tr></thead>
+            <tbody>
+              <tr><td>배포 사고 방지</td><td><code>Stop</code> Hook으로 테스트 통과 강제(6.3)</td></tr>
+              <tr><td>API 호환성 유지</td><td><code>CLAUDE.md</code>에 하위호환 규칙, 계약 테스트</td></tr>
+              <tr><td>멀티테넌시 실수 방지</td><td><code>PreToolUse</code>로 테넌트 격리 위반 차단</td></tr>
+              <tr><td>PR 리뷰 부하</td><td>CI에서 자동 코드리뷰 에이전트(8.3)</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>핵심 부품</strong>: 테스트 강제 게이트 + PR 자동리뷰 + 배포 승인 게이트(<code>ask</code>). “빠르게, 하지만 안 깨지게”가 목표라 검증 축을 먼저 두껍게 세웁니다.</p>
+          <p><strong>도입 순서</strong>: 테넌트·호환 규칙 <code>CLAUDE.md</code> → <code>Stop</code> Hook 테스트 강제 → 테넌트 격리 차단 Hook → PR 자체점검 스킬 → 배포 <code>ask</code> 게이트 → CI 자동 리뷰.</p>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일</p>
+            <ul>
+              <li><span>📄</span><div><code>domains/saas/CLAUDE.md</code> — 테넌트 격리 + API 하위호환 규칙</div></li>
+              <li><span>🔧</span><div><code>domains/saas/hooks/block-tenant-leak.sh</code> — <code>tenant_id</code> 없는 쿼리를 저장 전에 차단</div></li>
+            </ul>
+          </div>
+        </div></article>
+
+        <article class="ch" id="ch-a-3"><h3 class="ch-title"><span class="ch-no">A.3</span>콘텐츠·미디어팀 — 대량 생성과 검수 파이프라인</h3>
+        <div class="ch-body">
+          <p>이 장의 “검수”는 Part 6의 <em>검증</em>을 콘텐츠 업계 용어로 부른 것입니다. 콘텐츠팀은 <strong>대량 생성</strong>이 핵심이라 SDK 파이프라인(Part 8)과 검수(Part 6)의 조합이 중심입니다. 양이 많을수록 “생성은 자동, 검수는 게이트”가 유효합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>단계</th><th>하네스</th></tr></thead>
+            <tbody>
+              <tr><td>톤·스타일 통일</td><td>브랜드 보이스 스킬(2.3)</td></tr>
+              <tr><td>대량 초안 생성</td><td>SDK 파이프라인, 항목별 격리(8.4)</td></tr>
+              <tr><td>사실·심의 검증</td><td>생성과 분리된 검증 에이전트(4.3)</td></tr>
+              <tr><td>금지어 필터</td><td>검증 게이트에 금지어 목록</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>도입 순서</strong>: 브랜드 보이스 스킬 → 금지어 목록 정비 → 검수 에이전트 분리 → 소량 파이프라인 시범 → 대량 확대(격리·상한 필수).</p>
+          <p><strong>주의</strong>: 생성 에이전트에게 자기검증을 맡기지 마세요(6.3). 초안을 쓰는 에이전트와 심의를 보는 에이전트를 <em>반드시</em> 분리해야 “그럴듯한 위반”이 걸러집니다. 대량일수록 이 분리가 생명입니다.</p>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일 — 생성·검증 분리 세트</p>
+            <ul>
+              <li><span>✍️</span><div><code>domains/content/skills/브랜드-보이스/</code> — <strong>생성</strong>용 톤 가이드</div></li>
+              <li><span>🔍</span><div><code>domains/content/agents/콘텐츠-검수.md</code> — <strong>검증</strong>용 별도 에이전트(“반박하는 사람”)</div></li>
+            </ul>
+          </div>
+        </div></article>
+
+        <article class="ch" id="ch-a-4"><h3 class="ch-title"><span class="ch-no">A.4</span>핀테크 — 규제·감사 로그·승인 게이트</h3>
+        <div class="ch-body">
+          <p>핀테크는 <strong>규제와 감사</strong>가 지배하는 도메인입니다. 여기서는 관측(Part 7)이 “편의”가 아니라 <strong>법적 요구사항</strong>이고, 승인 게이트(3.3)가 필수입니다. 자유도보다 통제가 우선입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>요구</th><th>하네스</th></tr></thead>
+            <tbody>
+              <tr><td>모든 행위 추적</td><td>전체 도구 호출 감사 로그(7.2), 보존기간 설정</td></tr>
+              <tr><td>돈 관련 작업 통제</td><td>결제·이체는 <code>ask</code> 승인 게이트 + 사람 승인 기록</td></tr>
+              <tr><td>규제 데이터 격리</td><td>민감 필드 <code>deny</code>, MCP 최소권한(5.3)</td></tr>
+              <tr><td>감사 대응</td><td>“누가·언제·무엇을 승인” 로그가 곧 증거(10.4)</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>도입 순서</strong>: 감사 로그 Hook(첫날) → 비밀·KYC 경로 <code>deny</code> → 돈 관련 코드 <code>ask</code> 게이트 → 금액·정산 규칙 <code>CLAUDE.md</code> → 검증 게이트 → 로그 보존·접근 정책 수립.</p>
+          <div class="callout warn"><p class="callout-h"><b>여기선 로그가 자산</b></p><p>다른 도메인에선 관측을 뒤로 미뤄도 되지만, 핀테크는 <strong>첫날부터</strong> 감사 로그를 켜야 합니다. 규제 대응에서 “기록이 없습니다”라는 답변은 치명적입니다. 관측을 비용이 아니라 컴플라이언스 인프라로 보세요.</p></div>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일</p>
+            <ul>
+              <li><span>⚙️</span><div><code>domains/fintech/settings.json</code> — 원장·이체 편집에 <code>ask</code>, DB 직접접근·KYC 경로 <code>deny</code>, 매처 없는 전체 감사 로그</div></li>
+              <li><span>📋</span><div><code>domains/fintech/README.md</code> — 각 설정의 의도와 “첫날부터 켜야 할 것” 체크리스트</div></li>
+            </ul>
+          </div>
+        </div></article>
+
+        <article class="ch" id="ch-a-5"><h3 class="ch-title"><span class="ch-no">A.5</span>데이터·분석팀 — 쿼리·리포트·파이프라인</h3>
+        <div class="ch-body">
+          <p>데이터팀의 최대 리스크는 <strong>“그럴듯하지만 틀린 수치”</strong>입니다. 잘못된 지표 하나가 잘못된 의사결정을 낳죠. 그래서 컨텍스트(지표 정의)와 검증(재현성)이 핵심입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>리스크</th><th>하네스</th></tr></thead>
+            <tbody>
+              <tr><td>지표 정의 제각각</td><td>‘지표 정의’ 스킬 — 매출·AOV 표준(<code>data.CLAUDE.md</code>)</td></tr>
+              <tr><td>재현 불가한 수치</td><td>“모든 수치에 근거 쿼리 첨부” 검증(6.3)</td></tr>
+              <tr><td>프로덕션 사고</td><td><code>PreToolUse</code>로 프로덕션 <code>DELETE</code> 차단</td></tr>
+              <tr><td>리포트 반복 노동</td><td>야간 리포트 크론 에이전트(8.3)</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>핵심 부품</strong>: 지표 정의 스킬 + 근거 쿼리 검증 + 읽기전용 DB 연결. “숫자는 반드시 재현 가능하게”가 이 팀 하네스의 제1원칙입니다.</p>
+          <p><strong>도입 순서</strong>: 지표 정의 스킬 → 저장소 <code>CLAUDE.md</code>(개인정보·기간 규칙) → 근거 쿼리 첨부 검증 → 읽기전용 DB MCP → 프로덕션 쓰기 차단 Hook → 야간 리포트 크론.</p>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일</p>
+            <ul>
+              <li><span>📐</span><div><code>domains/data/skills/지표-정의/</code> — 매출·MAU·재구매율·AOV 표준 정의와 재현성 규칙</div></li>
+              <li><span>📄</span><div><code>claude-md/data.CLAUDE.md</code> — 데이터 저장소 상시 규칙</div></li>
+              <li><span>🌙</span><div><code>sdk/nightly-report.py</code> — 비용 상한이 걸린 야간 리포트 크론</div></li>
+            </ul>
+          </div>
+        </div></article>
+
+        <article class="ch" id="ch-a-6"><h3 class="ch-title"><span class="ch-no">A.6</span>ERP·사내 시스템 구축 프로젝트</h3>
+        <div class="ch-body">
+          <p class="lead">방대한 도메인 용어, 레거시 연동, 장기 프로젝트, 다수 이해관계자 — 하네스의 가치가 가장 극대화되는 현장입니다.</p>
+          <p>ERP·사내 시스템 구축이 하네스에 이상적인 이유는 <strong>맥락의 무게</strong> 때문입니다. 회계·재고·인사 용어가 수백 개고, 20년 된 레거시와 연동해야 하고, 프로젝트가 1년 넘게 가며 담당자가 바뀝니다. 이 맥락을 매번 사람 머리로 나르면 프로젝트가 무너집니다. 하네스가 그 맥락을 <em>시스템</em>에 고정합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>ERP 특유의 난제</th><th>하네스 처방</th></tr></thead>
+            <tbody>
+              <tr><td>방대한 도메인 용어</td><td><strong>도메인 사전</strong>을 컨텍스트 하네스로 고정 — 용어·코드·업무 규칙을 <code>CLAUDE.md</code>와 스킬에</td></tr>
+              <tr><td>레거시 연동 규칙</td><td>마이그레이션·인터페이스 규칙을 스킬로 패키징(2.3)</td></tr>
+              <tr><td>장기 프로젝트·인수인계</td><td>컨텍스트 파일이 곧 인수인계 문서(10.2)</td></tr>
+              <tr><td>요구사항 추적성</td><td>요구사항↔구현↔테스트 연결을 검증하는 하네스</td></tr>
+              <tr><td>다수 이해관계자</td><td>모듈별 디렉토리 스코프 <code>CLAUDE.md</code>(1.3)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>도메인 사전이 심장</b></p><p>ERP 하네스의 핵심은 <strong>도메인 사전</strong>입니다. “미결전표란 무엇인가”, “원가 계산은 어떤 규칙인가”를 컨텍스트에 고정하면, 에이전트가 매번 헤매지 않고 담당자가 바뀌어도 지식이 유지됩니다. 이것 하나가 ERP 프로젝트의 성패를 가릅니다.</p></div>
+          <p>도메인 사전이 실제로 어떻게 생겼는지 봅시다. 가상의 제조사 <strong>한빛물산</strong> ERP 프로젝트의 발췌입니다 — 용어를 <em>설명</em>하는 게 아니라 <strong>필드명·주의점까지 못 박는</strong> 것이 핵심입니다.</p>
+          <div class="code" data-lang="markdown"><div class="code-head">domains/erp/도메인사전.CLAUDE.md (발췌)</div><pre>## 1. 회계 용어
+
+| 용어 | 코드/필드 | 정의 | 주의 |
+|------|-----------|------|------|
+| 전표 | `slip` | 회계 거래 1건의 기록 단위 | "증빙"과 다름. 증빙은 첨부서류 |
+| 미결전표 | `slip.status = PENDING` | 작성됐으나 승인 전 | "미승인"이 아니라 "미결" |
+| 계정과목 | `account_code` | 4자리 숫자 (예: 1010 현금) | 임의 생성 금지 |
+| 차변/대변 | `debit` / `credit` | 복식부기의 좌우 | 합계 일치해야 저장 가능 |
+
+## 절대 규칙
+- **차변 합계 = 대변 합계.** 이 검증 없이 전표 저장 로직을 작성하지 않는다.
+- **마감된 기간의 데이터는 절대 수정하지 않는다.** 역분개 전표를 새로 만든다.</pre></div>
+          <p><strong>도입 순서</strong>: 도메인 사전 <code>CLAUDE.md</code> → 레거시 인터페이스 스킬 → 모듈별 디렉토리 스코프 → 요구사항 추적 검증 → (부록 B의 전사 표준화로). 개인 하네스보다 <em>조직 하네스</em>(부록 B)와 함께 가야 하는 대표 사례입니다.</p>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일 세트</p>
+            <ul>
+              <li><span>📖</span><div><code>domains/erp/도메인사전.CLAUDE.md</code> — 회계·재고·구매·인사 용어와 절대 규칙</div></li>
+              <li><span>🔌</span><div><code>domains/erp/skills/레거시-연동/</code> — EUC-KR 인코딩·고정폭(fixed-width) 금액·멱등성 등 인터페이스 규칙</div></li>
+              <li><span>🔗</span><div><code>domains/erp/commands/요구사항추적.md</code> — 요구사항→설계→구현→테스트 고리 검증</div></li>
+            </ul>
+          </div>
+        </div></article>
+
+        <article class="ch" id="ch-a-7"><h3 class="ch-title"><span class="ch-no">A.7</span>에이전시·수탁 개발 — 프로젝트마다 하네스 갈아끼우기</h3>
+        <div class="ch-body">
+          <p>에이전시는 <strong>고객마다 다른 규칙·스택</strong>을 다룹니다. 그래서 “하나의 하네스”가 아니라 <strong>프로젝트별로 갈아끼우는 하네스</strong>가 핵심입니다. 재사용 가능한 뼈대 + 프로젝트별 커스터마이징의 조합이죠.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>과제</th><th>하네스</th></tr></thead>
+            <tbody>
+              <tr><td>프로젝트마다 다른 규칙</td><td>프로젝트별 <code>CLAUDE.md</code>(git 커밋, 고객과 공유 가능)</td></tr>
+              <tr><td>공통 작업의 재사용</td><td>사내 표준 커맨드·스킬 라이브러리(부록 B)</td></tr>
+              <tr><td>빠른 온보딩</td><td>새 프로젝트 = 뼈대 복제 후 규칙만 교체</td></tr>
+              <tr><td>고객 인수인계</td><td><code>CLAUDE.md</code>를 산출물로 함께 전달</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>도입 순서</strong>: 사내 템플릿 <code>CLAUDE.md</code> 마련 → 킥오프에서 고객사 규칙·용어 채우기 → 공용 라이브러리에서 커맨드 가져오기 → 프로젝트 전용 커맨드 추가 → 종료 시 인수인계 체크리스트로 정리.</p>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일</p>
+            <ul>
+              <li><span>📋</span><div><code>domains/agency/CLAUDE.md.template</code> — <code>{{ }}</code>만 채우면 되는 프로젝트 템플릿 + 인수인계 체크리스트</div></li>
+            </ul>
+          </div>
+          <p><strong>차별화 포인트</strong>: 하네스 자체가 <em>경쟁력이자 납품물</em>이 됩니다. “우리는 프로젝트 시작 첫날 이 하네스로 셋업합니다”가 수주 경쟁력이 되고, 잘 정리된 <code>CLAUDE.md</code>는 고객에게 넘기는 자산이 됩니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-a-8"><h3 class="ch-title"><span class="ch-no">A.8</span>1인 개발자와 소규모 스타트업 — 최소 비용 하네스</h3>
+        <div class="ch-body">
+          <p>1인·소규모는 <strong>거버넌스가 필요 없습니다.</strong> 전사 표준·승인 체계는 오버킬이죠. 여기서는 “가장 적은 노력으로 가장 큰 효과”만 챙기면 됩니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>하면 좋은 것 ✅</th><th>지금은 오버킬 ❌</th></tr></thead>
+            <tbody>
+              <tr><td><code>CLAUDE.md</code> 하나</td><td>전사 거버넌스(부록 B)</td></tr>
+              <tr><td>자주 쓰는 커맨드 2~3개</td><td>복잡한 권한 계층</td></tr>
+              <tr><td>커밋 전 테스트 Hook</td><td>OTEL 대시보드</td></tr>
+              <tr><td>위험 명령 차단</td><td>전담 하네스 엔지니어</td></tr>
+            </tbody>
+          </table></div>
+          <p><strong>도입 순서</strong>: <code>CLAUDE.md</code> 한 장 → 반복 작업 커맨드 1~2개 → 빌드·테스트를 완료 조건에 포함. 여기까지가 전부입니다.</p>
+          <div class="callout tip"><p class="callout-h"><b>성장에 맞춰 자란다</b></p><p>지금 <code>CLAUDE.md</code> + 커맨드 몇 개면 충분합니다. 팀이 커지면 그때 자동화·관측·거버넌스를 하나씩 붙이세요(성숙도 모델 9.4). 작게 시작한 하네스가 <strong>회사와 함께 자라는 것</strong>이 이상적입니다 — 처음부터 대기업 하네스를 흉내 내지 마세요.</p></div>
+          <div class="mats">
+            <p class="mats-h">📎 이 도메인의 예시 파일</p>
+            <ul>
+              <li><span>🌱</span><div><code>domains/solo/CLAUDE.md</code> — 최소 세트. 끝에 “여기서 더 필요해지면” 성장 신호표 포함</div></li>
+            </ul>
+          </div>
+        </div></article>
+      </section>
+
+      <!-- ---------- APPENDIX B ---------- -->
+      <section class="part" id="appx-b" data-wire="x" data-label="부록 B" data-title="전사 하네스 아키텍처">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">부록 B</span></div>
+          <h2 class="part-title">전사 하네스 아키텍처 — “하네스 ERP”</h2>
+          <p class="part-note">개인 하네스를 넘어 조직 인프라로 구축하는 단계. 각자 엑셀에서 통합 시스템으로의 전환과 구조가 같다.</p>
+        </div>
+        <article class="ch" id="ch-b-1"><h3 class="ch-title"><span class="ch-no">B.1</span>왜 ERP 비유인가 — 각자 엑셀에서 통합 시스템으로</h3>
+        <div class="ch-body">
+          <p class="lead">개인이 각자 하네스를 만드는 단계를 넘어서면, 하네스 자체가 전사 인프라가 됩니다. 그 전환은 ERP 도입과 구조가 같습니다.</p>
+          <p>회사 초기에는 각 팀이 <em>엑셀</em>로 재고·회계·인사를 따로 관리합니다. 편하지만, 규모가 커지면 문제가 터지죠 — 팀마다 숫자가 다르고, 담당자가 나가면 파일이 미궁이 되고, 전사 현황을 아무도 모릅니다. 그래서 ERP를 도입해 <strong>흩어진 관리를 하나의 시스템으로 통합</strong>합니다.</p>
+          <p>하네스도 똑같은 경로를 밟습니다. 처음엔 각자 <code>CLAUDE.md</code>를 쓰지만, 규모가 커지면 같은 문제가 옵니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>각자 하네스 (엑셀 단계)</th><th>전사 하네스 (ERP 단계)</th></tr></thead>
+            <tbody>
+              <tr><td>팀마다 규칙이 제각각</td><td>사내 표준 라이브러리로 통합</td></tr>
+              <tr><td>좋은 커맨드가 한 팀에만</td><td>공용 저장소로 전사 공유</td></tr>
+              <tr><td>보안 정책이 들쭉날쭉</td><td>표준 Hook·보안 베이스라인</td></tr>
+              <tr><td>비용을 아무도 집계 못 함</td><td>팀별 사용량·비용 리포팅</td></tr>
+              <tr><td>신입이 맨땅에서 시작</td><td>첫날 하네스를 지급</td></tr>
+            </tbody>
+          </table></div>
+          <p>대부분의 자료가 “개인이 잘 쓰는 법”에서 멈춥니다. 하지만 조직의 진짜 경쟁력은 <strong>이 통합 단계</strong>에서 나옵니다. 부록 B는 그 전환을 설계합니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-b-2"><h3 class="ch-title"><span class="ch-no">B.2</span>공용 라이브러리 — 사내 표준 Skill·Command 저장소</h3>
+        <div class="ch-body">
+          <p>전사 하네스의 심장은 <strong>공용 라이브러리</strong>입니다. 잘 만든 커맨드·스킬을 한 저장소에 모아, 모든 팀이 가져다 쓰게 하는 것이죠. “A팀이 만든 완벽한 PR 리뷰 커맨드를 B팀도 쓴다” — 이 재사용이 조직 단위 복리를 만듭니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>구성</th><th>내용</th></tr></thead>
+            <tbody>
+              <tr><td>표준 커맨드</td><td>PR 리뷰, 릴리즈 노트, 보안 점검 등 전사 공통</td></tr>
+              <tr><td>표준 스킬</td><td>사내 코딩 규약, 문서 양식, 브랜드 보이스</td></tr>
+              <tr><td>배포 방식</td><td>git 저장소 + 각 프로젝트가 참조/복제</td></tr>
+              <tr><td>기여 절차</td><td>좋은 로컬 커맨드를 공용으로 승격하는 PR 흐름</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>상향식으로 자라게 하라</b></p><p>공용 라이브러리는 위에서 “이걸 써라”로 강제하면 죽습니다. 각 팀이 만든 좋은 커맨드를 <strong>승격</strong>시키는 흐름이 건강합니다 — “이거 우리 팀에서 잘 쓰는데 공용으로 올릴까요?”. 현장에서 검증된 것만 표준이 되게 하세요.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-b-3"><h3 class="ch-title"><span class="ch-no">B.3</span>표준 Hook 정책과 보안 베이스라인</h3>
+        <div class="ch-body">
+          <p>개인 하네스에선 각자 위험 명령을 차단했지만(3.3), 전사 단계에선 <strong>모든 프로젝트가 지켜야 할 최소 안전선</strong>이 필요합니다. 이것이 보안 베이스라인입니다 — “우리 회사에선 이 Hook·이 <code>deny</code> 목록이 기본으로 깔린다.”</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>베이스라인 항목</th><th>내용</th></tr></thead>
+            <tbody>
+              <tr><td>공통 차단</td><td>파괴적 명령·비밀 파일 읽기를 전사 <code>deny</code></td></tr>
+              <tr><td>공통 로깅</td><td>감사 로그 Hook을 기본 탑재(규제 대응)</td></tr>
+              <tr><td>승인 게이트</td><td>프로덕션·결제는 전사 <code>ask</code> 정책</td></tr>
+              <tr><td>배포 방식</td><td>전역 설정으로 상속, 프로젝트가 강화만 가능</td></tr>
+            </tbody>
+          </table></div>
+          <p>핵심은 <strong>“프로젝트가 베이스라인을 <em>완화</em>할 수 없게”</strong> 하는 것입니다. 각 팀은 더 조일 수는 있어도 풀 수는 없어야 합니다. 그래야 어느 팀이 실수로 가드레일을 껐다가 사고를 내는 일이 방지됩니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-b-4"><h3 class="ch-title"><span class="ch-no">B.4</span>버전 관리와 배포 — 하네스도 릴리즈된다</h3>
+        <div class="ch-body">
+          <p>공용 라이브러리가 생기면 새 질문이 옵니다 — <strong>“표준 커맨드를 고치면 누가 언제 받나?”</strong> 하네스도 코드이므로, 소프트웨어처럼 버전·릴리즈·롤백이 필요합니다.</p>
+          <ul>
+            <li><strong>버전 관리</strong> — 공용 라이브러리를 git으로. 변경 이력이 남고 되돌릴 수 있습니다.</li>
+            <li><strong>배포</strong> — 각 프로젝트가 특정 버전을 참조. 강제 최신이 아니라 “받을 준비되면 올린다”. 단, <strong>보안 베이스라인(B.3)만은 예외</strong>로 즉시 강제 배포합니다.</li>
+            <li><strong>롤백</strong> — 새 표준이 문제를 일으키면 이전 버전으로. 개인 하네스엔 없던 개념입니다.</li>
+            <li><strong>변경 공지</strong> — “이번 릴리즈에서 이 커맨드가 바뀝니다”를 팀에 알림.</li>
+          </ul>
+          <div class="callout note"><p class="callout-h"><b>하네스에 릴리즈 노트를</b></p><p>표준 하네스를 바꿀 때 <strong>왜 바꿨는지</strong>를 릴리즈 노트로 남기세요. “이 Hook을 추가한 이유는 지난달 사고” 같은 맥락이 없으면, 몇 달 뒤 아무도 이유를 모른 채 규칙만 따르거나 함부로 지웁니다(10.7 부패 방지).</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-b-5"><h3 class="ch-title"><span class="ch-no">B.5</span>권한과 거버넌스 — 누가 무엇을 바꿀 수 있나</h3>
+        <div class="ch-body">
+          <p>전사 표준이 생기면 <strong>거버넌스</strong>가 필요해집니다 — 누가 표준을 바꿀 수 있고, 누가 검토하고, 어떻게 결정하나. 통제가 없으면 표준이 아니고, 통제가 과하면 아무도 안 씁니다. 그 균형을 설계합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>대상</th><th>권한 모델</th></tr></thead>
+            <tbody>
+              <tr><td>개인·프로젝트 하네스</td><td>각 팀이 자유롭게(빠른 실험)</td></tr>
+              <tr><td>공용 라이브러리 기여</td><td>PR + 리뷰(현장 검증 후 승격)</td></tr>
+              <tr><td>보안 베이스라인</td><td>보안·플랫폼팀 승인 필수(완화 불가)</td></tr>
+              <tr><td>MCP 서버 승인</td><td>감사된 서버만 목록에 등록(5.3)</td></tr>
+            </tbody>
+          </table></div>
+          <p>원칙은 <strong>“위험도에 비례한 통제”</strong>입니다. 실험적 로컬 커맨드는 자유롭게, 보안에 영향을 주는 베이스라인은 엄격하게. 모든 걸 똑같이 통제하면 혁신이 죽고, 모든 걸 풀면 사고가 납니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-b-6"><h3 class="ch-title"><span class="ch-no">B.6</span>사용량·비용 집계와 팀별 리포팅</h3>
+        <div class="ch-body">
+          <p>Part 7의 관측을 <strong>전사 규모</strong>로 끌어올린 것입니다. 개인은 자기 비용만 봤지만, 조직은 “어느 팀이 무엇에 얼마를 쓰고, 무엇이 효과를 내는가”를 봐야 합니다 — 예산 배분과 개선의 근거죠.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>집계</th><th>답하는 질문</th></tr></thead>
+            <tbody>
+              <tr><td>팀별 비용</td><td>어디에 예산이 쓰이나 (OTEL 태그, 7.4)</td></tr>
+              <tr><td>커맨드 사용률</td><td>무엇이 실제로 쓰이나 / 폐기 후보는(10.7)</td></tr>
+              <tr><td>성공·실패율</td><td>어느 하네스가 신뢰할 만한가</td></tr>
+              <tr><td>ROI 근거</td><td>경영진 설득 자료(10.3)</td></tr>
+            </tbody>
+          </table></div>
+          <p>이 데이터가 <strong>투자 결정의 근거</strong>가 됩니다. “이 자동화는 잘 쓰이니 더 투자, 저 커맨드는 아무도 안 쓰니 폐기.” 관측 없이 하는 전사 하네스 투자는 감으로 하는 도박입니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-b-7"><h3 class="ch-title"><span class="ch-no">B.7</span>온보딩 — 신규 입사자가 첫날 하네스를 받는 법</h3>
+        <div class="ch-body">
+          <p>전사 하네스의 가장 극적인 효과는 <strong>온보딩</strong>에서 나옵니다. 신입이 첫날 저장소를 클론하면, <code>CLAUDE.md</code>·표준 커맨드·보안 Hook이 <em>이미 다</em> 깔려 있습니다. 3개월치 암묵지가 첫날에 전달되는 것이죠.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>기존 온보딩</th><th>하네스 온보딩</th></tr></thead>
+            <tbody>
+              <tr><td>“우리는 원화 정수 써요” 구두 설명</td><td><code>CLAUDE.md</code>에 이미 있음</td></tr>
+              <tr><td>“테스트는 이렇게 돌려요” 반복</td><td>커맨드로 실행, Hook으로 강제</td></tr>
+              <tr><td>“이건 건드리면 안 돼요” 경고</td><td><code>deny</code>가 자동 차단</td></tr>
+              <tr><td>선배가 옆에서 며칠</td><td>하네스가 가드레일 역할</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>하네스 = 살아 있는 온보딩 문서</b></p><p>좋은 <code>CLAUDE.md</code>는 <strong>실행되는 온보딩 문서</strong>입니다. 위키 문서는 낡지만, 하네스는 매일 쓰이므로 낡으면 바로 티가 나 갱신됩니다. 신입 온보딩 품질을 높이고 싶으면, 온보딩 문서를 쓰지 말고 하네스를 다듬으세요.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-b-8"><h3 class="ch-title"><span class="ch-no">B.8</span>롤아웃 전략 — 파일럿에서 표준화까지</h3>
+        <div class="ch-body">
+          <p>전사 하네스를 <strong>한 번에</strong> 밀어붙이면 실패합니다. 저항이 크고, 검증 안 된 표준이 사고를 내죠. 검증된 롤아웃 경로는 <strong>파일럿 → 확산 → 표준화</strong>입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>단계</th><th>목표</th><th>핵심</th></tr></thead>
+            <tbody>
+              <tr><td>파일럿</td><td>한 팀에서 증명</td><td>의욕적인 팀 선정, 실제 성과·데이터 확보</td></tr>
+              <tr><td>확산</td><td>성과로 설득</td><td>파일럿 데이터로 다른 팀 자발적 참여 유도</td></tr>
+              <tr><td>표준화</td><td>공용 인프라화</td><td>검증된 것만 공용 라이브러리·베이스라인으로</td></tr>
+            </tbody>
+          </table></div>
+          <p>핵심은 B.2에서 본 상향식 원리 그대로 — <strong>“강제”가 아니라 “매력”으로 퍼뜨리는 것</strong>입니다. 파일럿 팀이 눈에 띄게 편해지고 빨라지면, 다른 팀이 “우리도”라고 합니다. 위에서 명령한 표준은 형식적으로 지켜지지만, 아래서 원해서 채택한 표준은 실제로 쓰입니다(10.5 변화관리와 직결).</p>
+        </div></article>
+
+        <article class="ch" id="ch-b-9"><h3 class="ch-title"><span class="ch-no">B.9</span>실패 사례 — 전사 표준화가 무너지는 이유</h3>
+        <div class="ch-body">
+          <p>전사 하네스는 잘못하면 오히려 방해가 됩니다. 실제로 관찰되는 실패 패턴을 미리 알면 피할 수 있습니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>실패</th><th>원인</th><th>처방</th></tr></thead>
+            <tbody>
+              <tr><td>표준을 아무도 안 씀</td><td>위에서 강제, 현장 미검증</td><td>상향식 승격(B.2, B.8)</td></tr>
+              <tr><td>표준이 낡아 방해</td><td>유지보수 주체 없음</td><td>거버넌스·소유권 명확화(B.5)</td></tr>
+              <tr><td>너무 무거워 답답</td><td>과잉 거버넌스</td><td>위험도 비례 통제(B.5)</td></tr>
+              <tr><td>보안 사고</td><td>베이스라인 완화 허용</td><td>완화 불가 정책(B.3)</td></tr>
+              <tr><td>비용 폭증</td><td>집계·상한 부재</td><td>사용량 리포팅·상한(B.6, 7.3)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="takeaway"><p class="callout-h"><b>부록 B 요약 — 하네스 ERP</b></p><p>개인 하네스가 조직 인프라가 되는 전환은 ERP 도입과 같습니다 — 흩어진 관리를 통합하되, <strong>상향식으로 자라게 하고</strong>, 위험도에 비례해 통제하고, 파일럿으로 검증한 뒤 확산하세요. 이 단계가 “AI 잘 쓰는 회사”와 “하네스 위에 선 회사”를 가릅니다.</p></div>
+        </div></article>
+      </section>
+
+      <!-- ---------- APPENDIX C ---------- -->
+      <section class="part" id="appx-c" data-wire="x" data-label="부록 C" data-title="안티패턴과 트러블슈팅">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">부록 C</span></div>
+          <h2 class="part-title">안티패턴과 트러블슈팅</h2>
+          <p class="part-note">증상에서 출발해 원인으로 가는 진단표.</p>
+        </div>
+        <article class="ch" id="ch-c-1"><h3 class="ch-title"><span class="ch-no">C.1</span>증상별 진단표</h3>
+        <div class="ch-body">
+          <p class="lead">문제가 생겼을 때 증상에서 원인으로 빠르게 가는 지도. 빈출 4가지는 다음 절들이 깊이 다루고, 나머지는 본편 해당 절을 참조하세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>증상</th><th>흔한 원인</th><th>가서 볼 곳</th></tr></thead>
+            <tbody>
+              <tr><td>“규칙을 자꾸 무시해요”</td><td>규칙이 모호·과다, 컨텍스트 넘침</td><td>1.2, C.2</td></tr>
+              <tr><td>“답이 오락가락해요”</td><td>컨텍스트가 잡음으로 가득</td><td>C.2</td></tr>
+              <tr><td>“Hook이 안 걸려요”</td><td>매처·경로·권한 문제</td><td>C.3</td></tr>
+              <tr><td>“비용이 너무 커요”</td><td>큰 모델 남용, 무한 루프</td><td>C.4, 7.3</td></tr>
+              <tr><td>“사람마다 결과가 달라요”</td><td>하네스가 공유 안 됨</td><td>C.5</td></tr>
+              <tr><td>“완료라는데 안 돼요”</td><td>검증 게이트 부재</td><td>6.3</td></tr>
+              <tr><td>“위험한 걸 실행했어요”</td><td>가드레일 부재·완화</td><td>3.3</td></tr>
+            </tbody>
+          </table></div>
+          <p>대부분의 문제는 <strong>“하네스가 없어서”가 아니라 “하네스가 어긋나서”</strong>입니다. 규칙이 현실과 다르거나, 컨텍스트가 잡음으로 찼거나, 공유가 안 된 것이죠. 진단의 첫걸음은 “이 하네스가 지금도 맞나?”를 의심하는 것입니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-c-2"><h3 class="ch-title"><span class="ch-no">C.2</span>컨텍스트가 넘칠 때</h3>
+        <div class="ch-body">
+          <p><strong>증상</strong>: 초반엔 잘하다가 대화가 길어지면 규칙을 잊고, 답이 오락가락합니다. <strong>원인</strong>: 컨텍스트가 무관한 내용(옛 시도, 실패한 탐색, 방대한 파일 덤프)으로 가득 차 중요한 규칙의 신호가 묻힌 것입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>대응</th><th>방법</th></tr></thead>
+            <tbody>
+              <tr><td>세션 정리</td><td>결론만 남기고 새 세션으로 이월(1.4)</td></tr>
+              <tr><td>규칙 다이어트</td><td><code>CLAUDE.md</code>에서 안 쓰는 규칙 제거</td></tr>
+              <tr><td>범위 분리</td><td>특정 폴더 규칙은 디렉토리 스코프로(1.3)</td></tr>
+              <tr><td>위임 활용</td><td>지저분한 탐색을 서브에이전트로 격리(4.1)</td></tr>
+            </tbody>
+          </table></div>
+          <p>핵심 교훈: <strong>규칙을 더 넣어서 해결하려 하지 마세요.</strong> “규칙을 자꾸 어기네, 규칙을 더 강하게 써야지”는 종종 역효과입니다 — 잡음을 더 늘리니까요. 오히려 <em>빼서</em> 중요한 규칙의 신호를 살리는 게 정답일 때가 많습니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-c-3"><h3 class="ch-title"><span class="ch-no">C.3</span>Hook이 걸리지 않을 때</h3>
+        <div class="ch-body">
+          <p><strong>증상</strong>: 분명 Hook을 등록했는데 실행이 안 됩니다. Hook은 강력하지만 <em>조용히</em> 실패하는 경향이 있어 진단이 까다롭습니다. 체크리스트로 좁히세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>확인</th><th>흔한 실수</th></tr></thead>
+            <tbody>
+              <tr><td>매처</td><td>이벤트·도구 매처가 실제 도구명과 다름(<code>Edit</code> vs <code>Write</code>)</td></tr>
+              <tr><td>경로</td><td>스크립트 경로가 틀림, <code>$CLAUDE_PROJECT_DIR</code> 미사용</td></tr>
+              <tr><td>실행 권한</td><td>스크립트에 <code>chmod +x</code> 안 함</td></tr>
+              <tr><td>의존성</td><td><code>jq</code> 등 스크립트가 쓰는 도구가 미설치</td></tr>
+              <tr><td>종료 코드</td><td>차단하려는데 <code>exit 2</code> 대신 <code>exit 1</code></td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout tip"><p class="callout-h"><b>먼저 로그를 찍어라</b></p><p>Hook 디버깅의 첫걸음은 스크립트 맨 위에 <code>echo "hook 실행됨: $(date)" &gt;&gt; /tmp/hook.log</code>를 넣는 것입니다. 로그가 안 찍히면 <em>등록·매처</em> 문제, 찍히는데 동작이 이상하면 <em>스크립트 로직</em> 문제로 범위가 반으로 줄어듭니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-c-4"><h3 class="ch-title"><span class="ch-no">C.4</span>비용이 예상보다 클 때</h3>
+        <div class="ch-body">
+          <p><strong>증상</strong>: 청구서가 예상을 크게 넘습니다. 비용 문제는 대개 <strong>관측이 없어서</strong> 늦게 발견됩니다 — 먼저 7.2의 로그로 어디서 새는지부터 봐야 합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>원인</th><th>처방</th></tr></thead>
+            <tbody>
+              <tr><td>단순 작업에 큰 모델</td><td>분류·추출은 빠른 모델로(모델 믹스, 8.3)</td></tr>
+              <tr><td>무한 루프·재시도</td><td>비용 상한·최대 반복 제한(8.4)</td></tr>
+              <tr><td>불필요한 대량 컨텍스트</td><td>컨텍스트 위생으로 다이어트(1.4)</td></tr>
+              <tr><td>야간 배치가 폭주</td><td>하드 리밋 + 임계치 알림(7.3)</td></tr>
+            </tbody>
+          </table></div>
+          <p>가장 흔한 범인은 <strong>“모든 걸 최상위 모델로”</strong>입니다. 단순 분류 100만 건을 최상위 모델로 돌리면 낭비죠. 작업에 맞는 모델을 고르는 것만으로 비용이 몇 배 줄기도 합니다. 그리고 비용을 아끼려다 품질을 죽이지 마세요 — 비용/가치로 보세요(10.3).</p>
+        </div></article>
+
+        <article class="ch" id="ch-c-5"><h3 class="ch-title"><span class="ch-no">C.5</span>팀원마다 결과가 다를 때</h3>
+        <div class="ch-body">
+          <p><strong>증상</strong>: 같은 작업인데 사람마다 결과 품질이 제각각입니다. 이건 거의 항상 <strong>하네스가 공유되지 않았다</strong>는 신호입니다 — 잘하는 사람의 하네스가 그 사람 로컬에만 있는 거죠.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>원인</th><th>처방</th></tr></thead>
+            <tbody>
+              <tr><td>규칙이 개인 로컬에만</td><td>프로젝트 <code>CLAUDE.md</code>를 git 커밋(1.3)</td></tr>
+              <tr><td>좋은 커맨드가 한 사람만</td><td>공용 커맨드 저장소로 공유(부록 B.2)</td></tr>
+              <tr><td>암묵지가 문서화 안 됨</td><td>잘하는 사람의 프롬프트를 커맨드로 승격</td></tr>
+              <tr><td>보안·권한 기준이 제각각</td><td>표준 Hook·베이스라인(B.3)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="takeaway"><p class="callout-h"><b>부록 C 요약</b></p><p>문제의 대부분은 하네스의 <em>부재</em>가 아니라 <em>어긋남</em>입니다 — 낡거나, 잡음이 끼거나, 공유 안 됐거나. 증상에서 출발해 “이 하네스가 지금도 맞나, 팀이 공유하나”를 물으세요. 진단은 곧 하네스 위생 점검입니다(10.7).</p></div>
+        </div></article>
+      </section>
+
+      <!-- ---------- APPENDIX D–G ---------- -->
+      <section class="part" id="appx-d" data-wire="x" data-label="부록 D–G" data-title="인덱스·치트시트·용어집">
+        <div class="part-head">
+          <div class="pin"><span class="pin-swatch"></span><span class="pin-label">부록 D–G</span></div>
+          <h2 class="part-title">인덱스 · 치트시트 · 용어집</h2>
+          <p class="part-note">책을 덮은 뒤 책상 위에 남는 것들.</p>
+        </div>
+        <article class="ch" id="ch-d"><h3 class="ch-title"><span class="ch-no">D</span>예시 파일 인덱스 — <code>examples/</code> 전체 목록과 용도</h3>
+        <div class="ch-body">
+          <p>이 책의 예시 파일은 모두 <code>examples/</code> 아래에 있습니다 — 이 책자(<code>index.html</code>)와 같은 폴더에 동봉된 디렉토리입니다. 복사해서 바로 쓰거나, 팀 규칙에 맞게 고쳐 쓰세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>경로</th><th>용도</th><th>등장</th></tr></thead>
+            <tbody>
+              <tr><td><code>claude-md/webapp.CLAUDE.md</code></td><td>웹앱용 상시 규칙</td><td>1.1</td></tr>
+              <tr><td><code>claude-md/data.CLAUDE.md</code></td><td>데이터 저장소용</td><td>1.1, A.5</td></tr>
+              <tr><td><code>claude-md/planning.CLAUDE.md</code></td><td>기획문서 저장소용</td><td>1.1</td></tr>
+              <tr><td><code>claude-md/design-system.CLAUDE.md</code></td><td>디자인팀 변형</td><td>1.1</td></tr>
+              <tr><td><code>claude-md/legacy.CLAUDE.md</code></td><td>디렉토리 스코프 예시</td><td>1.3</td></tr>
+              <tr><td><code>commands/상품등록.md</code></td><td>상품 등록 커맨드</td><td>2.1</td></tr>
+              <tr><td><code>commands/cs-응답초안.md</code></td><td>CS 응답 커맨드</td><td>2.2</td></tr>
+              <tr><td><code>commands/변경요약.md</code></td><td>bash 실행 커맨드</td><td>2.2</td></tr>
+              <tr><td><code>commands/완료점검.md</code></td><td>검증 게이트 커맨드</td><td>6.3</td></tr>
+              <tr><td><code>skills/상품-카피라이팅/</code></td><td>스킬 + 참고자료</td><td>2.3</td></tr>
+              <tr><td><code>skills/pr-자체점검/</code></td><td>PR 전 자체 점검 스킬</td><td>6.3</td></tr>
+              <tr><td><code>hooks/settings.json</code></td><td>권한·Hook 설정</td><td>3.2</td></tr>
+              <tr><td><code>hooks/block-dangerous.sh</code></td><td>위험 명령 차단</td><td>3.3</td></tr>
+              <tr><td><code>hooks/format-and-log.sh</code></td><td>포맷·로깅</td><td>3.1</td></tr>
+              <tr><td><code>hooks/verify-on-stop.sh</code></td><td>완료 검증 게이트</td><td>6.3</td></tr>
+              <tr><td><code>agents/경쟁사-가격조사.md</code></td><td>가격조사 에이전트</td><td>4.4</td></tr>
+              <tr><td><code>agents/리서처.md</code></td><td>읽기전용 리서치</td><td>4.1</td></tr>
+              <tr><td><code>mcp/.mcp.json</code> + README</td><td>외부 연결</td><td>5.2</td></tr>
+              <tr><td><code>observability/audit-log.sh</code></td><td>도구 호출 로깅</td><td>7.2</td></tr>
+              <tr><td><code>observability/otel.env</code></td><td>OTEL 설정</td><td>7.4</td></tr>
+              <tr><td><code>observability/cost-report.sh</code></td><td>사용량·비용 추적 리포트</td><td>7.3</td></tr>
+              <tr><td><code>sdk/minimal-agent.py</code></td><td>최소 SDK 에이전트</td><td>8.2</td></tr>
+              <tr><td><code>sdk/cs-pipeline.py</code></td><td>CS 분류 파이프라인</td><td>8.3</td></tr>
+              <tr><td><code>sdk/nightly-report.py</code></td><td>야간 리포트 크론 + 비용 하드 리밋</td><td>8.4</td></tr>
+            </tbody>
+          </table></div>
+          <h4>도메인별 세트 — <code>examples/domains/</code></h4>
+          <p>부록 A의 각 도메인에 대응하는 완결형 예시입니다. 자기 도메인 폴더를 통째로 가져다 고쳐 쓰세요.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>경로</th><th>용도</th><th>등장</th></tr></thead>
+            <tbody>
+              <tr><td><code>domains/erp/도메인사전.CLAUDE.md</code></td><td>회계·재고·구매·인사 용어와 절대 규칙</td><td>A.6</td></tr>
+              <tr><td><code>domains/erp/skills/레거시-연동/</code></td><td>EUC-KR·고정폭 금액·멱등성 인터페이스 규칙</td><td>A.6</td></tr>
+              <tr><td><code>domains/erp/commands/요구사항추적.md</code></td><td>요구사항→설계→구현→테스트 추적성 검증</td><td>A.6</td></tr>
+              <tr><td><code>domains/saas/CLAUDE.md</code></td><td>테넌트 격리 + API 하위호환</td><td>A.2</td></tr>
+              <tr><td><code>domains/saas/hooks/block-tenant-leak.sh</code></td><td><code>tenant_id</code> 없는 쿼리 차단</td><td>A.2</td></tr>
+              <tr><td><code>domains/fintech/settings.json</code></td><td>승인 게이트·DB 차단·전체 감사 로그</td><td>A.4</td></tr>
+              <tr><td><code>domains/fintech/README.md</code></td><td>설정 의도 + 첫날 체크리스트</td><td>A.4</td></tr>
+              <tr><td><code>domains/content/skills/브랜드-보이스/</code></td><td>생성용 톤 가이드</td><td>A.3</td></tr>
+              <tr><td><code>domains/content/agents/콘텐츠-검수.md</code></td><td>검증용 별도 에이전트</td><td>A.3</td></tr>
+              <tr><td><code>domains/data/skills/지표-정의/</code></td><td>매출·MAU·AOV 표준 정의</td><td>A.5</td></tr>
+              <tr><td><code>domains/agency/CLAUDE.md.template</code></td><td>수탁 프로젝트 템플릿 + 인수인계</td><td>A.7</td></tr>
+              <tr><td><code>domains/solo/CLAUDE.md</code></td><td>1인 최소 세트 + 성장 신호표</td><td>A.8</td></tr>
+            </tbody>
+          </table></div>
+        </div></article>
+
+        <article class="ch" id="ch-e-1"><h3 class="ch-title"><span class="ch-no">E.1</span>치트시트 — 하네스 구성요소 한눈에 보기</h3>
+        <div class="ch-body">
+          <p>인쇄해 책상에 붙여 두는 한 장. 일곱 축과 구성요소, 그리고 확장(SDK)을 요약합니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>축</th><th>구성요소</th><th>위치</th><th>한 줄</th></tr></thead>
+            <tbody>
+              <tr><td>컨텍스트</td><td><code>CLAUDE.md</code></td><td>루트/디렉토리</td><td>상시 규칙, 자동 주입</td></tr>
+              <tr><td>행동</td><td>Command</td><td><code>.claude/commands/</code></td><td>반복 절차, <code>/명령</code></td></tr>
+              <tr><td>행동</td><td>Skill</td><td><code>.claude/skills/</code></td><td>반복 전문성, 자동 트리거</td></tr>
+              <tr><td>자동화</td><td>Hook</td><td><code>settings.json</code></td><td>이벤트 시 결정론적 실행</td></tr>
+              <tr><td>자동화</td><td>권한</td><td><code>settings.json</code></td><td>allow/ask/deny</td></tr>
+              <tr><td>위임</td><td>Subagent</td><td><code>.claude/agents/</code></td><td>격리된 병렬 작업</td></tr>
+              <tr><td>연결</td><td>MCP</td><td><code>.mcp.json</code></td><td>외부 시스템 표준 연결</td></tr>
+              <tr><td>검증</td><td>피드백 루프</td><td>Hook/Command</td><td>테스트를 에이전트 손에</td></tr>
+              <tr><td>관측</td><td>로그/OTEL</td><td>Hook/env</td><td>무엇을·얼마를·잘 됐나</td></tr>
+              <tr><td>확장</td><td>Agent SDK</td><td>코드(파이썬 등)</td><td>하네스를 코드로, 무인 자동화</td></tr>
+            </tbody>
+          </table></div>
+        </div></article>
+
+        <article class="ch" id="ch-e-2"><h3 class="ch-title"><span class="ch-no">E.2</span>치트시트 — 상황별 “무엇을 쓸까” 결정 트리</h3>
+        <div class="ch-body">
+          <p>“이 상황엔 어떤 도구?”가 헷갈릴 때 보는 결정 가이드입니다.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>하고 싶은 것</th><th>쓸 것</th></tr></thead>
+            <tbody>
+              <tr><td>매번 설명하던 규칙을 고정</td><td><code>CLAUDE.md</code> (Part 1)</td></tr>
+              <tr><td>내가 반복하는 작업을 단축</td><td>Command (2.1)</td></tr>
+              <tr><td>특정 작업이 오면 자동 전문화</td><td>Skill (2.3)</td></tr>
+              <tr><td>어겼을 때 대가 큰 것을 강제</td><td>Hook (3.1)</td></tr>
+              <tr><td>위험한 것을 못 하게</td><td><code>deny</code> + PreToolUse (3.3)</td></tr>
+              <tr><td>넓게 탐색하고 결론만</td><td>Subagent (4.1)</td></tr>
+              <tr><td>외부 DB·시스템에 접근</td><td>MCP (5.1)</td></tr>
+              <tr><td>“다 됐다”를 못 믿음</td><td>검증 게이트 (6.3)</td></tr>
+              <tr><td>비용·실패가 안 보임</td><td>관측 (Part 7)</td></tr>
+              <tr><td>사람 없이 대량·반복</td><td>SDK (Part 8)</td></tr>
+            </tbody>
+          </table></div>
+          <p>망설여지면 언제나 <strong>가장 가벼운 것부터</strong>. 대부분은 <code>CLAUDE.md</code> + 커맨드로 시작해 필요할 때 무거운 축을 붙이면 됩니다.</p>
+        </div></article>
+
+        <article class="ch" id="ch-e-3"><h3 class="ch-title"><span class="ch-no">E.3</span>치트시트 — 파일 위치와 우선순위 요약표</h3>
+        <div class="ch-body">
+          <p>하네스 파일들이 어디 있고 어떤 범위로 적용되는지 한눈에.</p>
+          <div class="tblwrap"><table class="htable">
+            <thead><tr><th>파일</th><th>위치</th><th>범위·공유</th></tr></thead>
+            <tbody>
+              <tr><td>개인 규칙</td><td><code>~/.claude/CLAUDE.md</code></td><td>전역, 나만</td></tr>
+              <tr><td>프로젝트 규칙</td><td><code>&lt;repo&gt;/CLAUDE.md</code></td><td>저장소, 팀 공유(커밋)</td></tr>
+              <tr><td>디렉토리 규칙</td><td><code>&lt;repo&gt;/dir/CLAUDE.md</code></td><td>하위 폴더, 팀 공유</td></tr>
+              <tr><td>프로젝트 설정</td><td><code>.claude/settings.json</code></td><td>팀 공유(커밋)</td></tr>
+              <tr><td>개인 설정</td><td><code>.claude/settings.local.json</code></td><td>개인(git 제외)</td></tr>
+              <tr><td>커맨드</td><td><code>.claude/commands/</code></td><td>팀(프로젝트) / <code>~/</code>는 개인</td></tr>
+              <tr><td>스킬</td><td><code>.claude/skills/</code></td><td>팀 / 개인</td></tr>
+              <tr><td>에이전트</td><td><code>.claude/agents/</code></td><td>팀 / 개인</td></tr>
+              <tr><td>MCP 연결</td><td><code>.mcp.json</code></td><td>프로젝트</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout note"><p class="callout-h"><b>우선순위 원칙</b></p><p>충돌 시 <strong>더 가까운(더 구체적인) 범위가 이깁니다.</strong> 디렉토리 &gt; 프로젝트 &gt; 개인 전역. 팀 공유는 커밋, 개인용은 <code>.local</code>·전역으로 — 이 두 가지만 지켜도 “내 취향이 팀에 새는” 사고가 없습니다.</p></div>
+        </div></article>
+
+        <article class="ch" id="ch-f"><h3 class="ch-title"><span class="ch-no">F</span>용어집</h3>
+        <div class="ch-body">
+          <p>이 책에서 쓴 핵심 용어를 한자리에.</p>
+          <div class="otherteam" data-wire="x">
+            <div class="otherteam-h"><span class="ic">📖</span> GLOSSARY</div>
+            <div class="otherteam-body"><dl>
+              <dt>하네스</dt><dd>LLM이 신뢰할 수 있게 동작하도록 모델 주변에 설계하는 컨텍스트·도구·자동화·검증·관측의 총체.</dd>
+              <dt>컨텍스트 하네스</dt><dd>모델에게 상시 주입되는 규칙·정보의 설계. <code>CLAUDE.md</code>가 대표.</dd>
+              <dt><code>CLAUDE.md</code></dt><dd>세션마다 자동으로 읽히는 프로젝트 규칙 파일.</dd>
+              <dt>Command(슬래시 커맨드)</dt><dd>반복 절차를 <code>/명령</code>으로 굳힌 마크다운 파일.</dd>
+              <dt>Skill</dt><dd>조건이 맞으면 자동 활성화되는 재사용 지침 패키지. description이 트리거.</dd>
+              <dt>Hook</dt><dd>특정 이벤트에 결정론적으로 실행되는 명령. 지침과 달리 “강제”.</dd>
+              <dt>PreToolUse / PostToolUse</dt><dd>도구 실행 직전/직후에 발화하는 Hook 이벤트.</dd>
+              <dt>Subagent</dt><dd>독립 컨텍스트에서 작업을 수행하고 결론만 돌려주는 별도 에이전트.</dd>
+              <dt>MCP</dt><dd>Model Context Protocol. 에이전트를 외부 시스템에 잇는 표준 규격.</dd>
+              <dt>피드백 루프</dt><dd>테스트·타입체크처럼 기계가 판정하는 신호를 에이전트에 쥐여 주는 검증 장치.</dd>
+              <dt>관측성(Observability)</dt><dd>무엇을 했나·얼마가 들었나·잘 됐나를 집계 가능하게 남기는 것.</dd>
+              <dt>Agent SDK</dt><dd>하네스를 코드로 짓는 프로그래밍 인터페이스. 무인 자동화에 사용.</dd>
+              <dt>모델 믹스</dt><dd>작업별로 다른 모델을 써 비용·품질을 함께 잡는 설계.</dd>
+              <dt>검증 게이트</dt><dd>테스트 등 검증을 통과해야 완료·진행이 허용되는 장치(6.3).</dd>
+              <dt>승인 게이트</dt><dd>되돌리기 어려운 작업 전에 사람의 확인을 강제하는 장치(<code>ask</code>, 3.3).</dd>
+              <dt>보안 베이스라인</dt><dd>모든 프로젝트가 완화할 수 없는 전사 최소 안전선(B.3).</dd>
+              <dt>하네스 ERP</dt><dd>개인 하네스를 전사 인프라로 통합하는 단계(부록 B).</dd>
+            </dl></div>
+          </div>
+        </div></article>
+
+        <article class="ch" id="ch-g"><h3 class="ch-title"><span class="ch-no">G</span>더 읽을거리</h3>
+        <div class="ch-body">
+          <p>이 책의 개념을 실제 도구·문서로 확장하고 싶을 때.</p>
+          <ul>
+            <li><strong>공식 문서</strong> — 사용하는 에이전트 도구(Claude Code 등)의 <code>CLAUDE.md</code>·Hooks·Skills·Subagents·MCP·settings 레퍼런스. 이 책의 개념이 각 도구에서 어떤 이름·문법으로 구현되는지 확인하세요.</li>
+            <li><strong>Agent SDK 문서</strong> — Part 8의 커스텀 하네스를 실제로 짤 때. 도구 정의·tool runner·모델 선택·비용 관리.</li>
+            <li><strong>MCP 생태계</strong> — 이미 공개된 MCP 서버 목록. 사내 시스템 연결 전에 기존 서버를 먼저 찾아보세요.</li>
+            <li><strong>OpenTelemetry</strong> — Part 7의 관측을 표준 스택으로 올릴 때의 메트릭·트레이스 규격.</li>
+            <li><strong>이 책의 예시</strong> — <code>examples/</code>의 파일들을 출발점으로. 부록 D 인덱스 참고.</li>
+          </ul>
+          <div class="takeaway"><p class="callout-h"><b>마지막 한마디</b></p><p>도구의 문법은 계속 바뀌지만, 이 책이 다룬 <strong>원리</strong> — 모델을 바꾸지 말고 주변을 설계하라 — 는 바뀌지 않습니다. 새 도구가 나와도 “이건 어느 축이지?”를 물으면 바로 자리를 찾습니다. 이제 첫 <code>CLAUDE.md</code>를 만들 차례입니다.</p></div>
+        </div></article>
+      </section>
+
+    </div><!-- /docwrap -->
+  </main>
+</div>
+
+<!-- ================= SEARCH OVERLAY ================= -->
+<div class="ovl" id="ovl" role="dialog" aria-modal="true" aria-label="전문 검색">
+  <div class="sbox">
+    <div class="sbox-top">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="sInput" type="text" placeholder="제목과 본문에서 검색…" autocomplete="off" spellcheck="false">
+      <span class="sbox-hint">ESC 닫기</span>
+    </div>
+    <div class="sres" id="sres"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- theme ---------- */
+var root=document.documentElement;
+var saved=null; try{saved=localStorage.getItem('he-theme')}catch(e){}
+/* Default to light; honor an explicit saved choice. */
+root.setAttribute('data-theme', saved || 'light');
+var darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+function currentTheme(){
+  return root.getAttribute('data-theme') ||
+    ((darkQuery && darkQuery.matches) ? 'dark':'light');
+}
+document.getElementById('themeBtn').addEventListener('click',function(){
+  var next = currentTheme()==='dark' ? 'light':'dark';
+  root.setAttribute('data-theme',next);
+  try{localStorage.setItem('he-theme',next)}catch(e){}
+  buildLoom();
+});
+if(darkQuery){
+  var onSchemeChange=function(){ if(!root.getAttribute('data-theme')) buildLoom(); };
+  if(darkQuery.addEventListener) darkQuery.addEventListener('change',onSchemeChange);
+  else if(darkQuery.addListener) darkQuery.addListener(onSchemeChange); /* older Safari */
+}
+
+/* ---------- loom figure (masthead signature) ---------- */
+/* Colors are read from computed styles, so this must re-run on theme change. */
+function buildLoom(){
+  var g=document.getElementById('loomStrands'), c=document.getElementById('loomConn');
+  if(!g) return;
+  g.innerHTML=''; c.innerHTML='';
+  var cs=getComputedStyle(root);
+  var keys=['0','1','2','3','4','5','6','7','8','9','10'];
+  var W=640,H=116,hubX=470,hubY=H/2;
+  keys.forEach(function(k,i){
+    var col=cs.getPropertyValue('--wire-'+k).trim()||'#888';
+    var y=10+i*((H-20)/(keys.length-1));
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d','M0 '+y+' H210 C300 '+y+', 330 '+hubY+', '+hubX+' '+hubY);
+    p.setAttribute('stroke',col);
+    p.setAttribute('opacity','.85');
+    g.appendChild(p);
+  });
+  var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  r.setAttribute('x',hubX);r.setAttribute('y',hubY-17);
+  r.setAttribute('width',34);r.setAttribute('height',34);r.setAttribute('rx','3');
+  r.setAttribute('fill','none');
+  r.setAttribute('stroke',cs.getPropertyValue('--ink-2').trim());
+  r.setAttribute('stroke-width','1.5');
+  c.appendChild(r);
+  var l=document.createElementNS('http://www.w3.org/2000/svg','path');
+  l.setAttribute('d','M'+(hubX+34)+' '+hubY+' H'+(W-2));
+  l.setAttribute('stroke',cs.getPropertyValue('--ink-2').trim());
+  l.setAttribute('stroke-width','2.5');l.setAttribute('fill','none');
+  l.setAttribute('stroke-linecap','round');
+  c.appendChild(l);
+}
+buildLoom();
+
+/* ---------- build TOC from the document ---------- */
+var parts=[].slice.call(document.querySelectorAll('.part'));
+var toc=document.getElementById('toc');
+var chLinks={};
+
+parts.forEach(function(sec){
+  var wrap=document.createElement('div');
+  wrap.className='toc-part';
+  wrap.setAttribute('data-wire',sec.getAttribute('data-wire'));
+  wrap.dataset.for=sec.id;
+
+  var btn=document.createElement('button');
+  btn.className='toc-part-btn';
+  btn.innerHTML='<span class="strand"></span>'+
+    '<span class="toc-part-label">'+sec.dataset.label.replace('Part ','P')+'</span>'+
+    '<span class="toc-part-title">'+sec.dataset.title+'</span>';
+  btn.addEventListener('click',function(){
+    var wasOpen=wrap.classList.contains('is-open');
+    wrap.classList.toggle('is-open',!wasOpen);
+    document.getElementById(sec.id).scrollIntoView({block:'start'});
+    closeNav();
+  });
+
+  var ul=document.createElement('ul');
+  ul.className='toc-chs';
+  [].slice.call(sec.querySelectorAll('.ch')).forEach(function(ch){
+    var t=ch.querySelector('.ch-title');
+    var no=t.querySelector('.ch-no').textContent;
+    var txt=t.textContent.replace(no,'').trim();
+    var li=document.createElement('li');
+    var a=document.createElement('a');
+    a.href='#'+ch.id;
+    a.innerHTML='<span class="toc-ch-no">'+no+'</span>'+txt;
+    a.addEventListener('click',closeNav);
+    li.appendChild(a); ul.appendChild(li);
+    chLinks[ch.id]=a;
+  });
+
+  wrap.appendChild(btn); wrap.appendChild(ul); toc.appendChild(wrap);
+});
+
+/* ---------- scroll spy ---------- */
+var crumb=document.getElementById('crumb');
+var chapters=[].slice.call(document.querySelectorAll('.ch'));
+var currentCh=null;
+
+function setActive(chId){
+  if(chId===currentCh) return;
+  currentCh=chId;
+  for(var k in chLinks) chLinks[k].classList.remove('is-current');
+  var sec=null;
+  if(chId){
+    var a=chLinks[chId];
+    if(a){ a.classList.add('is-current'); }
+    sec=document.getElementById(chId).closest('.part');
+  }
+  [].slice.call(toc.children).forEach(function(w){
+    var on = sec && w.dataset.for===sec.id;
+    w.classList.toggle('is-active',!!on);
+    if(on) w.classList.add('is-open');
+  });
+  if(sec && chId){
+    var t=document.getElementById(chId).querySelector('.ch-title');
+    var no=t.querySelector('.ch-no').textContent;
+    crumb.innerHTML='<b>'+sec.dataset.label+'</b> · '+sec.dataset.title+' &nbsp;/&nbsp; '+no+' '+
+      t.textContent.replace(no,'').trim();
+  } else {
+    crumb.textContent='표지';
+  }
+  if(sec && chLinks[chId]){
+    var a2=chLinks[chId], r=a2.getBoundingClientRect(), tr=toc.getBoundingClientRect();
+    if(r.top<tr.top+40 || r.bottom>tr.bottom-40) a2.scrollIntoView({block:'center'});
+  }
+}
+
+function syncActive(){
+  var visible=chapters.filter(function(ch){
+    var r=ch.getBoundingClientRect();
+    return r.bottom>80 && r.top<window.innerHeight*0.5;
+  });
+  if(visible.length) setActive(visible[0].id);
+  else if(window.scrollY<200) setActive(null);
+}
+if(window.IntersectionObserver){
+  var spy=new IntersectionObserver(syncActive,
+    {rootMargin:'-70px 0px -50% 0px',threshold:0});
+  chapters.forEach(function(ch){spy.observe(ch)});
+}else{
+  addEventListener('scroll',syncActive,{passive:true}); /* fallback */
+}
+
+/* progress */
+var prog=document.getElementById('progress');
+function onScroll(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  prog.style.width=(h>0? (window.scrollY/h*100):0)+'%';
+}
+addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+/* ---------- mobile nav ---------- */
+var sidebar=document.getElementById('sidebar'), scrim=document.getElementById('scrim');
+function closeNav(){ sidebar.classList.remove('on'); scrim.classList.remove('on'); }
+document.getElementById('menuBtn').addEventListener('click',function(){
+  sidebar.classList.add('on'); scrim.classList.add('on');
+});
+scrim.addEventListener('click',closeNav);
+
+/* ---------- search index ---------- */
+var index=chapters.map(function(ch){
+  var sec=ch.closest('.part');
+  var t=ch.querySelector('.ch-title');
+  var no=t.querySelector('.ch-no').textContent;
+  var title=t.textContent.replace(no,'').trim();
+  var body=(ch.querySelector('.ch-body')||{textContent:''}).textContent
+            .replace(/\s+/g,' ').trim();
+  return {id:ch.id, no:no, title:title, body:body,
+          part:sec.dataset.label+' · '+sec.dataset.title, wire:sec.getAttribute('data-wire'),
+          hay:(no+' '+title+' '+body).toLowerCase()};
+});
+/* also index part-level material notes so 예시 파일명으로도 찾힌다 */
+parts.forEach(function(sec){
+  var m=sec.querySelector('.mats');
+  if(!m) return;
+  var body=m.textContent.replace(/\s+/g,' ').trim();
+  index.push({id:sec.id, no:sec.dataset.label, title:sec.dataset.title+' — 자료 목록',
+    body:body, part:sec.dataset.label+' · '+sec.dataset.title,
+    wire:sec.getAttribute('data-wire'), hay:(sec.dataset.title+' '+body).toLowerCase()});
+});
+
+var ovl=document.getElementById('ovl'), sInput=document.getElementById('sInput'),
+    sres=document.getElementById('sres'), sel=-1, rows=[];
+
+function esc(s){return s.replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function mark(text,q){
+  if(!q) return esc(text);
+  var i=text.toLowerCase().indexOf(q);
+  if(i<0) return esc(text);
+  return esc(text.slice(0,i))+'<span class="hl">'+esc(text.slice(i,i+q.length))+
+         '</span>'+esc(text.slice(i+q.length));
+}
+function snippet(body,q){
+  if(!q||!body) return body.slice(0,90);
+  var i=body.toLowerCase().indexOf(q);
+  if(i<0) return body.slice(0,90);
+  var s=Math.max(0,i-32);
+  return (s>0?'…':'')+body.slice(s,s+100);
+}
+
+function runSearch(){
+  var q=sInput.value.trim().toLowerCase();
+  sres.innerHTML=''; rows=[]; sel=-1;
+  if(!q){
+    sres.innerHTML='<p class="sres-empty">제목·본문·예시 파일명을 함께 검색합니다.</p>';
+    return;
+  }
+  var hits=index.filter(function(it){return it.hay.indexOf(q)>-1})
+    .sort(function(a,b){
+      var at=(a.no+' '+a.title).toLowerCase().indexOf(q)>-1?0:1;
+      var bt=(b.no+' '+b.title).toLowerCase().indexOf(q)>-1?0:1;
+      return at-bt;
+    }).slice(0,40);
+  if(!hits.length){
+    sres.innerHTML='<p class="sres-empty">결과가 없습니다.</p>';
+    return;
+  }
+  var lastPart=null;
+  hits.forEach(function(it){
+    if(it.part!==lastPart){
+      lastPart=it.part;
+      var g=document.createElement('div'); g.className='sgrp'; g.textContent=it.part;
+      sres.appendChild(g);
+    }
+    var a=document.createElement('a');
+    a.className='sitem'; a.href='#'+it.id;
+    a.setAttribute('data-wire',it.wire);
+    a.innerHTML='<div class="sitem-t"><span class="toc-ch-no">'+esc(it.no)+'</span>'+
+                mark(it.title,q)+'</div>'+
+                (it.body?'<div class="sitem-p">'+mark(snippet(it.body,q),q)+'</div>':'');
+    a.addEventListener('click',closeSearch);
+    sres.appendChild(a); rows.push(a);
+  });
+}
+function move(d){
+  if(!rows.length) return;
+  if(sel>-1) rows[sel].classList.remove('sel');
+  sel=(sel+d+rows.length)%rows.length;
+  rows[sel].classList.add('sel');
+  rows[sel].scrollIntoView({block:'nearest'});
+}
+function openSearch(){
+  ovl.classList.add('on'); sInput.value=''; runSearch();
+  sInput.focus();
+}
+function closeSearch(){ ovl.classList.remove('on'); }
+
+document.getElementById('searchOpen').addEventListener('click',openSearch);
+sInput.addEventListener('input',runSearch);
+ovl.addEventListener('click',function(e){ if(e.target===ovl) closeSearch(); });
+addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openSearch(); return; }
+  if(!ovl.classList.contains('on')) return;
+  if(e.key==='Escape'){ closeSearch(); }
+  else if(e.key==='ArrowDown'){ e.preventDefault(); move(1); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); move(-1); }
+  else if(e.key==='Enter' && sel>-1){ e.preventDefault(); rows[sel].click(); }
+});
+
+/* ---------- copy buttons on code blocks ---------- */
+/* The book is normally opened as a local file, where the async clipboard API
+   is unavailable in some browsers. Fall back to a selection-based copy. */
+function copyText(text){
+  if(navigator.clipboard && window.isSecureContext){
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise(function(resolve,reject){
+    var ta=document.createElement('textarea');
+    ta.value=text;
+    ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0,ta.value.length);
+    var ok=false;
+    try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+    document.body.removeChild(ta);
+    ok?resolve():reject(new Error('copy unavailable'));
+  });
+}
+
+function wireCopyButtons(scope){
+  [].slice.call((scope||document).querySelectorAll('.code')).forEach(function(box){
+    if(box.querySelector('.copybtn')) return;
+    var head=box.querySelector('.code-head');
+    if(!head){ head=document.createElement('div'); head.className='code-head';
+               box.insertBefore(head,box.firstChild); }
+    var b=document.createElement('button');
+    b.className='copybtn'; b.type='button'; b.textContent='복사';
+    var timer=null;
+    function flash(msg,ok){
+      clearTimeout(timer);
+      b.textContent=msg;
+      b.classList.toggle('ok',ok);
+      timer=setTimeout(function(){ b.textContent='복사'; b.classList.remove('ok'); },1400);
+    }
+    b.addEventListener('click',function(){
+      var pre=box.querySelector('pre');
+      copyText(pre?pre.textContent:'').then(
+        function(){ flash('복사됨',true); },
+        function(){ flash('복사 실패',false); }
+      );
+    });
+    head.appendChild(b);
+  });
+}
+wireCopyButtons();
+window.wireCopyButtons=wireCopyButtons;
+
+/* open the part containing the hash target on load */
+if(location.hash){
+  var el=document.querySelector(location.hash);
+  if(el && el.closest('.part')) setActive(el.classList.contains('ch')?el.id:null);
+}
+})();
+</script>
+</body>
+</html>

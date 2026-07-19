@@ -1,0 +1,3927 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI를 부리는 사람이 되는 법</title>
+<meta name="description" content="개발은 배우지 않지만, AI 앞에서 일을 정의하고 시키고 검증할 줄 아는 사람이 되는 비개발자용 성장 과정.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════ Tokens ═══════════════ */
+:root{
+  /* 본문 기본: 애플고딕(기기 내장) → Noto Sans KR(CDN) → 시스템 */
+  --sans:"Apple SD Gothic Neo","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",sans-serif;
+  /* 세리프는 표지·부 구분지 같은 표제에만 제한적으로 */
+  --serif:"Noto Serif KR","Apple SD Gothic Neo",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,"D2Coding",monospace;
+  --topbar-h:57px;
+  --sb-w:266px;
+
+  --paper:#faf8f3;
+  --sheet:#ffffff;
+  --wash:#f1ede4;
+  --wash-2:#e8e3d7;
+  --ink:#191c1a;
+  --ink-2:#525853;
+  --ink-3:#7c827b;
+  --rule:#e4dfd4;
+  --rule-2:#cdc7b9;
+  --accent:#0e6f5c;
+  --accent-2:#0a5546;
+  --accent-wash:#e3f0ea;
+  --gold:#a9762a;
+  --focus:#1d4ed8;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --paper:#121513;
+  --sheet:#191d18;
+  --wash:#212620;
+  --wash-2:#2c322a;
+  --ink:#e8eae2;
+  --ink-2:#a7ada2;
+  --ink-3:#858c81;
+  --rule:#2e352d;
+  --rule-2:#454d42;
+  --accent:#43c2a4;
+  --accent-2:#6ad6bb;
+  --accent-wash:#15241e;
+  --gold:#d8a860;
+  --focus:#7db8e8;
+  color-scheme:dark;
+}
+/* 기본값은 항상 라이트. 다크는 사용자가 토글할 때만 (data-theme="dark"). */
+
+/* ═══════════════ Base ═══════════════ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);
+  font-size:clamp(1.0625rem,1rem + .25vw,1.15rem);
+  line-height:1.9;letter-spacing:-.004em;word-break:keep-all;overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:var(--sans);margin:0 0 .5em;letter-spacing:-.022em;line-height:1.42;font-weight:700}
+p{margin:0 0 1.3em}
+a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent-2)}
+strong{font-weight:700}
+em{font-style:normal;color:var(--ink-2)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:3px}
+button{font-family:inherit}
+code{font-family:var(--mono);font-size:.85em;background:var(--wash);padding:.12em .4em;border-radius:3px;word-break:break-all}
+mark{background:color-mix(in srgb,var(--accent) 30%,transparent);color:inherit;border-radius:2px;padding:0 .05em}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:.7em 1.2em;z-index:200}
+.skip-link:focus{left:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
+/* ═══════════════ Top bar ═══════════════ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(1.3) blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar-inner{
+  max-width:1250px;margin:0 auto;padding:9px 20px;
+  display:flex;align-items:center;gap:14px;min-height:var(--topbar-h);
+}
+@media (min-width:1000px){.topbar-inner{padding:9px 26px}}
+.brand{
+  font-family:var(--serif);font-weight:700;font-size:.98rem;color:var(--ink);
+  text-decoration:none;letter-spacing:-.03em;white-space:nowrap;margin-right:auto;
+}
+.brand:hover{color:var(--ink)}
+.brand b{color:var(--accent);font-weight:900}
+.tb-btn{
+  min-height:36px;min-width:36px;padding:.35em .7em;
+  border:1px solid var(--rule-2);background:transparent;color:var(--ink-2);
+  border-radius:99px;cursor:pointer;font-size:.78rem;font-weight:700;
+  display:inline-flex;align-items:center;gap:.4em;white-space:nowrap;
+  transition:color .14s,border-color .14s;
+}
+.tb-btn:hover{color:var(--accent);border-color:var(--accent)}
+.tb-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tb-btn .tb-txt{display:none}
+@media (min-width:560px){.tb-btn .tb-txt{display:inline}}
+
+.progress-track{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:transparent}
+.progress-fill{height:100%;width:0;background:var(--accent);transition:width .3s ease}
+
+/* ═══════════════ Layout: 좌측 고정 목차 + 본문 ═══════════════ */
+.layout{max-width:1250px;margin:0 auto}
+@media (min-width:1000px){
+  .layout{display:grid;grid-template-columns:var(--sb-w) minmax(0,1fr);gap:46px;padding:0 26px}
+}
+
+.sidebar{
+  background:var(--paper);
+}
+/* 데스크톱: 좌측에 고정(스티키) */
+@media (min-width:1000px){
+  .sidebar{
+    align-self:start;               /* 스티키가 먹히려면 필수 */
+    position:sticky;top:var(--topbar-h);
+    height:calc(100vh - var(--topbar-h));
+    overflow-y:auto;overscroll-behavior:contain;
+    border-right:1px solid var(--rule);
+    /* 위쪽 여백은 .sb-head 안에서 준다. 스크롤 컨테이너에 padding-top을 주면
+       스크롤된 항목이 그 틈으로 비쳐서 고정 헤더 위에 잘린 채 보인다. */
+    padding:0 10px 40px 0;
+  }
+  #btn-toc{display:none}            /* 항상 보이므로 버튼 불필요 */
+  .sb-close{display:none}
+}
+/* 모바일: 왼쪽에서 밀려 나오는 서랍 */
+@media (max-width:999px){
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;z-index:120;
+    width:min(400px,86vw);
+    border-right:1px solid var(--rule);
+    box-shadow:0 0 60px rgba(0,0,0,.2);
+    overflow-y:auto;overscroll-behavior:contain;
+    transform:translateX(-100%);
+    transition:transform .26s cubic-bezier(.22,.61,.36,1);
+    visibility:hidden;
+  }
+  .sidebar.open{transform:none;visibility:visible}
+}
+.scrim{
+  position:fixed;inset:0;z-index:110;
+  background:rgba(20,22,20,.42);backdrop-filter:blur(2px);
+  animation:fade .2s;
+}
+@media (min-width:1000px){.scrim{display:none}}
+
+.sb-head{
+  position:sticky;top:0;background:var(--paper);z-index:2;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:17px 14px 12px;border-bottom:1px solid var(--rule);margin-bottom:6px;
+}
+.sb-head h2{
+  font-size:.74rem;margin:0;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+.sb-close{background:none;border:0;cursor:pointer;color:var(--ink-2);padding:5px;border-radius:8px;margin:-5px}
+.sb-close:hover{color:var(--accent)}
+.sb-close svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* ═══════════════ Book / pages ═══════════════ */
+.book{padding:0 20px}
+@media (min-width:1000px){.book{padding:0}}
+.page{display:none;padding:38px 0 40px;min-height:60vh}
+.page.is-active{display:block;animation:pageIn .36s cubic-bezier(.22,.61,.36,1)}
+.book.dir-prev .page.is-active{animation-name:pageInPrev}
+@keyframes pageIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+@keyframes pageInPrev{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+.prose{max-width:40rem;margin:0 auto}
+
+/* eyebrow / kicker */
+.kicker{
+  font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 14px;display:flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:22px;height:2px;background:var(--accent);flex:none}
+
+/* ═══════════════ Cover ═══════════════ */
+.cover{text-align:left;padding-top:52px}
+.cover .cov-eyebrow{
+  font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:26px;
+}
+.cover h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(2.3rem,7.5vw,3.7rem);line-height:1.16;letter-spacing:-.035em;
+  margin:0 0 22px;
+}
+.cover h1 .soft{color:var(--ink-2);font-weight:500}
+.cover .cov-lead{font-size:1.12rem;color:var(--ink-2);max-width:33rem;margin:0 0 34px}
+.cover .cov-lead strong{color:var(--ink)}
+.dirmap{
+  display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:12px;overflow:hidden;margin:0 0 34px;
+}
+@media (min-width:620px){.dirmap{grid-template-columns:1fr 1fr}}
+.dirmap .dm{
+  background:var(--sheet);padding:15px 17px;display:flex;gap:13px;align-items:baseline;
+}
+@media (min-width:620px){.dirmap .dm-wide{grid-column:1 / -1}}
+.dirmap .dm-n{
+  font-family:var(--serif);font-weight:900;font-size:1.05rem;color:var(--accent);
+  flex:none;font-variant-numeric:tabular-nums;
+}
+.dirmap .dm-t{font-size:.94rem;line-height:1.5}
+.dirmap .dm-t b{font-weight:700}
+.dirmap .dm-t span{color:var(--ink-3);display:block;font-size:.84rem}
+.cov-meta{
+  display:flex;flex-wrap:wrap;gap:8px 10px;margin:0 0 30px;
+  font-size:.8rem;color:var(--ink-2);
+}
+.cov-meta span{
+  border:1px solid var(--rule-2);border-radius:99px;padding:.3em .85em;
+  background:var(--sheet);
+}
+.cov-line{
+  font-family:var(--serif);font-style:italic;font-weight:500;
+  color:var(--ink-2);font-size:1.02rem;border-left:2px solid var(--accent);
+  padding:2px 0 2px 16px;margin:0 0 34px;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--accent);color:#fff;border:0;border-radius:99px;
+  padding:.82em 1.5em;font-size:.98rem;font-weight:800;cursor:pointer;
+  text-decoration:none;transition:background .15s,transform .15s;
+}
+:root[data-theme="dark"] .btn-primary{color:#08130f}
+.btn-primary:hover{background:var(--accent-2);transform:translateY(-1px);color:#fff}
+:root[data-theme="dark"] .btn-primary:hover{color:#08130f}
+.btn-primary svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.cov-note{font-size:.82rem;color:var(--ink-3);margin-top:16px}
+
+/* ═══════════════ Part divider ═══════════════ */
+.partpage{padding-top:46px}
+.part-big{
+  font-family:var(--serif);font-weight:900;color:var(--accent);
+  font-size:clamp(3rem,13vw,5.5rem);line-height:.9;letter-spacing:-.04em;margin:0 0 6px;
+}
+.part-big small{font-size:.28em;font-weight:800;letter-spacing:.16em;text-transform:uppercase;display:block;line-height:1.5;margin-bottom:10px;color:var(--accent)}
+.partpage h1{font-size:clamp(1.8rem,5.5vw,2.5rem);font-weight:900;margin:0 0 18px;letter-spacing:-.03em}
+.part-goal{
+  border-top:1.5px solid var(--ink);border-bottom:1px solid var(--rule);
+  padding:16px 0;margin:22px 0;
+}
+.part-goal dt{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase;margin-bottom:3px}
+.part-goal dd{margin:0 0 12px;font-size:.98rem}
+.part-goal dd:last-child{margin-bottom:0}
+.part-chaps{list-style:none;padding:0;margin:22px 0 0}
+.part-chaps li{border-bottom:1px solid var(--rule)}
+.part-chaps a{
+  display:flex;gap:14px;align-items:baseline;padding:13px 2px;
+  text-decoration:none;color:var(--ink);transition:background .12s,padding .12s;
+}
+.part-chaps a:hover{background:var(--wash);padding-left:8px;color:var(--ink)}
+.part-chaps .pc-n{font-family:var(--serif);font-weight:900;color:var(--accent);font-size:.95rem;min-width:2.4em;flex:none}
+.part-chaps .pc-t{font-weight:700;font-family:var(--serif)}
+
+/* ═══════════════ Prose elements ═══════════════ */
+.prose h2{font-size:1.5rem;font-weight:900;margin:1.8em 0 .6em;letter-spacing:-.028em;display:flex;gap:.5em;align-items:baseline}
+.prose h2:first-of-type,.prose > h2:first-child{margin-top:0}
+.prose h3{font-size:1.18rem;font-weight:700;margin:1.9em 0 .5em;display:flex;gap:.55em;align-items:baseline}
+.h-num{color:var(--accent);font-weight:900;font-size:.92em;flex:none}
+.prose ul,.prose ol{padding-left:1.25em;margin:0 0 1.3em}
+.prose li{margin-bottom:.5em}
+.prose h1.page-title{font-size:clamp(1.9rem,5.5vw,2.5rem);font-weight:900;letter-spacing:-.03em;margin:0 0 .3em}
+.lead{font-size:1.1rem;color:var(--ink-2);margin-bottom:1.6em}
+
+.callout{border-radius:12px;padding:18px 20px;margin:1.6em 0;border:1px solid var(--rule);background:var(--sheet)}
+.callout .co-label{
+  font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;margin-bottom:9px;
+}
+.callout p:last-child,.callout ul:last-child,.callout ol:last-child{margin-bottom:0}
+.callout.tip{background:var(--accent-wash);border-color:color-mix(in srgb,var(--accent) 22%,transparent)}
+.callout.tip .co-label{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--gold) 12%,var(--sheet));border-color:color-mix(in srgb,var(--gold) 34%,transparent)}
+.callout.warn .co-label{color:var(--gold)}
+.callout.try{background:var(--sheet);border:1.5px solid var(--accent)}
+.callout.try .co-label{color:var(--accent)}
+
+.check{list-style:none;padding:0;margin:1.4em 0}
+.check li{position:relative;padding-left:30px;margin-bottom:.65em}
+.check li::before{
+  content:"";position:absolute;left:0;top:.42em;width:16px;height:16px;
+  border:1.6px solid var(--rule-2);border-radius:4px;
+}
+.check.done li::before{border-color:var(--accent);background:var(--accent)}
+
+.table-wrap{overflow-x:auto;margin:1.6em 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:.9rem;line-height:1.6}
+.table-wrap table{min-width:440px}
+th,td{border:0;border-bottom:1px solid var(--rule);padding:.7em 1em .7em 0;text-align:left;vertical-align:top}
+th:last-child,td:last-child{padding-right:0}
+thead th{border-bottom:1.5px solid var(--ink);font-size:.74rem;font-weight:800;letter-spacing:.03em;color:var(--ink-2);text-transform:uppercase;white-space:nowrap}
+tbody th{font-weight:700;color:var(--ink);white-space:nowrap}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+.row-blank td{color:var(--ink-3)}
+
+.stub{
+  border:1px dashed var(--rule-2);border-radius:12px;background:var(--wash);
+  padding:16px 18px;margin-top:22px;font-size:.88rem;color:var(--ink-2);
+}
+.stub b{color:var(--ink);font-weight:700}
+
+/* ── 프롬프트 상자 (복사 가능) ── */
+.prompt-helper{border:1px solid var(--rule-2);border-radius:12px;overflow:hidden;margin:1.6em 0;background:var(--sheet)}
+.ph-head{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--wash);border-bottom:1px solid var(--rule)}
+.ph-title{font-size:.77rem;font-weight:800;color:var(--ink-2);flex:1;line-height:1.4}
+.copy-btn{
+  border:1px solid var(--rule-2);background:var(--sheet);color:var(--ink-2);
+  border-radius:99px;padding:.3em .8em;font-size:.72rem;font-weight:800;cursor:pointer;
+  white-space:nowrap;transition:color .14s,border-color .14s;
+}
+.copy-btn:hover,.copy-btn.copied{color:var(--accent);border-color:var(--accent)}
+.prompt-helper pre{
+  margin:0;padding:15px 17px;font-family:var(--sans);
+  font-size:.93rem;line-height:1.78;white-space:pre-wrap;
+  word-break:keep-all;overflow-wrap:break-word;color:var(--ink);
+}
+
+/* ── AI 응답 예시 ── */
+.ai-out{border-left:3px solid var(--rule-2);padding:0 0 0 17px;margin:1.5em 0}
+.ao-label{
+  display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;
+  font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:9px;
+}
+.ao-note{font-size:.95em;font-weight:700;color:var(--gold);text-transform:none;letter-spacing:0}
+.ai-out > :last-child{margin-bottom:0}
+.ai-out p{font-size:.97rem}
+
+/* ── 전 / 후 비교 ── */
+.compare{display:grid;gap:12px;margin:1.6em 0}
+@media (min-width:620px){.compare{grid-template-columns:1fr 1fr}}
+.compare-card{border:1px solid var(--rule);border-radius:12px;padding:15px 17px;background:var(--sheet);font-size:.95rem}
+.compare-card.bad{border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+.compare-card.good{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:var(--accent-wash)}
+.cc-label{font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:8px}
+.compare-card.bad .cc-label{color:var(--gold)}
+.compare-card.good .cc-label{color:var(--accent)}
+.compare-card > :last-child{margin-bottom:0}
+
+/* ── 사례 상자 ── */
+.example{
+  border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:0 12px 12px 0;padding:16px 19px;margin:1.7em 0;background:var(--sheet);
+}
+.ex-label{font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px}
+.example h4{font-size:1.03rem;margin:0 0 .55em;font-weight:700}
+.example > :last-child{margin-bottom:0}
+
+/* ── 번호 단계 ── */
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:1.5em 0}
+ol.steps li{counter-increment:s;position:relative;padding-left:40px;margin-bottom:1.05em}
+ol.steps li::before{
+  content:counter(s);position:absolute;left:0;top:.1em;
+  width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+  font-family:var(--sans);font-size:.8rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+:root[data-theme="dark"] ol.steps li::before{color:#08130f}
+ol.steps li strong{display:block;margin-bottom:.1em}
+ol.steps li span{color:var(--ink-2);font-size:.95rem}
+
+/* ═══════════════ Pager (prev / next) ═══════════════ */
+.pager{
+  max-width:40rem;margin:44px auto 0;padding-top:22px;border-top:1px solid var(--rule);
+  display:flex;gap:12px;
+}
+.pager a{
+  flex:1;min-width:0;text-decoration:none;color:var(--ink);
+  border:1px solid var(--rule);border-radius:12px;padding:13px 16px;
+  transition:border-color .14s,background .14s;background:var(--sheet);
+}
+.pager a:hover{border-color:var(--accent);color:var(--ink)}
+.pager a[hidden]{visibility:hidden}
+.pager .pg-dir{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+.pager .pg-title{font-family:var(--serif);font-weight:700;font-size:.95rem;line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.pager .next{text-align:right}
+
+/* ═══════════════ Search overlay 공통 ═══════════════ */
+.overlay{
+  position:fixed;inset:0;z-index:130;display:none;
+}
+.overlay.open{display:block}
+.overlay-scrim{position:absolute;inset:0;background:rgba(20,22,20,.42);backdrop-filter:blur(2px);animation:fade .2s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.panel-close{background:none;border:0;cursor:pointer;color:var(--ink-2);padding:6px;border-radius:8px}
+.panel-close:hover{color:var(--accent)}
+.panel-close svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* ═══════════════ 목차 ═══════════════ */
+.toc{padding:2px 8px 40px}
+@media (max-width:999px){.toc{padding:2px 12px 40px}}
+.toc-part{margin-top:15px}
+.toc-part-label{
+  font-size:.68rem;font-weight:800;letter-spacing:.05em;
+  color:var(--ink-3);padding:8px 10px 6px;line-height:1.4;
+}
+.toc a{
+  display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;
+  text-decoration:none;color:var(--ink-2);font-size:.875rem;line-height:1.42;
+}
+.toc a:hover{background:var(--wash);color:var(--ink)}
+.toc a.active{background:var(--accent-wash);color:var(--accent);font-weight:700}
+.toc a.top{color:var(--ink);font-weight:700}
+.toc .t-n{font-weight:800;color:var(--ink-3);min-width:1.7em;font-variant-numeric:tabular-nums;flex:none;font-size:.82rem}
+.toc a.active .t-n{color:var(--accent)}
+
+/* ═══════════════ Search overlay ═══════════════ */
+.search-panel{
+  position:absolute;top:0;left:0;right:0;
+  background:var(--paper);border-bottom:1px solid var(--rule);
+  box-shadow:0 20px 50px rgba(0,0,0,.14);animation:dropIn .22s cubic-bezier(.22,.61,.36,1);
+  max-height:100vh;overflow-y:auto;
+}
+@keyframes dropIn{from{transform:translateY(-16px);opacity:0}to{transform:none;opacity:1}}
+.search-inner{max-width:640px;margin:0 auto;padding:18px 20px 30px}
+.search-box{display:flex;align-items:center;gap:11px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.search-box svg{width:19px;height:19px;stroke:var(--ink-3);fill:none;stroke-width:2;stroke-linecap:round;flex:none}
+.search-box input{
+  flex:1;border:0;background:transparent;color:var(--ink);
+  font-family:inherit;font-size:1.15rem;font-weight:500;padding:2px 0;
+}
+.search-box input:focus{outline:none}
+.search-box input::placeholder{color:var(--ink-3)}
+.search-meta{font-size:.78rem;color:var(--ink-3);margin:14px 2px 4px}
+.search-results{list-style:none;padding:0;margin:8px 0 0}
+.search-results li{border-bottom:1px solid var(--rule)}
+.search-results a{display:block;padding:12px 4px;text-decoration:none;color:var(--ink);border-radius:8px}
+.search-results a:hover{background:var(--wash)}
+.sr-loc{font-size:.72rem;font-weight:800;letter-spacing:.03em;color:var(--accent);text-transform:uppercase;margin-bottom:4px}
+.sr-title{font-family:var(--serif);font-weight:700;font-size:.98rem;margin-bottom:3px}
+.sr-snip{font-size:.85rem;color:var(--ink-2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sr-snip mark{font-weight:700}
+.search-empty{padding:26px 2px;color:var(--ink-3);font-size:.92rem}
+
+@media (max-width:559px){
+  .cover h1{font-size:clamp(2rem,9vw,2.6rem)}
+  .page{padding-top:26px}
+}
+
+/* ═══════════════ 모바일 하단 미니 페이저 ═══════════════ */
+.minipager{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  display:none;gap:1px;background:var(--rule);
+  border-top:1px solid var(--rule);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+@media (max-width:999px){
+  .minipager{display:flex}
+  .book{padding-bottom:64px}     /* 하단 바에 본문이 가리지 않게 */
+}
+.minipager button{
+  flex:1;min-width:0;min-height:52px;
+  background:color-mix(in srgb,var(--paper) 94%,transparent);
+  backdrop-filter:saturate(1.3) blur(8px);
+  border:0;cursor:pointer;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:.84rem;font-weight:700;padding:6px 12px;
+}
+.minipager button:disabled{opacity:.32;cursor:default}
+.minipager .mp-arrow{color:var(--accent);font-weight:800;flex:none}
+.minipager .mp-label{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-weight:600;color:var(--ink-2);
+}
+.minipager #mp-next{justify-content:flex-end}
+.minipager #mp-prev{justify-content:flex-start}
+
+/* ═══════════════ 인쇄 / PDF ═══════════════ */
+@media print{
+  /* 화면 전용 요소는 감춘다 */
+  .topbar,.sidebar,.scrim,.overlay,.minipager,.pager,
+  .copy-btn,.btn-primary,.skip-link{display:none !important}
+
+  /* 한 장씩 보여 주던 것을 전부 펼친다 */
+  .page{display:block !important;animation:none !important;
+        padding:0 0 18pt;min-height:0;break-after:page;page-break-after:always}
+  .page:last-child{break-after:auto;page-break-after:auto}
+
+  .layout{display:block !important;max-width:none;padding:0}
+  .book{padding:0}
+  .prose{max-width:none;margin:0}
+
+  /* 인쇄는 항상 밝게 (다크 토글 상태와 무관) */
+  :root,:root[data-theme="dark"]{
+    --paper:#fff;--sheet:#fff;--wash:#f4f4f4;--wash-2:#ebebeb;
+    --ink:#111;--ink-2:#333;--ink-3:#555;--rule:#ccc;--rule-2:#aaa;
+    --accent:#0b5e4e;--accent-2:#0b5e4e;--accent-wash:#eef5f2;--gold:#7a5510;
+  }
+  body{background:#fff;color:#000;font-size:10.5pt;line-height:1.62}
+  a{color:#000;text-decoration:none}
+
+  /* 상자·표가 페이지 경계에서 잘리지 않게 */
+  .callout,.example,.prompt-helper,.ai-out,.compare-card,
+  .table-wrap,table,ol.steps li{break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3,h4{break-after:avoid;page-break-after:avoid}
+  .prompt-helper pre{background:#f6f6f6;white-space:pre-wrap}
+  .cover{padding-top:0}
+  .part-big{font-size:48pt}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#cover"><b>◆</b> AI를 부리는 사람</a>
+    <button class="tb-btn" id="btn-search" aria-label="본문 검색">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <span class="tb-txt">검색</span>
+    </button>
+    <button class="tb-btn" id="btn-toc" aria-label="목차 열기">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      <span class="tb-txt">목차</span>
+    </button>
+    <button class="tb-btn" id="btn-theme" aria-label="밝기 전환">
+      <svg id="ico-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"></path></svg>
+    </button>
+    <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+  </div>
+</header>
+
+<div class="layout">
+
+<aside class="sidebar" id="sidebar" aria-label="목차">
+  <div class="sb-head">
+    <h2>목차</h2>
+    <button class="sb-close" id="sb-close" aria-label="목차 닫기">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </button>
+  </div>
+  <nav class="toc" id="toc"></nav>
+</aside>
+
+<main id="main" class="book" tabindex="-1">
+
+  <!-- ════════ 표지 ════════ -->
+  <section class="page cover" id="cover" data-loc="표지" data-title="AI를 부리는 사람이 되는 법">
+    <div class="cov-eyebrow">비개발자를 위한 AI 활용 성장 과정</div>
+    <h1>AI를 부리는<br>사람이 되는 법<br><span class="soft">— 코드는 한 줄도 없이</span></h1>
+    <p class="cov-lead">
+      개발자가 되려는 과정이 아닙니다. <strong>AI 앞에서 일을 정의하고, 시키고, 검증할 줄 아는 사람</strong>이
+      되는 과정입니다. 수료할 때 당신에게는 실제로 돌아가는 자동화, 진행 중인 공부, 그리고
+      직접 만든 — 정확히는 <strong>만들게 한</strong> — 도구가 남습니다.
+    </p>
+
+    <div class="dirmap" aria-label="이 과정이 다루는 다섯 방향">
+      <div class="dm"><span class="dm-n">1</span><span class="dm-t"><b>일 시키기</b><span>요청을 자산으로</span></span></div>
+      <div class="dm"><span class="dm-n">2</span><span class="dm-t"><b>나를 가르치게 하기</b><span>지치지 않는 과외 선생</span></span></div>
+      <div class="dm"><span class="dm-n">3</span><span class="dm-t"><b>도구 고르기</b><span>불편 → 맞는 도구</span></span></div>
+      <div class="dm"><span class="dm-n">4</span><span class="dm-t"><b>알아서 돌게 하기</b><span>자는 동안 도는 자동화</span></span></div>
+      <div class="dm dm-wide"><span class="dm-n">5</span><span class="dm-t"><b>맡기고 감독하기</b><span>에이전트에게 프로젝트를 — 흥미의 정점</span></span></div>
+    </div>
+
+    <div class="cov-meta">
+      <span>5부 18장</span><span>약 4~5개월</span><span>주 5시간</span><span>부 단위 선택 수강</span>
+    </div>
+
+    <p class="cov-line">기계는 준비하고, 사람은 결정한다.</p>
+
+    <a class="btn-primary" href="#ot" data-go>
+      시작하기
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
+    <p class="cov-note">선수 조건: 대화형 AI를 써 본 경험. (『AI 블로그 자동화 가이드』 1~2부 수준이면 충분합니다.)</p>
+  </section>
+
+  <!-- ════════ 오리엔테이션 ════════ -->
+  <section class="page" id="ot" data-loc="오리엔테이션" data-title="당신은 이미 절반쯤 와 있다">
+    <div class="prose">
+      <div class="kicker">오리엔테이션</div>
+      <h1 class="page-title">당신은 이미 절반쯤 와 있다</h1>
+      <p class="lead">
+        이 과정은 당신을 코드 짜는 사람으로 만들지 않습니다. <strong>일을 시키고, 그 결과를 검증하는 사람</strong>으로
+        만듭니다. 그리고 그 일은 — 당신이 눈치채지 못했을 뿐 — 이미 시작됐습니다.
+      </p>
+
+      <h2>이 과정이 만드는 사람</h2>
+      <p>
+        "AI를 잘 쓴다"는 말을 들으면 대개 두 가지를 떠올립니다. 프롬프트를 화려하게 쓰는 사람,
+        아니면 코드를 짜서 뭔가를 자동으로 만드는 사람. 이 과정은 둘 다 목표로 하지 않습니다.
+      </p>
+      <p>
+        우리가 기르려는 건 <strong>감독</strong>입니다. 영화 감독은 카메라를 직접 들지 않고, 배우의 연기를 대신 하지도 않습니다.
+        대신 <em>무엇을 만들지 정하고, 시키고, 나온 것을 보고 "이건 다시"라고 말합니다.</em>
+        AI 앞에서 우리가 갖춰야 할 능력이 정확히 이겁니다. 일을 <b>정의</b>하고, <b>시키고</b>, <b>검증</b>하는 것.
+      </p>
+
+      <div class="callout tip">
+        <div class="co-label">◆ 이 과정의 약속</div>
+        <p>모든 장은 <strong>"직접 해보기"</strong>로 끝나고, 모든 부는 <strong>"결과물 점검"</strong>으로 끝납니다.
+        읽어서 아는 것이 아니라, 끝날 때마다 <strong>당신 삶에서 실제로 돌아가는 무언가</strong>가 손에 남습니다.</p>
+      </div>
+
+      <h2>왜 지금, 이게 희소한 능력인가</h2>
+      <p>
+        도구는 점점 쉬워집니다. 몇 년 뒤면 지금보다 훨씬 똑똑한 AI가 훨씬 싼값에 깔릴 겁니다.
+        그럴수록 희소해지는 건 도구를 <em>다루는</em> 손재주가 아니라, <strong>무엇을 시킬지 정하고 결과를 판단하는 눈</strong>입니다.
+      </p>
+      <p>
+        AI는 시키면 뭐든 그럴듯하게 내놓습니다. 문제는 그 "그럴듯함" 안에 섞인 오류를 알아보는 사람이 드물다는 것.
+        그래서 앞으로 값이 오르는 쪽은 <strong>일을 명료하게 정의하고, 나온 결과의 진위를 가려내는 사람</strong>입니다.
+        이 과정은 처음부터 끝까지 그 두 근육만 단련합니다.
+      </p>
+
+      <div class="callout tip">
+        <div class="co-label">◆ 관통 인물 — 미연 씨</div>
+        <p>
+          이 과정에는 <strong>미연 씨</strong>가 이따금 등장합니다. 평일에는 회사에 다니고,
+          주말에는 <strong>홈카페 원두를 소량 판매하며 블로그를 쓰는</strong> 사람입니다. 그래서 그의 예시는
+          <strong>회사 일</strong>(공지 메일·보고)과 <strong>내 일</strong>(고객 문의·원가·재고) 양쪽에서 나옵니다.
+          AI를 조금씩 써 보기 시작한 참이고, 그가 어떤 요청을 어떻게 바꾸는지가
+          "직접 해보기"의 <em>본보기</em>가 됩니다. 단, 주인공은 미연 씨가 아니라 당신입니다 —
+          모든 실습은 <strong>당신의 실제 일</strong>로 합니다.
+        </p>
+      </div>
+
+      <h2>지금 내 위치 확인</h2>
+      <p>아래 중 <strong>하나라도 해본 적 있다면</strong>, 당신은 이미 이 과정의 출발선을 넘은 사람입니다.</p>
+      <ul class="check">
+        <li>대화형 AI에게 이메일이나 글을 대신 써 달라고 시켜 봤다</li>
+        <li>결과가 마음에 안 들어서 "다시", "더 짧게" 같은 말로 고쳐 본 적 있다</li>
+        <li>모르는 걸 검색 대신 AI에게 물어본 적 있다</li>
+        <li>AI가 그럴듯하게 틀린 말을 해서 "어, 이거 아닌데?" 했던 순간이 있다</li>
+      </ul>
+      <p>
+        특히 마지막 항목에 해당한다면 좋은 신호입니다. <strong>AI를 의심해 본 사람</strong>이야말로
+        검증하는 감독이 될 준비가 된 사람이니까요.
+      </p>
+
+      <h2>기준선 측정 — 이 과정의 유일한 성적표</h2>
+      <p>
+        이 과정에는 시험이 없습니다. 용어를 외웠는지도 묻지 않습니다. 대신 딱 하나만 잽니다 —
+        <strong>"내 시간이 줄었는가."</strong> 그래서 지금, 시작하기 전의 시간을 기록해 둡니다.
+        과정이 끝나는 날 이 표를 다시 꺼내 같은 일을 재고, 두 숫자를 비교합니다.
+      </p>
+      <p>매주 <strong>반복해서 하는 일 5개</strong>와, 각각에 걸리는 시간을 적어 보세요. 아래는 미연 씨가 적은 예시입니다.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">매주 반복하는 일</th><th scope="col">한 번 하는 데</th><th scope="col">주당 횟수</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>회사 주간 업무 보고 쓰기</td><td>약 1시간</td><td>1회</td></tr>
+            <tr><td>블로그 글 초안 쓰기</td><td>약 2시간</td><td>2회</td></tr>
+            <tr><td>고객 문의 메일 답장</td><td>약 15분</td><td>10회 이상</td></tr>
+            <tr><td>주간 매출 정리</td><td>약 40분</td><td>1회</td></tr>
+            <tr><td>SNS 게시글 문구 다듬기</td><td>약 25분</td><td>3회</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cov-note" style="margin-bottom:1.6em">
+        위 표는 <em>재구성한 예시</em>입니다. 당신의 표는 당연히 다릅니다 — 볼 것은 숫자가 아니라 <strong>형태</strong>입니다.
+      </p>
+
+      <div class="callout warn">
+        <div class="co-label">▲ 시간을 정확히 안 재도 됩니다</div>
+        <p>스톱워치를 들라는 게 아닙니다. "체감상 얼마쯤"이면 충분합니다.
+        중요한 건 정밀함이 아니라 <strong>지금의 나를 한 장에 붙잡아 두는 것</strong>. 나중에 비교할 기준점만 있으면 됩니다.</p>
+      </div>
+
+      <h2>배움 목표 하나 적기</h2>
+      <p>
+        마지막으로 하나 더. 오래 미뤄 온 공부가 있나요? 자격증, 어학, 엑셀, 뭐든 좋습니다.
+        <strong>"언젠가 해야지" 했지만 계속 미룬 것 하나</strong>를 지금 적어 두세요.
+      </p>
+      <div class="callout try">
+        <div class="co-label">✎ 적어 둘 것</div>
+        <p style="margin-bottom:.6em"><strong>내가 미뤄 온 공부 하나:</strong> ____________________</p>
+        <p style="margin:0">이 목표는 지금 손대지 않습니다. <strong>2부</strong>에서, AI를 "지치지 않는 과외 선생"으로 만드는 법을
+        배울 때 이걸 다시 꺼냅니다. 그때 이 미뤄 둔 공부가 실제로 굴러가기 시작합니다.</p>
+      </div>
+
+      <h2>이 과정에서 <em>절대</em> 하지 않는 것</h2>
+      <ul>
+        <li><strong>문법 공부</strong> — 코드 한 줄 외우지 않습니다.</li>
+        <li><strong>용어 암기</strong> — 낯선 말은 그때그때 비유로 풀고, 시험 보지 않습니다.</li>
+        <li><strong>자격증을 위한 자격증</strong> — 남에게 보여줄 증서가 아니라, 내 삶에서 돌아가는 결과물이 목표입니다.</li>
+      </ul>
+
+      <div class="callout try">
+        <div class="co-label">✓ 직접 해보기</div>
+        <p style="margin-bottom:.5em">지금, 딱 두 가지만 손으로 적어 두세요. 이 과정 전체가 여기서 시작됩니다.</p>
+        <ol style="margin-bottom:0">
+          <li><strong>기준선 표</strong> — 매주 반복하는 일 5개와 각각 걸리는 시간</li>
+          <li><strong>배움 목표 하나</strong> — 미뤄 온 공부 한 줄</li>
+        </ol>
+      </div>
+
+      <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+        준비됐습니다. 다음 장부터, 가장 먼저 손볼 것은 <strong>"시키는 법"</strong> 그 자체입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 나머지 부·장·후반부는 아래 스크립트가 목차 데이터로 생성 -->
+</main>
+
+</div><!-- /.layout -->
+
+<!-- ════════ 집필된 장 원고 (스크립트가 해당 위치에 끼워 넣음) ════════ -->
+<template id="tpl-ch1">
+  <div class="prose">
+    <div class="kicker">1부 · 1장</div>
+    <h1 class="page-title">좋은 요청은 재능이 아니라 구조다</h1>
+    <p class="lead">
+      "프롬프트를 잘 쓰는 사람"이 따로 있는 게 아닙니다. 좋은 요청에는 뼈대가 있고,
+      그 뼈대는 외울 수 있을 만큼 단순합니다. 이 장에서 그 뼈대를 손에 익힙니다.
+    </p>
+
+    <h2><span class="h-num">1.1</span>AI가 실망스러웠던 진짜 이유</h2>
+    <p>
+      AI를 처음 써 본 사람 대부분이 비슷한 경험을 합니다. 뭔가를 시켜 봤는데, 나온 결과가
+      <strong>딱히 틀리지도 않았지만 쓸 수도 없는</strong> 무난한 글이었던 것. 그리고 조용히 결론 내립니다.
+      "생각보다 별거 없네."
+    </p>
+    <p>
+      그런데 그 결론은 대개 틀렸습니다. 문제는 AI의 실력이 아니라 <strong>재료</strong>였습니다.
+    </p>
+    <p>
+      신입사원이 첫 출근한 날을 떠올려 보세요. 그에게 <em>"보고서 좀 써 와"</em>라고만 말하면 어떻게 될까요.
+      무슨 보고서인지, 누가 볼 건지, 언제까지인지 모르니 제대로 된 물건이 나올 리 없습니다.
+      AI에게 "블로그 글 써 줘", "메일 좀 써 줘"라고 하는 건 정확히 이 상황입니다.
+    </p>
+    <p>
+      다만 결정적인 차이가 하나 있습니다. <strong>신입은 되묻습니다.</strong>
+      "어떤 보고서 말씀이신가요?" "언제까지 드리면 될까요?" 그런데 AI는 되묻지 않습니다.
+      재료가 모자라도 멈추지 않고, 모자란 자리를 <strong>가장 평균적인 내용으로 채워서</strong> 완성된 척 내놓습니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 이 장의 핵심 한 줄</div>
+      <p>AI가 평범한 답을 주는 건 게을러서가 아니라, <strong>당신에 대해 아무것도 모르기 때문</strong>입니다.
+      그리고 모르면서도 묻지 않기 때문입니다.</p>
+    </div>
+
+    <div class="example">
+      <span class="ex-label">미연 씨의 경우</span>
+      <h4>"워크숍 공지 메일 좀 써 줘"</h4>
+      <p>
+        미연 씨는 회사에서 다음 달 워크숍 공지 메일을 써야 했습니다. 귀찮은 일이라 AI에게 한 줄로 시켰습니다.
+      </p>
+      <div class="ai-out">
+        <span class="ao-label">AI의 응답 (일부)<em class="ao-note">재구성한 예시입니다</em></span>
+        <p>
+          안녕하세요, 임직원 여러분.<br>
+          다가오는 워크숍에 대해 안내드립니다. 이번 워크숍은 팀워크 증진과 소통 강화를 목적으로 하며,
+          모든 임직원 여러분의 많은 관심과 참여를 부탁드립니다. 자세한 사항은 추후 공지될 예정이오니…
+        </p>
+      </div>
+      <p>
+        틀린 문장은 하나도 없습니다. 그런데 <strong>그대로 보낼 수는 없습니다.</strong>
+        날짜도, 장소도, 준비물도, 회신 기한도 없으니까요. 정작 사람들이 알아야 할 것만 쏙 빠져 있습니다.
+        AI가 그 정보를 몰랐으니 당연한 결과입니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">1.2</span>좋은 요청의 4요소</h2>
+    <p>
+      매번 무엇을 줘야 할지 고민하지 않도록, 네 칸짜리 뼈대를 외워 두면 편합니다.
+      이 네 가지만 챙기면 요청의 질이 확 달라집니다.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">요소</th><th scope="col">스스로에게 던질 질문</th><th scope="col">미연 씨의 답</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">대상</th><td>이걸 누가 읽나? 어떤 사람인가?</td><td>전 직원. 워크숍이 처음인 사람도 많음</td></tr>
+          <tr><th scope="row">목적</th><td>읽고 나서 뭘 하길 바라나?</td><td>3일 안에 참석 여부를 회신하게</td></tr>
+          <tr><th scope="row">꼭 들어갈 것</th><td>빠지면 안 되는 정보는?</td><td>날짜·장소·준비물·회신 기한</td></tr>
+          <tr><th scope="row">하지 말 것</th><td>피하고 싶은 건?</td><td>과한 격식, 이모지, 세 문단 초과</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      왜 하필 이 넷일까요. 앞의 둘(<strong>대상·목적</strong>)은 <em>방향</em>이고,
+      뒤의 둘(<strong>꼭 들어갈 것·하지 말 것</strong>)은 <em>울타리</em>이기 때문입니다.
+      방향만 주면 엉뚱한 데로 가고, 울타리만 치면 안전하지만 뻔해집니다. 둘 다 있어야 원하는 물건이 나옵니다.
+    </p>
+
+    <div class="callout tip">
+      <div class="co-label">◆ 넷을 다 채우지 않아도 됩니다</div>
+      <p>
+        네 칸을 전부 채우는 게 목표가 아닙니다. <strong>하나만 붙여도 결과는 달라집니다.</strong>
+        특히 효과가 빨리 나타나는 건 대개 <strong>"하지 말 것"</strong>입니다.
+        AI가 습관적으로 하는 것(과한 인사말, 장황한 마무리) 하나만 금지해도 결과가 눈에 띄게 정돈됩니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">1.3</span>나쁜 요청을 좋은 요청으로</h2>
+    <p>미연 씨가 같은 일을 4요소로 다시 시켜 봤습니다. 먼저 두 요청을 나란히 보겠습니다.</p>
+
+    <div class="compare">
+      <div class="compare-card bad">
+        <span class="cc-label">처음 요청</span>
+        <p>"다음 달 워크숍 공지 메일 좀 써 줘"</p>
+        <p style="color:var(--ink-3)">→ AI가 아는 것: 워크숍, 공지, 메일. 그게 전부입니다.</p>
+      </div>
+      <div class="compare-card good">
+        <span class="cc-label">4요소를 붙인 요청</span>
+        <p>대상·목적·꼭 들어갈 것·하지 말 것을 각각 한두 줄씩 적어 준 요청 (아래 전문)</p>
+        <p style="color:var(--accent)">→ AI가 채워 넣을 빈칸이 사라집니다.</p>
+      </div>
+    </div>
+
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">4요소 요청 — 대괄호 안만 내 상황으로 바꾸세요</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>사내 공지 메일을 쓰려고 해. 아래 조건에 맞춰서 초안을 써 줘.
+
+[대상]
+우리 회사 전 직원. 워크숍에 처음 참석하는 사람도 많아서,
+당연히 알 거라고 가정하지 말고 써 줘.
+
+[목적]
+읽고 나서 3일 안에 참석 여부를 회신하게 만드는 것.
+
+[꼭 들어갈 것]
+- 날짜: 3월 14일(금) 오전 9시 ~ 오후 6시
+- 장소: 양평 그린리조트 (회사에서 전세버스 운행)
+- 준비물: 편한 복장, 개인 세면도구
+- 회신: 3월 5일까지 회신 메일로 참석 여부
+
+[하지 말 것]
+- 과한 격식체 ("~하시기 바랍니다" 남발)
+- 이모지
+- 세 문단 넘기지 말 것</pre>
+    </div>
+
+    <div class="ai-out">
+      <span class="ao-label">AI의 응답 (일부)<em class="ao-note">재구성한 예시입니다</em></span>
+      <p>
+        <strong>제목: [회신 요청] 3월 14일 전사 워크숍 안내 (~3/5까지)</strong>
+      </p>
+      <p>
+        안녕하세요. 3월 14일 금요일에 열리는 전사 워크숍을 안내드립니다.
+        오전 9시부터 오후 6시까지 양평 그린리조트에서 진행하며, 회사에서 전세버스를 운행합니다.
+      </p>
+      <p>
+        처음 참석하시는 분들을 위해 안내드리면, 별도로 준비하실 것은 많지 않습니다.
+        편한 복장과 개인 세면도구만 챙겨 주시면 됩니다.
+      </p>
+      <p>
+        참석 여부는 <strong>3월 5일까지</strong> 이 메일에 회신으로 알려 주세요. 버스와 식사 인원을 확정해야 해서
+        기한을 지켜 주시면 큰 도움이 됩니다.
+      </p>
+    </div>
+
+    <p>
+      예시와 똑같이 나오지 않는 게 정상입니다. 볼 것은 문장이 아니라 <strong>형태와 흐름</strong>입니다.
+      무엇이 달라졌는지 뜯어보면 이렇습니다.
+    </p>
+    <ul>
+      <li><strong>대상</strong>을 줬더니 → "처음 참석하시는 분들을 위해"라는 배려 문단이 생겼습니다.</li>
+      <li><strong>목적</strong>을 줬더니 → 제목에 회신 기한이 들어가고, 회신 요청이 독립 문단으로 강조됐습니다.</li>
+      <li><strong>꼭 들어갈 것</strong>을 줬더니 → 빈칸("추후 공지 예정")이 사라졌습니다.</li>
+      <li><strong>하지 말 것</strong>을 줬더니 → 길이가 짧아지고 말투가 사람 말에 가까워졌습니다.</li>
+    </ul>
+    <p>
+      요청을 쓰는 데 든 시간은 2~3분 더였습니다. 대신 <strong>고쳐 쓰는 시간이 사라졌습니다.</strong>
+      이 장부터 우리가 계속 확인할 교환입니다 — 앞에서 조금 더 쓰고, 뒤에서 훨씬 덜 고치기.
+    </p>
+
+    <h3>이제 당신의 업무로</h3>
+    <p>
+      읽기만 해서는 손에 붙지 않습니다. 이번 주에 실제로 해야 할 일 하나를 골라, 아래 네 칸을 채워 보세요.
+      완벽하게 쓸 필요 없습니다. <strong>한 줄씩이면 충분합니다.</strong>
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">요소</th><th scope="col">내 업무에 대입하면</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-blank"><th scope="row">대상</th><td>누가 읽고, 그 사람은 무엇을 이미 아는가?</td></tr>
+          <tr class="row-blank"><th scope="row">목적</th><td>읽고 나서 어떤 행동을 하길 바라는가?</td></tr>
+          <tr class="row-blank"><th scope="row">꼭 들어갈 것</th><td>빠지면 다시 물어보게 될 정보는?</td></tr>
+          <tr class="row-blank"><th scope="row">하지 말 것</th><td>매번 마음에 안 들어서 고치는 부분은?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      마지막 칸이 잘 안 떠오른다면 힌트가 있습니다. <strong>지난번에 AI 결과물을 받아서 손댔던 곳</strong>을 떠올리세요.
+      그게 바로 다음번에 "하지 말 것"에 적을 문장입니다.
+    </p>
+
+    <h2><span class="h-num">1.4</span>거꾸로 시키기 — AI가 먼저 묻게 하기</h2>
+    <p>
+      4요소를 매번 생각해 내는 게 부담스러울 때가 있습니다. 특히 <strong>처음 해 보는 종류의 일</strong>이라
+      무엇을 알려 줘야 할지 나조차 흐릿할 때가 그렇습니다.
+    </p>
+    <p>
+      이럴 때 쓰는 손쉬운 방법이 있습니다. 앞에서 "AI는 되묻지 않는다"고 했지요.
+      <strong>되묻게 시키면 됩니다.</strong>
+    </p>
+
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">역질문 프롬프트 — 어떤 일에나 그대로 붙여 쓸 수 있습니다</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[하려는 일을 한 줄로 적기]
+
+바로 답하지 말고, 좋은 결과를 내려면 나에게 더 필요한 정보가
+무엇인지 먼저 질문해 줘. 질문은 5개 이내로, 한 번에 물어봐.
+내가 답하면 그때 작업을 시작해 줘.</pre>
+    </div>
+
+    <div class="ai-out">
+      <span class="ao-label">AI의 응답<em class="ao-note">재구성한 예시입니다</em></span>
+      <p>작업 전에 다섯 가지만 확인하겠습니다.</p>
+      <p>
+        1. 이 공지를 읽는 분들은 워크숍 참석 경험이 있나요?<br>
+        2. 참석은 필수인가요, 선택인가요?<br>
+        3. 회신 기한과 회신 방법이 정해져 있나요?<br>
+        4. 준비물이나 복장 안내가 필요한가요?<br>
+        5. 사내 메일 말투는 격식체인가요, 편한 편인가요?
+      </p>
+    </div>
+
+    <p>
+      질문에 한 줄씩만 답해 주면 됩니다. 그런데 여기서 주목할 게 있습니다.
+      AI가 던진 이 다섯 개의 질문은, 사실 <strong>1.2에서 본 4요소를 그대로 묻고 있습니다.</strong>
+      (1번은 대상, 2·3번은 목적, 4번은 꼭 들어갈 것, 5번은 하지 말 것입니다.)
+    </p>
+
+    <div class="callout tip">
+      <div class="co-label">◆ 이 습관의 진짜 이득</div>
+      <p>
+        역질문의 가치는 이번 한 번을 편하게 해 주는 데 있지 않습니다.
+        <strong>AI가 던진 질문 목록이, 그 일의 체크리스트가 된다는 것</strong>에 있습니다.
+        같은 종류의 일을 다음에 할 때는 그 질문들에 미리 답해서 주면 됩니다.
+        이게 다음 장에서 만들 <strong>템플릿</strong>의 재료입니다.
+      </p>
+    </div>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 질문이 너무 많이 돌아온다면</div>
+      <p>
+        가끔 열 개 넘는 질문이 쏟아져 답하다 지치는 경우가 있습니다.
+        그럴 땐 개수를 줄여서 다시 시키세요 — <em>"가장 중요한 3개만 물어봐."</em>
+        반대로 질문이 너무 뻔하면 <em>"내가 놓치고 있을 만한 것 위주로 물어봐"</em>라고 하면 됩니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">1.5</span>결과가 별로일 때 — 세 가지 수</h2>
+    <p>
+      4요소를 챙겨도 첫 결과가 마음에 안 들 수 있습니다. 정상입니다.
+      이때 많은 사람이 <strong>요청을 처음부터 다시 씁니다.</strong> 대개 그럴 필요가 없습니다.
+      대화를 이어서 고치는 편이 훨씬 빠릅니다. 쓸 수 있는 수는 셋입니다.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <strong>다시 시키기 — 무엇이 어떻게 아쉬운지 한 문장으로</strong>
+        <span>"별로야"는 정보가 없습니다. <em>"너무 딱딱해. 사내 메신저에 쓰듯이 편하게 고쳐 줘."</em>처럼
+        <strong>아쉬운 점 + 원하는 방향</strong>을 붙여야 합니다.</span>
+      </li>
+      <li>
+        <strong>방향 주기 — 설명 대신 예시를 던지기</strong>
+        <span>말로 설명하기 어려운 감각은 예시가 빠릅니다.
+        <em>"이런 느낌으로 써 줘: '금요일 워크숍, 버스 타고 양평 갑니다. 참석 여부만 알려주세요.'"</em>
+        내가 잘 쓴 과거 결과물을 붙여 주는 것도 같은 방법입니다.</span>
+      </li>
+      <li>
+        <strong>두 버전 받아 고르기 — 판단을 내 쪽으로 가져오기</strong>
+        <span><em>"톤이 다른 두 버전으로 줘. A는 격식 있게, B는 편하게."</em>
+        고르는 건 쉽고 빠릅니다. 게다가 <strong>고르고 나면 내가 뭘 원했는지가 분명해집니다.</strong></span>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 세 번 고쳐도 안 될 때</div>
+      <p>
+        같은 걸 세 번 고쳐도 원하는 게 안 나온다면, 문제는 <strong>고치는 방식이 아니라 재료</strong>입니다.
+        더 고치지 말고 <strong>1.4의 역질문</strong>으로 돌아가세요.
+        "지금 결과가 계속 아쉬운데, 내가 안 알려준 정보가 뭐가 있을까?"라고 물어보면 됩니다.
+      </p>
+    </div>
+
+    <h2>막힐 때 — 흔한 상황과 처방</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">이런 결과가 나오면</th><th scope="col">대개의 원인</th><th scope="col">해 볼 것</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>어디서 본 듯 무난하기만 하다</td><td>대상이 없다</td><td>읽는 사람이 누구인지 한 줄 추가</td></tr>
+          <tr><td>필요한 정보가 빠져 있다</td><td>꼭 들어갈 것이 없다</td><td>빠진 항목을 목록으로 적어 다시 요청</td></tr>
+          <tr><td>매번 말투가 달라진다</td><td>하지 말 것이 없다</td><td>금지 목록을 고정 (3장에서 파일로 만듭니다)</td></tr>
+          <tr><td>쓸데없이 길다</td><td>분량 기준이 없다</td><td>"세 문단 이내" 같은 숫자를 주기</td></tr>
+          <tr><td>그럴듯한데 사실이 틀렸다</td><td>검증을 안 했다</td><td>4장에서 본격적으로 다룹니다</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">
+        <strong>이번 주에 실제로 해야 할 업무 하나</strong>를 고르세요. 새로 만들지 말고, 어차피 할 일로 하세요.
+      </p>
+      <ol style="margin-bottom:.9em">
+        <li>평소 하던 대로 <strong>한 줄로</strong> 시켜서 결과를 받아 둡니다.</li>
+        <li>같은 일을 <strong>4요소를 붙여</strong> 다시 시킵니다. (네 칸이 안 채워지면 역질문 프롬프트를 먼저 쓰세요.)</li>
+        <li>두 결과를 나란히 놓고 비교합니다.</li>
+        <li><strong>어느 요소가 결과를 가장 크게 바꿨는지</strong> 한 줄로 적어 둡니다.</li>
+      </ol>
+      <p style="margin:0">
+        마지막 4번이 이 실습의 핵심입니다. 사람마다 효과가 큰 요소가 다릅니다.
+        <strong>당신에게 잘 듣는 요소</strong>를 알아 두면, 앞으로 바쁠 때 그것 하나만 챙기면 됩니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      이 요청을 <strong>세 번 이상 반복하게 된다면</strong>, 매번 다시 쓸 이유가 없습니다.
+      다음 장에서 이걸 템플릿으로 굳힙니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch2">
+  <div class="prose">
+    <div class="kicker">1부 · 2장</div>
+    <h1 class="page-title">반복 업무를 템플릿으로 바꾸기</h1>
+    <p class="lead">
+      좋은 요청을 한 번 만들었다면, 그걸 <strong>매번 다시 쓰는 건 낭비</strong>입니다.
+      바뀌는 부분만 비워 두고 나머지를 굳히면, 같은 일을 30초 만에 시킬 수 있습니다.
+    </p>
+
+    <h2><span class="h-num">2.1</span>같은 설명을 두 번 하고 있다면</h2>
+    <p>
+      1장에서 4요소로 요청을 잘 만들었습니다. 그런데 다음 날 비슷한 일이 또 생기면 어떻게 하나요.
+      대부분 <strong>처음부터 다시 씁니다.</strong> 대상을 다시 설명하고, 하지 말 것을 다시 나열하고.
+    </p>
+    <p>
+      요리로 치면 매번 장을 새로 보는 셈입니다. 자주 하는 요리라면 <strong>레시피 카드</strong>를 한 번 만들어 두고,
+      그날그날 재료만 바꾸면 됩니다. 템플릿이 바로 그 레시피 카드입니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 템플릿의 정의</div>
+      <p>
+        템플릿은 <strong>고정된 부분(매번 똑같은 것) + 빈칸(매번 바뀌는 것)</strong>으로 나눈 요청입니다.
+        고정 부분에 1장의 4요소가 들어가고, 빈칸에는 그날의 재료만 넣습니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">2.2</span>반복 업무 3개 고르기</h2>
+    <p>
+      아무거나 템플릿으로 만들면 안 됩니다. 만드는 데도 품이 드니까요.
+      <strong>만들 가치가 있는 것</strong>만 고릅니다. 기준은 둘입니다.
+    </p>
+    <ul>
+      <li><strong>자주 한다</strong> — 적어도 주 1회, 또는 한 달에 여러 번.</li>
+      <li><strong>매번 모양이 비슷하다</strong> — 들어가는 내용만 다르지, 형식은 거의 같다.</li>
+    </ul>
+    <p>
+      이 두 기준에 다 해당하는 일이 좋은 후보입니다. 미연 씨가 자기 일주일에서 세 개를 골랐습니다 —
+      이번엔 회사 일이 아니라 <strong>주말에 하는 원두 판매</strong> 쪽입니다.
+    </p>
+    <div class="example">
+      <span class="ex-label">미연 씨의 후보 3개</span>
+      <ul style="margin-bottom:0">
+        <li><strong>고객 문의 답장</strong> — 주문·배송·환불 문의에 답하는 메일. 주 10회 이상.</li>
+        <li><strong>블로그 글 초안</strong> — 홈카페 주제로 정보 글 쓰기. 주 2회.</li>
+        <li><strong>인스타 게시글 문구</strong> — 사진에 붙일 짧은 글. 주 3회.</li>
+      </ul>
+    </div>
+
+    <h2><span class="h-num">2.3</span>고정과 빈칸으로 나누기</h2>
+    <p>
+      후보를 정했으면, 지난번에 잘 나왔던 요청 하나를 꺼냅니다. 그리고 그 요청을 두 색으로 칠한다고 생각하세요.
+      <strong>매번 똑같이 쓸 부분</strong>과 <strong>매번 바뀔 부분</strong>. 바뀔 부분만 대괄호 <code>[ ]</code>로 비웁니다.
+    </p>
+    <p>미연 씨가 고객 문의 답장을 템플릿으로 만들었습니다.</p>
+
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">고객 문의 답장 템플릿 — 대괄호만 그날그날 채우기</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>너는 우리 홈카페 원두 쇼핑몰의 고객 응대 담당이야.
+아래 문의에 답장 메일 초안을 써 줘.
+
+[고객 문의 원문]
+(여기에 받은 문의를 그대로 붙여넣기)
+
+[이번 건 사실관계]
+(주문번호, 배송 상태, 환불 가능 여부 등 내가 확인한 것)
+
+조건:
+- 사과할 일은 사과하되, 굽신대지 말고 담백하게
+- 다음에 고객이 뭘 하면 되는지 마지막에 한 줄로 안내
+- 이모지 없이, 5문장 이내
+- 확실하지 않은 건 지어내지 말고 "확인 후 안내드리겠다"로</pre>
+    </div>
+
+    <p>
+      고정 부분(역할·조건)은 한 번 써 두면 끝입니다. 매번 채우는 건 대괄호 두 칸 —
+      <strong>받은 문의</strong>와 <strong>내가 확인한 사실</strong>뿐입니다. 30초면 됩니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ "확실하지 않은 건 지어내지 마" 를 꼭 넣으세요</div>
+      <p>
+        고객 응대·환불처럼 사실이 중요한 일에서는, 이 한 줄이 사고를 막습니다.
+        AI는 빈칸을 그럴듯하게 메우려는 성질이 있어서(1장에서 봤죠), 없는 배송일이나 정책을
+        지어낼 수 있습니다. 왜 그런지와 대처법은 <strong>4장</strong>에서 자세히 다룹니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">2.4</span>설명보다 예시가 빠르다</h2>
+    <p>
+      원하는 말투를 글로 설명하기 어려울 때가 있습니다. "담백하게"가 사람마다 다르니까요.
+      이럴 때 가장 빠른 방법은 <strong>내가 예전에 잘 쓴 결과물을 붙여 주고 "이 스타일로"라고 하는 것</strong>입니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">예시로 말투 고정하기 — 템플릿에 덧붙이는 한 덩어리</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>말투는 아래 예시를 참고해서 똑같은 톤으로 써 줘.
+
+[좋은 예시]
+안녕하세요, ○○님. 주문하신 원두는 오늘 오후 발송 예정입니다.
+로스팅을 주문 후 진행해서 하루 늦어졌어요. 송장번호는 발송되면
+문자로 보내드리겠습니다. 늦어진 점 양해 부탁드립니다.</pre>
+    </div>
+    <p>
+      말로 열 줄 설명하는 것보다 이 예시 하나가 정확합니다. AI는 예시에서 문장 길이, 존댓말 수위,
+      사과의 정도까지 통째로 읽어 냅니다. <strong>"이런 느낌"은 예시로 주는 게 언제나 빠릅니다.</strong>
+    </p>
+    <div class="example">
+      <span class="ex-label">미연 씨가 알아챈 것</span>
+      <p style="margin-bottom:0">
+        예시를 붙이기 전에는 답장이 매번 조금씩 딱딱하거나 과하게 굽신댔는데,
+        예전에 자기가 직접 잘 썼던 답장 하나를 붙였더니 <strong>그 뒤로는 톤이 흔들리지 않았습니다.</strong>
+        "내 말투를 설명하는 것보다 보여 주는 게 빨랐다"가 미연 씨의 소감이었습니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">2.5</span>보관하고 다시 쓰기</h2>
+    <p>
+      템플릿은 만드는 것보다 <strong>다시 찾아 쓰는 게 중요합니다.</strong> 어딘가 잘 둬야
+      다음에 바로 꺼냅니다. 거창한 도구는 필요 없습니다. 이미 쓰는 것 중 하나면 됩니다.
+    </p>
+    <ol class="steps">
+      <li>
+        <strong>한 곳에 모은다</strong>
+        <span>메모 앱, 문서 하나, 혹은 AI 대화에 고정해 두기. 흩어져 있으면 결국 안 씁니다.</span>
+      </li>
+      <li>
+        <strong>이름을 알아보게 붙인다</strong>
+        <span>"고객답장", "블로그초안", "인스타문구"처럼. 나중에 검색해서 바로 찾을 수 있게.</span>
+      </li>
+      <li>
+        <strong>쓸 때마다 조금씩 고친다</strong>
+        <span>실제로 써 보면 아쉬운 데가 보입니다. 그 자리에서 한 줄 고쳐 두면 다음엔 더 잘 나옵니다.</span>
+      </li>
+    </ol>
+    <div class="callout tip">
+      <div class="co-label">◆ 템플릿이 세 개를 넘어가면</div>
+      <p>
+        같은 조건("이모지 없이", "지어내지 마")이 여러 템플릿에 <strong>똑같이 반복</strong>되기 시작합니다.
+        그러면 그 공통 잔소리를 템플릿마다 넣지 말고, 한 군데로 모을 때가 된 겁니다 —
+        그게 다음 장의 <strong>규칙 파일</strong>입니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">이번 주 실제 업무에서 <strong>반복 업무 3개</strong>를 골라 템플릿으로 만듭니다.</p>
+      <ol style="margin-bottom:.9em">
+        <li>2.2의 기준(자주 + 비슷)으로 후보 3개를 고른다.</li>
+        <li>각각을 고정 + 대괄호 빈칸으로 나눠 템플릿을 만든다.</li>
+        <li>그중 <strong>하나는 예시를 붙여</strong> 말투까지 고정한다.</li>
+        <li>세 개를 한 곳에 이름 붙여 보관한다.</li>
+        <li><strong>하나는 이번 주에 실제로 3번 이상 써 본다.</strong></li>
+      </ol>
+      <p style="margin:0">
+        마지막 5번이 핵심입니다. 실제로 세 번 써 봐야 <strong>어디가 아쉬운지</strong>가 드러나고,
+        그게 템플릿을 진짜 쓸 만한 물건으로 만듭니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      템플릿이 늘면서 같은 잔소리가 반복되기 시작하면, 다음 장에서 그걸 <strong>규칙 파일 하나</strong>로 모읍니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch3">
+  <div class="prose">
+    <div class="kicker">1부 · 3장</div>
+    <h1 class="page-title">나의 업무 규칙 파일 만들기</h1>
+    <p class="lead">
+      템플릿이 "한 가지 일"의 레시피라면, 규칙 파일은 <strong>모든 일에 공통으로 적용되는 나의 기준</strong>입니다.
+      한 번 만들어 두면, 대화가 "이 파일 읽고 시작해" 한 줄로 줄어듭니다.
+    </p>
+
+    <h2><span class="h-num">3.1</span>매번 하는 잔소리를 한곳으로</h2>
+    <p>
+      2장에서 템플릿을 여러 개 만들다 보면 이상한 걸 눈치챕니다. <strong>같은 말을 계속 적고 있다</strong>는 것.
+      "이모지 쓰지 마", "존댓말로", "지어내지 마", "3문단 넘기지 마"… 일 종류는 달라도 잔소리는 똑같습니다.
+    </p>
+    <p>
+      이건 특정 업무의 조건이 아니라 <strong>당신이 일하는 방식</strong>입니다. 그러니 템플릿마다 반복할 게 아니라,
+      한 군데 모아 두고 "이거 먼저 읽고 와"라고 하면 됩니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 규칙 파일이란</div>
+      <p>
+        새 직원에게 주는 <strong>업무 안내서</strong>와 같습니다. 매번 옆에 붙어 설명하는 대신,
+        "이 문서 먼저 읽어" 하고 건네는 것. AI에게도 똑같이, 대화를 시작할 때 이 파일을 먼저 읽히면 됩니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">3.2</span>규칙 파일에 들어갈 네 가지</h2>
+    <p>무엇을 적어야 할지 막막하면, 네 칸으로 시작하세요.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">항목</th><th scope="col">무엇을 적나</th><th scope="col">미연 씨의 예</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">내 역할</th><td>나는 누구이고 무슨 일을 하나</td><td>1인 홈카페 원두 쇼핑몰 운영자</td></tr>
+          <tr><th scope="row">문체</th><td>어떤 말투를 원하나</td><td>담백한 존댓말, 과한 감탄사·이모지 금지</td></tr>
+          <tr><th scope="row">금지</th><td>절대 하지 말 것</td><td>없는 사실 지어내기, 근거 없는 숫자</td></tr>
+          <tr><th scope="row">검증 기준</th><td>믿기 전에 확인할 것</td><td>가격·배송일·정책은 내가 확인 전엔 단정 금지</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>이 네 칸을 문장으로 풀면 그대로 규칙 파일 v1이 됩니다.</p>
+
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">규칙 파일 v1 — 대괄호만 내 것으로 바꾸세요</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[나의 업무 규칙 — 작업 전에 반드시 읽을 것]
+
+# 내 역할
+나는 [1인 홈카페 원두 쇼핑몰]을 운영해. 너는 내 글쓰기와
+고객 응대를 돕는 조수야.
+
+# 문체
+- 담백한 존댓말. 과한 감탄사와 이모지는 쓰지 마.
+- 문장은 짧게. 한 문단은 3~4문장을 넘기지 마.
+
+# 금지
+- 확인되지 않은 사실을 지어내지 마.
+- 근거 없는 숫자("90%")나 뭉뚱그린 단정("다들 그렇게 해요")을 쓰지 마.
+
+# 검증 기준
+- 가격·배송일·환불 정책은 내가 확인해 주기 전까지
+  단정하지 말고 "확인 후 안내"로 처리해.
+- 확실하지 않은 문장 끝에는 (확인 필요)라고 표시해 줘.</pre>
+    </div>
+
+    <h2><span class="h-num">3.3</span>"이 파일 읽고 시작해"</h2>
+    <p>
+      규칙 파일이 있으면, 매 대화의 시작이 짧아집니다. 새 대화를 열고 규칙 파일을 붙여넣은 뒤,
+      한 줄만 더하면 됩니다.
+    </p>
+    <div class="compare">
+      <div class="compare-card bad">
+        <span class="cc-label">규칙 파일 없이</span>
+        <p>매번: 내 역할 설명 + 말투 요구 + 금지 사항 + 검증 요구 + 그리고 실제 일…</p>
+        <p style="color:var(--ink-3)">→ 대화마다 다섯 줄을 다시 씀</p>
+      </div>
+      <div class="compare-card good">
+        <span class="cc-label">규칙 파일과 함께</span>
+        <p>"위 규칙을 지켜서, [오늘 할 일]을 해 줘."</p>
+        <p style="color:var(--accent)">→ 한 줄. 나머지는 파일이 대신함</p>
+      </div>
+    </div>
+    <p>
+      2장의 템플릿과도 자연스럽게 겹칩니다. 템플릿에서 반복되던 "이모지 금지", "지어내지 마" 같은 조건은
+      이제 규칙 파일이 책임지므로, <strong>템플릿에서는 빼도 됩니다.</strong> 템플릿은 더 짧아지고, 규칙은 한곳에 모입니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 규칙 파일은 대화마다 다시 붙여야 합니다</div>
+      <p>
+        AI는 어제 읽은 규칙을 오늘 기억하지 못하는 경우가 많습니다(도구에 따라 다릅니다).
+        그러니 <strong>새 대화를 열 때마다 규칙 파일을 맨 앞에 붙이는 습관</strong>을 들이세요.
+        한 번 붙여 두면 그 대화 안에서는 계속 지킵니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">3.4</span>규칙 파일은 살아 있는 문서다</h2>
+    <p>
+      규칙 파일은 한 번 쓰고 끝나는 게 아닙니다. 쓰다 보면 <strong>같은 잔소리를 또 하고 있는</strong> 순간이 옵니다.
+      그때가 규칙을 한 줄 추가할 때입니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 한 줄 규칙</div>
+      <p>
+        <strong>같은 지적을 두 번 했다면, 규칙 파일에 한 줄 추가한다.</strong>
+        예를 들어 AI가 자꾸 영어 단어를 섞어 쓴다면, 세 번째로 고치는 대신 규칙에
+        "외래어는 가능한 한 우리말로"를 넣습니다. 이렇게 파일이 나와 함께 자랍니다.
+      </p>
+    </div>
+    <p>
+      이 원리는 뒤에서 계속 재등장합니다. <strong>2부의 오답노트</strong>도 같은 방식으로 자라고,
+      <strong>5부에서 에이전트에게 일을 맡길 때</strong>도 바로 이 규칙 파일을 물려주게 됩니다.
+      지금 만드는 이 파일이, 과정 내내 쓰이는 자산입니다.
+    </p>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">나만의 <strong>업무 규칙 파일 v1</strong>을 완성합니다.</p>
+      <ol style="margin-bottom:.9em">
+        <li>3.2의 네 칸(역할·문체·금지·검증)을 내 상황으로 채운다.</li>
+        <li>2장에서 만든 템플릿들을 훑어, <strong>반복되던 공통 조건</strong>을 규칙 파일로 옮긴다.</li>
+        <li>새 대화에 규칙 파일을 붙이고, 실제 업무 하나를 "이 규칙 지켜서 해 줘"로 시켜 본다.</li>
+        <li>결과에서 아쉬운 점이 있으면 <strong>규칙 한 줄을 추가</strong>하고 다시 시켜 본다.</li>
+      </ol>
+      <p style="margin:0">파일 이름은 찾기 쉽게. 앞으로 이 파일을 아주 자주 열게 됩니다.</p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      이제 잘 시키는 법은 갖췄습니다. 다음 장은 방향이 반대입니다 —
+      <strong>AI가 내놓은 것을 어떻게 의심하고 걸러낼 것인가.</strong>
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch4">
+  <div class="prose">
+    <div class="kicker">1부 · 4장</div>
+    <h1 class="page-title">AI의 거짓말을 걸러내는 습관</h1>
+    <p class="lead">
+      감독의 일은 절반이 "잘 시키기"이고, 나머지 절반이 <strong>"나온 것을 검증하기"</strong>입니다.
+      AI는 모를 때도 자신 있게 말합니다. 그 자신감에 속지 않는 습관을 이 장에서 들입니다.
+    </p>
+
+    <h2><span class="h-num">4.1</span>AI는 모를 때도 자신 있다</h2>
+    <p>
+      사람은 모르면 대개 티가 납니다. 말끝을 흐리거나, "아마도"를 붙이거나, 눈을 피하죠.
+      AI는 그렇지 않습니다. <strong>아는 것과 모르는 것을 똑같이 매끄러운 문장으로</strong> 말합니다.
+      그래서 틀린 답이 맞는 답보다 더 그럴듯해 보이기도 합니다.
+    </p>
+    <p>
+      이유는 1장에서 본 것과 같습니다. AI는 "가장 그럴듯한 다음 말"을 이어 붙이는 데 능한 것이지,
+      사실을 확인하고 말하는 게 아닙니다. 그러니 <strong>매끄러움은 정확함의 증거가 아닙니다.</strong>
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 이 장의 태도</div>
+      <p>
+        "AI는 못 믿어" 하고 안 쓰는 것도, "AI가 그렇다니까" 하고 다 믿는 것도 아닙니다.
+        <strong>어디를 의심해야 하는지 알고, 그 부분만 확인하는 것</strong> — 그게 감독의 검증입니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">4.2</span>AI가 특히 잘 틀리는 네 영역</h2>
+    <p>모든 걸 다 의심하면 지칩니다. 대신 <strong>틀리기 쉬운 곳</strong>을 알아 두고 거기를 집중해서 봅니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">영역</th><th scope="col">왜 위험한가</th><th scope="col">예</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">숫자</th><td>그럴듯한 값을 지어내기 쉽다</td><td>통계, 가격, 비율, 날짜</td></tr>
+          <tr><th scope="row">방법·절차</th><td>바뀌었거나 없는 단계를 만든다</td><td>"설정 → 여기 눌러" 식 화면 안내</td></tr>
+          <tr><th scope="row">위험 정보</th><td>틀리면 손해가 큰 분야</td><td>건강, 법률, 세금, 계약</td></tr>
+          <tr><th scope="row">경험·출처</th><td>안 해 본 걸 해 본 듯 말한다</td><td>"제가 써 보니", 없는 논문 인용</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <div class="co-label">▲ 바뀌는 정보는 특히 조심</div>
+      <p>
+        가격·요금·자격 기준·화면 위치처럼 <strong>수시로 바뀌는 정보</strong>는 AI가 옛날 값을 기억하고 있을 수 있습니다.
+        이런 건 AI 답을 <strong>출발점</strong>으로만 쓰고, 반드시 공식 안내에서 <strong>오늘 기준</strong>으로 확인하세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">4.3</span>사람이 보기 전에, AI에게 먼저 검수시키기</h2>
+    <p>
+      검증을 전부 내가 눈으로 할 필요는 없습니다. <strong>1차 검수를 AI에게 시키는</strong> 방법이 있습니다.
+      방금 뭔가를 만들게 했다면, 이어서 이렇게 물어보세요.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">AI 자기검수 프롬프트 — 결과물 받은 직후에</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>방금 네가 쓴 내용을 비판적으로 다시 검토해 줘.
+
+1. 사실이 틀렸을 가능성이 있는 문장 3군데를 골라 표시해 줘.
+2. 숫자·날짜·고유명사 중 확인이 필요한 것에 (확인 필요) 표시.
+3. 네가 확실히 아는 것과, 추측으로 채운 것을 구분해서 알려 줘.</pre>
+    </div>
+    <div class="ai-out">
+      <span class="ao-label">AI의 응답 (일부)<em class="ao-note">재구성한 예시입니다</em></span>
+      <p>다시 보니 확인이 필요한 부분이 있습니다.</p>
+      <p>
+        · "원두는 개봉 후 <strong>2주</strong> 안에 소비" — 이 기간은 보관 상태에 따라 달라 단정은 (확인 필요)입니다.<br>
+        · "핸드드립 물 온도는 <strong>92~96도</strong>" — 일반적 권장 범위이나 원두·취향에 따라 다릅니다.<br>
+        · 마지막 문단의 "많은 분들이 그렇게 하십니다"는 <strong>근거 없이 추측으로 쓴 문장</strong>입니다. 빼는 걸 권합니다.
+      </p>
+    </div>
+    <p>
+      완벽하지는 않습니다. AI가 자기 실수를 다 잡아내지는 못하니까요. 하지만 <strong>내가 어디를 봐야 하는지</strong>
+      표시가 붙은 채로 넘어오니, 눈으로 하는 최종 검수가 훨씬 빨라집니다. 검수 순서가
+      <strong>"AI 1차 → 내 최종"</strong>이 됩니다.
+    </p>
+
+    <h2><span class="h-num">4.4</span>근거를 믿는 순서, 그리고 5분 규칙</h2>
+    <p>
+      표시가 붙은 부분을 확인할 때는, 아무 검색 결과나 믿으면 안 됩니다. <strong>믿을 순서</strong>가 있습니다.
+    </p>
+    <ol class="steps">
+      <li>
+        <strong>공식 출처</strong>
+        <span>해당 기관·회사의 공식 사이트·약관·공고. 가격·정책·자격 기준은 여기가 1순위.</span>
+      </li>
+      <li>
+        <strong>공공기관·1차 자료</strong>
+        <span>정부·공공기관 발표, 원문 통계, 원 논문. 누가 요약하기 전의 것.</span>
+      </li>
+      <li>
+        <strong>교차 확인</strong>
+        <span>위가 애매하면 서로 독립된 출처 두세 곳이 같은 말을 하는지 본다.</span>
+      </li>
+    </ol>
+    <div class="callout tip">
+      <div class="co-label">◆ 5분 규칙</div>
+      <p>
+        어떤 사실을 <strong>5분 안에 믿을 만한 근거로 확인하지 못하면, 그 내용은 쓰지 않습니다.</strong>
+        빼거나, "확인 중"으로 남기거나, 안전한 표현으로 바꿉니다.
+        확인 안 된 그럴듯한 문장 하나가, 나중에 가장 큰 사고가 됩니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">4.5</span>반대 방향의 경계선 — AI에게 주면 안 되는 것</h2>
+    <p>
+      검증이 "AI가 나에게 주는 것"을 거르는 일이라면, 반대쪽 경계선도 있습니다.
+      <strong>내가 AI에게 넣으면 안 되는 것</strong>입니다.
+    </p>
+    <ul>
+      <li><strong>회사 기밀</strong> — 미공개 실적, 내부 문서, 계약 조건.</li>
+      <li><strong>남의 개인정보</strong> — 고객·동료의 이름·연락처·주민번호가 담긴 원자료.</li>
+      <li><strong>비밀번호·인증정보</strong> — 계정 암호, 카드번호, 보안 키.</li>
+    </ul>
+    <div class="callout warn">
+      <div class="co-label">▲ 넣기 전에 한 번 멈추기</div>
+      <p>
+        입력한 내용이 어떻게 보관·활용되는지는 도구와 설정에 따라 다릅니다.
+        그러니 민감한 자료는 <strong>회사 규정을 먼저 확인</strong>하고, 꼭 필요하면
+        이름을 지우거나 가짜 예시로 바꿔서(예: "고객A", "010-0000-0000") 넣으세요.
+        미연 씨는 고객 문의를 붙일 때 실명과 주소를 <strong>지운 뒤</strong> 넣는 걸 습관으로 만들었습니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">
+        AI가 만들어 준 결과물 하나를 골라 <strong>검증 습관을 실제로 돌려 봅니다.</strong>
+        (1~3장에서 만든 결과물이면 좋습니다.)
+      </p>
+      <ol style="margin-bottom:.9em">
+        <li>결과물에 4.3의 <strong>자기검수 프롬프트</strong>를 걸어 "확인 필요" 표시를 받는다.</li>
+        <li>표시된 것 중 하나를 골라 <strong>4.4의 순서</strong>로 실제로 확인해 본다.</li>
+        <li><strong>실제로 틀렸거나 근거가 없던 곳을 최소 1건</strong> 찾아 기록한다.</li>
+      </ol>
+      <p style="margin:0">
+        AI가 틀린 걸 직접 잡아내는 이 경험이 중요합니다. 한 번 잡아 보면,
+        그다음부터는 매끄러운 문장을 그냥 믿지 않게 됩니다.
+      </p>
+    </div>
+
+    <div class="callout tip" style="margin-top:1.8em">
+      <div class="co-label">✅ 1부를 마치며</div>
+      <p style="margin-bottom:.5em">여기까지 왔다면 손에 이런 것들이 남아 있어야 합니다.</p>
+      <ul class="check" style="margin-bottom:0">
+        <li>요청 템플릿 3개 (1개는 실사용 3회 이상)</li>
+        <li>업무 규칙 파일 v1</li>
+        <li>검수에서 실제로 잡아낸 오류 1건 이상</li>
+      </ul>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      잘 시키고 검증하는 법을 갖췄습니다. 2부에서는 이 능력을 완전히 다른 데 씁니다 —
+      <strong>AI를 나를 가르치는 선생으로.</strong>
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch5">
+  <div class="prose">
+    <div class="kicker">2부 · 5장</div>
+    <h1 class="page-title">AI를 과외 선생으로 만들기</h1>
+    <p class="lead">
+      지금까지 AI에게 <strong>일</strong>을 시켰습니다. 이제 방향을 바꿉니다 — AI에게
+      <strong>나를 가르치게</strong> 합니다. 답을 받는 게 아니라, 이해할 때까지 되묻는 겁니다.
+    </p>
+
+    <div class="callout tip">
+      <div class="co-label">◆ 오리엔테이션의 그 목표를 꺼낼 차례</div>
+      <p>
+        시작할 때 <strong>"미뤄 온 공부 하나"</strong>를 적어 두라고 했습니다. 자격증, 어학, 엑셀, 무엇이든.
+        2부 내내 그걸 실제로 굴립니다. 지금 그 한 줄을 다시 꺼내 두세요. 이 부의 모든 실습은 그 공부로 합니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">5.1</span>검색과 과외는 다르다</h2>
+    <p>
+      모르는 걸 만나면 우리는 검색을 합니다. 검색은 <strong>답을 줍니다.</strong> 그런데 답을 받는 것과
+      이해하는 것은 다릅니다. 답은 읽는 순간 아는 것 같지만, 돌아서면 사라집니다.
+    </p>
+    <p>
+      과외 선생은 다릅니다. 내가 어디서 막혔는지 보고, 눈높이를 맞춰 다시 설명하고,
+      <strong>내가 이해했는지 되물어 확인합니다.</strong> AI는 검색으로도 쓸 수 있지만,
+      제대로 시키면 이 과외 선생 쪽에 훨씬 가깝습니다. 지치지도, 부끄럽게 하지도 않는 선생입니다.
+    </p>
+    <div class="compare">
+      <div class="compare-card bad">
+        <span class="cc-label">검색하듯 쓰기</span>
+        <p>"복리가 뭐야?" → 정의 한 문단을 받고 끝.</p>
+        <p style="color:var(--ink-3)">→ 읽고 나면 안 것 같지만 설명은 못 함</p>
+      </div>
+      <div class="compare-card good">
+        <span class="cc-label">과외받듯 쓰기</span>
+        <p>"복리를 초등학생도 알게 비유로 설명하고, 이해했는지 나한테 질문해 줘."</p>
+        <p style="color:var(--accent)">→ 되묻고 답하는 사이에 남는다</p>
+      </div>
+    </div>
+
+    <h2><span class="h-num">5.2</span>내 눈높이를 선언하기</h2>
+    <p>
+      AI는 기본적으로 <strong>평균 성인에게 설명하듯</strong> 답합니다. 그래서 어려운 용어가 섞여 나오죠.
+      눈높이를 내가 정해 주면 설명이 확 쉬워집니다. 처음 물을 때 이 한 줄을 붙이세요.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">눈높이 선언 — 배우고 싶은 것 앞에 붙이기</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>나는 이 분야를 처음 배우는 비전공자야.
+[배우고 싶은 개념]을 설명해 줘. 단,
+- 전문용어는 쓰기 전에 쉬운 말로 먼저 풀어 주고
+- 일상에서 겪는 비유 하나와, 구체적인 예시 셋을 들어 줘
+- 한 번에 다 쏟지 말고, 내가 "다음"이라고 하면 이어서 가 줘</pre>
+    </div>
+    <p>
+      마지막 줄이 중요합니다. <strong>"한 번에 다 쏟지 마"</strong>를 넣으면, AI가 열 문단을 퍼붓는 대신
+      한 조각씩 주고 내 반응을 기다립니다. 실제 과외처럼 <strong>주고받는</strong> 리듬이 생깁니다.
+    </p>
+
+    <h2><span class="h-num">5.3</span>"왜?"를 세 번 — 이해로 가는 길</h2>
+    <p>
+      설명을 들으면 아는 것 같습니다. 진짜 아는지 확인하는 가장 쉬운 방법은 <strong>"왜?"를 파고드는 것</strong>입니다.
+      AI는 몇 번을 되물어도 짜증 내지 않으니, 사람에게는 민망해서 못 하던 꼬리 질문을 마음껏 할 수 있습니다.
+    </p>
+    <div class="example">
+      <span class="ex-label">미연 씨의 경우 — "왜"를 세 번</span>
+      <p style="margin-bottom:.4em">미연 씨는 홈카페 원가 계산이 늘 헷갈렸습니다. AI에게 배우면서 "왜"를 파고들었습니다.</p>
+      <ul style="margin-bottom:0">
+        <li>"원가에 왜 임대료도 넣어?" → 고정비 개념</li>
+        <li>"고정비는 왜 잔마다 나눠 담아?" → 판매량으로 분산된다는 것</li>
+        <li>"그럼 왜 많이 팔수록 잔당 원가가 싸져?" → 여기서 "아!" 하고 이해가 붙음</li>
+      </ul>
+    </div>
+    <p>
+      세 번째 "왜"에서 개념이 <strong>내 것</strong>이 됩니다. 정의를 외운 게 아니라, 왜 그런지를 알았기 때문입니다.
+    </p>
+
+    <h2><span class="h-num">5.4</span>이해 확인 루프 — 내가 설명하고 AI가 채점하기</h2>
+    <p>
+      진짜 이해했는지 아는 방법은 하나뿐입니다. <strong>내 말로 설명해 보는 것.</strong>
+      설명하다 막히는 자리가 곧 아직 이해 못 한 자리입니다. 이걸 혼자 하면 막힌 줄도 모르는데,
+      AI에게 채점을 맡기면 <strong>구멍을 대신 찾아 줍니다.</strong> 이 방법을 파인만 기법이라고 부릅니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">파인만 채점 — 내 설명을 붙이고 시키기</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>방금 배운 걸 내 말로 설명해 볼게. 아래 내 설명을 듣고,
+- 틀리거나 부정확한 부분을 짚어 주고
+- 설명이 비어 있는(내가 아직 모르는 것 같은) 부분을 찾아 줘
+- 마지막에 이해했는지 확인하는 질문 2개를 던져 줘
+
+[내 설명]
+(여기에 배운 걸 내 말로 적기)</pre>
+    </div>
+    <div class="ai-out">
+      <span class="ao-label">AI의 응답 (일부)<em class="ao-note">재구성한 예시입니다</em></span>
+      <p>설명 잘하셨어요. 두 군데만 짚을게요.</p>
+      <p>
+        · "고정비는 안 변한다"고 하셨는데, 정확히는 <strong>판매량이 늘어도 총액이 안 변하는 것</strong>이에요.
+        잔당으로 나누면 오히려 줄죠. 이 부분 설명이 살짝 비어 있었어요.<br>
+        · 확인 질문 둘: ① 하루 10잔 팔 때와 100잔 팔 때, 잔당 임대료는 어떻게 달라질까요?
+        ② 재료비는 고정비일까요, 아닐까요?
+      </p>
+    </div>
+    <div class="callout tip">
+      <div class="co-label">◆ 2부의 성적표는 "시간"이 아니다</div>
+      <p>
+        이 과정의 유일한 잣대는 "내 시간이 줄었는가"였습니다. <strong>2부만은 예외</strong>입니다.
+        공부의 잣대는 <strong>"내 말로 설명되는가"</strong>입니다. 파인만 채점을 통과하면, 그 개념은 배운 겁니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">5.5</span>선생도 거짓말을 한다</h2>
+    <p>
+      여기서 4장을 잊으면 안 됩니다. <strong>과외 선생도 틀립니다.</strong> 오히려 공부에서는 더 위험합니다.
+      업무에서는 틀린 걸 나중에 고치면 되지만, 공부에서 <strong>틀린 걸 사실로 외워 버리면</strong>
+      그 위에 쌓는 모든 게 흔들리니까요.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 배운 걸 통째로 믿지 않기</div>
+      <p>
+        특히 <strong>숫자·공식·날짜·법 규정</strong>은 4장에서 들인 검증 습관을 그대로 적용하세요. 시험을 준비한다면
+        더더욱, AI가 알려 준 범위나 기준을 <strong>공식 자료로 대조</strong>해야 합니다(다음 장에서 다룹니다).
+        개념을 이해하는 데는 AI가 훌륭한 선생이지만, <strong>사실을 확정하는 건 공식 출처</strong>입니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">
+        늘 어렵던 개념 하나를 골라, <strong>이해될 때까지 배우고 내 말로 설명해 채점받습니다.</strong>
+        (오리엔테이션에 적은 배움 목표와 관련된 것이면 가장 좋습니다.)
+      </p>
+      <ol style="margin-bottom:0">
+        <li>5.2의 눈높이 선언을 붙여 그 개념을 배운다.</li>
+        <li>이해가 안 되는 지점에서 <strong>"왜?"를 최소 세 번</strong> 파고든다.</li>
+        <li>배운 걸 <strong>내 말로 설명</strong>해 5.4의 파인만 채점을 받는다.</li>
+        <li>지적받은 구멍을 다시 배우고, 통과할 때까지 반복한다.</li>
+      </ol>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      개념을 배우는 법을 익혔습니다. 다음 장은 이걸 <strong>시험공부</strong>에 적용합니다 —
+      계획표, 모의 문제, 그리고 규칙 파일을 닮은 오답노트.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch6">
+  <div class="prose">
+    <div class="kicker">2부 · 6장</div>
+    <h1 class="page-title">시험공부에 적용하기 — 자격증·어학·사내 시험</h1>
+    <p class="lead">
+      개념 이해를 넘어 <strong>시험이라는 목표</strong>가 있을 때. AI에게 계획을 짜게 하고,
+      문제를 내게 하고, 내가 틀린 유형을 기억하게 만듭니다.
+    </p>
+
+    <h2><span class="h-num">6.1</span>먼저 시험 정보를 정리시키기 — 단, 공식 확인은 필수</h2>
+    <p>
+      시험공부는 범위를 아는 데서 시작합니다. AI에게 시험의 범위·형식·배점을 표로 정리시키면 빠릅니다.
+      <strong>딱 하나 주의</strong>가 있습니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 시험 기준은 "바뀌는 정보"다</div>
+      <p>
+        출제 범위, 합격 점수, 시험 일정, 응시료 같은 건 해마다 바뀝니다. AI가 알려 주는 건
+        <strong>옛날 기준일 수 있습니다.</strong> AI 정리는 <strong>얼개를 잡는 출발점</strong>으로만 쓰고,
+        실제 기준은 반드시 <strong>주관처 공식 공고</strong>에서 오늘 날짜로 확인하세요. (4장의 습관 그대로입니다.)
+      </p>
+    </div>
+
+    <h2><span class="h-num">6.2</span>학습 계획 짜게 하기</h2>
+    <p>
+      범위를 확정했으면, 남은 기간과 내 가용 시간을 주고 <strong>주차별 계획표</strong>를 만들게 합니다.
+      막연한 "열심히"가 아니라, 이번 주에 뭘 할지가 눈에 보이게.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">학습 계획 — 대괄호를 내 상황으로</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[시험 이름]을 준비하려고 해. 아래 조건으로 주차별 계획표를 짜 줘.
+
+- 시험까지 남은 기간: [8주]
+- 내가 공부할 수 있는 시간: [평일 저녁 1시간, 주말 2시간]
+- 확정된 출제 범위: (공식 공고에서 확인한 범위를 붙여넣기)
+- 나는 이 분야가 [처음이야 / 기초는 있어]
+
+조건:
+- 마지막 1주는 복습·모의고사로 비워 둘 것
+- 매주 끝에 "이번 주 점검" 한 줄을 넣어 줘
+- 무리한 분량이면 솔직히 말하고 범위 줄이는 안을 제안해 줘</pre>
+    </div>
+    <p>
+      마지막 조건이 중요합니다. AI는 시키면 빡빡한 계획도 그럴듯하게 짜 줍니다. <strong>"무리면 솔직히 말해"</strong>를
+      넣어야 지킬 수 있는 계획이 나옵니다.
+    </p>
+
+    <h2><span class="h-num">6.3</span>문제를 출제시키기 — 풀이·해설의 반복 루프</h2>
+    <p>
+      계획이 섰으면 이제 <strong>문제를 풀어야</strong> 합니다. AI에게 범위를 주고 모의 문제를 내게 한 뒤,
+      풀고, 해설을 받는 루프를 돌립니다.
+    </p>
+    <ol class="steps">
+      <li><strong>출제</strong><span>"이 범위에서 객관식 5문제. 답은 아직 알려 주지 마."</span></li>
+      <li><strong>풀이</strong><span>내가 먼저 답을 적는다. 찍은 것도 표시해 둔다.</span></li>
+      <li><strong>채점·해설</strong><span>"내 답은 이거야. 채점하고, 틀린 건 왜 틀렸는지 해설해 줘."</span></li>
+    </ol>
+    <div class="callout warn">
+      <div class="co-label">▲ 답을 먼저 보지 않기</div>
+      <p>
+        해설부터 읽으면 아는 것 같은 착각만 커집니다. <strong>반드시 내가 먼저 풀고</strong> 나서 채점하세요.
+        틀리는 경험 자체가 공부입니다. 그리고 AI가 낸 문제·해설도 5장에서 말했듯 <strong>사실은 의심</strong>하세요 —
+        특히 숫자 답은 검산이 필요합니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">6.4</span>오답노트를 규칙 파일처럼</h2>
+    <p>
+      여기가 이 장의 핵심입니다. 틀린 문제를 그냥 다시 풀고 넘어가면 같은 걸 또 틀립니다.
+      <strong>3장의 규칙 파일을 기억하나요?</strong> 오답노트도 똑같은 원리로 굴립니다 —
+      틀릴 때마다 한 줄씩 쌓이는 <strong>살아 있는 문서</strong>입니다.
+    </p>
+    <div class="example">
+      <span class="ex-label">오답노트의 진짜 쓸모</span>
+      <p style="margin-bottom:.5em">
+        오답노트를 AI에게 주고 이렇게 시킵니다. 그러면 노트가 나를 아는 출제자가 됩니다.
+      </p>
+      <div class="ai-out" style="margin:0">
+        <span class="ao-label">시키는 말</span>
+        <p style="margin:0">
+          "아래는 내가 자주 틀린 유형이야. <strong>이 유형에서 집중적으로</strong> 새 문제 5개를 내 줘.
+          내가 약한 함정을 일부러 넣어서."
+        </p>
+      </div>
+    </div>
+    <p>
+      규칙 파일이 "같은 잔소리 두 번 → 한 줄 추가"였듯, 오답노트는 <strong>"같은 실수 두 번 → 유형으로 등록"</strong>입니다.
+      그리고 그 유형으로 출제를 <strong>편향</strong>시키면, 공부가 내 약점에 정확히 꽂힙니다.
+    </p>
+
+    <h2><span class="h-num">6.5</span>회독 도우미와 시험 직전</h2>
+    <p>여러 번 훑어야 하는 공부라면, AI에게 회독 도구를 만들게 할 수 있습니다.</p>
+    <ul>
+      <li><strong>요약본</strong> — 범위를 한 장으로 압축시키기</li>
+      <li><strong>빈칸 문제</strong> — 요약본의 핵심어를 빈칸으로 바꿔 스스로 채우기</li>
+      <li><strong>암기 카드</strong> — 앞면 질문 / 뒷면 답 형태로</li>
+    </ul>
+    <p>
+      시험이 코앞이면, <strong>취약 단원 집중</strong>으로 좁힙니다. "오답노트에서 가장 자주 틀린 단원만
+      최종 모의고사로 내 줘." 넓게 훑는 대신, 마지막엔 <strong>구멍을 메우는 데</strong> 시간을 씁니다.
+    </p>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">목표 시험 하나로 <strong>공부를 실제로 굴려 봅니다.</strong></p>
+      <ol style="margin-bottom:0">
+        <li>공식 공고로 범위를 확인하고, 6.2로 <strong>주차별 계획표</strong>를 만든다.</li>
+        <li>6.3 루프로 <strong>모의 문제 20개</strong>를 풀고 채점받는다.</li>
+        <li>틀린 것으로 <strong>오답노트를 시작</strong>하고, 그 유형으로 다시 출제시켜 본다.</li>
+      </ol>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      시험처럼 목표가 뚜렷한 공부를 다뤘습니다. 다음 장은 반대입니다 —
+      <strong>시험도 정답도 없이, 필요할 때 필요한 만큼만</strong> 배우는 법.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch7">
+  <div class="prose">
+    <div class="kicker">2부 · 7장</div>
+    <h1 class="page-title">새로운 기술 배우기 — 필요할 때, 필요한 만큼</h1>
+    <p class="lead">
+      모든 공부에 시험이 있는 건 아닙니다. 새 도구, 새 취미, 외국어 회화처럼
+      <strong>쓰면서 익히는</strong> 것들. 여기엔 다른 전략이 필요합니다.
+    </p>
+
+    <h2><span class="h-num">7.1</span>다 배우고 쓰는 게 아니라, 쓰다가 배우기</h2>
+    <p>
+      엑셀을 예로 들죠. "엑셀을 마스터하고 쓰겠다"며 강의를 처음부터 듣기 시작하면, 대개
+      함수 몇 개 배우다 지쳐 그만둡니다. 정작 <strong>지금 내게 필요한 건 딱 하나</strong>인데 말입니다.
+    </p>
+    <p>
+      더 나은 방법은 거꾸로입니다. <strong>지금 하려는 일에서 막힌 그 지점</strong>만, 그만큼만 배우는 것.
+      이걸 <em>필요할 때 배우기</em>(just-in-time)라고 합니다. 필요가 있으니 동기가 확실하고,
+      바로 써먹으니 안 잊습니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ AI가 이 방식에 특히 맞다</div>
+      <p>
+        강의는 "커리큘럼"을 따라야 하지만, AI에게는 <strong>내가 막힌 그 지점만</strong> 물으면 됩니다.
+        "엑셀에서 이 표를 이름별로 합계 내고 싶은데 어떻게 해?"처럼. 배경 지식이 없어도,
+        지금 문제를 풀면서 필요한 조각만 가져올 수 있습니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">7.2</span>실습 과제를 받아 내기 — 내 데이터로</h2>
+    <p>
+      배우기만 하면 손에 안 붙습니다. AI에게 <strong>연습문제를 내 데이터로 만들어 달라</strong>고 하면,
+      배운 걸 그 자리에서 써 보게 됩니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">내 데이터로 연습문제 — 배운 직후에</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>방금 [엑셀 피벗테이블] 사용법을 배웠어.
+이제 내 실제 데이터로 연습하고 싶어. 아래 데이터를 보고,
+- 이 기능으로 풀 수 있는 연습 과제 3개를 쉬운 순서로 내 줘
+- 답은 알려 주지 말고, 내가 하다 막히면 힌트만 단계로 줘
+
+[내 데이터]
+(실제 표나 상황을 붙여넣기 — 민감정보는 지우고)</pre>
+    </div>
+    <p>
+      교재의 남의 예제가 아니라 <strong>내 것으로</strong> 연습하는 게 핵심입니다. 오늘 배운 걸
+      오늘 실제 업무에 쓰면, 그건 이미 배운 게 됩니다. (민감정보는 4장에서 배운 대로 지우고 넣으세요.)
+    </p>
+
+    <h2><span class="h-num">7.3</span>같은 구조, 다른 분야</h2>
+    <p>
+      이 "필요한 만큼 배우기 + 바로 써 보기" 구조는 놀랄 만큼 여러 곳에 그대로 들어맞습니다.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">배우는 것</th><th scope="col">AI를 이렇게 쓴다</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">외국어 회화</th><td>"초급 수준으로 나랑 영어로 대화하고, 내가 틀리면 자연스러운 표현으로 고쳐 줘"</td></tr>
+          <tr><th scope="row">업무 도구</th><td>지금 막힌 기능만 콕 집어 묻고, 내 파일로 바로 적용</td></tr>
+          <tr><th scope="row">취미(요리·악기·운동)</th><td>"왜 이렇게 하는지" 원리를 묻고, 오늘 할 연습 하나를 받기</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      회화 상대는 특히 AI가 빛나는 자리입니다. <strong>부끄럽지 않고, 지치지 않고, 24시간</strong> 대화해 주니까요.
+      틀려도 판단하지 않고 고쳐만 주니, 말문이 트이기 좋습니다.
+    </p>
+
+    <h2><span class="h-num">7.4</span>배운 것을 가르쳐 보기 — 최고의 복습</h2>
+    <p>
+      5장에서 "내 말로 설명하면 이해가 확인된다"고 했습니다. 이걸 한 단계 밀면,
+      <strong>남에게 가르치듯 정리해 보는 것</strong>이 가장 강한 복습입니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 상시 과제와 이어집니다</div>
+      <p>
+        이 과정에는 <strong>"매주 배운 것을 블로그에 한 편 기록하기"</strong>라는 상시 과제가 있습니다.
+        그게 바로 이 "가르쳐 보기 복습"입니다. 오늘 배운 걸 남이 읽게 정리하는 순간,
+        어설프게 알던 부분이 드러나고 진짜 내 것이 됩니다. 기록이 곧 복습이자 포트폴리오입니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">
+        미뤄 왔던 기술 하나를 <strong>"오늘 쓸 만큼만"</strong> 배워서 당일에 실제로 써 봅니다.
+      </p>
+      <ol style="margin-bottom:0">
+        <li>지금 실제로 막혀 있는 지점 하나를 고른다(마스터 말고, 그 한 조각).</li>
+        <li>AI에게 그 조각만 배우고, 7.2로 <strong>내 데이터 연습 과제</strong>를 받는다.</li>
+        <li>오늘 안에 실제 일에 써 본다.</li>
+        <li>(선택) 배운 걸 블로그 한 편으로 정리해 상시 과제와 연결한다.</li>
+      </ol>
+    </div>
+
+    <div class="callout tip" style="margin-top:1.8em">
+      <div class="co-label">✅ 2부를 마치며</div>
+      <p style="margin-bottom:.5em">여기까지 왔다면 손에 이런 것들이 남아 있어야 합니다.</p>
+      <ul class="check" style="margin-bottom:0">
+        <li>진행 중인 공부 1건 (주차별 계획표 + 오답노트)</li>
+        <li>파인만 채점 기록 1회 이상 ("설명해 보니 여기가 구멍이었다")</li>
+        <li>공식 자료로 검증한 사실 1건 (AI가 틀렸던 것이면 더 좋다)</li>
+      </ul>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      일 시키기(1부)와 배우기(2부)를 익혔습니다. 3부에서는 <strong>불편에 맞는 도구</strong>를 찾아
+      지도를 넓힙니다 — 필요 없으면 건너뛰어도 되는 부입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch8">
+  <div class="prose">
+    <div class="kicker">3부 · 8장</div>
+    <h1 class="page-title">조사가 오래 걸린다면 — AI 리서치 도구</h1>
+    <div class="callout tip">
+      <div class="co-label">◆ 이런 불편이 있다면</div>
+      <p>
+        뭔가를 알아보려고 검색창을 열었다가, 탭이 스무 개로 늘어나고 반나절이 지나 있던 적.
+        정작 정리는 아직 시작도 못 했고요. 이 불편이 없다면 <strong>이 장은 건너뛰어도 됩니다.</strong>
+      </p>
+    </div>
+
+    <h2><span class="h-num">8.1</span>검색과 리서치의 차이</h2>
+    <p>
+      일반 검색은 <strong>링크 열 개</strong>를 줍니다. 그걸 하나씩 열어 읽고, 취사선택하고, 정리하는 건
+      전부 내 몫이죠. AI 리서치 도구(딥리서치)는 다릅니다. 여러 출처를 스스로 훑어
+      <strong>정리된 답 + 근거 출처</strong>를 한 번에 내놓습니다.
+    </p>
+    <div class="compare">
+      <div class="compare-card bad">
+        <span class="cc-label">일반 검색</span>
+        <p>"핸드드립 원두 원산지별 특징" → 링크 10개. 읽고 비교하고 정리는 내가.</p>
+      </div>
+      <div class="compare-card good">
+        <span class="cc-label">AI 리서치</span>
+        <p>같은 질문 → 원산지별 표로 정리 + 각 항목마다 출처 링크.</p>
+      </div>
+    </div>
+
+    <h2><span class="h-num">8.2</span>어떤 도구가 있나</h2>
+    <p>
+      리서치용 도구는 크게 두 갈래입니다. <strong>대화형 AI에 딸린 "딥리서치" 기능</strong>과,
+      <strong>검색에 특화된 도구</strong>. 처음이라면 이미 쓰는 대화형 AI에 딥리서치 기능이 있는지부터 보세요.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">종류</th><th scope="col">예</th><th scope="col">이럴 때</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">딥리서치 기능</th><td>ChatGPT·Gemini·Claude의 리서치/심층 조사 모드</td><td>이미 쓰는 AI에서 바로. 긴 정리가 필요할 때</td></tr>
+          <tr><th scope="row">검색 특화 도구</th><td>Perplexity 등</td><td>출처를 문장마다 달아 주는 게 필요할 때</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <div class="co-label">▲ 기능 이름·유무는 바뀝니다</div>
+      <p style="margin:0">
+        "딥리서치"라는 이름과 무료 제공 여부는 서비스마다 다르고 자주 바뀝니다. 위 예시는 참고용이니,
+        <strong>내가 쓰는 도구에 심층 조사 기능이 있는지 오늘 기준으로 확인</strong>하세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">8.3</span>리서치 시키는 법</h2>
+    <p>
+      리서치 도구도 재료를 줘야 잘합니다(1장 그대로). <strong>무엇을, 왜, 어떤 형태로</strong> 원하는지 주세요.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">리서치 요청 — 목적과 형태를 함께</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[알아보려는 주제]를 조사해 줘.
+
+- 목적: 이걸로 [무엇을 할 건지]
+- 꼭 담을 것: [비교 기준, 기간, 지역 등]
+- 형태: 표로 정리하고, 각 항목에 출처 링크를 달아 줘
+- 확실하지 않은 건 "불확실"이라고 표시해 줘</pre>
+    </div>
+
+    <div class="example">
+      <span class="ex-label">미연 씨의 경우 — 원산지 조사</span>
+      <p style="margin-bottom:.5em">
+        미연 씨는 새 원두 라인업을 고르려고 "핸드드립용 인기 원산지"를 조사했습니다.
+        위 틀에 목적("판매용 소개글 쓰기")과 형태("원산지·맛 특징·가격대 표")를 넣었더니 이렇게 왔습니다.
+      </p>
+      <div class="ai-out" style="margin:0">
+        <span class="ao-label">리서치 결과 (일부)<em class="ao-note">재구성한 예시입니다</em></span>
+        <p style="margin:0">
+          · <strong>에티오피아 예가체프</strong> — 꽃향·산미. 입문자 선호. [출처]<br>
+          · <strong>콜롬비아 수프레모</strong> — 균형 잡힌 맛. 무난. [출처]<br>
+          · <strong>과테말라 안티구아</strong> — 초콜릿·묵직함. [출처]<br>
+          <em>※ 가격대는 시세 변동이 커 "불확실"로 표시함 — 도매처에서 확인 권장</em>
+        </p>
+      </div>
+    </div>
+    <p>
+      주목할 건 마지막 줄입니다. "확실하지 않은 건 불확실로 표시해"를 넣었더니, <strong>가격처럼 바뀌는 정보를
+      스스로 유보</strong>했습니다. 이렇게 시키면 어디를 직접 확인해야 하는지가 드러납니다.
+    </p>
+
+    <h2><span class="h-num">8.4</span>좋은 리서치 질문 vs 나쁜 질문</h2>
+    <div class="compare">
+      <div class="compare-card bad">
+        <span class="cc-label">막연한 질문</span>
+        <p>"커피에 대해 알려 줘"</p>
+        <p style="color:var(--ink-3)">→ 뻔한 백과사전식 답. 쓸 데가 없음</p>
+      </div>
+      <div class="compare-card good">
+        <span class="cc-label">쓸 수 있는 질문</span>
+        <p>"입문자용 핸드드립 원두 3종을, 맛 특징과 추천 이유로 비교해 표로"</p>
+        <p style="color:var(--accent)">→ 바로 소개글에 쓸 재료</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 믿기 전에 출처를 연다</div>
+      <p>
+        리서치 도구도 <strong>틀립니다.</strong> 출처를 그럴듯하게 붙이지만, 링크가 엉뚱하거나 내용과
+        다를 때가 있습니다. 4장의 습관대로, <strong>결론을 쓰기 전에 핵심 출처 두어 개는 직접 열어</strong>
+        확인하세요. 특히 숫자와 날짜는요.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        평소 <strong>반나절 걸리던 조사 하나</strong>를 리서치 도구로 처리하고, 걸린 시간을 기록하세요.
+        (미연 씨는 "원두 원산지별 맛 특징" 조사를 30분으로 줄였습니다.) <strong>출처 두 개는 꼭 직접 확인</strong>하고요.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      밖의 정보를 조사했다면, 다음 장은 반대입니다 — <strong>내가 이미 가진 자료</strong>에게 묻는 법.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch9">
+  <div class="prose">
+    <div class="kicker">3부 · 9장</div>
+    <h1 class="page-title">자료가 쌓여만 있다면 — 내 문서에게 질문하기</h1>
+    <div class="callout tip">
+      <div class="co-label">◆ 이런 불편이 있다면</div>
+      <p>
+        회의록·계약서·PDF·긴 보고서가 폴더에 쌓여만 있고, "그거 어디 적혀 있었더라" 하며
+        매번 뒤적이는 불편. 이 장은 <strong>자료를 던져 넣고 그 안에서 답을 받는</strong> 도구를 다룹니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">9.1</span>"이 안에서만" 답하게 하기</h2>
+    <p>
+      NotebookLM 같은 도구는 일반 대화형 AI와 결정적으로 다릅니다. 일반 AI는 세상 지식으로 답하지만,
+      이 도구는 <strong>내가 넣은 자료 안에서만</strong> 답합니다. 그래서 "아는 척"을 덜 하고,
+      대개 <strong>근거가 된 문장의 위치까지</strong> 짚어 줍니다.
+    </p>
+    <div class="example">
+      <span class="ex-label">미연 씨의 경우</span>
+      <p style="margin-bottom:0">
+        미연 씨는 원두 납품 계약서 몇 개와 거래명세를 넣고 물었습니다.
+        "A거래처 정산 주기가 며칠이지?" 계약서를 다시 펼치지 않고, <strong>답과 함께 해당 조항 위치</strong>를 받았습니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">9.2</span>어떤 도구가 있나</h2>
+    <p>
+      대표적인 게 <strong>구글의 NotebookLM</strong>입니다. 무료로 자료를 올리고 그 안에서 질문할 수 있어요.
+      이 밖에도 "내 파일을 올려 그 안에서 답하게" 하는 기능은 여러 대화형 AI에 붙고 있습니다.
+      핵심은 도구 이름이 아니라 <strong>"내 자료 안에서만 답한다"는 방식</strong>이니, 쓰는 도구에 이 기능이 있는지 보세요.
+    </p>
+
+    <h2><span class="h-num">9.3</span>물어보는 법</h2>
+    <p>자료를 넣었으면, 막연히 "요약해 줘"보다 <strong>찾는 것을 콕 집어</strong> 묻는 게 낫습니다.</p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">자료에 질문하기</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>넣은 자료 안에서만 답해 줘. 밖의 지식은 쓰지 말고,
+자료에 없으면 "자료에 없음"이라고 해.
+
+질문: [구체적인 질문]
+답의 근거가 된 부분(문서 이름·위치)도 함께 알려 줘.</pre>
+    </div>
+
+    <h2><span class="h-num">9.4</span>어디에 쓰나 — 일반 AI와 나눠 쓰기</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">이럴 때</th><th scope="col">어느 쪽</th></tr></thead>
+        <tbody>
+          <tr><td>내 계약서·회의록에서 사실 찾기</td><td>자료 기반 도구(내 자료 안에서만)</td></tr>
+          <tr><td>여러 회의록에서 "결정된 것"만 취합</td><td>자료 기반 도구</td></tr>
+          <tr><td>30쪽 보고서 핵심 요약</td><td>자료 기반 도구</td></tr>
+          <tr><td>일반 상식·아이디어·글쓰기</td><td>일반 대화형 AI(1~2부)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      요령은 간단합니다. <strong>"내가 준 것 안에서 찾아야 하는 일"이면 자료 기반 도구</strong>,
+      세상 지식이 필요하면 일반 AI. 둘을 섞지 말고 상황에 맞게 고르면 됩니다.
+    </p>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 그래도 원문 대조는 필요</div>
+      <p>
+        "자료 안에서만" 답한다고 100% 정확한 건 아닙니다. 요약 과정에서 뉘앙스가 바뀔 수 있어요.
+        <strong>중요한 판단의 근거</strong>가 되는 답은, 짚어 준 원문 위치를 열어 한 번 확인하세요.
+        그리고 민감한 자료를 올릴 땐 4장의 경계선(기밀·개인정보)을 지키세요.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        내 자료 <strong>10개 이상</strong>(회의록·PDF·메모 무엇이든)을 넣고, 실제 업무 질문 <strong>5개</strong>를 던져 보세요.
+        그중 하나는 "여러 자료에 걸친" 질문으로 — 취합이 진짜 쓸모를 보여 주는 자리입니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      글로 된 자료를 다뤘으니, 다음은 가장 시간을 잡아먹는 것 — <strong>표와 숫자</strong>입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch10">
+  <div class="prose">
+    <div class="kicker">3부 · 10장</div>
+    <h1 class="page-title">데이터 정리에 시간이 녹는다면 — 표와 숫자 다루기</h1>
+    <div class="callout tip">
+      <div class="co-label">◆ 이런 불편이 있다면</div>
+      <p>
+        복사해 온 명단이 제각각이라 형식 맞추느라 한나절, 엑셀 함수가 기억 안 나 검색만 반복.
+        데이터 정리에 시간이 녹는다면, AI가 이 지루한 일을 크게 덜어 줍니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">10.1</span>지저분한 데이터를 정리시키기</h2>
+    <p>
+      가장 흔한 불편부터. 여기저기서 모은 데이터는 형식이 엉망입니다. 날짜 표기가 다르고,
+      띄어쓰기가 제각각이고, 중복이 섞여 있죠. 그걸 <strong>그대로 붙여넣고</strong> 정리시키면 됩니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">데이터 정리 — 붙여넣고 규칙만 주기</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>아래 지저분한 데이터를 정리해 줘.
+
+- 날짜는 모두 [2026-03-14] 형식으로 통일
+- 이름 앞뒤 공백 제거, 중복 행은 하나로
+- [지역]별로 묶어서 표로 정리
+- 원본에 없는 값은 채우지 말고 빈칸으로 둬
+
+[데이터]
+(여기에 그대로 붙여넣기 — 개인정보는 지우고)</pre>
+    </div>
+
+    <div class="example">
+      <span class="ex-label">전 / 후 — 미연 씨의 주문 명단</span>
+      <p style="margin-bottom:.5em">여기저기서 복사한 주문 명단이 이렇게 지저분했습니다.</p>
+      <div class="ai-out" style="margin:0 0 .8em">
+        <span class="ao-label">정리 전</span>
+        <p style="margin:0"><code>3/14 김민수 예가체프 2 / 2026-03-14 김민수 콜롬비아1 / 삼월14일 이지은 과테말라 3개</code></p>
+      </div>
+      <div class="ai-out" style="margin:0">
+        <span class="ao-label">AI가 정리한 표<em class="ao-note">재구성한 예시입니다</em></span>
+        <p style="margin:0">
+          날짜 통일(2026-03-14), 이름·품목·수량 칸 분리, 표로 정렬. <strong>"원본에 없는 값은 빈칸으로"</strong>를 넣어
+          없는 정보를 지어내지 않게 함.
+        </p>
+      </div>
+    </div>
+
+    <h2><span class="h-num">10.2</span>표 변환과 "물어서 쓰는" 엑셀</h2>
+    <p>표는 이리저리 바꿀 수 있고, 엑셀·시트 기능은 외우는 대신 <strong>목적을 설명하면</strong> 됩니다.</p>
+    <ul>
+      <li><strong>글 → 표</strong>, <strong>표 → 요약</strong>, <strong>표 → 다른 서식</strong>으로 변환</li>
+    </ul>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">엑셀·시트 수식을 물어보기 — 함수는 몰라도 됨</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>구글 시트를 쓰고 있어. 아래 표에서 [이름별 판매 합계]를 내고 싶어.
+- 어느 칸에 무슨 수식을 넣어야 하는지 한 단계씩
+- 함수 이름을 몰라도 따라 할 수 있게 설명도 붙여 줘
+
+[표] (여기에 붙여넣기)</pre>
+    </div>
+    <p>함수 이름을 외울 필요가 없습니다. <strong>하려는 일을 말하면 수식이 나옵니다.</strong> (7장의 "필요한 만큼만 배우기"와 같은 방식입니다.)</p>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 계산과 집계는 AI가 약한 영역</div>
+      <p>
+        이게 이 장에서 가장 중요합니다. AI는 <strong>많은 숫자를 정확히 더하는 데 약합니다.</strong>
+        그럴듯한 합계를 내놓지만 틀릴 수 있어요. 그러니 AI가 만든 <strong>결과 표는 반드시 원본과 대조</strong>하고,
+        합계·평균 같은 계산은 <strong>AI가 값을 직접 더하게 하지 말고, 수식을 받아 엑셀에서 돌리는 편</strong>이
+        안전합니다. (4장의 습관을 숫자에 적용하는 겁니다.)
+      </p>
+    </div>
+
+    <h2><span class="h-num">10.3</span>막힐 때 — 흔한 상황과 처방</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">이런 일이 생기면</th><th scope="col">해 볼 것</th></tr></thead>
+        <tbody>
+          <tr><td>표가 화면에서 깨져 보인다</td><td>"표를 붙여넣기 좋게 탭으로 구분해 줘" 또는 CSV로 달라기</td></tr>
+          <tr><td>없는 값을 채워 넣었다</td><td>"원본에 없는 건 빈칸으로 둬"를 명시</td></tr>
+          <tr><td>합계가 원본과 안 맞는다</td><td>AI에게 더하게 말고, 수식을 받아 시트에서 계산</td></tr>
+          <tr><td>양이 많아 중간에 잘린다</td><td>나눠서 넣기 — "1~50행 먼저" 식으로</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        실제로 갖고 있는 <strong>지저분한 데이터 하나</strong>(명단·지출 내역·설문 응답…)를 정리시키고,
+        <strong>원본과 대조</strong>해 검수하세요. 미연 씨는 3개월 치 지출 내역을 항목별로 정리시키되,
+        합계는 시트 수식으로 직접 냈습니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      글과 숫자를 다뤘으니, 다음은 <strong>이미지</strong>입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch11">
+  <div class="prose">
+    <div class="kicker">3부 · 11장</div>
+    <h1 class="page-title">이미지가 필요하다면 — 생성과 편집</h1>
+    <div class="callout tip">
+      <div class="co-label">◆ 이런 불편이 있다면</div>
+      <p>
+        발표 표지, 블로그 썸네일, 안내문에 넣을 그림이 필요한데 손이 안 가는 불편.
+        이 장은 <strong>어떤 도구를 언제 쓰는지</strong>를 가릅니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">11.1</span>템플릿 도구와 생성 AI, 역할이 다르다</h2>
+    <p>
+      둘을 헷갈리면 엉뚱한 데 시간을 씁니다. 쓰임이 다릅니다.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">도구</th><th scope="col">잘하는 것</th><th scope="col">이럴 때</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">템플릿 도구(Canva 등)</th><td>정해진 틀에 내 글·사진 얹기</td><td>발표 표지, 카드뉴스, 포스터</td></tr>
+          <tr><th scope="row">생성 AI</th><td>없던 그림을 말로 만들어 내기</td><td>딱 맞는 소재가 없을 때, 삽화·배경</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>대개는 <strong>템플릿 도구가 먼저</strong>입니다. 실무에 필요한 대부분은 틀에 얹으면 끝나거든요. 생성 AI는 "마땅한 그림이 없을 때" 부릅니다. (Canva 같은 템플릿 도구와, ChatGPT·Gemini 등의 이미지 생성이 대표적입니다. 어디까지 무료인지는 수시로 바뀌니 쓰기 전에 한 번 보세요.)</p>
+
+    <h2><span class="h-num">11.2</span>생성 이미지, 잘 시키는 법</h2>
+    <p>
+      생성 AI에 "예쁜 그림"이라고만 하면 뻔한 게 나옵니다. <strong>용도·분위기·구도·피할 것</strong>을 주면 달라집니다
+      (1장의 4요소가 이미지에도 그대로 적용됩니다).
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">이미지 생성 요청 — 용도부터</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[블로그 썸네일]에 쓸 이미지를 만들어 줘.
+- 분위기: 따뜻하고 아늑한 홈카페
+- 담을 것: 드립커피 도구, 나무 테이블
+- 피할 것: 사람 얼굴, 글자
+- 비율: 가로형(썸네일용)</pre>
+    </div>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 생성 이미지의 세 가지 주의</div>
+      <p style="margin:0">
+        <strong>① 실물 오해</strong> — 생성된 제품·인물 이미지를 실제인 양 쓰면 안 됩니다(특히 판매·홍보).
+        <strong>② 저작권·초상</strong> — 특정 브랜드·실존 인물을 흉내 낸 이미지는 문제가 될 수 있습니다.
+        <strong>③ 어색함</strong> — 손가락·글자가 뭉개지는 경우가 흔하니, 쓰기 전 꼭 확대해 확인하세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">11.3</span>실제로 한 장 만들어 보는 순서</h2>
+    <p>미연 씨가 블로그 썸네일 한 장을 만든 과정입니다. 순서가 있으면 헤매지 않습니다.</p>
+    <ol class="steps">
+      <li>
+        <strong>먼저 글자를 정한다</strong>
+        <span>이미지보다 <em>제목 문구</em>가 먼저입니다. "집에서 커피 내리기, 뭐부터 사야 할까" — 이게 정해져야 그림이 정해집니다.</span>
+      </li>
+      <li>
+        <strong>배경이 필요한지 판단한다</strong>
+        <span>직접 찍은 사진이 있으면 그걸 씁니다. 없을 때만 생성 AI로 배경을 만듭니다.</span>
+      </li>
+      <li>
+        <strong>글자는 템플릿 도구에서 얹는다</strong>
+        <span>생성 AI가 만든 한글은 자주 뭉개집니다. <strong>글자는 반드시 템플릿 도구에서</strong> 넣으세요.</span>
+      </li>
+      <li>
+        <strong>실제 크기로 확인한다</strong>
+        <span>휴대폰 화면 크기로 줄여 봤을 때 제목이 읽히는지. 안 읽히면 글자를 키웁니다.</span>
+      </li>
+    </ol>
+    <div class="callout tip">
+      <div class="co-label">◆ 가장 자주 하는 실수</div>
+      <p style="margin:0">
+        생성 AI에게 <strong>글자까지 넣어 달라고 하는 것</strong>입니다. 한글은 특히 깨져서 나옵니다.
+        <strong>그림은 생성 AI, 글자는 템플릿 도구</strong> — 이렇게 역할을 나누면 실패가 확 줄어듭니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        실제로 쓸 자료 <strong>1장</strong>(발표 표지나 블로그 썸네일 등)을 <strong>두 방식으로</strong> 만들어 비교하세요 —
+        템플릿 도구로 하나, 생성 AI로 하나. 어느 쪽이 내 일에 맞는지 몸으로 알게 됩니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      마지막 도구는 <strong>말과 회의</strong>를 붙잡는 것입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch12">
+  <div class="prose">
+    <div class="kicker">3부 · 12장</div>
+    <h1 class="page-title">말과 회의가 새고 있다면 — 음성과 회의록</h1>
+    <div class="callout tip">
+      <div class="co-label">◆ 이런 불편이 있다면</div>
+      <p>
+        회의가 끝나면 무슨 얘기가 오갔는지 흐릿하고, 통화로 정한 걸 나중에 못 찾는 불편.
+        말은 흘러가 버리니까요. 이 장은 <strong>말을 글로 붙잡아</strong> 요약·할 일까지 뽑습니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">12.1</span>녹음에서 할 일까지의 흐름</h2>
+    <p>음성 도구의 작업은 대개 네 단계로 이어집니다.</p>
+    <ol class="steps">
+      <li><strong>녹음</strong><span>회의·통화를 녹음(상대 동의는 필수).</span></li>
+      <li><strong>전사</strong><span>말을 글로 받아쓰기.</span></li>
+      <li><strong>요약</strong><span>긴 전사에서 핵심만 추리기.</span></li>
+      <li><strong>할 일 추출</strong><span>"누가 무엇을 언제까지"를 목록으로.</span></li>
+    </ol>
+
+    <h2><span class="h-num">12.2</span>어떤 도구가 있나</h2>
+    <p>
+      전사·요약을 한 번에 해 주는 도구가 여럿 있습니다. 한국어라면 <strong>네이버 클로바노트</strong>가 대표적이고,
+      <strong>다글로</strong>, 영어 중심이면 <strong>Otter</strong> 같은 것도 있습니다. 요약·할 일 추출은 그중 일부가
+      바로 해 주고, 아니면 <strong>전사 결과를 1~2부의 대화형 AI에 붙여</strong> 시키면 됩니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">전사 결과를 회의록으로 — AI에 붙여 시키기</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>아래는 회의를 받아쓴 글이야. 세 부분으로 정리해 줘.
+1. 핵심 요약 (5줄 이내)
+2. 결정된 것 (목록)
+3. 할 일 — "누가 / 무엇을 / 언제까지" 표로
+
+애매하거나 안 정해진 건 "미정"으로 표시해.
+[전사 내용] (여기에 붙여넣기)</pre>
+    </div>
+    <div class="callout warn">
+      <div class="co-label">▲ 도구·요금은 바뀝니다</div>
+      <p style="margin:0">
+        위 도구 이름은 참고용입니다. 무료 시간·기능은 자주 바뀌니 <strong>오늘 기준으로 확인</strong>하세요.
+        회사 회의를 올릴 땐 4장의 경계선(기밀·개인정보)과 <strong>녹음 동의</strong>를 반드시 지키세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">12.3</span>결과를 좌우하는 건 녹음 품질</h2>
+    <p>
+      전사가 엉망이면 그 뒤 요약도 엉망입니다. 그런데 녹음은 <strong>몇 가지만 지켜도</strong> 크게 좋아집니다.
+      도구를 바꾸는 것보다 이쪽이 효과가 큽니다.
+    </p>
+    <ul>
+      <li><strong>기기를 말하는 사람 쪽에</strong> — 테이블 한가운데보다, 주로 말하는 사람 가까이.</li>
+      <li><strong>이름을 부르며 말하기</strong> — "김 팀장님 의견은요?"처럼. 나중에 누가 말했는지 구분이 쉬워집니다.</li>
+      <li><strong>결정은 소리 내어 정리</strong> — "그럼 다음 주 금요일까지 A안으로 갑니다"라고 말해 두면, 요약이 그 문장을 잡아냅니다.</li>
+      <li><strong>고유명사는 또박또박</strong> — 사람 이름·제품명·숫자는 전사가 가장 잘 틀리는 곳입니다.</li>
+    </ul>
+    <div class="callout tip">
+      <div class="co-label">◆ 회의 끝에 30초만</div>
+      <p style="margin:0">
+        회의 마지막에 <strong>"오늘 정한 것"을 소리 내어 요약</strong>하는 습관을 들이면,
+        자동 회의록의 정확도가 눈에 띄게 올라갑니다. 사람에게도 좋고 기계에게도 좋은 습관입니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">12.4</span>검수 — 어디만 보면 되나</h2>
+    <p>전사 전체를 다시 읽을 필요는 없습니다. <strong>틀리면 손해가 큰 것</strong>만 대조하면 됩니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">꼭 확인</th><th scope="col">왜</th></tr></thead>
+        <tbody>
+          <tr><td>날짜·마감일</td><td>가장 자주 틀리고, 틀리면 바로 사고</td></tr>
+          <tr><td>금액·수량</td><td>숫자는 전사가 약한 영역</td></tr>
+          <tr><td>사람 이름·회사명</td><td>비슷한 발음으로 바뀌어 적히기 쉬움</td></tr>
+          <tr><td>"하기로 했다" 문장</td><td>결정 사항이 요약에서 통째로 빠지기도 함</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="co-label">▲ 사람이 꼭 확인할 것</div>
+      <p style="margin:0">
+        전사는 <strong>사람 이름·숫자·전문용어</strong>를 자주 틀립니다. 그리고 요약은 <strong>결정 사항</strong>을
+        빠뜨리기도 합니다. 그러니 자동 회의록은 <strong>초안</strong>으로 받고, 결정과 마감일만은
+        내가 직접 대조하세요.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        실제 회의(또는 통화) <strong>1건</strong>을 자동 회의록으로 만들고 직접 검수하세요.
+        미연 씨는 거래처 통화를 정리해 "다음 주까지 샘플 발송"이라는 할 일을 놓치지 않았습니다.
+      </p>
+    </div>
+
+    <div class="callout tip" style="margin-top:1.8em">
+      <div class="co-label">✅ 3부를 마치며</div>
+      <p style="margin-bottom:.5em">건너뛴 장이 있어도 괜찮습니다. 건너뛴 것도 판단이니까요.</p>
+      <ul class="check" style="margin-bottom:0">
+        <li>내 불편과 도구를 연결한 "나의 도구 지도" 1장</li>
+        <li>각 도구로 처리한 실제 업무 최소 2건</li>
+        <li>건너뛴 장과 그 이유 한 줄</li>
+      </ul>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      도구를 손에 익혔습니다. 4부부터는 이 도구들을 <strong>자동으로 이어 붙여</strong>, 내가 자는 동안 돌아가게 만듭니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch13">
+  <div class="prose">
+    <div class="kicker">4부 · 13장</div>
+    <h1 class="page-title">연결 자동화란 무엇인가</h1>
+    <p class="lead">
+      지금까지는 내가 AI를 <strong>불렀습니다.</strong> 이제 내가 부르지 않아도,
+      <strong>어떤 일이 생기면 알아서 다음 일이 벌어지게</strong> 만듭니다.
+    </p>
+
+    <h2><span class="h-num">13.1</span>도미노처럼 — 한 번 세워 두면</h2>
+    <p>
+      연결 자동화는 도미노와 같습니다. 한 번 줄을 세워 두면, 앞이 쓰러질 때마다
+      <strong>손대지 않아도</strong> 끝까지 굴러갑니다. "A에서 일이 생기면 → B를 한다"의 연쇄죠.
+      예를 들어 <em>"설문 응답이 들어오면 → 시트에 기록하고 → 나에게 알림"</em>.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 무엇이 도미노가 되나</div>
+      <p>
+        <strong>계기(트리거)</strong>가 있고 → <strong>정해진 처리</strong>가 이어지는 일. 새 메일, 새 설문 응답,
+        정해진 시각 같은 게 계기가 됩니다. 매번 똑같이 반복하는 단순 작업일수록 좋은 후보입니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">13.2</span>도구 하나만 고르기</h2>
+    <p>
+      연결 자동화 도구는 여럿입니다. 한 문장으로만 구분하면 충분합니다.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">도구</th><th scope="col">한 문장</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Zapier</th><td>가장 쉽고 앱 연결이 많음. 입문용으로 무난.</td></tr>
+          <tr><th scope="row">Make</th><td>화면으로 흐름을 그려서 봄. 조금 복잡한 것도 가능.</td></tr>
+          <tr><th scope="row">n8n</th><td>자유도·확장성이 높음. 익숙해진 뒤에.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <div class="co-label">▲ 비교에 시간 쓰지 말 것</div>
+      <p>
+        어느 게 최고인지 알아보다 정작 시작을 못 하는 게 가장 흔한 실패입니다.
+        <strong>지금은 하나만 고르세요.</strong> 입문이라면 쉬운 것부터. 개념은 다 비슷해서, 하나를 익히면
+        나중에 갈아타기 어렵지 않습니다. 요금·무료 한도는 바뀌니 <strong>공식 안내에서 오늘 기준</strong>으로 확인하세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">13.3</span>표를 데이터베이스처럼</h2>
+    <p>
+      자동화에는 데이터를 담아 둘 곳이 자주 필요합니다. 거창한 게 아니라 <strong>구글 시트</strong> 한 장이면
+      충분할 때가 많습니다. "응답이 오면 시트에 한 줄씩 쌓기"처럼, 표를 작은 창고로 씁니다.
+    </p>
+
+    <h2><span class="h-num">13.4</span>자동화할 후보를 고르는 눈</h2>
+    <p>
+      좋은 후보는 <strong>계기가 분명하고, 처리가 늘 똑같은</strong> 일입니다. 미연 씨가 후보 셋을 적어 봤습니다.
+    </p>
+    <div class="example">
+      <span class="ex-label">미연 씨의 자동화 후보 3개</span>
+      <div class="table-wrap" style="margin:.3em 0 0">
+        <table>
+          <thead><tr><th scope="col">무엇이 생기면</th><th scope="col">무엇을 한다</th><th scope="col">첫 후보로?</th></tr></thead>
+          <tbody>
+            <tr><td>매일 아침 7시</td><td>오늘 주문 건수를 메신저로</td><td>◎ 안전(알림)</td></tr>
+            <tr><td>새 설문 응답이 오면</td><td>시트에 쌓고 주간 요약</td><td>○ 그다음</td></tr>
+            <tr><td>환불 문의가 오면</td><td>자동으로 환불 처리</td><td>✗ 판단 필요(금지)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin:.6em 0 0">
+        셋째 줄이 왜 ✗인지가 이 장의 핵심입니다 — 환불은 <strong>판단</strong>이라 자동화에 맡기면 안 됩니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">13.5</span>자동화에 넣으면 안 되는 것</h2>
+    <p>
+      마지막이 가장 중요합니다. 자동화는 <strong>정해진 대로 반복하는 것</strong>은 잘하지만,
+      <strong>판단과 최종 결정</strong>은 맡기면 안 됩니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 사람이 쥐고 있어야 할 것</div>
+      <p style="margin:0">
+        고객에게 돈을 환불할지, 계약을 승인할지, 민감한 내용을 대신 답장할지 —
+        이런 <strong>판단</strong>은 자동화가 초안까지만 만들고, <strong>보내기 버튼은 사람이</strong> 눌러야 합니다.
+        "기계는 준비하고, 사람은 결정한다"가 여기서 그대로 적용됩니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        도구 하나에 <strong>가입</strong>하고, 내 삶에서 <strong>자동화할 후보 3개</strong>를 적어 보세요.
+        각 후보를 "무엇이 생기면 → 무엇을 한다" 형태로 한 줄씩. 다음 장에서 이 중 하나를 실제로 만듭니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      개념을 잡았으니, 다음 장에서 <strong>첫 자동화</strong>를 실제로 세워 봅니다 — 실패해도 안전한 것으로.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch14">
+  <div class="prose">
+    <div class="kicker">4부 · 14장</div>
+    <h1 class="page-title">첫 자동화: 알림 만들기</h1>
+    <p class="lead">
+      첫 자동화는 성공 경험이 중요합니다. 그래서 <strong>실패해도 아무것도 망가지지 않는 것</strong>부터 —
+      바로 "알림"입니다.
+    </p>
+
+    <h2><span class="h-num">14.1</span>왜 알림이 첫 자동화로 좋은가</h2>
+    <p>
+      알림은 잘못돼도 손해가 없습니다. 안 오거나, 두 번 오는 정도죠. 반면 "자동 답장"이나 "자동 결제"는
+      첫 자동화로는 위험합니다. 잘못되면 <strong>진짜로 뭔가 망가지니까요.</strong> 그래서 첫 자동화는
+      <strong>망가져도 안전한 것</strong>으로 감을 잡습니다.
+    </p>
+    <p>
+      이 장은 하나의 예제를 끝까지 따라갑니다 — <strong>"매일 아침 7시, 오늘 날씨와 일정을 메신저로 받기."</strong>
+      실패해도 알림이 안 오는 게 전부라, 마음 편히 연습할 수 있습니다.
+    </p>
+
+    <h2><span class="h-num">14.2</span>먼저, 어디로 받을지 고르기</h2>
+    <p>
+      알림을 <strong>어디로 받을지</strong>부터 정합니다. 이미 자주 여는 곳이 정답입니다 —
+      안 보는 앱으로 보내면 알림의 의미가 없으니까요. 대표적인 선택지입니다.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">받을 곳</th><th scope="col">이런 사람에게</th><th scope="col">붙이기 난이도</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">텔레그램(Telegram)</th><td>가장 무난. 자동화 도구들이 잘 지원</td><td>쉬움</td></tr>
+          <tr><th scope="row">이메일</th><td>따로 앱 설치 없이 바로</td><td>가장 쉬움</td></tr>
+          <tr><th scope="row">슬랙(Slack)</th><td>이미 업무로 슬랙을 쓰는 팀</td><td>보통</td></tr>
+          <tr><th scope="row">디스코드(Discord)</th><td>개인·커뮤니티에서 디스코드를 쓰는 사람</td><td>보통</td></tr>
+          <tr><th scope="row">카카오톡</th><td>"나에게 보내기"로 받고 싶은 사람</td><td>다소 까다로움</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout tip">
+      <div class="co-label">◆ 처음이라면</div>
+      <p style="margin:0">
+        <strong>이메일이나 텔레그램</strong>으로 시작하세요. 연결이 가장 단순합니다. 슬랙·디스코드는 팀·커뮤니티에서
+        이미 쓰고 있다면 좋고, 카카오톡은 붙이는 절차가 조금 더 번거로우니 익숙해진 뒤에 권합니다.
+        각 서비스의 무료 범위·연결 방법은 바뀌므로 <strong>공식 안내에서 오늘 기준으로 확인</strong>하세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">14.3</span>흐름 조립하기 — 다섯 조각</h2>
+    <p>알림 자동화는 대개 이 다섯 조각으로 이뤄집니다. 우리 예제에 대입해 보겠습니다.</p>
+    <ol class="steps">
+      <li><strong>깨우기 (계기)</strong><span>무엇이 자동화를 시작시키나 — 우리 예제는 <em>"매일 아침 7시"</em>라는 시각.</span></li>
+      <li><strong>읽기</strong><span>필요한 정보 가져오기 — <em>오늘 날씨 + 오늘 캘린더 일정.</em></span></li>
+      <li><strong>거르기</strong><span>필요한 것만 추리기 — <em>종일 일정 말고 시간 있는 일정만</em> 같은 조건.</span></li>
+      <li><strong>중복 방지</strong><span>이미 보낸 건 또 안 보내기 (아래에서 자세히).</span></li>
+      <li><strong>알리기</strong><span>14.2에서 고른 곳으로 보내기 — <em>텔레그램으로 한 줄 요약.</em></span></li>
+    </ol>
+    <p>
+      이 조각들을 자동화 도구(13장에서 고른 것) 화면에서 이어 붙입니다. 막히는 지점이 나오면
+      혼자 끙끙대지 말고, 아래 자기 진단 프롬프트를 쓰세요.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">자동화가 안 돌 때 — AI에게 묻는 프롬프트</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[사용 중인 자동화 도구 이름]로 이런 자동화를 만들려고 해:
+"[하려는 것을 한 줄로]"
+
+지금 [어느 단계]에서 [무슨 일이/무슨 메시지가] 나와서 막혔어.
+비전공자가 따라 할 수 있게, 다음에 뭘 눌러야 하는지 한 단계씩 알려 줘.</pre>
+    </div>
+
+    <h2><span class="h-num">14.4</span>중복 방지 — 도장 찍기</h2>
+    <p>
+      우리 예제(매일 1회)는 중복이 잘 안 나지만, <strong>"새 글/새 메일이 오면 알림"</strong> 같은 자동화에서는
+      중복 방지가 없으면 사고가 납니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 도장을 안 찍으면 벌어지는 일</div>
+      <p>
+        자동화는 돌 때마다 "새 글 목록"을 처음부터 다시 봅니다. 그래서 중복 방지가 없으면,
+        <strong>10분마다 예전 글까지 전부 다시 알립니다.</strong> 알림이 수십 개씩 쏟아지죠.
+        그래서 처리한 항목에는 <strong>"보냈음" 도장</strong>을 찍습니다 — 보통 <strong>구글 시트에 한 줄 기록</strong>해 두고,
+        다음 번에 "시트에 이미 있으면 건너뛰기"로 처리합니다. (자매 책 『AI 블로그 자동화 가이드』에서
+        가장 강조한 장치가 바로 이겁니다.)
+      </p>
+    </div>
+
+    <h2><span class="h-num">14.5</span>손 실행 3회 전에는 예약을 켜지 않는다</h2>
+    <p>
+      만들었다고 바로 자동 예약(매일 7시)을 켜면 안 됩니다. 먼저 <strong>"지금 실행" 버튼으로 직접 돌려</strong>
+      보며 알림이 제대로 오는지 확인합니다. <strong>3번 연속 문제없이</strong> 오면, 그때 예약을 켭니다.
+      자는 동안 돌릴 물건이니, 깨어 있을 때 충분히 지켜봐야 합니다.
+    </p>
+
+    <h2><span class="h-num">14.6</span>막힐 때 — 흔한 상황과 처방</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">이런 일이 생기면</th><th scope="col">대개의 원인</th><th scope="col">해 볼 것</th></tr></thead>
+        <tbody>
+          <tr><td>알림이 아예 안 온다</td><td>계기(트리거)가 안 켜졌거나 잘못됨</td><td>"지금 실행"으로 수동 테스트 → 로그 확인</td></tr>
+          <tr><td>같은 알림이 계속 온다</td><td>중복 방지(도장)가 없음</td><td>14.4대로 처리 기록 추가</td></tr>
+          <tr><td>연결(로그인)에서 막힘</td><td>권한 승인이 안 됨</td><td>해당 서비스 다시 연결, 팝업 차단 해제</td></tr>
+          <tr><td>내용이 비어서 온다</td><td>"읽기" 단계가 빈 값을 받음</td><td>그 단계만 따로 실행해 값이 오는지 확인</td></tr>
+          <tr><td>새벽에 안 오고 낮에 옴</td><td>시간대(표준시) 설정 문제</td><td>자동화 도구의 시간대를 한국으로</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">
+        <strong>알림 자동화 1개</strong>를 실제로 완성합니다.
+      </p>
+      <ol style="margin-bottom:.9em">
+        <li>14.2에서 <strong>받을 곳 하나</strong>를 고른다(처음이면 이메일·텔레그램).</li>
+        <li>다섯 조각으로 흐름을 조립한다(막히면 자기 진단 프롬프트).</li>
+        <li><strong>"지금 실행" 3회</strong>가 문제없이 통과하면 예약을 켠다.</li>
+        <li><strong>일주일 방치</strong>한 뒤 잘 오는지 확인한다.</li>
+      </ol>
+      <p style="margin:0">
+        응용하면 6장의 공부 루틴에도 붙일 수 있어요 — "매일 아침 오늘의 복습 문제 5개가 도착하게."
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      첫 자동화가 돌기 시작했다면, 다음은 한 단계 위 — <strong>모으고 요약해 리포트로</strong> 만드는 자동화입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch15">
+  <div class="prose">
+    <div class="kicker">4부 · 15장</div>
+    <h1 class="page-title">두 번째 자동화: 정리와 리포트</h1>
+    <p class="lead">
+      알림이 "알려 주기"였다면, 두 번째는 <strong>모아서 정리해 주기</strong>입니다.
+      여기서 3부의 AI 도구를 자동화 흐름 안에 끼워 넣습니다.
+    </p>
+
+    <h2><span class="h-num">15.1</span>어떤 걸 만들까</h2>
+    <p>두 번째 자동화 후보들입니다. 하나만 고르세요.</p>
+    <ul>
+      <li><strong>메일 정리</strong> — 특정 조건 메일을 라벨링하거나 시트에 모으기</li>
+      <li><strong>설문 응답 취합</strong> — 응답이 오면 시트에 쌓고 주기적으로 요약</li>
+      <li><strong>주간 리포트 초안</strong> — 한 주 데이터를 모아 요약 초안 생성</li>
+      <li><strong>일정 리마인드</strong> — 마감 하루 전 알림</li>
+    </ul>
+
+    <h2><span class="h-num">15.2</span>AI 단계를 흐름에 끼워 넣기</h2>
+    <p>
+      이번엔 흐름 중간에 <strong>AI에게 요약을 시키는 단계</strong>가 들어갑니다.
+      "이번 주 모인 응답들을 세 줄로 요약해 줘" 같은 걸 자동으로 시키는 거죠.
+      1부에서 만든 <strong>요청 방식·규칙 파일</strong>이 그대로 자동화 안으로 들어갑니다.
+    </p>
+    <p>미연 씨의 주간 리포트 자동화는 이렇게 이어집니다.</p>
+    <ol class="steps">
+      <li><strong>깨우기</strong><span>매주 월요일 아침 9시.</span></li>
+      <li><strong>읽기</strong><span>지난 한 주 주문·문의 데이터를 시트에서 가져오기.</span></li>
+      <li><strong>AI 요약</strong><span>"이번 주 특이사항과 자주 온 문의를 5줄로" 시키기.</span></li>
+      <li><strong>알리기</strong><span>요약 <em>초안</em>을 메신저로 — 내가 확인하고 다듬어 한 주를 마감.</span></li>
+    </ol>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">자동화 안에 넣는 요약 지시</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>아래는 지난 한 주 데이터야. 주간 리포트 초안을 만들어 줘.
+- 이번 주 특이사항 3가지
+- 자주 온 문의 유형과 건수
+- 다음 주에 챙길 것 한 줄
+근거 없는 숫자는 쓰지 말고, 데이터에 있는 것만.
+[데이터] (자동으로 채워짐)</pre>
+    </div>
+    <div class="callout warn">
+      <div class="co-label">▲ 자동 요약도 사람이 한 번 본다</div>
+      <p style="margin:0">
+        자동으로 만든 요약을 <strong>검토 없이 그대로 발송·게시</strong>하면 4장의 사고가 자동으로 반복됩니다.
+        리포트는 <strong>초안</strong>으로 받아, 보내기 전 사람이 훑는 단계를 남겨 두세요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">15.3</span>고장에 대비하기</h2>
+    <p>
+      자동화는 조용히 멈추는 게 가장 무섭습니다. 안 돌고 있는데 나는 돌고 있는 줄 알죠.
+    </p>
+    <ul>
+      <li><strong>멈춤 감지</strong> — "24시간 동안 아무것도 안 왔으면 나에게 알림" 같은 안전장치</li>
+      <li><strong>유지비</strong> — 무료 한도를 넘으면 요금이 붙을 수 있음(공식 안내로 확인)</li>
+    </ul>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin-bottom:.6em">두 번째 자동화를 완성하고, <strong>안 만들 결정</strong>도 한 번 내려 봅니다.</p>
+      <ol style="margin-bottom:0">
+        <li>후보 하나로 두 번째 자동화를 완성한다(AI 요약 단계 포함).</li>
+        <li>다른 후보 하나는 <strong>"1년간 매주 할 일인가?"</strong>를 따져 보고,
+          아니면 <strong>자동화하지 않기로 결정</strong>하고 그 이유를 적는다.</li>
+      </ol>
+    </div>
+
+    <div class="callout tip" style="margin-top:1.8em">
+      <div class="co-label">✅ 4부를 마치며</div>
+      <ul class="check" style="margin-bottom:0">
+        <li>실제로 돌아가는 자동화 2개 (1주 이상 무사고)</li>
+        <li>자동화하지 않기로 한 결정 1건과 이유</li>
+        <li>오리엔테이션에서 잰 시간과 1차 비교</li>
+      </ul>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      자는 동안 돌아가는 흐름을 갖췄습니다. 이제 마지막 5부 — <strong>프로젝트 하나를 통째로 맡기고 감독</strong>합니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch16">
+  <div class="prose">
+    <div class="kicker">5부 · 16장</div>
+    <h1 class="page-title">에이전트는 챗봇과 무엇이 다른가</h1>
+    <p class="lead">
+      지금까지 쓴 대화형 AI는 <strong>상담원</strong>이었습니다. 5부에서 만날 에이전트는 <strong>조수</strong>입니다.
+      말만 하는 게 아니라, 파일을 다루고 여러 단계를 스스로 밟습니다.
+    </p>
+
+    <h2><span class="h-num">16.1</span>상담원과 조수의 차이</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col"></th><th scope="col">대화형 AI (상담원)</th><th scope="col">에이전트 (조수)</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">하는 일</th><td>물으면 답한다</td><td>맡기면 여러 단계를 실행한다</td></tr>
+          <tr><th scope="row">파일</th><td>대화창 안에서만</td><td>내 폴더의 파일을 직접 읽고 만든다</td></tr>
+          <tr><th scope="row">일의 크기</th><td>한 번의 대답</td><td>"이 프로젝트를 해 줘" 단위</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>쉽게 말해, 챗봇에게는 <strong>물어보고</strong>, 에이전트에게는 <strong>맡깁니다.</strong></p>
+
+    <h2><span class="h-num">16.2</span>검은 화면(터미널) 공포 해체</h2>
+    <p>
+      에이전트를 쓰다 보면 <strong>검은 화면에 글자만 있는</strong> 터미널을 만날 수 있습니다. 겁먹기 쉽지만,
+      실체는 별거 아닙니다. <strong>터미널은 사실상 채팅창</strong>입니다. 예쁜 버튼 대신 글자로 주고받을 뿐이죠.
+      해커의 도구가 아니라, 그냥 말로 시키는 또 다른 창입니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 막히면 쓰는 만능 기술</div>
+      <p>
+        빨간 글씨(오류)가 떠도 당황할 필요 없습니다. <strong>그 오류 메시지를 그대로 복사해 AI에게 붙여넣고
+        "이게 무슨 뜻이고 어떻게 해결해?"라고 물으면</strong> 됩니다. 이 한 가지 기술이면 대부분의 막힘을 뚫습니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">16.3</span>안 되면 우회로</h2>
+    <p>
+      설치가 막히거나 검은 화면이 영 부담스러우면, <strong>웹 기반 에이전트</strong>로 시작해도 됩니다.
+      브라우저에서 바로 쓰는 것들이 있어요. 요점은 도구가 아니라 <strong>맡기고 감독하는 경험</strong>이니,
+      진입이 쉬운 쪽으로 시작하면 됩니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 30분 막히면 멈추는 게 판단</div>
+      <p style="margin:0">
+        설치나 설정에서 30분 넘게 막히면, 붙잡고 씨름하지 말고 <strong>우회로로 갈아타거나 잠시 접으세요.</strong>
+        여기서 진 빼면 정작 재미있는 부분에 못 갑니다. 오류를 복사해 AI에게 묻는 것부터 해 보고요.
+      </p>
+    </div>
+
+    <h2><span class="h-num">16.4</span>첫 대화는 이렇게 — 폴더 정리 시켜 보기</h2>
+    <p>
+      개념은 됐으니 실제로 시켜 봅시다. 첫 일은 <strong>망가져도 괜찮은 것</strong>으로.
+      바탕화면에 어질러진 파일 정리가 딱 좋습니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">에이전트에게 거는 첫 마디</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>이 폴더에 있는 파일들을 종류별(문서/이미지/기타)로
+폴더를 만들어 정리해 줘.
+
+단, 조건이 있어.
+- 지우는 건 절대 하지 마. 옮기기만 해.
+- 실제로 옮기기 전에, 무엇을 어디로 옮길지 먼저 보여 주고
+  내 확인을 받아.</pre>
+    </div>
+    <div class="ai-out">
+      <span class="ao-label">에이전트의 응답 (일부)<em class="ao-note">재구성한 예시입니다</em></span>
+      <p style="margin:0">
+        폴더를 살펴봤습니다. 파일 23개가 있고, 이렇게 옮기려 합니다.<br>
+        · <strong>문서/</strong> — 한글·PDF·엑셀 11개<br>
+        · <strong>이미지/</strong> — 사진·캡처 9개<br>
+        · <strong>기타/</strong> — 압축파일 등 3개<br>
+        삭제는 하지 않습니다. 진행할까요?
+      </p>
+    </div>
+    <p>
+      이게 <strong>맡긴다</strong>는 감각입니다. 파일을 하나씩 끌어다 놓는 대신, 무엇을 원하는지 말하고
+      <strong>결과를 확인하고 승인</strong>했습니다. 5부 내내 하게 될 일이 바로 이겁니다.
+    </p>
+    <div class="callout warn">
+      <div class="co-label">▲ 처음엔 안전장치를 걸고</div>
+      <p style="margin:0">
+        에이전트는 진짜로 내 파일을 건드립니다. 그러니 처음에는 <strong>① 중요한 폴더 말고 연습용으로</strong>,
+        <strong>② "지우지 마, 옮기기만 해"</strong>, <strong>③ "하기 전에 먼저 보여 줘"</strong> 세 가지를 꼭 걸어 두세요.
+        익숙해지면 하나씩 풀면 됩니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">16.5</span>막힐 때 — 흔한 상황과 처방</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">이런 일이 생기면</th><th scope="col">해 볼 것</th></tr></thead>
+        <tbody>
+          <tr><td>빨간 오류 글씨가 뜬다</td><td>메시지를 통째로 복사해 AI에게 "무슨 뜻이고 어떻게 해결?"</td></tr>
+          <tr><td>설치가 자꾸 실패한다</td><td>30분 넘기지 말고 웹 기반 에이전트로 우회</td></tr>
+          <tr><td>영어로만 나온다</td><td>"앞으로 한국어로 답해 줘" 한 줄</td></tr>
+          <tr><td>엉뚱한 파일을 건드릴까 겁난다</td><td>"바꾸기 전에 뭘 할지 먼저 설명하고 내 확인을 받아"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        16.4의 <strong>폴더 정리를 실제로</strong> 해 보세요 — 연습용 폴더를 하나 만들어, 안전장치 세 가지를 걸고.
+        결과가 완벽하지 않아도 됩니다. <strong>맡기고, 계획을 확인하고, 승인해 봤다는 경험</strong>이 이 장의 목표입니다.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      조수를 만났으니, 다음 장에서 <strong>제대로 감독하는 언어</strong>를 배웁니다 — 사실 이미 1부에서 익힌 것입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch17">
+  <div class="prose">
+    <div class="kicker">5부 · 17장</div>
+    <h1 class="page-title">감독의 언어 배우기</h1>
+    <p class="lead">
+      좋은 소식이 있습니다. 에이전트를 감독하는 언어는 <strong>1부에서 이미 배웠습니다.</strong>
+      더 큰 일에 같은 근육을 쓸 뿐입니다.
+    </p>
+
+    <h2><span class="h-num">17.1</span>요구사항을 말하는 법 — 4요소의 재등장</h2>
+    <p>
+      에이전트에게 일을 맡길 때도 <strong>1장의 4요소</strong>가 그대로 들어갑니다.
+      완성된 모습(목적), 꼭 필요한 것, 하지 말 것을 분명히 하면 됩니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">에이전트 발주 — 4요소로</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[만들 것을 한 줄로]
+
+- 완성 모습: 다 되면 이런 상태여야 해
+- 꼭 필요한 것: 반드시 들어갈 기능/내용
+- 하지 말 것: 이건 피해 줘
+- 진행 방식: 한 번에 다 하지 말고, 단계마다 나한테 확인받고 진행해</pre>
+    </div>
+
+    <h2><span class="h-num">17.2</span>중간 확인을 요청하기</h2>
+    <p>
+      에이전트는 여러 단계를 스스로 밟기 때문에, <strong>중간에 개입할 지점</strong>을 만들어 둬야 합니다.
+    </p>
+    <ul>
+      <li><strong>"이건 왜 이렇게 했어?"</strong> — 이유를 설명하게 해서 방향을 점검</li>
+      <li><strong>"지우기 전에 먼저 설명해 줘"</strong> — 되돌리기 어려운 일 전에 제동</li>
+      <li><strong>"지금까지 한 걸 요약하고, 다음에 뭘 할지 말해 줘"</strong> — 길을 잃지 않게</li>
+    </ul>
+
+    <h2><span class="h-num">17.3</span>한 번에 다 시키지 않기</h2>
+    <p>
+      가장 흔한 실수가 "이거 다 만들어 줘" 하고 통째로 던지는 것입니다. 그러면 엉뚱한 방향으로 멀리 가 버립니다.
+      <strong>작게 시키고 → 확인하고 → 다음.</strong> 이 리듬이 감독의 핵심입니다. (2부에서 AI에게 배울 때
+      "한 번에 다 쏟지 마"라고 한 것과 같은 원리입니다.)
+    </p>
+    <div class="compare">
+      <div class="compare-card bad">
+        <span class="cc-label">통째로 던지기</span>
+        <p>"우리 팀 일정 관리 도구 하나 만들어 줘. 알아서 다."</p>
+        <p style="color:var(--ink-3)">→ 30분 뒤, 내가 원한 것과 다른 게 완성돼 있음</p>
+      </div>
+      <div class="compare-card good">
+        <span class="cc-label">작게 나눠 시키기</span>
+        <p>"먼저 일정을 표로 보여 주는 화면만 만들어 줘. 되면 확인하고 다음으로."</p>
+        <p style="color:var(--accent)">→ 매 단계 방향을 바로잡을 수 있음</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <span class="ex-label">감독의 왕복 — 실제로는 이런 리듬</span>
+      <p style="margin-bottom:.5em">미연 씨가 "원두 재고 표를 정리해 달라"고 맡겼을 때의 주고받음입니다.</p>
+      <div class="ai-out" style="margin:0 0 .7em">
+        <span class="ao-label">1차 — 작게 시키기</span>
+        <p style="margin:0">"먼저 지금 파일이 어떤 구조인지 보고, 어떻게 정리할지 계획만 말해 줘. 아직 바꾸지 말고."</p>
+      </div>
+      <div class="ai-out" style="margin:0 0 .7em">
+        <span class="ao-label">2차 — 방향 잡기</span>
+        <p style="margin:0">"좋아. 그런데 원산지 칸은 그대로 둬. 수량만 정리해 줘."</p>
+      </div>
+      <div class="ai-out" style="margin:0">
+        <span class="ao-label">3차 — 확인하고 승인</span>
+        <p style="margin:0">"바꾼 것 요약해 줘. 원본은 따로 남겨 뒀지?"</p>
+      </div>
+      <p style="margin:.7em 0 0">
+        세 마디 모두 <strong>기술이 아니라 판단</strong>입니다. 무엇을 남기고, 무엇을 바꾸고, 어디를 확인할지.
+        코드를 몰라도 할 수 있고, <strong>코드를 아는 사람이 대신 해 줄 수도 없는</strong> 일입니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">17.4</span>규칙 파일을 물려주기</h2>
+    <p>
+      3장에서 만든 <strong>업무 규칙 파일</strong>, 기억하나요? 그걸 에이전트에게도 줍니다.
+      "이 규칙을 지켜서 작업해"라고. 내 문체, 금지 사항, 검증 기준을 에이전트가 그대로 따르게 됩니다.
+      <strong>1부에서 만든 자산이 여기서 다시 일합니다.</strong>
+    </p>
+
+    <h2><span class="h-num">17.5</span>결과를 검수하는 기준</h2>
+    <p>
+      에이전트가 "다 됐습니다"라고 해도 그대로 믿지 않습니다(4장의 태도 그대로).
+      맡긴 일이 끝났을 때 <strong>이 네 가지만</strong> 확인하세요.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">확인할 것</th><th scope="col">묻는 말</th></tr></thead>
+        <tbody>
+          <tr><td>내가 요구한 게 다 됐나</td><td>"처음에 말한 조건들, 하나씩 됐는지 짚어 줘"</td></tr>
+          <tr><td>시키지 않은 걸 했나</td><td>"내가 요청 안 했는데 바꾼 게 있어?"</td></tr>
+          <tr><td>되돌릴 수 있나</td><td>"원본은 남아 있어? 되돌리려면 어떻게 해?"</td></tr>
+          <tr><td>실제로 되나</td><td>말로 확인하지 말고 <strong>내가 직접 열어 본다</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <div class="co-label">▲ 마지막 줄이 제일 중요합니다</div>
+      <p style="margin:0">
+        에이전트는 "완료했습니다"라고 자신 있게 말하지만, 실제로는 덜 됐거나 엉뚱하게 된 경우가 있습니다.
+        <strong>결과물을 내 눈으로 직접 열어 확인하는 것</strong> — 이건 절대 생략하지 마세요.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        에이전트와 함께 <strong>간단한 결과물</strong>을 하나 완성하세요 — 정리된 문서 세트, 표 변환,
+        여러 파일 이름 일괄 정리 같은 것. <strong>작게 시키고 확인하는 리듬</strong>을 꼭 지키면서요.
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      이제 마지막입니다. 배운 걸 모아 <strong>진짜 작동하는 나만의 도구</strong>를 만들게 합니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-ch18">
+  <div class="prose">
+    <div class="kicker">5부 · 18장</div>
+    <h1 class="page-title">졸업 프로젝트: 나만의 도구 만들게 하기</h1>
+    <p class="lead">
+      마지막 장입니다. 지금까지의 모든 걸 모아, 코드 한 줄 안 배우고
+      <strong>실제로 작동하는 나만의 도구</strong>를 만들게 합니다.
+    </p>
+
+    <h2><span class="h-num">18.1</span>무엇을 만들까</h2>
+    <p>거창할 필요 없습니다. <strong>내 삶에서 실제로 쓸 작은 것</strong>이 좋습니다.</p>
+    <ul>
+      <li>자주 쓰는 <strong>링크 모음 페이지</strong></li>
+      <li>반복 계산을 해 주는 <strong>계산 도구</strong></li>
+      <li>매일 쓰는 <strong>체크리스트 앱</strong></li>
+      <li>우리 팀 <strong>현황 대시보드</strong></li>
+      <li><strong>6장의 오답노트를 학습 앱으로</strong> — 문제를 내고 채점해 주는</li>
+    </ul>
+
+    <h2><span class="h-num">18.2</span>발주서를 먼저 쓴다</h2>
+    <p>
+      바로 "만들어 줘"라고 하지 않습니다. <strong>요구사항 문서(발주서)를 먼저</strong> 씁니다.
+      이건 17장의 4요소를 문서 한 장으로 키운 것입니다. 무엇을, 왜, 어떤 모습으로 원하는지 적고 시작하면,
+      엉뚱한 결과로 낭비하는 일이 확 줄어듭니다.
+    </p>
+    <div class="prompt-helper">
+      <div class="ph-head">
+        <span class="ph-title">졸업 프로젝트 발주서 뼈대</span>
+        <button class="copy-btn" type="button" data-copy>복사</button>
+      </div>
+      <pre>[만들 도구 이름과 한 줄 소개]
+
+# 누가 쓰나
+(나만 / 우리 팀 / 손님 …)
+
+# 완성 모습
+다 되면 이런 걸 할 수 있어야 한다: (핵심 동작 3가지)
+
+# 꼭 필요한 것 / 나중에 해도 되는 것
+(지금 꼭 / 나중에 추가)
+
+# 하지 말 것
+(복잡하게 만들지 말 것 등)
+
+# 진행 방식
+가장 작게 되는 버전부터 만들고, 보여 주고, 내 확인을 받고 다음으로.</pre>
+    </div>
+
+    <h2><span class="h-num">18.3</span>만들고 → 써 보고 → 고쳐 달라기</h2>
+    <p>
+      한 번에 완성되지 않습니다. <strong>가장 작은 버전</strong>을 먼저 만들게 하고, 직접 써 보고,
+      아쉬운 걸 고쳐 달라고 합니다. 이 반복이 자연스럽습니다. 실제 제품도 이렇게 자라거든요.
+      "이 버튼이 안 눌려", "여기 색을 바꿔 줘"처럼 <strong>써 본 사람만 할 수 있는 요청</strong>을 하면 됩니다.
+    </p>
+    <div class="example">
+      <span class="ex-label">미연 씨의 졸업 프로젝트 — 원두 재고 체크 앱</span>
+      <ol class="steps" style="margin:.4em 0 0">
+        <li><strong>1차</strong><span>"원두 이름과 남은 수량을 적고, 목록으로 보여 주는 화면만." → 됨.</span></li>
+        <li><strong>써 보고</strong><span>"수량이 3 이하면 빨갛게 표시해 줘." → 한눈에 부족분이 보임.</span></li>
+        <li><strong>또 고치고</strong><span>"휴대폰에서도 잘 보이게 크게." → 매장에서 폰으로 확인 가능.</span></li>
+      </ol>
+      <p style="margin:.6em 0 0">
+        코드는 한 줄도 안 봤습니다. 미연 씨가 한 건 <strong>무엇이 필요한지 말하고, 써 보고, 다음을 정한 것</strong>뿐입니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">18.4</span>"내가 이걸 만들었어?"</h2>
+    <p>
+      완성되어 실제로 돌아가는 걸 보면, 벅찬 순간이 옵니다. "내가 이걸 만들었다고?"
+      이 순간을 정확히 해석해 둡시다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 만든 건 AI, 정의하고 검증한 건 나</div>
+      <p>
+        코드를 짠 건 AI가 맞습니다. 하지만 <strong>무엇을 만들지 정하고, 방향을 잡고, 나온 걸 검증하고,
+        고쳐 나간 건 당신</strong>입니다. 그게 바로 이 과정 내내 길러 온 <strong>감독</strong>의 일입니다.
+        도구를 만든 게 아니라, <strong>도구를 만들게 할 줄 아는 사람</strong>이 된 겁니다.
+      </p>
+    </div>
+
+    <div class="callout try">
+      <div class="co-label">✓ 직접 해보기</div>
+      <p style="margin:0">
+        <strong>졸업 프로젝트를 완성</strong>하고, <strong>주변 1명에게 실제로 써 보게</strong> 하세요.
+        타인의 피드백 한 마디가, 다음 개선의 재료이자 이 도구가 진짜라는 증거입니다.
+      </p>
+    </div>
+
+    <div class="callout tip" style="margin-top:1.8em">
+      <div class="co-label">✅ 5부를 마치며</div>
+      <ul class="check" style="margin-bottom:0">
+        <li>작동하는 나만의 도구 1개</li>
+        <li>그 도구의 요구사항 문서 (감독 능력의 증거)</li>
+        <li>타인 사용 피드백 1건</li>
+      </ul>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.9rem;margin-top:2em">
+      다 왔습니다. 이제 처음에 잰 시간표를 다시 꺼낼 차례입니다.
+    </p>
+  </div>
+</template>
+
+<template id="tpl-finish">
+  <div class="prose">
+    <div class="kicker">수료</div>
+    <h1 class="page-title">처음의 시간표를 다시 꺼내며</h1>
+    <p class="lead">
+      시험도, 수료증도 없습니다. 대신 <strong>처음에 잰 시간</strong>이 있습니다.
+      그걸 지금 다시 재는 것으로, 이 과정의 성적표가 나옵니다.
+    </p>
+
+    <h2><span class="h-num">1</span>같은 일을, 지금 다시 재기</h2>
+    <p>
+      오리엔테이션에서 <strong>매주 반복하는 일 5개</strong>와 걸리는 시간을 적었습니다.
+      그 표를 지금 다시 꺼내, 같은 일을 지금은 얼마 만에 하는지 재 보세요.
+      대부분의 칸에서 숫자가 줄어 있을 겁니다. 그 차이가, 당신이 이 과정에서 얻은 것입니다.
+    </p>
+
+    <h2><span class="h-num">2</span>손에 남은 것 정리</h2>
+    <p>이 과정을 지나오며 만든 것들입니다. 흩어지지 않게 한곳에 모아 두세요.</p>
+    <ul>
+      <li>요청 <strong>템플릿</strong>과 <strong>업무 규칙 파일</strong> (1부)</li>
+      <li>진행 중인 <strong>공부</strong>와 <strong>오답노트</strong> (2부)</li>
+      <li>나만의 <strong>도구 지도</strong> (3부)</li>
+      <li>돌아가는 <strong>자동화 2개</strong> (4부)</li>
+      <li>직접 만든 <strong>나만의 도구</strong> (5부)</li>
+    </ul>
+
+    <h2><span class="h-num">3</span>다음 갈림길 — 강요는 없습니다</h2>
+    <p>여기서 어디로 갈지는 당신이 정합니다. 네 갈래를 안내만 해 둡니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">지금 마음이 이렇다면</th><th scope="col">이렇게</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>이대로 충분하다</td><td>만든 것들을 유지·개선하는 루틴만 이어 가기</td></tr>
+          <tr><td>공부를 계속하고 싶다</td><td>2부의 방법으로 다음 자격증·기술</td></tr>
+          <tr><td>자동화를 더 깊이</td><td>연결 자동화 심화로</td></tr>
+          <tr><td>"개발 배워 볼까?" 싶다</td><td>그때 개발 기초로 — 그 질문이 나왔다는 것 자체가 준비됐다는 신호</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout tip">
+      <div class="co-label">◆ 마지막 한 문장</div>
+      <p style="margin:0;font-size:1.05rem">
+        <strong>기계는 준비하고, 사람은 결정한다.</strong><br>
+        당신은 이제 AI 앞에서 일을 정의하고, 시키고, 검증할 줄 아는 사람입니다. 그거면 충분합니다.
+      </p>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-ongoing">
+  <div class="prose">
+    <div class="kicker">상시 과제</div>
+    <h1 class="page-title">전 과정 공통 — 매주, 매월 이어 가는 것</h1>
+    <p class="lead">
+      이 세 가지는 특정 부에 속하지 않고, <strong>과정 내내 배경에서 계속</strong> 돌아갑니다.
+      부담스럽지 않게, 작게 이어 가세요.
+    </p>
+
+    <h2><span class="h-num">1</span>기록 — 매주 한 편</h2>
+    <p>
+      매주 <strong>배운 것·만든 것을 블로그에 한 편</strong> 남깁니다. 자매 책 『AI 블로그 자동화 가이드』와
+      이어지는 과제입니다. 7장에서 봤듯 <strong>가르치듯 정리하는 것이 최고의 복습</strong>이고,
+      쌓인 기록은 그대로 <strong>포트폴리오</strong>가 됩니다.
+    </p>
+
+    <h2><span class="h-num">2</span>시간 장부 — 월 1회</h2>
+    <p>
+      반복 업무 시간표를 <strong>한 달에 한 번</strong> 갱신합니다. "내 시간이 줄었는가"라는
+      이 과정의 유일한 잣대를, 수료 때 한 번이 아니라 매달 확인하는 겁니다.
+    </p>
+
+    <h2><span class="h-num">3</span>규칙 파일 가꾸기</h2>
+    <p>
+      3장의 원리 그대로 — <strong>같은 잔소리를 두 번 했다면 규칙 한 줄 추가.</strong>
+      2부의 오답노트도 같은 원리("같은 실수 두 번 → 유형 등록")입니다. 이 습관이 당신의 자산을 계속 자라게 합니다.
+    </p>
+    <div class="callout tip">
+      <div class="co-label">◆ 세 가지의 공통점</div>
+      <p style="margin:0">
+        기록·시간 장부·규칙 파일은 모두 <strong>"조금씩, 계속"</strong>입니다. 한 번에 몰아서 하는 게 아니라,
+        지나가며 한 줄씩 남기는 것. 그게 오래갑니다.
+      </p>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-appendix">
+  <div class="prose">
+    <div class="kicker">부록</div>
+    <h1 class="page-title">필요한 만큼만 — 부록 안내</h1>
+    <p class="lead">
+      본문을 따라가다 막히거나, 문구를 그대로 가져다 쓰고 싶을 때 펼치는 자료 모음입니다.
+      다 읽을 필요는 없습니다. <strong>필요할 때 해당 부록만</strong> 보세요.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">부록</th><th scope="col">이럴 때 펼친다</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">A. 용어 사전</th><td>낯선 말이 나올 때 — 비개발자를 위한 최소한의 용어만</td></tr>
+          <tr><th scope="row">B. 요청 문구 모음</th><td>단계별 프롬프트를 그대로 복사해 쓰고 싶을 때</td></tr>
+          <tr><th scope="row">C. 결과물 점검표</th><td>각 부의 ✅ 점검표를 한곳에서 보고 싶을 때</td></tr>
+          <tr><th scope="row">D. 문제 해결</th><td>설치·연결·팝업 차단·영어 화면에서 막혔을 때</td></tr>
+          <tr><th scope="row">E. 운영 노트</th><td>이 과정을 남에게 가르치는 강사·멘토를 위한 진행 안내</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2><span class="h-num">A</span>비개발자를 위한 용어 사전</h2>
+    <p>본문에 나온 낯선 말만 모았습니다. <strong>비유가 먼저, 정의는 그다음</strong>입니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">말</th><th scope="col">쉽게 말하면</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">프롬프트</th><td>AI에게 건네는 <strong>요청문</strong>. "명령어"가 아니라 그냥 시키는 말.</td></tr>
+          <tr><th scope="row">대화형 AI</th><td>물으면 답하는 <strong>상담원</strong>. ChatGPT·Gemini·Claude 같은 것.</td></tr>
+          <tr><th scope="row">에이전트</th><td>맡기면 여러 단계를 실행하는 <strong>조수</strong>. 파일도 다룬다(16장).</td></tr>
+          <tr><th scope="row">터미널</th><td>글자로 주고받는 <strong>또 다른 채팅창</strong>. 검은 화면일 뿐 무섭지 않다.</td></tr>
+          <tr><th scope="row">규칙 파일</th><td>AI에게 매번 건네는 <strong>업무 안내서</strong>(3장).</td></tr>
+          <tr><th scope="row">템플릿</th><td>빈칸만 바꿔 다시 쓰는 <strong>요청 레시피 카드</strong>(2장).</td></tr>
+          <tr><th scope="row">딥리서치</th><td>여러 곳을 대신 조사해 <strong>정리+출처</strong>로 주는 기능(8장).</td></tr>
+          <tr><th scope="row">전사</th><td>말(음성)을 <strong>글로 받아쓰기</strong>(12장).</td></tr>
+          <tr><th scope="row">트리거(계기)</th><td>자동화를 <strong>깨우는 신호</strong> — 새 메일, 정해진 시각 등(13장).</td></tr>
+          <tr><th scope="row">연결 자동화</th><td>"A가 생기면 B를 한다"는 <strong>도미노</strong>를 세우는 도구(13장).</td></tr>
+          <tr><th scope="row">파인만 기법</th><td>배운 걸 <strong>내 말로 설명해</strong> 이해를 확인하는 법(5장).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2><span class="h-num">B</span>단계별 요청 문구 모음</h2>
+    <p>본문에 흩어진 프롬프트를 한곳에 모았습니다. 대괄호만 내 상황으로 바꿔 <strong>복사해 쓰세요.</strong></p>
+
+    <h3>일 시키기 (1부)</h3>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">4요소 요청 (1장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>[하려는 일]을 해 줘. 아래 조건에 맞춰서.
+
+[대상] 누가 읽나 / 그 사람이 이미 아는 것
+[목적] 읽고 나서 어떤 행동을 하길 바라나
+[꼭 들어갈 것] 빠지면 안 되는 정보
+[하지 말 것] 피하고 싶은 것</pre>
+    </div>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">역질문 — AI가 먼저 묻게 (1장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>[하려는 일을 한 줄로]
+
+바로 답하지 말고, 좋은 결과를 내려면 나에게 더 필요한 정보가
+무엇인지 먼저 질문해 줘. 5개 이내로 한 번에. 내가 답하면 시작해.</pre>
+    </div>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">규칙 파일 뼈대 (3장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>[나의 업무 규칙 — 작업 전에 반드시 읽을 것]
+
+# 내 역할: 나는 [무슨 일을 하는 사람]. 너는 [무엇을 돕는] 조수야.
+# 문체: [원하는 말투]. [금지할 말버릇].
+# 금지: 확인 안 된 사실 지어내기, 근거 없는 숫자.
+# 검증: [바뀌는 정보]는 단정하지 말고, 불확실하면 (확인 필요) 표시.</pre>
+    </div>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">AI 자기검수 (4장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>방금 네가 쓴 내용을 비판적으로 다시 검토해 줘.
+1. 사실이 틀렸을 가능성이 있는 문장 3군데 표시
+2. 숫자·날짜·고유명사 중 확인 필요한 것에 (확인 필요)
+3. 확실히 아는 것과 추측으로 채운 것을 구분해 줘</pre>
+    </div>
+
+    <h3>배우기 (2부)</h3>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">눈높이 선언 (5장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>나는 이 분야를 처음 배우는 비전공자야. [개념]을 설명해 줘. 단,
+- 전문용어는 쓰기 전에 쉬운 말로 먼저 풀어 주고
+- 일상 비유 하나와 구체적 예시 셋을 들어 주고
+- 한 번에 다 쏟지 말고, 내가 "다음"이라고 하면 이어서 가 줘</pre>
+    </div>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">파인만 채점 (5장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>방금 배운 걸 내 말로 설명해 볼게. 아래 설명을 듣고,
+- 틀리거나 부정확한 부분을 짚어 주고
+- 설명이 비어 있는(내가 아직 모르는) 부분을 찾아 주고
+- 이해했는지 확인하는 질문 2개를 던져 줘
+[내 설명] (여기에)</pre>
+    </div>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">약점 집중 출제 (6장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>아래는 내가 자주 틀린 유형이야. 이 유형에서 집중적으로
+새 문제 5개를 내 줘. 내가 약한 함정을 일부러 넣어서.
+답은 아직 알려 주지 말고, 내가 답하면 채점·해설해 줘.
+[내 오답 유형] (여기에)</pre>
+    </div>
+
+    <h3>맡기고 감독하기 (5부)</h3>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">에이전트 발주 (17장)</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>[만들/할 것을 한 줄로]
+- 완성 모습: 다 되면 이런 상태여야 해
+- 꼭 필요한 것 / 하지 말 것
+- 진행 방식: 한 번에 다 하지 말고 단계마다 확인받고 진행해</pre>
+    </div>
+
+    <h2><span class="h-num">C</span>결과물 점검표 전체 모음</h2>
+    <p>각 부를 마칠 때 손에 남아야 할 것들입니다. 여기서 한눈에 확인하세요.</p>
+    <p><strong>1부 — 시키는 법</strong></p>
+    <ul class="check">
+      <li>요청 템플릿 3개 (1개는 실사용 3회 이상)</li>
+      <li>업무 규칙 파일 v1</li>
+      <li>검수에서 실제로 잡아낸 오류 1건 이상</li>
+    </ul>
+    <p><strong>2부 — 배우기</strong></p>
+    <ul class="check">
+      <li>진행 중인 공부 1건 (주차별 계획표 + 오답노트)</li>
+      <li>파인만 채점 기록 1회 이상</li>
+      <li>공식 자료로 검증한 사실 1건</li>
+    </ul>
+    <p><strong>3부 — 도구 지도</strong></p>
+    <ul class="check">
+      <li>나의 도구 지도 1장</li>
+      <li>각 도구로 처리한 실제 업무 최소 2건</li>
+      <li>건너뛴 장과 그 이유 한 줄</li>
+    </ul>
+    <p><strong>4부 — 자동화</strong></p>
+    <ul class="check">
+      <li>실제로 돌아가는 자동화 2개 (1주 이상 무사고)</li>
+      <li>자동화하지 않기로 한 결정 1건과 이유</li>
+      <li>오리엔테이션에서 잰 시간과 1차 비교</li>
+    </ul>
+    <p><strong>5부 — 에이전트 감독</strong></p>
+    <ul class="check">
+      <li>작동하는 나만의 도구 1개</li>
+      <li>그 도구의 요구사항 문서</li>
+      <li>타인 사용 피드백 1건</li>
+    </ul>
+
+    <h2><span class="h-num">D</span>자주 막히는 문제 해결</h2>
+    <p>대부분의 막힘은 아래 만능 기술 하나로 풀립니다.</p>
+    <div class="prompt-helper">
+      <div class="ph-head"><span class="ph-title">오류를 복사해 AI에게 묻는 만능 프롬프트</span><button class="copy-btn" type="button" data-copy>복사</button></div>
+      <pre>아래는 내가 [무엇을 하다가] 만난 오류/화면이야.
+이게 무슨 뜻이고, 비전공자가 따라 할 수 있게 해결 방법을
+한 단계씩 알려 줘. 위험한 작업이면 먼저 경고해 줘.
+
+[오류 메시지나 화면 내용을 그대로 붙여넣기]</pre>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">막히는 상황</th><th scope="col">먼저 해 볼 것</th></tr></thead>
+        <tbody>
+          <tr><td>설치가 중간에 멈춘다</td><td>오류를 복사해 위 프롬프트로 묻기 → 안 되면 웹 기반으로 우회(16장)</td></tr>
+          <tr><td>연결(로그인·권한)에서 막힘</td><td>팝업 차단 해제, 다른 브라우저로 시도, 공식 도움말 검색</td></tr>
+          <tr><td>화면이 영어라 겁난다</td><td>화면을 캡처해 AI에게 "이 화면에서 [하려는 것] 어디를 누르나" 묻기</td></tr>
+          <tr><td>30분 넘게 안 된다</td><td>붙잡지 말고 멈추기 — 우회로로 가거나 다음 날 다시(막힘도 정보다)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout tip">
+      <div class="co-label">◆ 고객센터에 물을 때</div>
+      <p style="margin:0">
+        "<strong>무엇을 하려고 했고 / 어떤 화면에서 / 어떤 메시지가 떴는지</strong>" 세 가지를 적어 보내면
+        훨씬 빨리 해결됩니다. 이 세 가지는 AI에게 물을 때도 똑같이 유용합니다.
+      </p>
+    </div>
+
+    <h2><span class="h-num">E</span>강사·멘토용 운영 노트</h2>
+    <p>이 과정을 남에게 안내하는 분을 위한 메모입니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">시기</th><th scope="col">흔히 꺾이는 지점</th><th scope="col">처방</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">1부</th><td>"이 정도는 나도 알아" 하며 대충 넘김</td><td>기준선(시간)을 꼭 재게 하기 — 나중 비교의 근거</td></tr>
+          <tr><th scope="row">2부</th><td>공부가 일보다 덜 급해 미룸</td><td>오리엔테이션의 "배움 목표 하나"를 계속 상기시키기</td></tr>
+          <tr><th scope="row">3부</th><td>도구 욕심으로 다 설치하려다 지침</td><td>"불편 없으면 건너뛰기"를 명시적으로 허락</td></tr>
+          <tr><th scope="row">4부</th><td>자동화 첫 실패에 좌절</td><td>"실패해도 안전한 알림부터"를 지키게, 손 실행 3회 강조</td></tr>
+          <tr><th scope="row">5부</th><td>터미널·설치 공포</td><td>웹 기반 우회로 먼저 제시, "오류 복사해 묻기" 시연</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout tip">
+      <div class="co-label">◆ 운영의 원칙</div>
+      <p style="margin:0">
+        진도보다 <strong>결과물</strong>이 우선입니다. 각 부의 ✅ 점검표를 통과했는지로 확인하고,
+        <strong>개발을 권하지 마세요</strong> — "개발 배워 볼까?"가 학습자 입에서 나올 때가 신호입니다(대개 5부).
+      </p>
+    </div>
+
+    <p style="color:var(--ink-3);font-size:.95rem;margin-top:2.4em;padding-top:1.2em;border-top:1px solid var(--rule)">
+      여기까지 함께해 주셔서 고맙습니다.<br>
+      <strong style="font-size:1.08rem">기계는 준비하고, 사람은 결정합니다.</strong>
+    </p>
+  </div>
+</template>
+
+
+<!-- 모바일 하단 미니 페이저 -->
+<nav class="minipager" id="minipager" aria-label="장 이동">
+  <button type="button" id="mp-prev">
+    <span class="mp-arrow">◀</span><span class="mp-label"></span>
+  </button>
+  <button type="button" id="mp-next">
+    <span class="mp-label"></span><span class="mp-arrow">▶</span>
+  </button>
+</nav>
+
+<!-- 모바일에서 목차 서랍이 열릴 때만 -->
+<div class="scrim" id="scrim" hidden></div>
+
+<!-- ════════ 검색 오버레이 ════════ -->
+<div class="overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="본문 검색">
+  <div class="overlay-scrim" data-close></div>
+  <div class="search-panel">
+    <div class="search-inner">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+        <input type="search" id="search-input" placeholder="본문에서 찾기…" autocomplete="off" aria-label="검색어">
+        <button class="panel-close" data-close aria-label="검색 닫기">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+      </div>
+      <div class="search-meta" id="search-meta"></div>
+      <ul class="search-results" id="search-results"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+(function(){
+  /* ─────────── 목차 데이터: 부·장 구조 ─────────── */
+  var PARTS = [
+    {n:1, title:"시키는 법을 정교화하기", weeks:"3~4주",
+      goal:"프롬프트를 \"잘 쓰는\" 게 아니라 자산으로 만드는 것.",
+      result:"매번 처음부터 설명하지 않아도 되는 나만의 요청 체계.",
+      checks:["요청 템플릿 3개 (1개는 실사용 3회 이상)","업무 규칙 파일 v1","검수에서 실제로 잡아낸 오류 1건 이상"],
+      chapters:[
+        {n:1, title:"좋은 요청은 재능이 아니라 구조다", bullets:[
+          "AI가 실망스러웠던 진짜 이유: 재료 없이 시켰기 때문",
+          "좋은 요청의 4요소: 대상 · 목적 · 꼭 들어갈 것 · 하지 말 것",
+          "거꾸로 시키기: \"바로 답하지 말고 부족한 정보를 먼저 물어봐\"",
+          "결과가 별로일 때: 다시 시키기, 방향 주기, 두 버전 받아 고르기"]},
+        {n:2, title:"반복 업무를 템플릿으로 바꾸기", bullets:[
+          "내 일주일에서 반복 업무 3개 고르기",
+          "요청 템플릿 만들기: 바뀌는 부분만 대괄호로",
+          "설명보다 예시가 빠르다: 잘 쓴 결과물을 붙여 주고 \"이 스타일로\"",
+          "템플릿을 보관하고 다시 쓰는 나만의 방식"]},
+        {n:3, title:"나의 업무 규칙 파일 만들기", bullets:[
+          "매번 하는 잔소리를 문서 하나로",
+          "규칙 파일에 들어갈 것: 역할 · 문체 · 금지 · 검증 기준",
+          "\"이 파일 읽고 시작해\" — 대화가 한 줄로 줄어드는 경험",
+          "규칙 파일은 살아 있는 문서"]},
+        {n:4, title:"AI의 거짓말을 걸러내는 습관", bullets:[
+          "AI가 틀리는 4가지 영역: 숫자 · 방법 · 위험 정보 · 경험",
+          "사람 검수 전에 AI 1차 검수 시키기",
+          "근거를 믿는 순서: 공식 → 공공기관 → 교차 확인",
+          "AI에게 주면 안 되는 것: 기밀 · 개인정보 · 비밀번호"]}
+      ]},
+    {n:2, title:"AI에게 배우기 — 공부의 방법을 바꾸다", weeks:"3~4주",
+      goal:"AI를 \"일 시키는 도구\"에서 \"지치지 않는 과외 선생\"으로도 쓰는 것.",
+      result:"실제로 진행 중인 공부 하나와 나만의 오답노트. (설치도 가입도 없음)",
+      checks:["진행 중인 공부 1건 (주차별 계획표 + 오답노트)","파인만 채점 기록 1회 이상","공식 자료로 검증한 사실 1건"],
+      chapters:[
+        {n:5, title:"AI를 과외 선생으로 만들기", bullets:[
+          "검색과 과외의 차이: 답을 받는 것 vs 이해할 때까지 되묻는 것",
+          "내 눈높이 선언하기: \"비유 하나와 예시 셋으로\"",
+          "이해 확인 루프: 내가 설명하고 AI가 구멍을 찾게 하기 (파인만 기법)",
+          "주의: 선생도 거짓말을 한다"]},
+        {n:6, title:"시험공부에 적용하기 — 자격증·어학·사내 시험", bullets:[
+          "시험 정보 정리시키기 (단, 공식 공고로 반드시 확인)",
+          "학습 계획 짜게 하기: 남은 기간 × 가용 시간",
+          "문제 출제 → 풀이 → 해설의 반복 루프",
+          "오답노트를 규칙 파일처럼 — 자주 틀리는 유형으로 출제 편향"]},
+        {n:7, title:"새로운 기술 배우기 — 필요할 때, 필요한 만큼", bullets:[
+          "Just-in-time 학습: 쓰다가 막히면 그만큼만 배우기",
+          "실습 과제를 받아 내기: \"내 데이터로 연습문제를 내 줘\"",
+          "응용: 외국어 회화 상대, 업무 도구, 취미",
+          "배운 것을 가르쳐 보기 — 블로그 기록이 최고의 복습"]}
+      ]},
+    {n:3, title:"도구 지도 넓히기", weeks:"4~5주",
+      goal:"도구 수집이 아니라 내 불편 → 맞는 도구 연결 감각.",
+      result:"내 불편과 도구를 연결한 \"나의 도구 지도\" 1장.",
+      checks:["나의 도구 지도 1장","각 도구로 처리한 실제 업무 최소 2건","건너뛴 장과 그 이유 한 줄"],
+      chapters:[
+        {n:8, title:"조사가 오래 걸린다면 — AI 리서치 도구", bullets:[
+          "검색과 리서치의 차이: 링크 10개 vs 정리된 답 + 출처",
+          "딥리서치 사용법과 결과를 믿기 전 출처 확인"]},
+        {n:9, title:"자료가 쌓여만 있다면 — 내 문서에게 질문하기", bullets:[
+          "NotebookLM류: 자료를 던져 넣고 \"이 안에서\" 답하게 하기",
+          "회의록·PDF·긴 문서 요약과 질의응답"]},
+        {n:10, title:"데이터 정리에 시간이 녹는다면 — 표와 숫자 다루기", bullets:[
+          "지저분한 데이터 정리시키기: 형식 통일 · 분류 · 중복 제거",
+          "표 변환, 엑셀·시트 기능을 \"물어서\" 쓰기",
+          "주의: 계산·집계는 AI가 약한 영역 — 원본과 대조"]},
+        {n:11, title:"이미지가 필요하다면 — 생성과 편집", bullets:[
+          "템플릿 도구(Canva)와 생성 AI의 역할 구분",
+          "생성 이미지의 주의: 실물 오해 · 저작권"]},
+        {n:12, title:"말과 회의가 새고 있다면 — 음성과 회의록", bullets:[
+          "녹음 → 전사 → 요약 → 할 일 추출의 흐름",
+          "회의록 자동화에서 사람이 확인해야 하는 것"]}
+      ]},
+    {n:4, title:"자는 동안 돌아가는 자동화", weeks:"4주",
+      goal:"\"A에서 일이 생기면 B로\" — 연결 자동화 2개를 실제로 돌리기.",
+      result:"내가 안 봐도 돌아가는 흐름 2개.",
+      checks:["실제로 돌아가는 자동화 2개 (1주 이상 무사고)","자동화하지 않기로 한 결정 1건과 이유","오리엔테이션에서 잰 시간과 1차 비교"],
+      chapters:[
+        {n:13, title:"연결 자동화란 무엇인가", bullets:[
+          "도미노 비유: 한 번 세워 두면 알아서 굴러간다",
+          "n8n · Make · Zapier 한 문장 비교와 \"하나만 고르기\"",
+          "자동화에 들어가면 안 되는 것: 판단과 최종 결정"]},
+        {n:14, title:"첫 자동화: 알림 만들기", bullets:[
+          "첫 자동화는 \"실패해도 아무것도 안 망가지는 것\"으로",
+          "흐름 조립: 깨우기 → 읽기 → 거르기 → 중복 방지 → 알리기",
+          "손 실행 3회 통과 전에는 예약을 켜지 않는다"]},
+        {n:15, title:"두 번째 자동화: 정리와 리포트", bullets:[
+          "후보: 메일 정리, 설문 취합, 주간 리포트 초안",
+          "AI 단계를 흐름에 끼워 넣기",
+          "고장에 대비하기: 멈췄을 때 알아차리는 법"]}
+      ]},
+    {n:5, title:"에이전트 감독하기", weeks:"4주 · 흥미의 정점",
+      goal:"AI 에이전트에게 프로젝트 단위 일을 맡기고, 본인은 요구·검수·결정만.",
+      result:"코드를 안 배우고 만든, 진짜 작동하는 나만의 도구 1개.",
+      checks:["작동하는 나만의 도구 1개","그 도구의 요구사항 문서","타인 사용 피드백 1건"],
+      chapters:[
+        {n:16, title:"에이전트는 챗봇과 무엇이 다른가", bullets:[
+          "대화형 AI와 에이전트의 차이: 파일, 기억, 여러 단계 작업",
+          "검은 화면(터미널) 공포 해체 — 사실상 채팅창이다",
+          "안 되면 우회로: 웹 기반 에이전트로 시작해도 된다"]},
+        {n:17, title:"감독의 언어 배우기", bullets:[
+          "요구사항을 말하는 법 (1장의 4요소 재등장)",
+          "중간 확인 요청: \"지우기 전에 설명해 줘\"",
+          "1부에서 만든 규칙 파일을 에이전트에게 물려주기"]},
+        {n:18, title:"졸업 프로젝트: 나만의 도구 만들게 하기", bullets:[
+          "후보 고르기: 링크 모음, 계산 도구, 학습 앱…",
+          "요구사항 문서를 먼저 쓰고 시작하기 (에이전트에게 주는 발주서)",
+          "\"내가 이걸 만들었어?\" — 만든 건 AI, 정의하고 검증한 건 나"]}
+      ]}
+  ];
+  var BACK = [
+    {id:"finish", loc:"수료", title:"처음의 시간표를 다시 꺼내며", bullets:[
+      "오리엔테이션에서 잰 반복 업무 5개의 시간, 지금 다시 재기",
+      "남은 것 정리: 템플릿 · 규칙 파일 · 도구 지도 · 오답노트 · 자동화 2개 · 나만의 도구",
+      "다음 갈림길 안내 (강요 없이)",
+      "마지막 한 문장: 기계는 준비하고, 사람은 결정한다"]},
+    {id:"ongoing", loc:"상시 과제", title:"전 과정 공통", bullets:[
+      "기록: 매주 배운 것·만든 것을 블로그에 1편",
+      "시간 장부: 반복 업무 시간표를 월 1회 갱신",
+      "규칙 파일 가꾸기: 같은 잔소리 두 번 → 규칙 한 줄"]},
+    {id:"appendix", loc:"부록", title:"필요한 만큼만", bullets:[
+      "A. 비개발자를 위한 용어 사전",
+      "B. 단계별 요청 문구 모음 (공부용 프롬프트 포함)",
+      "C. 결과물 점검표 전체 모음",
+      "D. 자주 막히는 문제 해결",
+      "E. 강사/멘토용 운영 노트"]}
+  ];
+
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); };
+  var stubNote = '<div class="stub">이 장은 <b>집필 예정</b>입니다. 위 뼈대(오리엔테이션·표지·목차·검색·페이지 전환)가 확정되면 부 단위로 채워집니다.</div>';
+
+  /* ─────────── 부·장·후반부 섹션 생성 ─────────── */
+  var main = document.getElementById("main");
+  var html = "";
+  PARTS.forEach(function(part){
+    // 부 구분지
+    var chapLinks = part.chapters.map(function(c){
+      return '<li><a href="#ch'+c.n+'" data-go><span class="pc-n">'+c.n+'장</span><span class="pc-t">'+esc(c.title)+'</span></a></li>';
+    }).join("");
+    var checks = part.checks.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join("");
+    html += '<section class="page partpage" id="part'+part.n+'" data-loc="'+part.n+'부" data-title="'+esc(part.title)+'">'
+      + '<div class="prose">'
+      + '<div class="part-big"><small>PART '+part.n+' · '+esc(part.weeks)+'</small>'+part.n+'</div>'
+      + '<h1>'+esc(part.title)+'</h1>'
+      + '<dl class="part-goal"><dt>목표</dt><dd>'+esc(part.goal)+'</dd><dt>결과물</dt><dd>'+esc(part.result)+'</dd></dl>'
+      + '<ul class="part-chaps">'+chapLinks+'</ul>'
+      + '<div class="callout tip" style="margin-top:26px"><div class="co-label">✅ 이 부를 마치면</div><ul class="check">'+checks+'</ul></div>'
+      + '</div></section>';
+    // 장 — 집필된 장은 <template id="tpl-chN">의 내용을 쓰고, 없으면 목차 개요 스텁
+    part.chapters.forEach(function(c){
+      var tpl = document.getElementById("tpl-ch"+c.n);
+      var body;
+      if(tpl){
+        body = tpl.innerHTML;
+      }else{
+        var bl = c.bullets.map(function(b){ return '<li>'+esc(b)+'</li>'; }).join("");
+        body = '<div class="prose">'
+          + '<div class="kicker">'+part.n+'부 · '+c.n+'장</div>'
+          + '<h1 class="page-title">'+esc(c.title)+'</h1>'
+          + '<p class="lead">이 장에서 다룰 것</p>'
+          + '<ul>'+bl+'</ul>'
+          + stubNote
+          + '</div>';
+      }
+      html += '<section class="page" id="ch'+c.n+'" data-loc="'+part.n+'부 · '+c.n+'장" data-title="'+esc(c.title)+'">'
+        + body + '</section>';
+    });
+  });
+  BACK.forEach(function(b){
+    var tpl = document.getElementById("tpl-"+b.id);
+    var body;
+    if(tpl){
+      body = tpl.innerHTML;
+    }else{
+      var bl = b.bullets.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join("");
+      body = '<div class="prose">'
+        + '<div class="kicker">'+esc(b.loc)+'</div>'
+        + '<h1 class="page-title">'+esc(b.title)+'</h1>'
+        + '<ul>'+bl+'</ul>'
+        + stubNote
+        + '</div>';
+    }
+    html += '<section class="page" id="'+b.id+'" data-loc="'+esc(b.loc)+'" data-title="'+esc(b.title)+'">'
+      + body + '</section>';
+  });
+  main.insertAdjacentHTML("beforeend", html);
+
+  /* ─────────── 페이지 목록 & 이동 ─────────── */
+  var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
+  var ids = pages.map(function(p){ return p.id; });
+  var current = 0;
+  var book = main;
+
+  function addPager(){
+    pages.forEach(function(p, i){
+      if(p.querySelector(".pager")) return;
+      var prev = pages[i-1], next = pages[i+1];
+      var pg = document.createElement("nav");
+      pg.className = "pager";
+      pg.setAttribute("aria-label","장 이동");
+      var prevH = prev
+        ? '<a class="prev" href="#'+prev.id+'" data-go><span class="pg-dir">◀ 이전</span><span class="pg-title">'+esc(prev.getAttribute("data-title"))+'</span></a>'
+        : '<a class="prev" hidden aria-hidden="true"></a>';
+      var nextH = next
+        ? '<a class="next" href="#'+next.id+'" data-go><span class="pg-dir">다음 ▶</span><span class="pg-title">'+esc(next.getAttribute("data-title"))+'</span></a>'
+        : '<a class="next" hidden aria-hidden="true"></a>';
+      pg.innerHTML = prevH + nextH;
+      (p.querySelector(".prose") || p).appendChild(pg);
+    });
+  }
+  addPager();
+
+  function show(idx, opts){
+    opts = opts || {};
+    if(idx < 0) idx = 0; if(idx > pages.length-1) idx = pages.length-1;
+    var dir = idx >= current ? "next" : "prev";
+    book.classList.remove("dir-prev","dir-next");
+    book.classList.add("dir-"+dir);
+    pages.forEach(function(p){ p.classList.remove("is-active"); });
+    var pg = pages[idx];
+    pg.classList.add("is-active");
+    current = idx;
+    // 진행바
+    var pct = pages.length > 1 ? (idx/(pages.length-1))*100 : 0;
+    document.getElementById("progress").style.width = pct.toFixed(1)+"%";
+    updateMiniPager();
+    markTocActive();
+    if(!opts.noHash && location.hash !== "#"+pg.id){
+      history.replaceState(null,"","#"+pg.id);
+    }
+    if(!opts.noScroll){ window.scrollTo(0,0); if(main.focus){ main.focus({preventScroll:true}); } }
+  }
+  function goToId(id, opts){
+    var i = ids.indexOf(id);
+    if(i >= 0) show(i, opts);
+  }
+
+  /* ─────────── 링크 가로채기(data-go) ─────────── */
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[data-go]");
+    if(!a) return;
+    var id = a.getAttribute("href").slice(1);
+    if(ids.indexOf(id) >= 0){
+      e.preventDefault();
+      closeOverlays();
+      goToId(id);
+    }
+  });
+
+  /* ─────────── 모바일 하단 미니 페이저 ─────────── */
+  var mpPrev = document.getElementById("mp-prev");
+  var mpNext = document.getElementById("mp-next");
+  function updateMiniPager(){
+    var prev = pages[current-1], next = pages[current+1];
+    mpPrev.disabled = !prev;
+    mpNext.disabled = !next;
+    mpPrev.querySelector(".mp-label").textContent = prev ? prev.getAttribute("data-title") : "";
+    mpNext.querySelector(".mp-label").textContent = next ? next.getAttribute("data-title") : "";
+  }
+  mpPrev.addEventListener("click", function(){ show(current-1); });
+  mpNext.addEventListener("click", function(){ show(current+1); });
+
+  /* ─────────── 프롬프트 복사 ─────────── */
+  document.addEventListener("click", function(e){
+    var btn = e.target.closest && e.target.closest("[data-copy]");
+    if(!btn) return;
+    var box = btn.closest(".prompt-helper");
+    var pre = box && box.querySelector("pre");
+    if(!pre) return;
+    var done = function(){
+      var old = btn.textContent;
+      btn.textContent = "복사됨"; btn.classList.add("copied");
+      setTimeout(function(){ btn.textContent = old; btn.classList.remove("copied"); }, 1500);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(pre.textContent).then(done, fallback);
+    }else{ fallback(); }
+    function fallback(){
+      try{
+        var ta = document.createElement("textarea");
+        ta.value = pre.textContent; ta.style.position="fixed"; ta.style.opacity="0";
+        document.body.appendChild(ta); ta.select(); document.execCommand("copy");
+        document.body.removeChild(ta); done();
+      }catch(err){ btn.textContent = "복사 실패"; }
+    }
+  });
+
+  /* ─────────── 키보드 ← → ─────────── */
+  document.addEventListener("keydown", function(e){
+    if(anyOverlayOpen()){
+      if(e.key === "Escape") closeOverlays();
+      return;
+    }
+    var tag = (e.target.tagName||"").toLowerCase();
+    if(tag === "input" || tag === "textarea") return;
+    if(e.key === "ArrowRight"){ show(current+1); }
+    else if(e.key === "ArrowLeft"){ show(current-1); }
+  });
+
+  /* ─────────── 터치 스와이프 ─────────── */
+  var tx=0, ty=0;
+  main.addEventListener("touchstart", function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; }, {passive:true});
+  main.addEventListener("touchend", function(e){
+    if(anyOverlayOpen()) return;          /* 목차 서랍·검색이 열려 있으면 넘기지 않음 */
+    var dx=e.changedTouches[0].clientX - tx, dy=e.changedTouches[0].clientY - ty;
+    if(Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy)*1.6){
+      if(dx < 0) show(current+1); else show(current-1);
+    }
+  }, {passive:true});
+
+  /* ─────────── 목차 오버레이 ─────────── */
+  var tocEl = document.getElementById("toc");
+  var tocHtml = '<a class="top" href="#cover" data-go><span class="t-n">◆</span>표지</a>'
+    + '<a class="top" href="#ot" data-go><span class="t-n">·</span>오리엔테이션</a>';
+  PARTS.forEach(function(part){
+    tocHtml += '<div class="toc-part"><div class="toc-part-label">'+part.n+'부 · '+esc(part.title)+'</div>';
+    tocHtml += '<a href="#part'+part.n+'" data-go><span class="t-n">'+part.n+'부</span>들어가며</a>';
+    part.chapters.forEach(function(c){
+      tocHtml += '<a href="#ch'+c.n+'" data-go><span class="t-n">'+c.n+'</span>'+esc(c.title)+'</a>';
+    });
+    tocHtml += '</div>';
+  });
+  tocHtml += '<div class="toc-part"><div class="toc-part-label">마무리</div>';
+  BACK.forEach(function(b){
+    tocHtml += '<a href="#'+b.id+'" data-go><span class="t-n">·</span>'+esc(b.loc)+'</a>';
+  });
+  tocHtml += '</div>';
+  tocEl.innerHTML = tocHtml;
+
+  function markTocActive(){
+    var links = tocEl.querySelectorAll("a");
+    var activeId = pages[current].id;
+    links.forEach(function(a){
+      var id = a.getAttribute("href").slice(1);
+      a.classList.toggle("active", id === activeId);
+    });
+    revealActive();
+  }
+  /* 좌측 고정 목차에서 현재 장이 안 보이면 그만큼만 스크롤 */
+  function revealActive(){
+    if(!isDesktop()) return;
+    var a = tocEl.querySelector("a.active");
+    if(!a) return;
+    var top = a.offsetTop, h = a.offsetHeight;
+    var st = sidebar.scrollTop, vh = sidebar.clientHeight;
+    if(top < st + 10) sidebar.scrollTop = Math.max(0, top - 10);
+    else if(top + h > st + vh - 10) sidebar.scrollTop = top + h - vh + 10;
+  }
+
+  /* ─────────── 목차 서랍(모바일) / 검색 오버레이 ─────────── */
+  var sidebar = document.getElementById("sidebar");
+  var scrim = document.getElementById("scrim");
+  var searchOv = document.getElementById("search-overlay");
+  var mqDesktop = window.matchMedia("(min-width:1000px)");
+  function isDesktop(){ return mqDesktop.matches; }
+  function sidebarOpen(){ return sidebar.classList.contains("open"); }
+  function anyOverlayOpen(){ return (sidebarOpen() && !isDesktop()) || searchOv.classList.contains("open"); }
+  function lockScroll(on){ document.body.style.overflow = on ? "hidden" : ""; }
+
+  function openSidebar(){
+    if(isDesktop()) return;
+    searchOv.classList.remove("open");
+    sidebar.classList.add("open"); scrim.hidden = false; lockScroll(true);
+    markTocActive();
+  }
+  function closeSidebar(){
+    sidebar.classList.remove("open"); scrim.hidden = true;
+    if(!searchOv.classList.contains("open")) lockScroll(false);
+  }
+  function closeOverlays(){ closeSidebar(); searchOv.classList.remove("open"); lockScroll(false); }
+
+  document.getElementById("btn-toc").addEventListener("click", openSidebar);
+  document.getElementById("sb-close").addEventListener("click", closeSidebar);
+  scrim.addEventListener("click", closeSidebar);
+  document.getElementById("btn-search").addEventListener("click", openSearch);
+  document.querySelectorAll("#search-overlay [data-close]").forEach(function(el){
+    el.addEventListener("click", closeOverlays);
+  });
+  /* 데스크톱으로 넓어지면 서랍 상태를 정리 */
+  (mqDesktop.addEventListener ? mqDesktop.addEventListener.bind(mqDesktop,"change") : mqDesktop.addListener.bind(mqDesktop))(function(){
+    if(isDesktop()){ sidebar.classList.remove("open"); scrim.hidden = true; lockScroll(false); revealActive(); }
+  });
+
+  /* ─────────── 테마 토글 ─────────── */
+  var themeBtn = document.getElementById("btn-theme");
+  var savedTheme = null;
+  try{ savedTheme = localStorage.getItem("lg_theme"); }catch(e){}
+  if(savedTheme){ document.documentElement.setAttribute("data-theme", savedTheme); }
+  themeBtn.addEventListener("click", function(){
+    // 기본값은 라이트. 속성이 없으면 라이트로 간주.
+    var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    var next = isDark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try{ localStorage.setItem("lg_theme", next); }catch(e){}
+  });
+
+  /* ─────────── 검색 ─────────── */
+  var searchInput = document.getElementById("search-input");
+  var searchResults = document.getElementById("search-results");
+  var searchMeta = document.getElementById("search-meta");
+  // 색인: 각 페이지의 표시 텍스트
+  var index = pages.map(function(p){
+    var clone = p.cloneNode(true);
+    var pg = clone.querySelector(".pager"); if(pg) pg.remove();
+    var st = clone.querySelector(".stub"); if(st) st.remove();
+    var text = (clone.textContent||"").replace(/\s+/g," ").trim();
+    return { id:p.id, loc:p.getAttribute("data-loc"), title:p.getAttribute("data-title"), text:text, low:text.toLowerCase() };
+  });
+  function openSearch(){
+    closeOverlays(); searchOv.classList.add("open"); document.body.style.overflow="hidden";
+    searchInput.value=""; renderSearch(""); setTimeout(function(){ searchInput.focus(); }, 50);
+  }
+  function snippet(text, low, q){
+    var i = low.indexOf(q);
+    if(i < 0) return esc(text.slice(0,90))+"…";
+    var start = Math.max(0, i-32);
+    var end = Math.min(text.length, i+q.length+58);
+    var pre = (start>0?"…":"") + text.slice(start, i);
+    var mid = text.slice(i, i+q.length);
+    var post = text.slice(i+q.length, end) + (end<text.length?"…":"");
+    return esc(pre)+"<mark>"+esc(mid)+"</mark>"+esc(post);
+  }
+  function renderSearch(q){
+    q = q.trim().toLowerCase();
+    searchResults.innerHTML = "";
+    if(!q){ searchMeta.textContent = "제목·본문 어디든 찾습니다. 예: 규칙 파일, 검증, 오답노트"; return; }
+    var hits = index.filter(function(it){ return it.low.indexOf(q) >= 0 || it.title.toLowerCase().indexOf(q) >= 0; });
+    if(!hits.length){
+      searchMeta.textContent = "";
+      searchResults.innerHTML = '<li><div class="search-empty">"'+esc(q)+'"에 대한 결과가 없습니다.</div></li>';
+      return;
+    }
+    searchMeta.textContent = hits.length + "개 장에서 찾음";
+    searchResults.innerHTML = hits.map(function(it){
+      return '<li><a href="#'+it.id+'" data-search-go data-q="'+esc(q)+'">'
+        + '<div class="sr-loc">'+esc(it.loc)+'</div>'
+        + '<div class="sr-title">'+esc(it.title)+'</div>'
+        + '<div class="sr-snip">'+snippet(it.text, it.low, q)+'</div></a></li>';
+    }).join("");
+  }
+  searchInput.addEventListener("input", function(){ renderSearch(searchInput.value); });
+  searchResults.addEventListener("click", function(e){
+    var a = e.target.closest("a[data-search-go]");
+    if(!a) return;
+    e.preventDefault();
+    var id = a.getAttribute("href").slice(1);
+    var q = a.getAttribute("data-q");
+    closeOverlays();
+    goToId(id);
+    setTimeout(function(){ highlightIn(document.getElementById(id), q); }, 60);
+  });
+
+  /* 본문 내 하이라이트 */
+  var lastMarked = [];
+  function clearMarks(){
+    lastMarked.forEach(function(m){
+      var t = document.createTextNode(m.textContent);
+      if(m.parentNode){ m.parentNode.replaceChild(t, m); t.parentNode.normalize(); }
+    });
+    lastMarked = [];
+  }
+  function highlightIn(page, q){
+    clearMarks();
+    if(!page || !q) return;
+    q = q.toLowerCase();
+    var scope = page.querySelector(".prose") || page;
+    var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, {
+      acceptNode:function(node){
+        if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var pn = node.parentNode.nodeName;
+        if(pn === "SCRIPT" || pn === "STYLE" || pn === "MARK") return NodeFilter.FILTER_REJECT;
+        if(node.parentNode.closest(".pager,.stub")) return NodeFilter.FILTER_REJECT;
+        return node.nodeValue.toLowerCase().indexOf(q) >= 0 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var targets = [], n; var count = 0;
+    while((n = walker.nextNode()) && count < 40){ targets.push(n); count++; }
+    var first = null;
+    targets.forEach(function(node){
+      var val = node.nodeValue, low = val.toLowerCase(), i = low.indexOf(q);
+      if(i < 0) return;
+      var after = node.splitText(i);
+      after.splitText(q.length);
+      var mark = document.createElement("mark");
+      mark.textContent = after.nodeValue;
+      after.parentNode.replaceChild(mark, after);
+      lastMarked.push(mark);
+      if(!first) first = mark;
+    });
+    if(first){ first.scrollIntoView({block:"center", behavior:"smooth"}); }
+  }
+
+  /* ─────────── 시작 위치 ─────────── */
+  function initHash(){
+    var id = (location.hash||"").slice(1);
+    if(id && ids.indexOf(id) >= 0){ show(ids.indexOf(id), {noScroll:true}); }
+    else{ show(0, {noHash:true, noScroll:true}); }
+  }
+  window.addEventListener("hashchange", function(){
+    var id = (location.hash||"").slice(1);
+    if(id && ids.indexOf(id) >= 0 && pages[current].id !== id){ goToId(id, {noHash:true}); }
+  });
+  initHash();
+})();
+</script>
+</body>
+</html>

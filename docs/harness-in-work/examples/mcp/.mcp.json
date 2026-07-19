@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "상품DB": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://readonly@db.internal:5432/products"
+      ]
+    },
+    "사내위키": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/docs/wiki"
+      ]
+    },
+    "이슈트래커": {
+      "type": "http",
+      "url": "https://mcp.marketflow.internal/issues",
+      "headers": {
+        "Authorization": "Bearer ${ISSUE_TOKEN}"
+      }
+    }
+  }
+}
