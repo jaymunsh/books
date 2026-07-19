@@ -206,6 +206,15 @@ main{padding:0 0 120px;min-width:0}
   color:var(--accent);letter-spacing:-.035em;line-height:1.4;
   margin:-.1em 0 1.3em;max-width:22em;
 }
+.hero-author{
+  font-size:.95rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;margin:-.6em 0 1.9em;
+}
+.hero-author::before{
+  content:"지은이";display:inline-block;
+  font-size:.72rem;font-weight:800;letter-spacing:.06em;
+  color:var(--ink-faint);margin-right:10px;
+}
 .hero .lead{
   font-size:1.08rem;color:var(--ink-2);line-height:1.85;
   max-width:34em;margin-bottom:2.4em;
@@ -772,6 +781,7 @@ footer.site-footer{
       <span class="hero-overline">비전공자를 위한 입문서</span>
       <h1>AI 블로그 자동화 가이드</h1>
       <p class="hero-sub">AI와 함께 블로그를 운영하는 가장 현실적인 방법</p>
+      <p class="hero-author">문성혁</p>
       <p class="lead">
         코딩을 몰라도 괜찮습니다. 이 가이드는 글감 찾기부터 초안 작성, 검수, 발행, 성과 확인까지 —
         블로그 운영의 반복 작업을 AI에게 맡기고, 사람은 가장 중요한 판단에만 집중하는

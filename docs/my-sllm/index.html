@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" />
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" />
 
 <style>
   /* ── Tokens · 라이트모드가 기본값 ────────────────────────── */
@@ -38,8 +38,10 @@
     --measure: 68ch;
     --toc-w: 16.5rem;
 
-    --sans: "Noto Sans KR", -apple-system, BlinkMacSystemFont,
-            "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", sans-serif;
+    /* 1순위: 애플 시스템 폰트 · 2순위: CDN에서 받은 Noto Sans KR
+       (라틴 글리프는 -apple-system이, 한글은 Apple SD Gothic Neo가 담당) */
+    --sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+            "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
     --mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo,
             "JetBrains Mono", "D2Coding", Consolas, monospace;
   }
@@ -264,6 +266,19 @@
   }
   .masthead__title .thin { font-weight: 300; color: var(--ink-2); }
   .masthead__sub { font-family: var(--mono); font-size: .82rem; color: var(--ink-2); margin: 0; }
+
+  /* 부제 바로 아래에 붙도록 grid gap(1.5rem)을 음수 마진으로 상쇄합니다. */
+  .masthead__byline {
+    display: flex; align-items: baseline; gap: .6rem;
+    margin: -.9rem 0 0;
+  }
+  .masthead__byline .label {
+    font-family: var(--mono); font-size: .66rem; letter-spacing: .14em;
+    color: var(--ink-3);
+  }
+  .masthead__byline .name {
+    font-size: 1rem; font-weight: 700; letter-spacing: -.015em; color: var(--ink);
+  }
 
   /* ── Chapter opener ─────────────────────────────────────── */
   .chapter-open {
@@ -662,6 +677,7 @@
         </div>
         <h1 class="masthead__title">나만의 sLLM <span class="thin">만들기</span></h1>
         <p class="masthead__sub">작게, 그러나 내 것으로 — 1장에서 모델을 켜고, 14장에서 서비스를 내립니다. 하나의 프로젝트로.</p>
+        <p class="masthead__byline"><span class="label">지은이</span><span class="name">문성혁</span></p>
       </div>
     </header>
 

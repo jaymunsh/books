@@ -1,8 +1,7 @@
 <title>오픈클로 완전 정복</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap');
 
 :root{
   --ground:#F5F1E8; --surface:#FFFFFF; --sidebar:#EFE9DC;
@@ -52,7 +51,7 @@
 html{scroll-behavior:smooth;}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
 body{margin:0; background:var(--ground); color:var(--ink);
-  font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
   line-height:1.7; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
 
 /* Sidebar */
@@ -199,6 +198,11 @@ body{margin:0; background:var(--ground); color:var(--ink);
 .shot .ic{font-size:1.05rem; opacity:.8;}
 .shot b{color:var(--ink-soft); font-weight:700;}
 
+/* 지은이 */
+.brand .byline{margin:10px 0 0; padding-top:9px; border-top:1px solid var(--line);
+  font-size:.75rem; color:var(--ink-soft); letter-spacing:.01em;}
+.brand .byline b{color:var(--ink); font-weight:700;}
+
 </style>
 
 <script>
@@ -220,6 +224,7 @@ body{margin:0; background:var(--ground); color:var(--ink);
   <div class="mark" aria-hidden="true">🦀</div>
   <h1>오픈클로 완전 정복</h1>
   <p>메신저로 지시하는 나만의 AI 자동화 비서</p>
+  <p class="byline">지은이 <b>문성혁</b></p>
  </div>
  <nav class="toc">
   <div class="toc-part">I부 · 오픈클로 길들이기</div>
@@ -4750,7 +4755,8 @@ openclaw cron runs</code></pre></div>
 
 
   <footer class="foot">
-   오픈클로 완전 정복 — 초고(draft) · 6/6부 수록 · <a href="#top">맨 위로</a><br>
+   오픈클로 완전 정복 · 지은이 <strong>문성혁</strong><br>
+   초고(draft) · 6/6부 수록 · <a href="#top">맨 위로</a><br>
    명령·설정 문법은 오픈클로 공식 문서(docs.openclaw.ai) 기준
   </footer>
  </div>

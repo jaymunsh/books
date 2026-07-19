@@ -179,7 +179,12 @@ body{
 .mast-title{font-size:clamp(2.4rem,6vw,3.6rem); line-height:1.04; letter-spacing:-.035em;
   font-weight:850; margin:0 0 6px}
 .mast-sub{font-size:clamp(1.1rem,2.4vw,1.35rem); font-weight:500; color:var(--ink-2);
-  letter-spacing:-.015em; margin:0 0 28px}
+  letter-spacing:-.015em; margin:0 0 20px}
+.mast-byline{display:flex; align-items:center; gap:10px; margin:0 0 30px}
+.mast-byline::before{content:""; width:18px; height:1px; background:var(--rule); flex:0 0 18px}
+.mast-byline .lbl{font-family:var(--f-mono); font-size:10px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--muted)}
+.mast-byline .who{font-size:1rem; font-weight:700; color:var(--ink); letter-spacing:-.01em}
 .mast-lede{font-size:1.02rem; color:var(--ink-2); max-width:34rem; margin:0 0 34px}
 .mast-lede strong{color:var(--ink); font-weight:650}
 /* signature: the loom diagram — 11 strands bundling into one connector */
@@ -427,6 +432,7 @@ table.htable{width:100%; border-collapse:collapse; font-size:.88rem}
         <p class="mast-eyebrow">Harness Engineering in Practice · 2026</p>
         <h1 class="mast-title">실무 하네스<br>엔지니어링</h1>
         <p class="mast-sub">모델을 바꾸지 말고, 모델 주변을 설계하라</p>
+        <p class="mast-byline"><span class="lbl">지은이</span><span class="who">문성혁</span></p>
 
         <figure class="loomfig">
           <svg viewBox="0 0 640 116" role="img" aria-label="11개의 색색 전선이 하나의 커넥터로 묶이는 하네스 다이어그램">
